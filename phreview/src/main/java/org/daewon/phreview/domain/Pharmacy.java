@@ -1,13 +1,11 @@
 package org.daewon.phreview.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -23,17 +21,17 @@ public class Pharmacy {
     private String phTel;
     private String phAdd;
 
-    private LocalDateTime timeWeekStart;
-    private LocalDateTime timeWeekEnd;
-    private LocalDateTime timeSatStart;
-    private LocalDateTime timeSatEnd;
-    private LocalDateTime timeHoliStart;
-    private LocalDateTime timeHoliEnd;
+    private Time timeWeekStart;
+    private Time timeWeekEnd;
+    private Time timeSatStart;
+    private Time timeSatEnd;
+    private Time timeHoliStart;
+    private Time timeHoliEnd;
 
-    private float phX;
-    private float phY;
+    private double phX;  // 경도
+    private double phY;  // 위도
 
-    private int enjoyIndex;
-    private int star;
+    private int enjoyIndex; //
+    private int star;   // 즐겨찾기
 
 }
