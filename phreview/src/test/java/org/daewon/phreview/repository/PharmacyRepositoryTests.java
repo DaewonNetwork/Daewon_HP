@@ -6,12 +6,14 @@ import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.PharmacyData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Time;
@@ -25,16 +27,18 @@ public class PharmacyRepositoryTests {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
+    @Value("${org.daewon.json.path}")
+    private String jsonData;
+
     // insert
     @Test
-    public void testInsert() {
-        String pharmacyDataPath = "data/pharmacyData.json";
+    public void testInsert() throws FileNotFoundException {
 
-        JsonElement jsonElement = JsonParser.parseReader(new FileReader(pharmacyDataPath));
+        JsonElement jsonElement = JsonParser.parseReader(new FileReader(jsonData));
         // Gson 객체 생성
         Gson gson = new Gson();
         // JSON을 Java 객체로 변환
-        PharmacyData [] objects = gson.fromJson(jsonElement, PharmacyData[].class);
+        PharmacyData objects = gson.fromJson(jsonElement, PharmacyData.class);
 
         // .phName("100세건강약국")
         // .phTel("02-445-1460")
