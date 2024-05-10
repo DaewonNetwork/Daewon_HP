@@ -34,4 +34,5 @@ public class CustomSecurityConfig {
         // 정적 리소스 필터링 제외
         return (web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));    // staticResources가 있는 부분은 무시해라 resources - static 폴더 안에 있는 파일은 로그인창을 띄우지 않음
     }
+
 }
