@@ -2,14 +2,10 @@ package org.daewon.phreview.domain;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -17,11 +13,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "roleSet")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @Column(unique = true)
     private String email;
     private String password;
     private String userName;
@@ -33,4 +30,9 @@ public class Users {
     protected void onCreate() {
         createAt = new Date();
     }
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<UserRole> roleSet = new HashSet<>();
+
 }

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
@@ -33,5 +35,10 @@ public class CustomSecurityConfig {
         log.info("---------------------web configure--------------------");
         // 정적 리소스 필터링 제외
         return (web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));    // staticResources가 있는 부분은 무시해라 resources - static 폴더 안에 있는 파일은 로그인창을 띄우지 않음
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

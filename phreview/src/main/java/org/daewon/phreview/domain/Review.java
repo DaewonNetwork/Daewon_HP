@@ -1,16 +1,10 @@
 package org.daewon.phreview.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
@@ -18,29 +12,42 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "pharmacy")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
-    @ManyToOne
-    @JoinColumn(name = "phId", referencedColumnName = "phID")
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "phId", referencedColumnName = "phID")
     private Pharmacy pharmacy;
 
+    @Column(length = 500, nullable = false)
     private String reviewText;
-    private int star;
-    private String reviewDate;
+//    @Column(length = 50, nullable = false)
+//    private String writer;
+
+    private int star=0;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
     @PrePersist
-    protected void onCreate() {
+    public void onCreate() {
         createAt = new Date();
+    }
+
+    // 리뷰작성 내용 수정
+    public void changeText(String reviewText) {
+        this.reviewText = reviewText;
+    }
+
+    // pharmacy 값 설정 -> phId를 받아서 생성
+    public void setPharmacy(Long phId) {
+        this.pharmacy = Pharmacy.builder().phID(phId).build();
     }
 }
