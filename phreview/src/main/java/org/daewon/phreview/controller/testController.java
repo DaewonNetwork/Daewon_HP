@@ -8,8 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Log4j2
 public class testController {
 
-    @GetMapping("/test")
-    public void test() {
+    @GetMapping("/home")
+    public void home() {
 
     }
+
+    @GetMapping("/category")
+    public void category() {
+
+    }
+
 }
+
+
