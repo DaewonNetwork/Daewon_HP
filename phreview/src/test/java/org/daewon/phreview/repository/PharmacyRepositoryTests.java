@@ -6,6 +6,7 @@ import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.PharmacyData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.google.gson.Gson;
@@ -25,10 +26,13 @@ public class PharmacyRepositoryTests {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
+    
+    priva
+
     // insert
     @Test
+    @Value("${org.daewon.json.path")
     public void testInsert() {
-        String pharmacyDataPath = "data/pharmacyData.json";
 
         JsonElement jsonElement = JsonParser.parseReader(new FileReader(pharmacyDataPath));
         // Gson 객체 생성
