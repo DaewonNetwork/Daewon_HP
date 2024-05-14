@@ -9,5 +9,6 @@ public class UserJoinDTO {
     private String password;
     private String userName;
     private String email;
+    private boolean social;
 
 }
