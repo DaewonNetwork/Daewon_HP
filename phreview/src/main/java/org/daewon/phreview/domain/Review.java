@@ -31,7 +31,7 @@ public class Review {
 //    @Column(length = 50, nullable = false)
 //    private String writer;
 
-    private int star=0;
+    private int star=0; // 평점
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;

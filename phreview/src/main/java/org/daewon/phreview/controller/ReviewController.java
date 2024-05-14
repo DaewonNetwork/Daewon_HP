@@ -7,11 +7,9 @@ import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -31,5 +29,11 @@ public class ReviewController {
         Map<String, Long> resultMap = Map.of("reviewId", 1L);
 
         return ResponseEntity.ok(resultMap);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/register")
+    public void registerGET() {
+
     }
 }
