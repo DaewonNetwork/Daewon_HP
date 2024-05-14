@@ -6,6 +6,16 @@
 </head>
 <body>
 
+<form name ="form" action="/map/searchResult?city=" method="get" >
+    키워드 : <input type="text" name="keyword"><br>
+    <input type="hidden" name="city" value="">
+    <input type="hidden" name="lat" value="">
+    <input type="hidden" name="long" value="">
+    <button type="submit">검색</button>
+</form>
+
+
+
 <div id="map" style="width:500px;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services"></script>
@@ -14,6 +24,11 @@
     let query = window.location.search;
     let param = new URLSearchParams(query);
     const city = param.get('city')
+    const lat = param.get('lat')
+    const long = param.get('long')
+    document.form.city.value = city;
+    document.form.lat.value = lat;
+    document.form.long.value = long;
 
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -26,11 +41,14 @@
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
+
     // 장소 검색 객체를 생성합니다
     var ps = new kakao.maps.services.Places();
 
     // 키워드로 장소를 검색합니다
-    ps.keywordSearch(city+'약국', placesSearchCB);
+    // ps.keywordSearch(city,placesSearchCB,{category_group_code:'PM9'});
+    ps.categorySearch('PM9', placesSearchCB,{x:long, y:lat});
+
 
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB (data, status, pagination) {
@@ -38,15 +56,15 @@
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
             var bounds = new kakao.maps.LatLngBounds();
-
-            for (var i=0; i<data.length; i++) {
-                if(data[i].address_name.includes('서울')){
-                    displayMarker(data[i]);
-                    console.log(data[i])
-                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                }
-            }
-
+            console.log(data.length)
+                for (var i=0; i<data.length; i++) {
+                    if(data[i].address_name.includes(city)){
+                        console.log(data)
+                        displayMarker(data[i]);
+                        console.log(data[i])
+                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                    }
+               }
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
             map.setBounds(bounds);
         }

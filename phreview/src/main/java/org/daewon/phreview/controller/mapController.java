@@ -1,6 +1,7 @@
 package org.daewon.phreview.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,7 +12,6 @@ public class mapController {
 
     @GetMapping("/categoryResult")
     public void categoryResult() {
-
     }
 
     @GetMapping("/nearResult")
@@ -21,7 +21,6 @@ public class mapController {
 
     @GetMapping("/searchResult")
     public void searchResult() {
-
     }
 
 }

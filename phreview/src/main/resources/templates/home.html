@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-    <body>
-        검색 :
-        <br>
 
+
+    <body>
+            <form action="/map/searchResult" method="get" >
+            키워드 : <input type="text" name="keyword"><br>
+                <button type="submit">검색</button>
+            </form>
         <a href="/category">지역 카테고리</a>
         <br>
 
@@ -44,5 +47,6 @@
             document.querySelector("#nearPh").addEventListener("click", geoFindMe);
 
         </script>
+
     </body>
 </html>
