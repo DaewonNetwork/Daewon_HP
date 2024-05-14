@@ -64,7 +64,8 @@
             // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
             infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>' +
                                   '<div style="padding:5px;font-size:12px;">' + place.road_address_name + '</div>' +
-                                  '<div style="padding:5px;font-size:12px;">' + place.phone + '</div>' );
+                                  '<div style="padding:5px;font-size:12px;">' + place.phone + '</div>' +
+                '<a href="/pharmacyInfo?tel='+place.phone+'">병원정보</a>');
             infowindow.open(map, marker);
         });
     }
