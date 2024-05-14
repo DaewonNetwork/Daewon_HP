@@ -5,7 +5,7 @@
     <title>가까운 약국 검색</title>
 </head>
 <body>
-
+<a href="/home">홈</a>
 <div id="map" style="width:500px;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services"></script>
@@ -34,11 +34,11 @@
     // 장소 검색 객체를 생성합니다
     var ps = new kakao.maps.services.Places();
 
-    ps.categorySearch('PM9', placesSearchCB, {radius:3000, location: new kakao.maps.LatLng(lat, long)});
+    ps.categorySearch('PM9', placesSearchCB, {radius:3000, location: new kakao.maps.LatLng(lat, long),page:3});
 
     function placesSearchCB (data, status, pagination) {
         if (status === kakao.maps.services.Status.OK) {
-
+            pagination.prevPage();
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
             var bounds = new kakao.maps.LatLngBounds();
@@ -64,7 +64,7 @@
             // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
             infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>' +
                                   '<div style="padding:5px;font-size:12px;">' + place.road_address_name + '</div>' +
-                                  '<div style="padding:5px;font-size:12px;">' + place.phone + '</div>');
+                                  '<div style="padding:5px;font-size:12px;">' + place.phone + '</div>' );
             infowindow.open(map, marker);
         });
     }

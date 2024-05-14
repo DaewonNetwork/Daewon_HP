@@ -6,7 +6,7 @@
 
 </head>
 <body>
-
+<a href="/home">홈</a>
 <div id="map" style="width:500px;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services"></script>
@@ -49,8 +49,8 @@
 
 
     if(city!=null){
-    ps.keywordSearch(keyword, placesSearchCB2, {category_group_code:'PM9',radius:20000, location: mapOption.center});
-    } else ps.keywordSearch(keyword, placesSearchCB, {category_group_code:'PM9',radius:20000, location: mapOption.center } );
+    ps.keywordSearch(keyword, placesSearchCB2, {category_group_code:'PM9',radius:20000, location: mapOption.center,page:3});
+    } else ps.keywordSearch(keyword, placesSearchCB, {category_group_code:'PM9',radius:20000, location: mapOption.center,page:3} );
 
     console.log("시티"+city)
 
@@ -58,6 +58,7 @@
     // 키워드만
         function placesSearchCB (data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
+                pagination.prevPage();
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 // LatLngBounds 객체에 좌표를 추가합니다
                 var bounds = new kakao.maps.LatLngBounds();
