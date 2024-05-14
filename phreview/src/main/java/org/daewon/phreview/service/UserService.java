@@ -7,12 +7,9 @@ public interface UserService {
 
         public MidExistException() {}
         public MidExistException(String msg) {
-
             super(msg);
         }
     }
 
-    void join(UserJoinDTO  userJoinDTO) throws MidExistException;
-
-
+    void join(UserJoinDTO userJoinDTO) throws MidExistException;
 }
