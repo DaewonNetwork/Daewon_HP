@@ -1,11 +1,14 @@
 package org.daewon.phreview.domain;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Getter
@@ -16,6 +19,7 @@ import lombok.*;
 public class Users extends BaseEntity{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private String password;
