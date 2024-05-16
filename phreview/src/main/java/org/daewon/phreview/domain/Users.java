@@ -1,6 +1,5 @@
 package org.daewon.phreview.domain;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +15,7 @@ import lombok.*;
 public class Users extends BaseEntity{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private String password;

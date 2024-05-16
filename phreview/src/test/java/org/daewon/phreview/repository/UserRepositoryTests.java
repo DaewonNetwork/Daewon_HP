@@ -7,14 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Commit;
 
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
-public class MemberRepositoryTests {
+public class UserRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +29,7 @@ public class MemberRepositoryTests {
                     .email("email" + i + "@test.com")
                     .social(false)
                     .build();
-            user.addRole(UserRole.USER);  //권한 설정
+            user.addRole(UserRole.USER);
 
             if(i >= 90) {
                 user.addRole(UserRole.ADMIN);
