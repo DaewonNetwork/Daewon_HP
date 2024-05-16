@@ -2,7 +2,6 @@ package org.daewon.phreview.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.security.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,13 +29,6 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.info("----------------------- configure --------------------");
-
-        // 사용자 로그인 페이지 설정
-        http.formLogin(form -> {
-            form.loginPage("/users/login");
-        });
-        //CSRF 토큰 비활성화
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
         // 세션 비활성화
