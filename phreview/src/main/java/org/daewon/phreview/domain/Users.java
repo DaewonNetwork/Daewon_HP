@@ -18,6 +18,7 @@ public class Users extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Setter
     private String password;
     private String userName;
     private String email;
@@ -26,10 +27,6 @@ public class Users extends BaseEntity{
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<UserRole> roleSet = new HashSet<>();
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public void addRole(UserRole userRole) {
         this.roleSet.add(userRole);

@@ -22,7 +22,7 @@ public class UserRepositoryTests {
 
     @Test
     public void insertMembers() {
-        IntStream.rangeClosed(1, 20).forEach(i -> {
+        IntStream.rangeClosed(1, 10).forEach(i -> {
             Users user = Users.builder()
                     .userName("member" + i)
                     .password(passwordEncoder.encode("1111"))
