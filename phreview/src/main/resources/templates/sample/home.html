@@ -7,11 +7,11 @@
 
 
     <body>
-            <form action="/map/searchResult" method="get" >
+            <form action="/map/searchResult2" method="get" >
             키워드 : <input type="text" name="keyword"><br>
                 <button type="submit">검색</button>
             </form>
-        <a href="/category">지역 카테고리</a>
+        <a href="/sample/category">지역 카테고리</a>
         <br>
 
         <button id="nearPh">가까운 약국</button><br />
@@ -29,7 +29,7 @@
                 function success(position) {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
-                    window.location.href = `/map/nearResult?lat=${latitude}&long=${longitude}`;
+                    window.location.href = `/map/nearResult?lat=${latitude}&lng=${longitude}`;
                 }
 
                 function error() {

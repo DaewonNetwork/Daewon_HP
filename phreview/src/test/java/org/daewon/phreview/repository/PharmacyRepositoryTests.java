@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -39,6 +40,13 @@ public class PharmacyRepositoryTests {
                 .build();
          Pharmacy result = pharmacyRepository.save(pharmacy);
          log.info("id :"+result.getPhID());
+    }
+
+    @Test
+    public void testNearSearch(){
+        List<Pharmacy> result = pharmacyRepository.findByLoc(37.4685225,126.8943311);
+        log.info(result.toString());
+
     }
 
     // insert

@@ -1,6 +1,7 @@
 package org.daewon.phreview.dto;
 
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PharmacyDTO {
+
     private Long phID;
     private String phName; // 병원 이름
     private String phTel; // 병원 전화번호

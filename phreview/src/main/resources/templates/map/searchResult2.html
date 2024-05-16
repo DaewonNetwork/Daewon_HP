@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -19,22 +28,38 @@
 
     console.log(pharmacyDTO)
 
+    // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
     let query = window.location.search;
     let param = new URLSearchParams(query);
-
+    const city = param.get('city')
+    const keyword = param.get('keyword')
     const lat = param.get('lat') // 지역 위도
-    const long = param.get('lng') // 지역 경도
+    const long = param.get('long') // 지역 경도
 
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
-            level: 7 // 지도의 확대 레벨
-        };
+    if(city!=null){
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
+                level: 7 // 지도의 확대 레벨
+            };
+    } else  {
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                level: 9 // 지도의 확대 레벨
+            };
+
+    }
+
 
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
     for(var i = 0; i<pharmacyDTO.length; i++) {
+        // var sw = new kakao.maps.LatLng(pharmacyDTO[0].phY, pharmacyDTO[0].phX),
+        //     ne = new kakao.maps.LatLng(pharmacyDTO[pharmacyDTO.length].phY, pharmacyDTO[pharmacyDTO.length].phX)
+        // var bounds = new kakao.maps.LatLngBounds(sw, ne);
+        // map.setbounds(bounds)
         // 마커를 생성하고 지도에 표시합니다
         var marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX)
@@ -46,20 +71,18 @@
                 '<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phAdd + '</div>' +
                 '<a href="/sample/pharmacyInfo?phID='+pharmacyDTO[i].phID+'">병원 상세정보</a>',
             iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
         // 인포윈도우를 생성합니다
         var infowindow = new kakao.maps.InfoWindow({
             content : iwContent,
             removable : iwRemoveable
         });
-
         // 마커에 클릭이벤트를 등록합니다
         kakao.maps.event.addListener(marker, 'click', function() {
             // 마커 위에 인포윈도우를 표시합니다
             infowindow.open(map, marker);
         });
-
     }
+
 
 
 
