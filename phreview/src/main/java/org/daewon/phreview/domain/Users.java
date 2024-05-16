@@ -1,7 +1,6 @@
 package org.daewon.phreview.domain;
 
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,25 +13,25 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "roleSet")
-public class Users {
+public class Users extends BaseEntity{
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(unique = true)
-    private String email;
+
     private String password;
     private String userName;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createAt = new Date();
-    }
+    private String email;
+    private boolean social;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<UserRole> roleSet = new HashSet<>();
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void addRole(UserRole userRole) {
+        this.roleSet.add(userRole);
+    }
 }

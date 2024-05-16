@@ -1,17 +1,23 @@
 package org.daewon.phreview.repository;
 
+import jakarta.transaction.Transactional;
 import org.daewon.phreview.domain.Users;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<Users, String> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
-    @EntityGraph(attributePaths = "roleSet")
-    @Query("select u from Users u where u.email = :email")
-    Optional<Users> getWithRoles(String email);
+    @Query("select u from Users u where u.userId = :userId and u.social = false")
+    Optional<Users> getWithRoles(@Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query("update Users u set u.password = :password where u.userId = :userId")
+    void updatePassword(@Param("password") String password, @Param("userId") String mid);
+
+    Optional<Users> findByUserName(String username);
 }

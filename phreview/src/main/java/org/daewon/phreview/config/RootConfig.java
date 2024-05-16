@@ -14,7 +14,7 @@ public class RootConfig {
         modelMapper.getConfiguration()
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-                .setMatchingStrategy(MatchingStrategies.LOOSE);    // STRICT면 테이블의 변수와 이름이 같아야함
+                .setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
 }
