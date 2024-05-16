@@ -19,19 +19,17 @@ public class Review {
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    // @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "phId", referencedColumnName = "phID")
+//    @JoinColumn(name = "phId", referencedColumnName = "phId")
     private Pharmacy pharmacy;
 
     @Column(length = 500, nullable = false)
     private String reviewText;
-//    @Column(length = 50, nullable = false)
-//    private String writer;
 
-    private int star=0; // 평점
+    private int star =0; // 평점
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -42,12 +40,12 @@ public class Review {
     }
 
     // 리뷰작성 내용 수정
-    public void changeText(String reviewText) {
+    public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
 
     // pharmacy 값 설정 -> phId를 받아서 생성
     public void setPharmacy(Long phId) {
-        this.pharmacy = Pharmacy.builder().phID(phId).build();
+        this.pharmacy = Pharmacy.builder().phId(phId).build();
     }
 }

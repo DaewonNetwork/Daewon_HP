@@ -34,7 +34,7 @@ public class Reply {
     private Users users;
 
     @ManyToOne
-    @JoinColumn(name = "phId", referencedColumnName = "phID")
+    @JoinColumn(name = "phId", referencedColumnName = "phId")
     private Pharmacy pharmacy;
 
     @Column(length = 255)

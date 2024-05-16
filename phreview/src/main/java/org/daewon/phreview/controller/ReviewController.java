@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @Log4j2
-@RequestMapping("/reviews")
+@RequestMapping("/api/review")
 @RequiredArgsConstructor
 public class ReviewController {
 

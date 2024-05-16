@@ -3,7 +3,7 @@ package org.daewon.phreview.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.UserSecurityDTO;
+import org.daewon.phreview.dto.AuthSecurityDTO;
 import org.daewon.phreview.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +23,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("loadUserByUsername : " + username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        log.info("loadUserByUsername : " + userName);
 
-        Optional<Users> userOptional = userRepository.findByUserName(username);
+        Optional<Users> userOptional = userRepository.findByUserName(userName);
 
         if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new UsernameNotFoundException("User not found with userName: " + userName);
         }
 
         Long userId = userOptional.get().getUserId();
@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Users users = result.get();
 
-        UserSecurityDTO usersSecurityDTO = new UserSecurityDTO(
+        AuthSecurityDTO usersSecurityDTO = new AuthSecurityDTO(
                 users.getUserId(),
                 users.getPassword(),
                 users.getUserName(),

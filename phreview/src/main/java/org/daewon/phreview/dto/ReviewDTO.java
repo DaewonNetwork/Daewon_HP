@@ -14,11 +14,11 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ReviewDTO {
-
     private Long reviewId;
     private Users users;
     private Long phId;      // 특정한 병원 번호를 선언
     private Long userId;    // 특정한 유저 id를 선언
+
     @NotEmpty
     private String reviewText;
 

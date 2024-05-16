@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment와 같은
-    private Long phID;
+    private Long phId;
     private String phName; // 병원 이름
     private String phTel; // 병원 전화번호
     private String phAdd; // 병원 주소
