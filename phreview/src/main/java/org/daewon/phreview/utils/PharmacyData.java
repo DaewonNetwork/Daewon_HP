@@ -1,4 +1,4 @@
-package org.daewon.phreview.domain;
+package org.daewon.phreview.utils;
 
 import java.util.List;
 
