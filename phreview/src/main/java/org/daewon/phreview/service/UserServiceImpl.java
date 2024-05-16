@@ -21,13 +21,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void join(UserJoinDTO memberJoinDTO) throws MidExistException {
-        Long userId = memberJoinDTO.getUserId();
-
-        boolean exist = userRepository.existsById(userId);
-
-        if(exist) {
-            throw new MidExistException();
-        }
 
         Users users = modelMapper.map(memberJoinDTO, Users.class);
         users.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));

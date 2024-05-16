@@ -3,33 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 가입</title>
-    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<h1>회원 가입</h1>
-<form action="/user/join" method="POST">
-    <div class="input-group mb-3">
-        <span class="input-group-text">userid</span>
-        <input type="text" name="userId" class="form-control">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">username</span>
-        <input type="text" name="username" class="form-control">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">password</span>
-        <input type="password" name="password" class="form-control">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">EMAIL</span>
-        <input type="email" name="email" class="form-control">
-    </div>
-    <div class="my-4">
-        <div class="float-end">
-            <button type="submit" class="btn btn-primary submitBtn">Submit</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+<div class="container">
+    <h1>회원 가입</h1>
+    <form action="/user/join" method="POST">
+        <div class="input-group mb-3">
+            <span class="input-group-text">username</span>
+            <input type="text" name="userName" class="form-control">
         </div>
-    </div>
-</form>
+        <div class="input-group mb-3">
+            <span class="input-group-text">password</span>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">EMAIL</span>
+            <input type="email" name="email" class="form-control">
+        </div>
+        <div class="my-4">
+            <div class="float-end">
+                <button type="submit" class="btn btn-primary submitBtn">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
