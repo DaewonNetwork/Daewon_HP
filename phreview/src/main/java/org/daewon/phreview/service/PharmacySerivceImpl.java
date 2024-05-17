@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class PharmacySerivceImpl implements PharmacyService {
+class PharmacySerivceImpl implements PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
 
@@ -27,7 +27,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
-                    .phID(p.getPhID())
+                    .phId(p.getPhId())
                     .phName(p.getPhName())
                     .phAdd(p.getPhAdd())
                     .phTel(p.getPhTel())
@@ -56,7 +56,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
-                    .phID(p.getPhID())
+                    .phId(p.getPhId())
                     .phName(p.getPhName())
                     .phAdd(p.getPhAdd())
                     .phTel(p.getPhTel())
@@ -87,7 +87,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
-                    .phID(p.getPhID())
+                    .phId(p.getPhId())
                     .phName(p.getPhName())
                     .phAdd(p.getPhAdd())
                     .phTel(p.getPhTel())
@@ -116,7 +116,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
-                    .phID(p.getPhID())
+                    .phId(p.getPhId())
                     .phName(p.getPhName())
                     .phAdd(p.getPhAdd())
                     .phTel(p.getPhTel())
@@ -146,7 +146,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
-                    .phID(p.getPhID())
+                    .phId(p.getPhId())
                     .phName(p.getPhName())
                     .phAdd(p.getPhAdd())
                     .phTel(p.getPhTel())
@@ -169,9 +169,9 @@ public class PharmacySerivceImpl implements PharmacyService {
     }
 
     @Override
-    public PharmacyDTO getPharmacyInfo(Long phID) {
+    public PharmacyDTO getPharmacyInfo(Long phId) {
 
-        Optional<Pharmacy> result = pharmacyRepository.findById(phID);
+        Optional<Pharmacy> result = pharmacyRepository.findById(phId);
 
         Pharmacy pharmacy = result.orElseThrow();
 

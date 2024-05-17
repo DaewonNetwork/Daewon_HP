@@ -26,8 +26,8 @@ public class SampleController {
     }
 
     @GetMapping("/pharmacyInfo")
-    public void pharmacyInfo(Long phID, Model model) {
-        PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phID);
+    public void pharmacyInfo(Long phId, Model model) {
+        PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
         log.info("1번째인포:"+pharmacyDTO);
         model.addAttribute("pharmacyDTO", pharmacyDTO);
     }
