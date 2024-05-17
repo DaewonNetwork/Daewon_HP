@@ -27,10 +27,10 @@ public class AuthController {
             userService.signup(userSignupDTO);
         } catch (AuthService.MidExistException e) {
             redirectAttributes.addFlashAttribute("error", "uid");
-            return "redirect:/auth/signup";
+            return "redirect:/api/auth/signup";
         }
 
         redirectAttributes.addFlashAttribute("result", "success");
-        return "redirect:/auth/signin";
+        return "redirect:/api/auth/signin";
     }
 }
