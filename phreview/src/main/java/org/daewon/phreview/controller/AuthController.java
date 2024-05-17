@@ -19,7 +19,7 @@ public class AuthController {
 
     @Operation(summary = "회원가입 처리", description = "회원가입 요청을 처리합니다.")
     @PostMapping("/signup")
-    public String signup(AuthSignupDTO userSignupDTO, RedirectAttributes redirectAttributes){
+    public void signup(AuthSignupDTO userSignupDTO, RedirectAttributes redirectAttributes){
         log.info("signup post.....");
         log.info(userSignupDTO);
 
@@ -27,10 +27,8 @@ public class AuthController {
             userService.signup(userSignupDTO);
         } catch (AuthService.MidExistException e) {
             redirectAttributes.addFlashAttribute("error", "uid");
-            return "redirect:/api/auth/signup";
         }
 
         redirectAttributes.addFlashAttribute("result", "success");
-        return "redirect:/api/auth/signin";
     }
 }
