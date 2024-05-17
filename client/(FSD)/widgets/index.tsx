@@ -10,7 +10,8 @@ const map = {
 
 const Widget = () => {
     return (
-        <div>Widget</div>
+        <>
+        </>
     );
 };
 

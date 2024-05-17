@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 
-const mapSearchFetch = async (keyword: string) => {
+export const mapSearchFetch = async (keyword: string) => {
     const response = await fetch(`http://localhost:8090/api/map/search?keyword=${encodeURIComponent(keyword)}`, {
         method: "GET",
         headers: {

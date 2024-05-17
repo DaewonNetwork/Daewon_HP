@@ -1,3 +1,5 @@
+"use client";
+
 import Widget from "@/(FSD)/widgets";
 import React from "react";
 
