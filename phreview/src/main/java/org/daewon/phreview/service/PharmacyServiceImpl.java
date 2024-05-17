@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-class PharmacySerivceImpl implements PharmacyService {
+public class PharmacyServiceImpl implements PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
 
