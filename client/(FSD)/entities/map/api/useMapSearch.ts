@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 const mapSearchFetch = async (keyword: string) => {
-    const response = await fetch(`http://localhost:8090/map/search?keyword=${encodeURIComponent(keyword)}`, {
+    const response = await fetch(`http://localhost:8090/api/map/search?keyword=${encodeURIComponent(keyword)}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
