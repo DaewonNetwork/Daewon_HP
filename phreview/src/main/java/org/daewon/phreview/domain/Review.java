@@ -29,11 +29,7 @@ public class Review {
     @Column(length = 500, nullable = false)
     private String reviewText;
 
-<<<<<<< HEAD
-    private int star = 0; // 평점
-=======
     private int star =0; // 평점
->>>>>>> main
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
