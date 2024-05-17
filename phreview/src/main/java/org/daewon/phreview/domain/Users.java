@@ -1,5 +1,9 @@
 package org.daewon.phreview.domain;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +22,10 @@ public class Users extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+<<<<<<< HEAD
+=======
     @Setter
+>>>>>>> main
     private String password;
     private String userName;
     private String email;
