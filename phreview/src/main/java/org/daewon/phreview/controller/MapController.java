@@ -22,7 +22,6 @@ public class MapController {
 
     private final PharmacyService pharmacyService;
 
-
     @GetMapping("/categoryResult")
     public void getPharmacyInfoByCity(String city, Model model){ // 지역 별 검색
         List<PharmacyDTO> pharmacyDTO = pharmacyService.cityCategorySearch(city);
