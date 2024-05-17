@@ -1,12 +1,12 @@
-"use client";
+import Widget from "@/(FSD)/widgets";
 import React from "react";
 
-const page = () => {
+const Page = () => {
 	return (
-		<div>
-			
-		</div>
+		<>
+			<Widget.map.ui.MainContent />
+		</>
 	);
 };
 
-export default page;
+export default Page;

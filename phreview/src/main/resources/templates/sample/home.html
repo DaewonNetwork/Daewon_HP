@@ -7,7 +7,7 @@
 
 
 <body>
-<form action="/map/searchResult" method="get" >
+<form action="/api/map/searchResult" method="get" >
     키워드 : <input type="text" name="keyword"><br>
     <button type="submit">검색</button>
 </form>
@@ -29,7 +29,7 @@
         function success(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            window.location.href = `/map/nearResult?lat=${latitude}&lng=${longitude}`;
+            window.location.href = `/api/map/nearResult?lat=${latitude}&lng=${longitude}`;
         }
 
         function error() {
