@@ -1,5 +1,6 @@
+import "@/(FSD)/shareds/styles/globalStyle.scss";
 import { Metadata } from "next";
-import "@/styles/globals.css";
+import RootProvider from "@/(FSD)/apps/providers/RootProvider";
 
 export const metadata: Metadata = {
 
@@ -7,10 +8,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="ko" suppressHydrationWarning>
 			<head />
 			<body>
-				{children}
+				<RootProvider>
+					{children}
+				</RootProvider>
 			</body>
 		</html>
 	);
