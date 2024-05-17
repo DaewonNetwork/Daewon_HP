@@ -20,13 +20,12 @@ public class PharmacySerivceImpl implements PharmacyService {
     private final PharmacyRepository pharmacyRepository;
 
     private final ModelMapper modelMapper;
-
-
+    
     public List<PharmacyDTO> cityCategorySearch(String city) {
         List<Pharmacy> result = pharmacyRepository.findByCity(city);
         log.info("result:"+result);
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){ // 3
+        for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phID(p.getPhID())
                     .phName(p.getPhName())
@@ -43,7 +42,7 @@ public class PharmacySerivceImpl implements PharmacyService {
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
-            pharmacyDTOList.add(dto); // 4
+            pharmacyDTOList.add(dto);
         }
         log.info(pharmacyDTOList);
 
@@ -56,7 +55,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         log.info("result:"+result);
         log.info("nearSearch");
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){ // 3
+        for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phID(p.getPhID())
                     .phName(p.getPhName())
@@ -73,7 +72,7 @@ public class PharmacySerivceImpl implements PharmacyService {
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
-            pharmacyDTOList.add(dto); // 4
+            pharmacyDTOList.add(dto);
         }
         log.info(pharmacyDTOList);
 
@@ -88,7 +87,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         log.info("result:"+result);
         log.info("NameSearch");
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){ // 3
+        for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phID(p.getPhID())
                     .phName(p.getPhName())
@@ -105,7 +104,7 @@ public class PharmacySerivceImpl implements PharmacyService {
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
-            pharmacyDTOList.add(dto); // 4
+            pharmacyDTOList.add(dto);
         }
         log.info(pharmacyDTOList);
 
@@ -118,7 +117,7 @@ public class PharmacySerivceImpl implements PharmacyService {
         log.info("result:"+result);
         log.info("NameOrAddSearch");
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){ // 3
+        for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phID(p.getPhID())
                     .phName(p.getPhName())
@@ -135,7 +134,7 @@ public class PharmacySerivceImpl implements PharmacyService {
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
-            pharmacyDTOList.add(dto); // 4
+            pharmacyDTOList.add(dto);
         }
         log.info(pharmacyDTOList);
 
@@ -143,13 +142,13 @@ public class PharmacySerivceImpl implements PharmacyService {
     }
 
     @Override
-    public List<PharmacyDTO> NameSearchInCity(String keyword, String city) {
+    public List<PharmacyDTO> NameSearchInCity(String city,String keyword) {
 
         List<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(keyword, city);
         log.info("result:"+result);
         log.info("NameSearchInCity");
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){ // 3
+        for(Pharmacy p : result){
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phID(p.getPhID())
                     .phName(p.getPhName())

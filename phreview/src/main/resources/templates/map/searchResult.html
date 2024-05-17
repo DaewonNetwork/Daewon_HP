@@ -1,115 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>키워드로 약국 검색</title>
-
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-<body>
-<a href="/sample/home">홈</a>
-<div id="map" style="width:500px;height:350px;"></div>
+    <body>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services"></script>
-<script>
+        <a href="/sample/home">홈</a>
 
-    let query = window.location.search;
-    let param = new URLSearchParams(query);
-    const keyword = param.get('keyword')
-    const city = param.get('city')
-    const lat = param.get('lat')
-    const long = param.get('long')
+        <div id="map" style="width:500px;height:350px;"></div>
 
-    console.log("lat"+lat)
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services,clusterer"></script>
+        <script th:inline="javascript">
+            // 약국 정보
+            var pharmacyDTO = [[${pharmacyDTO}]];
 
-    // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-    var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+            console.log(pharmacyDTO)
 
-    if(lat!=null) {
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-    } else {
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(37.564968, 126.939909), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-    }
+            // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+            let query = window.location.search;
+            let param = new URLSearchParams(query);
 
+            const city = param.get('city')
+            const lat = param.get('lat') // 지역 위도
+            const long = param.get('long') // 지역 경도
 
-    // 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-    console.log("맵"+mapOption.center)
-    // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
-
-    // 키워드로 장소를 검색합니다
-
-
-    if(city!=null){
-    ps.keywordSearch(keyword, placesSearchCB2, {category_group_code:'PM9',radius:20000, location: mapOption.center,page:3});
-    } else ps.keywordSearch(keyword, placesSearchCB, {category_group_code:'PM9',radius:20000, location: mapOption.center,page:3} );
-
-    console.log("시티"+city)
-
-
-    // 키워드만
-        function placesSearchCB (data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
-                pagination.prevPage();
-                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                // LatLngBounds 객체에 좌표를 추가합니다
-                var bounds = new kakao.maps.LatLngBounds();
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].address_name.includes('서울')) {
-                        console.log(data)
-                        displayMarker(data[i]);
-                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                    }
-                }
-                // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-                map.setBounds(bounds);
+            if (city != null) {
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
+                        level: 7 // 지도의 확대 레벨
+                    };
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+            } else {
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                        level: 9 // 지도의 확대 레벨
+                    };
             }
-        }
 
-    // 지역 + 키워드
-    function placesSearchCB2 (data, status, pagination) {
-        if (status === kakao.maps.services.Status.OK) {
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
+            // 지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
             var bounds = new kakao.maps.LatLngBounds();
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].address_name.includes(city)) {
-                    displayMarker(data[i]);
-                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+            var iwContent = new Array();
+            var infoWindowArray = new Array();
+
+            for(var i = 0; i<pharmacyDTO.length; i++) {
+
+                var marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX)
+                });
+
+                marker.setMap(map); // 마커 지도에 추가
+
+                iwContent.push('<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phName + '</div>' + // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                    '<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phTel + '</div>' +
+                    '<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phAdd + '</div>' +
+                    '<a href="/sample/pharmacyInfo?phID='+pharmacyDTO[i].phID+'">병원 상세정보</a>')
+
+                var infoWindow =  new kakao.maps.InfoWindow({
+                    content: iwContent[i], // 인포윈도우에 표시할 내용
+                    removable: true // x 버튼
+                });
+
+                infoWindowArray.push(infoWindow);
+
+                bounds.extend(new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX)); // 중심 좌표
+
+                kakao.maps.event.addListener(marker, 'click', clickListener(map, marker, infoWindow)); // 클릭 시 인포윈도우
+                kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow)); // 인포창 한개만
+            }
+            map.setBounds(bounds); // 지도 이동
+
+            function closeInfoWindow() {
+                for (infoWindow of infoWindowArray) {
+                    infoWindow.close();
                 }
             }
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-            map.setBounds(bounds);
-        }
-    }
+            function clickListener(map, marker, infoWindow) {
+                return function() {
+                    closeInfoWindow();
+                    infoWindow.open(map, marker);
+                };
+            }
 
-        function displayMarker(place) {
-            // 마커를 생성하고 지도에 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.y, place.x)
-            });
-
-            // 마커에 클릭이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'click', function() {
-                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>' +
-                                      '<div style="padding:5px;font-size:12px;">' + place.road_address_name + '</div>' +
-                                      '<div style="padding:5px;font-size:12px;">' + place.phone + '</div>'+
-                    '<a href="/pharmacyInfo?tel='+place.phone+'">병원정보</a>');
-                infowindow.open(map, marker);
-            });
-
-
-    }
-</script>
-</body>
+        </script>
+    </body>
 </html>
