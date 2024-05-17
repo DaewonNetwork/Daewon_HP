@@ -1,8 +1,8 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.UserJoinDTO;
+import org.daewon.phreview.dto.AuthSignupDTO;
 
-public interface UserService {
+public interface AuthService {
     static class MidExistException extends Exception {
 
         public MidExistException() {}
@@ -11,5 +11,5 @@ public interface UserService {
         }
     }
 
-    void join(UserJoinDTO userJoinDTO) throws MidExistException;
+    void signup(AuthSignupDTO userSignupDTO) throws MidExistException;
 }

@@ -2,20 +2,25 @@ package org.daewon.phreview.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+<<<<<<< HEAD
 import org.daewon.phreview.security.CustomUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+=======
+>>>>>>> main
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+<<<<<<< HEAD
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+=======
+import org.springframework.security.core.userdetails.UserDetailsService;
+>>>>>>> main
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -23,9 +28,11 @@ import javax.sql.DataSource;
 @Log4j2
 @RequiredArgsConstructor
 @EnableMethodSecurity
+@EnableWebSecurity
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
+<<<<<<< HEAD
     private final CustomUserDetailsService userDetailsService;
 
     @Bean
@@ -63,3 +70,22 @@ public class CustomSecurityConfig {
         return repo;
     }
 }
+=======
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        log.info("Security configuration initialized.");
+
+        http.formLogin(form -> {
+            form.loginPage("/users/login");
+        });
+
+        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
+
+        return http.build();
+    }
+
+}
+>>>>>>> main

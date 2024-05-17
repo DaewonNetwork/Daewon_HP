@@ -3,7 +3,10 @@ package org.daewon.phreview.repository;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Pharmacy;
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +27,7 @@ import java.util.List;
 @SpringBootTest
 @Log4j2
 public class PharmacyRepositoryTests {
+<<<<<<< HEAD
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
@@ -83,4 +87,7 @@ public class PharmacyRepositoryTests {
 //        // Pharmacy result = pharmacyRepository.save(pharmacy);
 //        // log.info("id :"+result.getPhID());
 //    }
+=======
+    
+>>>>>>> main
 }

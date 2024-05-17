@@ -13,7 +13,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class UserSecurityDTO extends User implements OAuth2User {
+public class AuthSecurityDTO extends User implements OAuth2User {
 
     private Long userId;
     private String password;
@@ -23,11 +23,11 @@ public class UserSecurityDTO extends User implements OAuth2User {
 
     private Map<String, Object> props;
 
-    public UserSecurityDTO(Long userId, String username, String password, String email, boolean social,
-                           Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    public AuthSecurityDTO(Long userId, String userName, String password, String email, boolean social,
+            Collection<? extends GrantedAuthority> authorities) {
+        super(userName, password, authorities);
 
-        this.userName = username;
+        this.userName = userName;
         this.password = password;
         this.email = email;
         this.social = social;
