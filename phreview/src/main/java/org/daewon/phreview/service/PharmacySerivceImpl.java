@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-class PharmacySerivceImpl implements PharmacyService {
+public class PharmacySerivceImpl implements PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
 
@@ -25,7 +25,7 @@ class PharmacySerivceImpl implements PharmacyService {
         List<Pharmacy> result = pharmacyRepository.findByCity(city);
 
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){
+        for (Pharmacy p : result) {
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phId(p.getPhId())
                     .phName(p.getPhName())
@@ -44,17 +44,16 @@ class PharmacySerivceImpl implements PharmacyService {
                     .build();
             pharmacyDTOList.add(dto);
         }
-
 
         return pharmacyDTOList;
     }
 
     @Override
     public List<PharmacyDTO> nearSearch(double lat, double lng) {
-        List<Pharmacy> result = pharmacyRepository.findByLoc(lat,lng);
+        List<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng);
 
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){
+        for (Pharmacy p : result) {
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phId(p.getPhId())
                     .phName(p.getPhName())
@@ -74,18 +73,15 @@ class PharmacySerivceImpl implements PharmacyService {
             pharmacyDTOList.add(dto);
         }
 
-
         return pharmacyDTOList;
     }
-
-
 
     @Override
     public List<PharmacyDTO> NameSearch(String keyword) {
         List<Pharmacy> result = pharmacyRepository.findNameByKeyword(keyword);
 
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){
+        for (Pharmacy p : result) {
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phId(p.getPhId())
                     .phName(p.getPhName())
@@ -104,7 +100,6 @@ class PharmacySerivceImpl implements PharmacyService {
                     .build();
             pharmacyDTOList.add(dto);
         }
-
 
         return pharmacyDTOList;
     }
@@ -114,7 +109,7 @@ class PharmacySerivceImpl implements PharmacyService {
         List<Pharmacy> result = pharmacyRepository.findAddOrNameByKeyword(keyword);
 
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){
+        for (Pharmacy p : result) {
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phId(p.getPhId())
                     .phName(p.getPhName())
@@ -134,17 +129,16 @@ class PharmacySerivceImpl implements PharmacyService {
             pharmacyDTOList.add(dto);
         }
 
-
         return pharmacyDTOList;
     }
 
     @Override
-    public List<PharmacyDTO> NameSearchInCity(String city,String keyword) {
+    public List<PharmacyDTO> NameSearchInCity(String city, String keyword) {
 
         List<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(keyword, city);
 
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-        for(Pharmacy p : result){
+        for (Pharmacy p : result) {
             PharmacyDTO dto = PharmacyDTO.builder()
                     .phId(p.getPhId())
                     .phName(p.getPhName())
@@ -163,7 +157,6 @@ class PharmacySerivceImpl implements PharmacyService {
                     .build();
             pharmacyDTOList.add(dto); // 4
         }
-
 
         return pharmacyDTOList;
     }
