@@ -14,7 +14,7 @@
 <script th:inline="javascript">
     // 약국 정보
     var pharmacyDTO = [[${pharmacyDTO}]];
-
+    console.log(pharmacyDTO)
     // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
     let query = window.location.search;
     let param = new URLSearchParams(query);
