@@ -14,14 +14,11 @@ import lombok.*;
 @ToString(exclude = "roleSet")
 public class Users extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-
     @Setter
+    @Id
+    private String email;
     private String password;
     private String userName;
-    private String email;
     private boolean social;
 
     @ElementCollection(fetch = FetchType.LAZY)

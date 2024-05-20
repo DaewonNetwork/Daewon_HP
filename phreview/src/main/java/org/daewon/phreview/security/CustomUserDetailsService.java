@@ -19,29 +19,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername : " + username);
 
-        Optional<Users> userOptional = userRepository.findByUserName(username);
+        Optional<Users> userOptional = userRepository.findById(username);
+        Users user = userOptional.orElseThrow(() -> new UsernameNotFoundException("Cannot find email"));
 
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-
-        Long userId = userOptional.get().getUserId();
-        Optional<Users> result = userRepository.getWithRoles(userId);
+        String email = userOptional.get().getEmail();
+        Optional<Users> result = userRepository.getWithRoles(email);
 
         Users users = result.get();
 
         UserSecurityDTO usersSecurityDTO = new UserSecurityDTO(
-                users.getUserId(),
-                users.getPassword(),
-                users.getUserName(),
                 users.getEmail(),
+                users.getPassword(),
                 false,
                 users.getRoleSet().stream().map(userRole ->
                                 new SimpleGrantedAuthority("ROLE_" + userRole.name()))

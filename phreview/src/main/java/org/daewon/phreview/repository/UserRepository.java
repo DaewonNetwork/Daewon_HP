@@ -9,15 +9,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<Users, String> {
 
-    @Query("select u from Users u where u.userId = :userId and u.social = false")
-    Optional<Users> getWithRoles(@Param("userId") Long userId);
+    @Query("select u from Users u where u.email = :userId and u.social = false")
+    Optional<Users> getWithRoles(@Param("email") String email);
 
     @Modifying
     @Transactional
-    @Query("update Users u set u.password = :password where u.userId = :userId")
-    void updatePassword(@Param("password") String password, @Param("userId") String mid);
+    @Query("update Users u set u.password = :password where u.email = :email")
+    void updatePassword(@Param("password") String password, @Param("email") String email);
 
     Optional<Users> findByUserName(String username);
 }

@@ -16,7 +16,7 @@ public class LikeForReview {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_userId")
+    @JoinColumn(name = "users_email")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -25,7 +25,7 @@ public class EnjoyPh {
     private Long enjoyId;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "email", referencedColumnName = "email")
     private Users users;
 
     @ManyToOne

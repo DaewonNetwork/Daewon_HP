@@ -30,7 +30,7 @@ public class Reply {
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "email", referencedColumnName = "email")
     private Users users;
 
     @ManyToOne

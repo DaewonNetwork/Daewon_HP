@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public void join(UserJoinDTO memberJoinDTO) throws MidExistException {
 
         Users users = modelMapper.map(memberJoinDTO, Users.class);
-        users.setPassword(passwordEncoder.encode(memberJoinDTO.getPassword()));
+        users.setEmail(passwordEncoder.encode(memberJoinDTO.getPassword()));
         users.addRole(UserRole.USER);
 
         log.info("================================");
