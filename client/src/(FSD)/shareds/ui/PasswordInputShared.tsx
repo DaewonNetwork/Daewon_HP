@@ -7,33 +7,23 @@ import IconShared from "./IconShared";
 
 const PasswordInputShared = ({ name, control, onChange, children, ...props }: any) => {
     const [isVisible, setIsVisible] = useState(true);
-    const [placeholder, setPlaceholder] = useState("");
+
     const toggleVisibility = () => setIsVisible(!isVisible);
-
-    useLayoutEffect(() => {
-        switch (name) {
-            case "password":
-                setPlaceholder("비밀번호");
-                break;
-            case "confirmPassword":
-                setPlaceholder("비밀번호 재입력");
-                break;
-            default:
-                break;
-        }
-    }, [name]);
-
     return (
         <Controller name={name} control={control} render={({ field }) => {
             const { onChange, onBlur, name, value } = field;
 
             return (
-                <Input {...props}
+                <Input
                     {...props}
                     name={name}
                     value={value}
+                    isRequired
+                    isClearable
+                    id={name}
 
-                    event={(e: any) => {
+
+                    onChange={(e: any) => {
                         onChange(e);
                     }}
                     onBlur={(_: any) => {
@@ -41,16 +31,13 @@ const PasswordInputShared = ({ name, control, onChange, children, ...props }: an
                     }}
 
                     type={isVisible ? "password" : "text"}
-                    size={"lg"} variant={"flat"}
-                    isRequired
-                    radius={"md"}
-                    placeholder={children ? `${children}` : placeholder}
+                    placeholder={children ? `${children}` : props.placeholder}
 
-                    endContent={<>
+                    endContent={
                         <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                            <IconShared></IconShared>
+                            <IconShared iconType={isVisible ? "eye" : "eye_active"} />
                         </button>
-                    </>}
+                    }
                 />
             )
         }}

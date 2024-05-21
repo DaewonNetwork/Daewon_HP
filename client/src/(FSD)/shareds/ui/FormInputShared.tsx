@@ -6,7 +6,6 @@ import IconShared from "./IconShared";
 import { FormInputType } from "../types/FormInput.type";
 
 const FormInputShared = ({ name, control, ...props }: FormInputType) => {
-    
     return (
         <Controller
             name={name}
@@ -20,32 +19,24 @@ const FormInputShared = ({ name, control, ...props }: FormInputType) => {
                         name={name}
                         value={value}
                         isRequired
-                        radius={"none"}
                         isClearable
+                        id={name}
 
-                        onChange={(e : any) => {
+                        onChange={(e: any) => {
                             onChange(e);
 
                             if (props.onChange) {
                                 props.onChange(e);
                             }
                         }}
-                        onBlur={(_ : any) => {
+                        onBlur={(_: any) => {
                             onBlur();
                         }}
 
                         endContent={
-                            String(value).length >= 1 && (
-                                <button
-                                    className={"focus:outline-none"}
-                                    type={"button"}
-                                    onClick={() => {
-                                        onChange("");
-                                    }}
-                                >
-                                    <IconShared></IconShared>
-                                </button>
-                            )
+                            <button className={"focus:outline-none"} type={"button"} onClick={() => { onChange(""); }}>
+                                <IconShared iconType={"close"} />
+                            </button>
                         }
                     />
                 )

@@ -1,12 +1,14 @@
 import SigninForm from "@/(FSD)/features/auth/ui/SigninForm";
+import { Metadata } from "next";
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/SigninStyle.module.scss";
+
+export const metadata: Metadata = {
+    title: "HP - 로그인하기"
+}
 
 const Page = () => {
     return (
-        <div className={styles.container}>
-            <SigninForm />
-        </div>
+        <SigninForm />
     );
 };
 
