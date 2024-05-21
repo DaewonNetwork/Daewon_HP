@@ -12,40 +12,7 @@ const config = {
         extend: {},
     },
     darkMode: "class",
-    plugins: [nextui({
-        themes: {
-            light: {
-                colors: {}
-            },
-            dark: {
-                colors: {}
-            }
-        },
-        layout: {
-            radius: {
-                small: "5px",
-                medium: "8px",
-                large: "20px",
-            },
-            fontSize: {
-                large: "16px",
-                medium: "14px",
-                small: "12px",
-                tiny: "13px",
-            },
-            height: {
-                lg: "50px",
-                md: "45px",
-                sm: "42px",
-            },
-            width: {
-                lg: "100px",
-                md: "80px",
-                sm: "65px",
-            }
-        },
-        themes: ""
-    })]
+    plugins: [nextui({})]
 }
 
 export default config;
