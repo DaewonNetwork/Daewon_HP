@@ -21,6 +21,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void signup(AuthSignupDTO memberSignupDTO) throws MidExistException {
+        if(userRepository.existsByEmail(memberSignupDTO.getEmail())) {
+            throw new MidExistException();
+        }
+
         Users users = modelMapper.map(memberSignupDTO, Users.class);
         
         users.setPassword(passwordEncoder.encode(memberSignupDTO.getPassword()));

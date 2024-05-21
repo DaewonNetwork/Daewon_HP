@@ -12,4 +12,7 @@ public interface AuthService {
     }
 
     void signup(AuthSignupDTO userSignupDTO) throws MidExistException;
+
+    
+
 }
