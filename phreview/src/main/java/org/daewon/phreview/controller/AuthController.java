@@ -23,18 +23,18 @@ public class AuthController {
     public void signupGET() {
         log.info("join get.....");
     }
-    
+
 
     @Operation(summary = "회원가입 처리", description = "회원가입 요청을 처리합니다.")
     @PostMapping("/signup")
-    public String signup(AuthSignupDTO userSignupDTO, RedirectAttributes redirectAttributes){
+    public String signup(AuthSignupDTO userSignupDTO, RedirectAttributes redirectAttributes) {
         log.info("signup post.....");
         log.info(userSignupDTO);
 
         try {
             userService.signup(userSignupDTO);
         } catch (AuthService.MidExistException e) {
-            redirectAttributes.addFlashAttribute("error", "uid");
+            redirectAttributes.addFlashAttribute("error", "email");
             return "redirect:/auth/signup";
         }
 
