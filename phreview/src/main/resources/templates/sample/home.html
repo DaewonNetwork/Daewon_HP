@@ -13,7 +13,7 @@
     <button type="submit">키워드로 병원 이름검색</button>
 </form>
 
-<form action="/map/search/and" name="form" method="get" >
+<form action="/map/search/or" name="form" method="get" >
     키워드 : <input type="text" name="keyword"><br>
 
     <button type="submit">키워드로 병원 이름이랑 주소 검색</button>
@@ -36,7 +36,7 @@
         function success(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            window.location.href = `/map/nearResult?lat=${latitude}&lng=${longitude}`;
+            window.location.href = `/map/search/near?lat=${latitude}&lng=${longitude}`;
         }
 
         function error() {
