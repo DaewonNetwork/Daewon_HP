@@ -8,6 +8,7 @@ import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
 import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
+import { useAuthSignup } from "../api/useAuthSignup";
 
 const SignupForm = () => {
     const userNameRegex = /^[가-힣a-zA-Z\s]{1,20}$/;
@@ -39,20 +40,32 @@ const SignupForm = () => {
         mode: "onChange"
     });
 
-    const onSubmit = (data: any) => {
-        if (!data.password) return;
+    const onSuccess = (data: any) => {
+        console.log(data);
     }
+
+    const onError = () => {
+
+    }
+
+    const { mutate } = useAuthSignup({ onSuccess, onError });
+
+    const onSubmit = (data: any) => {
+        if ((!data.userName) || (!data.email) || (!data.password)) return;
+
+        mutate({ userName: data.userName, email: data.email, password: data.password });
+    };
 
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <label className={"text-medium"} htmlFor={"userName"}>이름</label>
-            <FormInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.userName} errorMessage={errors.userName && <>{errors.userName.message}</>} name={"userName"} type={"text"} autoFocus={true} isRequired control={control} placeholder={"이름을 입력해주세요."} />
-            <label className={"text-medium"} htmlFor={"email"}>이메일</label>
-            <FormInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.email} radius={"none"} errorMessage={errors.email && <>{errors.email.message}</>} name={"email"} control={control} placeholder={"이메일을 입력해주세요."} />
-            <label className={"text-medium"} htmlFor={"password"}>비밀번호</label>
-            <PasswordInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.password} errorMessage={errors.password && <>{errors.password.message}</>} name={"password"} control={control} placeholder={"비밀번호를 입력해주세요."} />
-           <label htmlFor={"confirmPassword"}>비밀번호</label>
-            <PasswordInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.confirmPassword} errorMessage={errors.confirmPassword && <>{errors.confirmPassword.message}</>} name={"confirmPassword"} control={control} placeholder={"비밀번호를 재입력해주세요."} />
+            <label className={"text-medium font-semibold"} htmlFor={"userName"}>이름</label>
+            <FormInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.userName} errorMessage={errors.userName && <>{errors.userName.message}</>} name={"userName"} type={"text"} autoFocus={true} isRequired control={control} placeholder={"홍길동"} />
+            <label className={"text-medium font-semibold"} htmlFor={"email"}>이메일</label>
+            <FormInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.email} radius={"none"} errorMessage={errors.email && <>{errors.email.message}</>} name={"email"} control={control} placeholder={"abc1234@gmail.com"} />
+            <label className={"text-medium font-semibold"} htmlFor={"password"}>비밀번호</label>
+            <PasswordInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.password} errorMessage={errors.password && <>{errors.password.message}</>} name={"password"} control={control} placeholder={"영문, 숫자 조합 8~16자"} />
+            <label className={"text-medium font-semibold"} htmlFor={"confirmPassword"}>비밀번호 재입력</label>
+            <PasswordInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.confirmPassword} errorMessage={errors.confirmPassword && <>{errors.confirmPassword.message}</>} name={"confirmPassword"} control={control} placeholder={"비밀번호를 한 번 더 입력해주세요."} />
             <Button isDisabled={(!isValid) || (submitCount >= 5)} type={"submit"} variant={"solid"} color={(!isValid) || (submitCount >= 5) ? "default" : "primary"} size={"lg"} radius={"sm"} fullWidth>회원가입</Button>
         </form>
     );

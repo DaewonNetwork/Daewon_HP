@@ -13,10 +13,10 @@ const AuthHeader = () => {
 
     return (
         <header className={`${styles.header} ${headerClassNames}`}>
-            <h1 className={"text-lg"}>{ path === "/auth/signin" ? "로그인" : "회원가입" }</h1>
+            <h1 className={"text-large"}>{ path === "/auth/signin" ? "로그인" : "회원가입" }</h1>
             <nav className={styles.nav}>
-                <Link className={"text-md"} href={"/auth/signin"}>로그인하기</Link>
-                <Link className={"text-md"} href={"/auth/signup"}>가입하기</Link>
+                <Link className={"text-medium"} href={"/auth/signin"}>로그인하기</Link>
+                <Link className={"text-medium"} href={"/auth/signup"}>가입하기</Link>
             </nav>
         </header>
     );
