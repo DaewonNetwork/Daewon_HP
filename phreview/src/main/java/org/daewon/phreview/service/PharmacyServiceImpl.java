@@ -118,7 +118,6 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public List<PharmacyDTO> NameOrAddSearch(String keyword) {
         List<Pharmacy> result = pharmacyRepository.findAddOrNameByKeyword(keyword);
-
         log.info("nameOrAdd");
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
