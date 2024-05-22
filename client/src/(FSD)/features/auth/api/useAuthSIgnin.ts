@@ -1,13 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../types/mutation.type";
 
-const userAuthSignin = async (data: any) => {
+const authSigninFetch = async (data: any) => {
     const response = await fetch("http://localhost:8090/auth/signin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(data),
     });
 
@@ -24,7 +23,7 @@ const userAuthSignin = async (data: any) => {
 export const useAuthSignin = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
         mutationFn: (userData: any) => {
-            return userAuthSignin(userData);
+            return authSigninFetch(userData);
         },
         onSuccess: (data: any) => {
             console.log(data);
