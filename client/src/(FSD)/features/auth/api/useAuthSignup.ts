@@ -2,12 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../types/mutation.type";
 
 const userAuthSignup = async (data: any) => {
-    const response = await fetch("http://localhost:8090/api/auth/signup", {
+    const response = await fetch("http://localhost:8090/auth/signup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(data),
     });
 

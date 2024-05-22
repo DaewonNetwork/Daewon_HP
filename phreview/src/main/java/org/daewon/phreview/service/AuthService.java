@@ -1,5 +1,6 @@
 package org.daewon.phreview.service;
 
+import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.AuthSignupDTO;
 
 public interface AuthService {
@@ -11,7 +12,7 @@ public interface AuthService {
         }
     }
 
-    void signup(AuthSignupDTO userSignupDTO) throws MidExistException;
+    Users signup(AuthSignupDTO authSignupDTO) throws MidExistException;
 
     
 

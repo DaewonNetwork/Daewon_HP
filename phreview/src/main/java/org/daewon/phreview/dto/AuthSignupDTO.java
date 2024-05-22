@@ -7,5 +7,5 @@ public class AuthSignupDTO {
     private String password;
     private String userName;
     private String email;
-    private boolean social;
+//    private boolean social;
 }
