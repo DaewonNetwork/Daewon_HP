@@ -30,6 +30,7 @@ public class AuthController {
         log.info(authSignupDTO);
         try {
             Users user = authService.signup(authSignupDTO);
+            return user.getUserName();
         } catch (AuthService.MidExistException e) {
             redirectAttributes.addFlashAttribute("error", "email");
             return "error";

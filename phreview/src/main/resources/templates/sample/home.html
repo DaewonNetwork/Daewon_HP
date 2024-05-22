@@ -7,9 +7,16 @@
 
 
 <body>
-<form action="/map/searchResult" method="get" >
+<form action="/map/search/keyword" name="form" method="get" >
     키워드 : <input type="text" name="keyword"><br>
-    <button type="submit">검색</button>
+
+    <button type="submit">키워드로 병원 이름검색</button>
+</form>
+
+<form action="/map/search/and" name="form" method="get" >
+    키워드 : <input type="text" name="keyword"><br>
+
+    <button type="submit">키워드로 병원 이름이랑 주소 검색</button>
 </form>
 <a href="/sample/category">지역 카테고리</a>
 <br>
