@@ -61,6 +61,7 @@
         kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow));
     }
     map.setbounds(bounds);
+    map.setLevel(4);
 
     function closeInfoWindow() {
         for (infoWindow of infoWindowArray) {

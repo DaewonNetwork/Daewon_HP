@@ -71,6 +71,7 @@
         kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow)); // 인포창 한개만
     }
     map.setBounds(bounds); // 지도 이동
+    map.setLevel(4);
 
     function closeInfoWindow() {
         for (infoWindow of infoWindowArray) {
