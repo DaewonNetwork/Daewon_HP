@@ -20,7 +20,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signup(AuthSignupDTO memberSignupDTO) throws MidExistException {
+    public Users signup(AuthSignupDTO memberSignupDTO) throws MidExistException {
         if(userRepository.existsByEmail(memberSignupDTO.getEmail())) {
             throw new MidExistException();
         }
@@ -35,5 +35,6 @@ public class AuthServiceImpl implements AuthService {
         log.info(users.getRoleSet());
 
         userRepository.save(users);
+        return users;
     }
 }

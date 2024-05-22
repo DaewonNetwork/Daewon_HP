@@ -45,13 +45,14 @@ const SignupForm = () => {
     }
 
     const onError = () => {
-
+        console.log("error")
     }
 
     const { mutate } = useAuthSignup({ onSuccess, onError });
 
     const onSubmit = (data: any) => {
         if ((!data.userName) || (!data.email) || (!data.password)) return;
+        console.log({ userName: data.userName, email: data.email, password: data.password });
 
         mutate({ userName: data.userName, email: data.email, password: data.password });
     };

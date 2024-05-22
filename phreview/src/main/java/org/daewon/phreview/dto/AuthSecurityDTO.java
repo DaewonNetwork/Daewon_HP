@@ -19,7 +19,7 @@ public class AuthSecurityDTO extends User implements OAuth2User {
     private String password;
     private String userName;
     private String email;
-    private boolean social;
+//    private boolean social;
 
     private Map<String, Object> props;
 
@@ -30,7 +30,7 @@ public class AuthSecurityDTO extends User implements OAuth2User {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.social = social;
+//        this.social = social;
     }
 
     @Override
