@@ -1,5 +1,6 @@
 package org.daewon.phreview.service;
 
+import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.ReviewDTO;
 
 public interface ReviewService {
@@ -10,4 +11,5 @@ public interface ReviewService {
     void modify(ReviewDTO reviewDTO);
 
     void remove(Long reviewId);
+
 }
