@@ -10,7 +10,7 @@ import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import { useAuthSignup } from "../api/useAuthSignup";
 
-const SignupForm = () => {
+const AuthSignupForm = () => {
     const userNameRegex = /^[가-힣a-zA-Z\s]{1,20}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
@@ -72,4 +72,4 @@ const SignupForm = () => {
     );
 };
 
-export default SignupForm;
+export default AuthSignupForm;

@@ -11,7 +11,7 @@ import { Button } from "@nextui-org/button";
 import { useAuthSignin } from "../api/useAuthSIgnin";
 import { useRouter } from "next/navigation";
 
-const SigninForm = () => {
+const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
 
@@ -61,4 +61,4 @@ const SigninForm = () => {
     );
 };
 
-export default SigninForm;
+export default AuthSigninForm;
