@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+<h1>약국 정보</h1>
 <div th:text="${pharmacyDTO.phName}"></div>
 <div th:text="${pharmacyDTO.phTel}"></div>
 <div th:text="${pharmacyDTO.phAdd}"></div>
@@ -16,7 +17,109 @@
 <div th:text="${pharmacyDTO.timeHoliStartDate}"></div>
 <div th:text="${pharmacyDTO.timeHoliEndDate}"></div>
 
+<h1>약국의 리뷰 댓글</h1>
+<div th:text="${reviewDTO[0].reviewText}"></div>
+<div th:text="${reviewDTO[1].reviewText}"></div>
+
+<h1>약국의 리뷰 댓글의 답글</h1>
+<div th:text="${replyDTO[0].replyText}"></div>
 
 
+
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <div class="my-4">
+            <button class="btn btn-info addReplyBtn">ADD REPLY</button>
+        </div>
+        <ul class="list-group replyList">
+
+        </ul>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <ul class="pagination replyPaging">
+
+        </ul>
+    </div>
+</div>
+
+<!-- Modal 창 - registerModal -->
+<div class="modal registerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register Reply</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Reply Text</span>
+                    <input type="text" class="form-control replyText">
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary registerBtn">Register</button>
+                <button type="button" class="btn btn-outline-dark closeRegisterBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>  <!-- end modal -->
+
+<!-- Modal 창 - modifyModal -->
+<div class="modal modifyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title replyHeader"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Reply Text</span>
+                    <input type="text" class="form-control modifyText">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info modifyBtn">Modify</button>
+                <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                <button type="button" class="btn btn-outline-dark closeModifyBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>  <!-- end modify modal -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="application/javascript" src="/js/reply.js"></script>
+<script layout:fragment="script" th:inline="javascript">
+
+const phId = [[${pharmacyDTO.phId}]]
+console.log(phId)
+const replyList = document.querySelector('.replyList')      // 댓글 목록 DOM
+function printList(dtoList) {
+    let str = '';
+        for (const reviewDTO of dtoList) {
+            str +=`<li class="list-group-item d-flex replyItem">
+              <span class="col-2">${reviewDTO.reviewId}</span>
+              <span class="col-6" data-reviewId="${reviewDTO.reviewId}">${reviewDTO.reviewText}</span>
+              </li>`
+        }
+    replyList.innerHTML = str
+}
+
+    function printReplies() {
+        getList({phId}).then(
+            data => {
+                printList(data.dtoList)  //목록 처리
+            }
+        ).catch(e => {
+            console.log(e)
+        })
+    }
+    printReplies();
+
+</script>
 </body>
 </html>

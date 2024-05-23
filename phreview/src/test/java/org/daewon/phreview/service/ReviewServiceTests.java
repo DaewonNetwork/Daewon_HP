@@ -39,12 +39,10 @@ public class ReviewServiceTests {
     @Test
     public void testModify() {
         ReviewDTO reviewDTO = ReviewDTO.builder()
-                .phId(1L)
+                .reviewId(1L)
                 .reviewText("siuuuuuuuuuu")
                 .build();
-
         reviewService.modify(reviewDTO);
-        log.info(reviewService.read(reviewDTO.getPhId()));
     }
 
     @Test

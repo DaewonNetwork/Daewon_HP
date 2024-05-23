@@ -19,17 +19,17 @@ public class Review {
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "phId", referencedColumnName = "phId")
+    @JoinColumn(name = "phId", referencedColumnName = "phId")
     private Pharmacy pharmacy;
 
     @Column(length = 500, nullable = false)
     private String reviewText;
 
-    private int star =0; // 평점
+    private int star = 0; // 평점
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
