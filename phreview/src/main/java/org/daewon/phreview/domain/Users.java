@@ -21,6 +21,7 @@ public class Users extends BaseEntity{
     @Setter
     private String password;
     private String userName;
+    @Column(name = "users_email", unique = true)
     private String email;
     private boolean social;
 

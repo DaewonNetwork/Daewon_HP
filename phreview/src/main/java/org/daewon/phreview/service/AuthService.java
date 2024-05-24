@@ -4,16 +4,17 @@ import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.AuthSignupDTO;
 
 public interface AuthService {
-    static class MidExistException extends Exception {
+    // 이메일 중복 검사 예외 Exception
+    static class UserEmailExistException extends Exception {
 
-        public MidExistException() {}
-        public MidExistException(String msg) {
+        public UserEmailExistException() {}
+        public UserEmailExistException(String msg) {
             super(msg);
         }
     }
 
-    Users signup(AuthSignupDTO authSignupDTO) throws MidExistException;
+    Users signup(AuthSignupDTO authSignupDTO) throws UserEmailExistException;
 
-    
+    Users signin(final String email, final String password);
 
 }
