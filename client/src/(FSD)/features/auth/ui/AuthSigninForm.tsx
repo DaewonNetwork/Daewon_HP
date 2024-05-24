@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import React from "react";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
@@ -10,6 +9,7 @@ import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import { useAuthSignin } from "../api/useAuthSIgnin";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -47,7 +47,6 @@ const AuthSigninForm = () => {
         if ((!data.email) || (!data.password)) return;
 
         mutate({ email: data.email, password: data.password });
-
     };
 
     return (

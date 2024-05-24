@@ -2,9 +2,9 @@
 
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const MapSearchForm = () => {
     const schema = z.object({
