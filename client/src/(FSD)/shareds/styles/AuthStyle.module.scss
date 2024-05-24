@@ -2,83 +2,78 @@
     display: block;
     width: 100%;
     height: 100%;
+    padding-top: 30px;
 
-    .signin_box {
-        width: 480px;
-        height: 100%;
-        margin: 0 auto;
+    .header {
         display: block;
-        padding: 20px 30px;
-        padding-top: 30px;
+        width: 100%;
+        padding-bottom: 30px;
 
-        .header {
+        &.signin_header {
             display: block;
-            width: 100%;
-            padding-bottom: 30px;
-
-            &.signin_header {
-                display: block;
-
-                .nav {
-                    a {
-                        &:first-child {
-                            border-bottom: 2px solid #000;
-                            font-weight: bolder;
-                        }
-                        &:last-child {
-                            border-bottom: 1px solid #ddd;
-                        }
-                    }
-                }
-            }
-            &.signup_header {
-                display: block;
-
-                .nav {
-                    a {
-                        &:last-child {
-                            border-bottom: 2px solid #000;
-                            font-weight: bolder;
-                        }
-                        &:first-child {
-                            border-bottom: 1px solid #ddd;
-                        }
-                    }
-                }
-            }
-
-            h1 {
-                text-align: center;
-            }
 
             .nav {
-                display: flex;
-                margin-top: 10px;
-
                 a {
-                    flex-grow: 1;
-                    display: block;
-                    text-align: center;
-                    padding: 10px 0;
+                    &:first-child {
+                        border-bottom: 2px solid #000;
+                        font-weight: bolder;
+                    }
+
+                    &:last-child {
+                        border-bottom: 1px solid #ddd;
+                    }
                 }
             }
         }
 
-        .form {
+        &.signup_header {
             display: block;
 
-            div[data-slot="base"] {
-                margin-top: 5px;
-                margin-bottom: 20px;
+            .nav {
+                a {
+                    &:last-child {
+                        border-bottom: 2px solid #000;
+                        font-weight: bolder;
+                    }
 
-                &:nth-last-child(2) {
-                    margin-bottom: 0;
+                    &:first-child {
+                        border-bottom: 1px solid #ddd;
+                    }
                 }
             }
+        }
 
-            & > button {
-                margin-top: 30px;
+        h1 {
+            text-align: center;
+        }
+
+        .nav {
+            display: flex;
+            margin-top: 10px;
+
+            a {
+                flex-grow: 1;
+                display: block;
+                text-align: center;
+                padding: 10px 0;
             }
+        }
+    }
+
+    .form {
+        display: block;
+
+        div[data-slot="base"] {
+            margin-top: 5px;
+            margin-bottom: 20px;
+
+            &:nth-last-child(2) {
+                margin-bottom: 0;
+            }
+        }
+
+        &>button {
+            margin-top: 30px;
         }
     }
 }

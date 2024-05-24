@@ -1,4 +1,4 @@
-import AuthSignupForm from "@/(FSD)/features/auth/ui/AuthAuthSignupForm";
+import AuthSignupForm from "@/(FSD)/features/auth/ui/AuthSignupForm";
 import { Metadata } from "next";
 import React from "react";
 
