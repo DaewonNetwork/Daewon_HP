@@ -4,15 +4,17 @@ import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.ReviewImage;
-import org.daewon.phreview.dto.ReviewListAllDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Commit;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Log4j2
@@ -23,6 +25,8 @@ public class ReviewRepositoryTests {
 
     @Autowired
     private ReplyRepository replyRepository;
+    @Autowired
+    private ReviewImageRepository reviewImageRepository;
 
     @Test
     public void testInsertWithImages() {
@@ -95,17 +99,20 @@ public class ReviewRepositoryTests {
     }
 
     @Test
-    public void testSearchImageReplyCount() {
-        List<ReviewListAllDTO> result = reviewRepository.searchWithAll(null, null);
+    public void testFindImagesByReview() {
+        Review review = Review.builder()
+                .reviewText("Hello world")
+                .build();
+        review.addImage(UUID.randomUUID().toString(), "image1.jpg");
+        reviewRepository.save(review);
 
-        log.info("-------------------");
-        log.info(result.size());
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        Page<ReviewImage> images = reviewImageRepository.findByReview(review, pageRequest);
 
-        result.forEach(review -> {
-            log.info(review);
-        });
+        assertNotNull(images);
+        assertEquals(1, images.getContent().size());
+        log.info("이미지 조회 테스트 : " + images.getContent());
     }
-
 
     @Test
     public void delete() {
