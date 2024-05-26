@@ -22,14 +22,14 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Users signup(AuthSignupDTO memberSignupDTO) throws UserEmailExistException {
-        if(userRepository.existsByEmail(memberSignupDTO.getEmail())) {
+    public Users signup(AuthSignupDTO authSignupDTO) throws UserEmailExistException {
+        if(userRepository.existsByEmail(authSignupDTO.getEmail())) {
             throw new UserEmailExistException();
         }
 
-        Users users = modelMapper.map(memberSignupDTO, Users.class);
+        Users users = modelMapper.map(authSignupDTO, Users.class);
         
-        users.setPassword(passwordEncoder.encode(memberSignupDTO.getPassword()));
+        users.setPassword(passwordEncoder.encode(authSignupDTO.getPassword()));
         users.addRole(UserRole.USER);
 
         log.info("================================");
