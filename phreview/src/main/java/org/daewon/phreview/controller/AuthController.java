@@ -95,9 +95,10 @@ public class AuthController {
             // SecurityContextHolder에 인증을 설정
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+            // JWT Payload에 userId, userName, roles 값을 실어서 보냄
             Map<String, Object> claim = new HashMap<>();
             claim.put("userId", users.getUserId());
-            claim.put("email", users.getEmail());
+            claim.put("userName", users.getUserName());
             claim.put("roles", userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList()));
