@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaPlus } from "react-icons/fa";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash } from "react-icons/fa6";
-import { IoCloseCircle, IoPersonSharp, IoChatbubble, IoPersonCircleOutline, IoPersonCircle, IoCopy, IoChatbubbleOutline, IoCopyOutline, IoHeart, IoHeartOutline, IoSettingsSharp, IoMenu } from "react-icons/io5";
+import { IoCloseCircle, IoPersonSharp, IoChatbubble, IoPersonCircleOutline, IoPersonCircle, IoCopy, IoChatbubbleOutline, IoCopyOutline, IoHeart, IoHeartOutline, IoSettingsSharp, IoMenu, IoSearch } from "react-icons/io5";
 import { GoHome, GoHomeFill, GoPencil } from "react-icons/go";
 import { IconType } from "../types/Icon.type";
 
@@ -80,6 +80,9 @@ const IconShared = ({ iconType, className, ...props }: IconType) => {
         case "menu":
             component = <IoMenu />;
             break;
+        case "search":
+            component = <IoSearch />;
+            break;    
         default:
             component = null;
             break;
