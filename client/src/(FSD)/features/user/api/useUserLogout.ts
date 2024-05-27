@@ -8,7 +8,7 @@ const userLogoutFetch = async () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("access_token") || ""
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
         },
     });
 
