@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @Log4j2
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -40,11 +40,11 @@ public class ReviewController {
     @Operation(summary = "Replies Post")
     @GetMapping(value = "/list/{phId}")
     public PageResponseDTO<ReviewDTO> getList(
-            @PathVariable("phId") Long phId,
+            @PathVariable(name = "phId") Long phId,
             PageRequestDTO pageRequestDTO) {
 
         PageResponseDTO<ReviewDTO> responseDTO = reviewService.getListOfPharmacy(phId, pageRequestDTO);
-
+        log.info("dto:"+responseDTO);
         return responseDTO;
     }
 

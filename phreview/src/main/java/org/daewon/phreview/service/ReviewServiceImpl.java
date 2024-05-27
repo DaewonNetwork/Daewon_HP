@@ -44,9 +44,9 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewOptional.orElseThrow();
 
         ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
-        log.info("read ReviewDTO : "+reviewDTO);
         reviewDTO.setPhId(review.getPharmacy().getPhId());  // phId 값을 넣어줌
-
+        reviewDTO.setUserId(review.getUsers().getUserId());
+        log.info("read ReviewDTO : "+reviewDTO);
         return reviewDTO;
     }
 
@@ -73,9 +73,10 @@ public class ReviewServiceImpl implements ReviewService {
         List<ReviewDTO> dtoList = result.getContent().stream().map(review -> {
             ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
             reviewDTO.setPhId(review.getPharmacy().getPhId());
+            reviewDTO.setUserId(review.getUsers().getUserId());
             return reviewDTO;
         }).collect(Collectors.toList());
-
+        log.info(dtoList);
         return PageResponseDTO.<ReviewDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
