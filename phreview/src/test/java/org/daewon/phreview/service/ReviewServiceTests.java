@@ -22,11 +22,14 @@ public class ReviewServiceTests {
         ReviewDTO reviewDTO = ReviewDTO.builder()
                 .phId(1L)
                 .reviewText("good")
+                .userId(1L)
+                .star(1)
                 .build();
-
-        Long phId = reviewService.register(reviewDTO);
-        log.info(phId);
+        Long reviewId = reviewService.register(reviewDTO);
+        log.info(reviewId);
     }
+
+
 
     @Test
     public void testRead() {
@@ -39,18 +42,18 @@ public class ReviewServiceTests {
     @Test
     public void testModify() {
         ReviewDTO reviewDTO = ReviewDTO.builder()
-                .phId(1L)
+                .reviewId(1L)
                 .reviewText("siuuuuuuuuuu")
                 .build();
-
         reviewService.modify(reviewDTO);
-        log.info(reviewService.read(reviewDTO.getPhId()));
     }
 
     @Test
     public void testDelete() {
-        Long reviewId = 1L;
 
-        reviewService.remove(reviewId);
+
+        reviewService.remove(101L);
+        reviewService.remove(102L);
+        reviewService.remove(103L);
     }
 }
