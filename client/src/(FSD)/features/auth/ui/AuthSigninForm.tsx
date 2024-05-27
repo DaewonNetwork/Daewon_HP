@@ -7,10 +7,9 @@ import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
 import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
-import { useAuthSignin } from "../api/useAuthSIgnin";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import UserLogoutButton from "../../user/ui/UserLogoutButton";
+import { useAuthSignin } from "../api/useAuthSignin";
 
 const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -34,6 +33,7 @@ const AuthSigninForm = () => {
 
     const onSuccess = (data: any) => {
         localStorage.setItem("access_token", data.accessToken);
+        localStorage.setItem("refresh_token", data.refreshToken);
         
         router.push("/");
     }
@@ -57,8 +57,6 @@ const AuthSigninForm = () => {
             <label className={"text-medium font-semibold"} htmlFor={"password"}>비밀번호</label>
             <PasswordInputShared size={"lg"} variant={"underlined"} isInvalid={!!errors.password} radius={"none"} errorMessage={errors.password && <>{errors.password.message}</>} name={"password"} control={control} placeholder={"비밀번호를 입력해주세요."} />
             <Button isDisabled={(!isValid) || (submitCount >= 5)} type={"submit"} variant={"solid"} color={(!isValid) || (submitCount >= 5) ? "default" : "primary"} size={"lg"} radius={"sm"} fullWidth>로그인</Button>
-
-            <UserLogoutButton />
         </form>
     );
 };

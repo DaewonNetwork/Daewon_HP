@@ -5,16 +5,12 @@ import React from "react";
 import { useUserLogout } from "../api/useUserLogout";
 
 const UserLogoutButton = () => {
-    const onSuccess = (data: any) => {
-        console.log(data);
-        
-    }
-
-    const onError = () => {
-
+    const onSuccess = () => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
     }
     
-    const { mutate } = useUserLogout({ onSuccess, onError });
+    const { mutate } = useUserLogout({ onSuccess });
 
     const onClick = () => {        
         mutate();
