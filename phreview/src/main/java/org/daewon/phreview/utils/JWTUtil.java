@@ -1,8 +1,6 @@
 package org.daewon.phreview.utils;
 
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -52,15 +50,43 @@ public class JWTUtil {
     // 토큰 검증 메서드
     // 주어진 토큰을 검증하고, 유효한 경우 클레임을 Map<String, Object> 형태로 반환
     public Map<String, Object> validateToken(String token) throws JwtException {
-        Map<String, Object> claim = null;
+        //Map<String, Object> claim = null;
 
         // 토큰을 파싱하고 클레임을 추출
-        claim = Jwts.parser()
-                .setSigningKey(key.getBytes()).build()  // 서명 검증을 위한 키 설정
-                .parseSignedClaims(token)               // 토큰 파싱 및 클레임 추출
-                .getBody();                             // 클레임 반환
-        log.info("claim : " + claim);
-        return claim;
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(key.getBytes()).build()  // 서명 검증을 위한 키 설정
+                    .parseSignedClaims(token)               // 토큰 파싱 및 클레임 추출
+                    .getBody();                             // 클레임 반환
+            return new HashMap<>(claims);
+        } catch (ExpiredJwtException e) {
+            log.error("토큰 유효시간이 만료되었습니다: " + e.getMessage());
+            throw e;
+        } catch (UnsupportedJwtException e) {
+            log.error("지원되지 않는 JWT 형식입니다: " + e.getMessage());
+            throw e;
+        } catch (MalformedJwtException e) {
+            log.error("토큰의 형식이나 구조가 올바르지 않습니다: " + e.getMessage());
+            throw e;
+        } catch (SignatureException e) {
+            log.error("토큰의 서명이 올바르지 않습니다: " + e.getMessage());
+            throw e;
+        } catch (PrematureJwtException e) {
+            log.error("토큰이 아직 유효하지 않습니다: " + e.getMessage());
+            throw e;
+        } catch (ClaimJwtException e) {
+            log.error("클레임 값이 잘못됐습니다: " + e.getMessage());
+            throw e;
+        } catch (JwtException e) {
+            log.error("토큰이 유효하지 않습니다: " + e.getMessage());
+            throw e;
+        }
+//        claim = Jwts.parser()
+//                .setSigningKey(key.getBytes()).build()  // 서명 검증을 위한 키 설정
+//                .parseSignedClaims(token)               // 토큰 파싱 및 클레임 추출
+//                .getBody();                             // 클레임 반환
+//        log.info("claim : " + claim);
+//        return claim;
     }
 }
 
