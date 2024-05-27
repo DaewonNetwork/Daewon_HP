@@ -8,6 +8,21 @@
     }
 
     .search_city_container {
+        display: block;
+        padding-top: 40px;
 
+        .city_list {
+            overflow-x:auto;
+            display: flex;
+
+
+            & > div {
+                margin-right: 8px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
     }
 }
