@@ -8,7 +8,7 @@
 
 <a href="/sample/home">홈</a>
 
-<form action="/map/search/inRegion" name="form" method="get" >
+<form action="/map/region-search" name="form" method="get" >
     키워드 : <input type="text" name="keyword"><br>
     <input type="hidden" name="city" value="" ><br>
     <input type="hidden" name="lat" value="" ><br>
@@ -41,7 +41,7 @@
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            level: 5 // 지도의 확대 레벨
         };
 
     // 지도를 생성합니다
@@ -79,7 +79,7 @@
         kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow));
     }
     map.setBounds(bounds);
-    map.setLevel(4);
+    map.setLevel(5);
 
     function closeInfoWindow() {
         for (infoWindow of infoWindowArray) {

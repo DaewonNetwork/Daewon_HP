@@ -46,8 +46,6 @@ public class PharmacyServiceImpl implements PharmacyService {
             pharmacyDTOList.add(dto);
 
         }
-
-        log.info(pharmacyDTOList);
         return pharmacyDTOList;
     }
 
