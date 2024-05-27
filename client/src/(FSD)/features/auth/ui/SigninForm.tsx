@@ -33,7 +33,9 @@ const SigninForm = () => {
 
     const onSuccess = (data: any) => {
         console.log(data);
-
+        const { accessToken, refreshToken } = data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         router.push("/");
     }
 

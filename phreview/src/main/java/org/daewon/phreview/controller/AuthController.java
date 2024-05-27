@@ -118,6 +118,9 @@ public class AuthController {
 
             Map<String, String> tokens = Map.of("accessToken", accessToken, "refreshToken", refreshToken);
 
+            // ok()에 클라이언트에게 반환할 토큰을 포함
+            // ResponseEntity나 @ResponseBody 어노테이션을 사용하면 스프링은 기본적으로 데이터를 JSON 형식으로 변환하여 클라이언트에게 응답함.
+            // 결론은 클라이언트는 JSON 형식으로 데이터를 받게 됨
             return ResponseEntity.ok(tokens);
         }else {
             // 401에러 발생
