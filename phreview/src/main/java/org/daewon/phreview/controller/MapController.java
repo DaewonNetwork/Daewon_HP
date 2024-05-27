@@ -23,43 +23,34 @@ public class MapController {
 
     private final PharmacyService pharmacyService;
 
-    @GetMapping("/search/category")
-    public ResponseEntity<List<PharmacyDTO>> searchCategory(String city){ // 지역 별 검색
-        List<PharmacyDTO> pharmacyDTO = pharmacyService.cityCategorySearch(city);
+    @GetMapping("/region")
+    public List<PharmacyDTO> searchRegionCategory(String city){ // 지역 별 검색
+        List<PharmacyDTO> pharmacyDTO = pharmacyService.regionCategorySearch(city);
         log.info(pharmacyDTO);
-        return ResponseEntity.ok(pharmacyDTO);
+        return pharmacyDTO;
     }
 
-    @GetMapping("/search/near")
-    public ResponseEntity<List<PharmacyDTO>> searchNear(double lat, double lng){ // 내 위치 반경 500m 가까운 약국 검색
+    @GetMapping("/near")
+    public List<PharmacyDTO> searchNear(double lat, double lng){ // 내 위치 반경 500m 가까운 약국 검색
         log.info("좌표값 :"+lat+","+lng);
         List<PharmacyDTO> pharmacyDTO = pharmacyService.nearSearch(lat,lng);
         log.info(pharmacyDTO);
 
-        return ResponseEntity.ok(pharmacyDTO);
+        return pharmacyDTO;
     }
 
-    @GetMapping("/search/keyword")
-    public ResponseEntity<List<PharmacyDTO>> searchKeyword(String keyword) { // 병원 이름만
-        log.info("키워드:"+keyword);
-            List<PharmacyDTO> pharmacyDTO = pharmacyService.NameSearch(keyword);
-            log.info(pharmacyDTO);
-
-        return ResponseEntity.ok(pharmacyDTO);
-    }
-
-    @GetMapping("/search/city")
-    public ResponseEntity<List<PharmacyDTO>>  searchCity(String city, String keyword) { // 지역 내 병원 이름
+    @GetMapping("/search/inRegion")
+    public List<PharmacyDTO>  searchNameInCity(String city, String keyword) { // 지역 내 병원 이름
         List<PharmacyDTO> pharmacyDTO = pharmacyService.NameSearchInCity(keyword,city);
         log.info(pharmacyDTO);
-        return ResponseEntity.ok(pharmacyDTO);
+        return pharmacyDTO;
     }
 
     @GetMapping("/search/or")
-    public ResponseEntity<List<PharmacyDTO>> searchOr(String keyword) { // 병원 이름이랑 주소 둘다
+    public List<PharmacyDTO> searchNameOrAdd(String keyword) { // 병원 이름이랑 주소 둘다
         List<PharmacyDTO> pharmacyDTO = pharmacyService.NameOrAddSearch(keyword);
         log.info(pharmacyDTO);
-        return ResponseEntity.ok(pharmacyDTO);
+        return pharmacyDTO;
     }
     
 }

@@ -21,7 +21,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     private final ModelMapper modelMapper;
 
-    public List<PharmacyDTO> cityCategorySearch(String city) {
+    public List<PharmacyDTO> regionCategorySearch(String city) {
         List<Pharmacy> result = pharmacyRepository.findByCity(city);
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
