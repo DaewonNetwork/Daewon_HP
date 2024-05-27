@@ -1,0 +1,18 @@
+.text-logo {
+    display: block;
+
+    a {
+        display: block;
+        padding: 3px;
+        span {
+            &:first-child { 
+                font-size: 30px;
+                margin-right: 3px;
+            }
+        }
+    }
+}
+
+.text-logo-size {
+    font-size: 30px;
+}

@@ -9,6 +9,7 @@ import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
 import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import { useAuthSignin } from "../api/useAuthSIgnin";
+import { useRouter } from "next/navigation";
 
 const SigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -28,8 +29,12 @@ const SigninForm = () => {
         mode: "onChange"
     });
 
+    const router = useRouter();
+
     const onSuccess = (data: any) => {
         console.log(data);
+
+        router.push("/");
     }
 
     const onError = () => {
