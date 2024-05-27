@@ -13,31 +13,23 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "pharmacy")
-public class Review {
+public class Review extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phId", referencedColumnName = "phId")
+//    @JoinColumn(name = "phId", referencedColumnName = "phId")
     private Pharmacy pharmacy;
 
     @Column(length = 500, nullable = false)
     private String reviewText;
 
     private int star = 0; // 평점
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
-
-    @PrePersist
-    public void onCreate() {
-        createAt = new Date();
-    }
 
     // 리뷰작성 내용 수정
     public void setReviewText(String reviewText) {

@@ -23,10 +23,11 @@ public class ReviewServiceTests {
                 .phId(1L)
                 .reviewText("good")
                 .build();
-
         Long phId = reviewService.register(reviewDTO);
         log.info(phId);
     }
+
+
 
     @Test
     public void testRead() {

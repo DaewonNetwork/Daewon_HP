@@ -1,5 +1,7 @@
 package org.daewon.phreview.service;
 
+import org.daewon.phreview.dto.PageRequestDTO;
+import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 
 import java.util.List;
@@ -13,5 +15,6 @@ public interface ReviewService {
 
     void remove(Long reviewId);
 
-    List<ReviewDTO> getListOfPharmacy(Long phId);
+    PageResponseDTO<ReviewDTO> getListOfPharmacy(Long bno, PageRequestDTO pageRequestDTO);
+
 }

@@ -20,7 +20,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Reply {
+public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long replyId;
@@ -36,13 +36,6 @@ public class Reply {
     @Column(length = 255)
     private String replyText;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createAt = new Date();
-    }
 
     // 리뷰 댓글 작성 내용 수정
     public void setReplyText(String replyText) {

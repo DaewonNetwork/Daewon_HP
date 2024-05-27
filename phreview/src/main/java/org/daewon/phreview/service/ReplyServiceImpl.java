@@ -64,8 +64,6 @@ public class ReplyServiceImpl implements ReplyService {
                     .replyId(r.getReplyId())
                     .reviewId(r.getReview().getReviewId())
                     .replyText(r.getReplyText())
-                    .createAt(r.getCreateAt())
-                    .users(r.getUsers())
                     .userId(r.getUsers().getUserId())
                     .build();
             replyDTOList.add(dto);

@@ -37,16 +37,8 @@ public class SampleController {
     @GetMapping("/pharmacyInfo")
     public void pharmacyInfo(Long phId, Model model) {
         PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
-
-        List<ReviewDTO> reviewDTO = reviewService.getListOfPharmacy(phId);
-
-
-        List<ReplyDTO> replyDTO = replyService.getListOfReview(2l);
         log.info("1번째인포:"+pharmacyDTO);
-        log.info("1번째인포:"+reviewDTO);
-        log.info("1번째인포:"+replyDTO);
+
         model.addAttribute("pharmacyDTO", pharmacyDTO);
-        model.addAttribute("reviewDTO", reviewDTO);
-        model.addAttribute("replyDTO", replyDTO);
     }
 }

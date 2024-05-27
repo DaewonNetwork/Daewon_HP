@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,37 +27,45 @@ public class ReviewRepositoryTests {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    // 테스트 : 있는게시글 중에 댓글 추가... 208번 에 댓글 추가... (insert....)
     @Test
     public void testInsert() {
-
+        // 실제 DB에 있는 BNO를 선택
         Pharmacy pharmacy = Pharmacy.builder().phId(1L).build();
         Users users = Users.builder().userId(1L).build();
-        Review review = Review.builder()
+        IntStream.rangeClosed(1, 100).forEach( i -> {
+            Review review = Review.builder()
                     .pharmacy(pharmacy)
-                    .reviewText("약국 댓글 테스트2......")
+                    .reviewText("약국 댓글 테스트1......"+i)
                     .users(users)
+                    .star(i)
                     .build();
-        reviewRepository.save(review);
 
+            reviewRepository.save(review);
+        });
+//        Reply reply = Reply.builder()
+//                .board(board)
+//                .replyText("댓글 테스트1......")
+//                .replyer("replyer1")
+//                .build();
+//
+//        replyRepository.save(reply);
     }
 
-//    @Transactional  // 쿼리가 다 성공해야 성공 처리...
-//    @Test
-//    public void testBoardReplies() {
-//        // 실제 게시물 번호
-//        Long bno = 208L;
-//
-//        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
-//
-//        Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
-//        log.info("게시물의 댓글 수 : "+result.getTotalElements());
-//        result.getContent().forEach(reply -> {
-//            log.info(reply);
-//        });
-//
-//
-//    }
+    @Transactional  // 쿼리가 다 성공해야 성공 처리...
+    @Test
+    public void testBoardReplies() {
+        // 실제 게시물 번호
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("reviewId").descending());
+
+        Page<Review> result = reviewRepository.listOfPharmacy(1L, pageable);
+        log.info("게시물의 댓글 수 : "+result.getTotalElements());
+        result.getContent().forEach(reply -> {
+            log.info(reply);
+        });
+
+
+    }
 //
 //    @Test
 //    public void testDelete() {

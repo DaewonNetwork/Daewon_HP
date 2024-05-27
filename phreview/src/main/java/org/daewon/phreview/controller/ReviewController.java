@@ -3,6 +3,8 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.dto.PageRequestDTO;
+import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @Log4j2
-@RequestMapping("/api/review")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -35,13 +37,15 @@ public class ReviewController {
         return reviewId;
     }
 
-//    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "Replies Post")
+    @GetMapping(value = "/list/{phId}")
+    public PageResponseDTO<ReviewDTO> getList(
+            @PathVariable("phId") Long phId,
+            PageRequestDTO pageRequestDTO) {
 
-    @GetMapping(value = "/list/{phId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ReviewDTO> readReviews(@PathVariable("phId") Long phId) {
-        List<ReviewDTO> reviews = reviewService.getListOfPharmacy(phId);
-        log.info("리뷰내용"+reviews);
-        return reviews;
+        PageResponseDTO<ReviewDTO> responseDTO = reviewService.getListOfPharmacy(phId, pageRequestDTO);
+
+        return responseDTO;
     }
 
     @DeleteMapping(value = "/{reviewId}")

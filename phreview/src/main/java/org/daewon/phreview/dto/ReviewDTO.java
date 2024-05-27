@@ -1,5 +1,7 @@
 package org.daewon.phreview.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.daewon.phreview.domain.Users;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,8 +17,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ReviewDTO {
+
     private Long reviewId;
-    private Users users;
     private Long phId;      // 특정한 병원 번호를 선언
     private Long userId;    // 특정한 유저 id를 선언
 
@@ -24,5 +27,9 @@ public class ReviewDTO {
 
     private int star;
 
-    private Date createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //날짜 형식 설정...
+    private LocalDateTime regDate;
+
+    @JsonIgnore                                    // 날짜 변환 무시...
+    private LocalDateTime modDate;
 }
