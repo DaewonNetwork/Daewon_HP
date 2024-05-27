@@ -32,8 +32,11 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
+        log.info("path: " + path);
 
-        if(!path.equals(refreshToken)) {
+        // url주소에 /refreshToken이 없으면 refresh Token filter를 skip
+          if(!path.contains("refreshToken")) {
+//        if(!path.equals(refreshToken)) {
             log.info("skip refresh token filter..........");
             filterChain.doFilter(request, response);
             return;
