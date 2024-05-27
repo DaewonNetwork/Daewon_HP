@@ -32,7 +32,7 @@ const AuthSigninForm = () => {
     const router = useRouter();
 
     const onSuccess = (data: any) => {
-        localStorage.setItem("access_token", data);
+        localStorage.setItem("access_token", data.accessToken);
         
         router.push("/");
     }
