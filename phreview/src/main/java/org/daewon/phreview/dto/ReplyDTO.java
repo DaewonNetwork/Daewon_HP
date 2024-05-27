@@ -10,27 +10,24 @@ import lombok.NoArgsConstructor;
 import org.daewon.phreview.domain.Users;
 
 import java.time.LocalDateTime;
-
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewDTO {
+public class ReplyDTO {
+    private Long replyId;
 
     private Long reviewId;
-    private Long phId;      // 특정한 병원 번호를 선언
     private Long userId;    // 특정한 유저 id를 선언
-//    private Users users;
 
     @NotEmpty
-    private String reviewText;
-
-    private int star;
+    private String replyText;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //날짜 형식 설정...
     private LocalDateTime regDate;
 
-    @JsonIgnore                                    // 날짜 변환 무시...
+    @JsonIgnore                                   // 날짜 변환 무시...
     private LocalDateTime modDate;
 }

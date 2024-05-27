@@ -19,24 +19,17 @@
     let query = window.location.search;
     let param = new URLSearchParams(query);
 
-    const city = param.get('city')
+
     const lat = param.get('lat') // 지역 위도
     const long = param.get('long') // 지역 경도
 
-    if (city != null) {
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
-                level: 7 // 지도의 확대 레벨
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
+            level: 7 // 지도의 확대 레벨
             };
         var map = new kakao.maps.Map(mapContainer, mapOption);
-    } else {
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                level: 9 // 지도의 확대 레벨
-            };
-    }
+
 
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -71,7 +64,7 @@
         kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow)); // 인포창 한개만
     }
     map.setBounds(bounds); // 지도 이동
-    map.setLevel(4);
+    map.setLevel(7);
 
     function closeInfoWindow() {
         for (infoWindow of infoWindowArray) {

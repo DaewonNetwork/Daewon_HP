@@ -1,64 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>지역별 약국</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 
 <a href="/sample/home">홈</a>
 
-<form action="/map/search/city" name="form" method="get" >
-    키워드 : <input type="text" name="keyword"><br>
-    <input type="hidden" name="city" value="" ><br>
-    <input type="hidden" name="lat" value="" ><br>
-    <input type="hidden" name="long" value="" ><br>
-    <button type="submit">지역 내 병원</button>
-</form>
-
-
 <div id="map" style="width:500px;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services,clusterer"></script>
 <script th:inline="javascript">
-
     // 약국 정보
     var pharmacyDTO = [[${pharmacyDTO}]];
-
     console.log(pharmacyDTO)
-
+    // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
     let query = window.location.search;
     let param = new URLSearchParams(query);
 
-    const city = param.get('city') // 지역 카테고리
+
     const lat = param.get('lat') // 지역 위도
     const long = param.get('long') // 지역 경도
 
-    document.form.city.value = city
-    document.form.lat.value = lat
-    document.form.long.value = long
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
-            center: new kakao.maps.LatLng(lat, long), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+            level: 9 // 지도의 확대 레벨
         };
 
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
+    // var bounds = new kakao.maps.LatLngBounds();
     var iwContent = new Array();
-    var infoWindowArray = [];
-
-    var bounds = new kakao.maps.LatLngBounds();
+    var infoWindowArray = new Array();
 
     for(var i = 0; i<pharmacyDTO.length; i++) {
-        // 마커를 생성하고 지도에 표시합니다
+
         var marker = new kakao.maps.Marker({
             position: new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX)
         });
 
-        marker.setMap(map);
+        marker.setMap(map); // 마커 지도에 추가
 
         iwContent.push('<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phName + '</div>' + // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
             '<div style="padding:5px;font-size:12px;">' + pharmacyDTO[i].phTel + '</div>' +
@@ -72,14 +57,13 @@
 
         infoWindowArray.push(infoWindow);
 
-        bounds.extend(new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX));
+        // bounds.extend(new kakao.maps.LatLng(pharmacyDTO[i].phY, pharmacyDTO[i].phX)); // 중심 좌표
 
-
-        kakao.maps.event.addListener(marker, 'click', clickListener(map, marker, infoWindow));
-        kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow));
+        kakao.maps.event.addListener(marker, 'click', clickListener(map, marker, infoWindow)); // 클릭 시 인포윈도우
+        kakao.maps.event.addListener(marker, 'click', closeInfoWindow(map, marker, infoWindow)); // 인포창 한개만
     }
-    map.setBounds(bounds);
-    map.setLevel(4);
+    // map.setBounds(bounds); // 지도 이동
+
 
     function closeInfoWindow() {
         for (infoWindow of infoWindowArray) {
