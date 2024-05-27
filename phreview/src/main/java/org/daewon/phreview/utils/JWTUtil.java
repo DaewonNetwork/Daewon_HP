@@ -50,13 +50,16 @@ public class JWTUtil {
     }
 
     // 토큰 검증 메서드
+    // 주어진 토큰을 검증하고, 유효한 경우 클레임을 Map<String, Object> 형태로 반환
     public Map<String, Object> validateToken(String token) throws JwtException {
         Map<String, Object> claim = null;
 
+        // 토큰을 파싱하고 클레임을 추출
         claim = Jwts.parser()
-                .setSigningKey(key.getBytes()).build()
-                .parseSignedClaims(token)
-                .getBody();
+                .setSigningKey(key.getBytes()).build()  // 서명 검증을 위한 키 설정
+                .parseSignedClaims(token)               // 토큰 파싱 및 클레임 추출
+                .getBody();                             // 클레임 반환
+        log.info("claim : " + claim);
         return claim;
     }
 }
