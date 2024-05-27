@@ -3,14 +3,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../../types/mutation.type";
 
-const authSigninFetch = async (data: any) => {
-    const response = await fetch("http://localhost:8090/auth/signin", {
+const userLogoutFetch = async () => {
+    const response = await fetch("http://localhost:8090/api/user/logout", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Authorization: localStorage.getItem("access_token") || ""
         },
-        body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -23,10 +22,10 @@ const authSigninFetch = async (data: any) => {
     return responseData;
 }
 
-export const useAuthSignin = ({ onSuccess, onError }: MutationType) => {
+export const useUserLogout = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (userData: any) => {
-            return authSigninFetch(userData);
+        mutationFn: () => {
+            return userLogoutFetch();
         },
         onSuccess: (data: any) => {
             console.log(data);

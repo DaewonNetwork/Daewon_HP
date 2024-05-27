@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public String logout(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
         log.info("logout token(successToken) : "+ token);
         // "Bearer " 부분 제거 - 토큰 값이 "Bearer ${accessToken}" 이 방식으로 들어가기 때문
         String refreshToken = token.substring(7);
@@ -52,6 +52,6 @@ public class UserController {
         // SecurityContextHolder 초기화
         SecurityContextHolder.clearContext();
 
-        return "Logged out successfully";
+        return ResponseEntity.ok("Logout successful");
     }
 }
