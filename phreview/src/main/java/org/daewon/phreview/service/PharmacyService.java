@@ -14,4 +14,6 @@ public interface PharmacyService {
     List<PharmacyDTO> NameSearch(String keyword);
     List<PharmacyDTO> NameOrAddSearch(String keyword);
     List<PharmacyDTO> NameSearchInCity(String keyword, String city);
+
+    String enjoyPharmacy(Long phId,String userName);
 }
