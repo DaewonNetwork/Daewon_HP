@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -94,9 +95,10 @@ public class AuthController {
             // SecurityContextHolder에 인증을 설정
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+            // JWT Payload에 userId, userName, roles 값을 실어서 보냄
             Map<String, Object> claim = new HashMap<>();
             claim.put("userId", users.getUserId());
-            claim.put("email", users.getEmail());
+            claim.put("userName", users.getUserName());
             claim.put("roles", userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList()));
@@ -108,6 +110,7 @@ public class AuthController {
 
             return ResponseEntity.ok(tokens);
         }else {
+            // 401에러 발생
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }

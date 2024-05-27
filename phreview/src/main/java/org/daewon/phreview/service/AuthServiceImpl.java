@@ -23,6 +23,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Users signup(AuthSignupDTO authSignupDTO) throws UserEmailExistException {
+        if(userRepository.existsByEmail(authSignupDTO.getEmail())) {
+            throw new UserEmailExistException();
+        }
+
         Users users = modelMapper.map(authSignupDTO, Users.class);
         
         users.setPassword(passwordEncoder.encode(authSignupDTO.getPassword()));
