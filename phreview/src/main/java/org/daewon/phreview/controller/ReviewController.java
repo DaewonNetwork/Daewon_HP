@@ -23,7 +23,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @Operation(summary = "Replies Post")
+
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReview(@RequestBody ReviewDTO reviewDTO) {
         log.info(reviewDTO);
@@ -37,14 +37,13 @@ public class ReviewController {
         return reviewId;
     }
 
-    @Operation(summary = "Replies Post")
+
     @GetMapping(value = "/list/{phId}")
     public PageResponseDTO<ReviewDTO> getList(
             @PathVariable(name = "phId") Long phId,
             PageRequestDTO pageRequestDTO) {
-
         PageResponseDTO<ReviewDTO> responseDTO = reviewService.getListOfPharmacy(phId, pageRequestDTO);
-        log.info("dto:"+responseDTO);
+        log.info("dto:"+responseDTO.getDtoList());
         return responseDTO;
     }
 

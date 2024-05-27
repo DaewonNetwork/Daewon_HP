@@ -40,4 +40,8 @@ public class Review extends BaseEntity{
     public void setPharmacy(Long phId) {
         this.pharmacy = Pharmacy.builder().phId(phId).build();
     }
+
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
+    }
 }

@@ -22,6 +22,8 @@ public class ReviewServiceTests {
         ReviewDTO reviewDTO = ReviewDTO.builder()
                 .phId(1L)
                 .reviewText("good")
+                .userId(1L)
+                .star(1)
                 .build();
         Long phId = reviewService.register(reviewDTO);
         log.info(phId);
@@ -48,8 +50,10 @@ public class ReviewServiceTests {
 
     @Test
     public void testDelete() {
-        Long reviewId = 1L;
 
-        reviewService.remove(reviewId);
+
+        reviewService.remove(101L);
+        reviewService.remove(102L);
+        reviewService.remove(103L);
     }
 }

@@ -57,7 +57,9 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public List<ReplyDTO> getListOfReview(Long reviewId) {
+        log.info("아이디:"+reviewId);
         List<Reply> result = replyRepository.listOfReview(reviewId);
+        log.info("result:"+result);
         List<ReplyDTO> replyDTOList = new ArrayList<>();
         for(Reply r : result){
             ReplyDTO dto = ReplyDTO.builder()
@@ -65,6 +67,8 @@ public class ReplyServiceImpl implements ReplyService {
                     .reviewId(r.getReview().getReviewId())
                     .replyText(r.getReplyText())
                     .userId(r.getUsers().getUserId())
+                    .modDate(r.getModDate())
+                    .regDate(r.getRegDate())
                     .build();
             replyDTOList.add(dto);
         }

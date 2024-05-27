@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.stream.IntStream;
+
 @SpringBootTest
 @Log4j2
 public class ReplyRepositoryTests {
@@ -23,13 +25,15 @@ public class ReplyRepositoryTests {
     public void testInsert() {
 
         Users users = Users.builder().userId(1L).build();
-        Review review = Review.builder().reviewId(2L).build();
-        Reply reply = Reply.builder()
-                .replyText("약국 답글 테스트1......")
-                .review(review)
-                .users(users)
-                .build();
-        replyRepository.save(reply);
+        Review review = Review.builder().reviewId(1L).build();
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            Reply reply = Reply.builder()
+                    .replyText("약국 답글 테스트1......")
+                    .review(review)
+                    .users(users)
+                    .build();
+            replyRepository.save(reply);
+        });
 
     }
 
