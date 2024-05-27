@@ -25,8 +25,8 @@ public class ReviewServiceTests {
                 .userId(1L)
                 .star(1)
                 .build();
-        Long phId = reviewService.register(reviewDTO);
-        log.info(phId);
+        Long reviewId = reviewService.register(reviewDTO);
+        log.info(reviewId);
     }
 
 

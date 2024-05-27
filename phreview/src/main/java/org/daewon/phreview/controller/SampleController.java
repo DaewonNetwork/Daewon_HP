@@ -23,8 +23,7 @@ import java.util.List;
 public class SampleController {
 
     private final PharmacyService pharmacyService;
-    private final ReviewService reviewService;
-    private final ReplyService replyService;
+
 
     @GetMapping("/home")
     public void home() {

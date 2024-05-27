@@ -38,7 +38,7 @@ public class MapController {
         model.addAttribute("pharmacyDTO", pharmacyDTO);
     }
 
-    @GetMapping("/region-search")
+    @GetMapping("/region/search")
     public void searchNameInCity(String city, String keyword,Model model) { // 지역 내 병원 이름
         List<PharmacyDTO> pharmacyDTO = pharmacyService.NameSearchInCity(keyword,city);
         log.info(pharmacyDTO);
