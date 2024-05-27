@@ -57,7 +57,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {    // OncePerReques
             // 등록 사용자 인증 정보 생성
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
+                            userDetails, userDetails.getPassword(), userDetails.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

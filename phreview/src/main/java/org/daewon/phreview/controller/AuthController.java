@@ -3,9 +3,11 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.RefreshToken;
 import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.AuthSigninDTO;
 import org.daewon.phreview.dto.AuthSignupDTO;
+import org.daewon.phreview.repository.RefreshTokenRepository;
 import org.daewon.phreview.security.UsersDetailsService;
 import org.daewon.phreview.service.AuthService;
 import org.daewon.phreview.utils.JWTUtil;
@@ -36,6 +38,7 @@ public class AuthController {
     private final JWTUtil jwtUtil;
     private final AuthService authService;
     private final UsersDetailsService usersDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @GetMapping("/signup")
     public void signupGET() {
@@ -95,16 +98,23 @@ public class AuthController {
             // SecurityContextHolder에 인증을 설정
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            // JWT Payload에 userId, userName, roles 값을 실어서 보냄
+            // JWT Payload에 userId, userName, email, roles 값을 실어서 보냄
             Map<String, Object> claim = new HashMap<>();
             claim.put("userId", users.getUserId());
             claim.put("userName", users.getUserName());
+            claim.put("email", users.getEmail());
             claim.put("roles", userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList()));
 
             String accessToken = jwtUtil.generateToken(claim, 1);
             String refreshToken = jwtUtil.generateToken(claim, 30);
+
+            // Refresh Token을 DB에 저장
+            RefreshToken newToken = new RefreshToken();
+            newToken.setToken(refreshToken);
+            newToken.setEmail(userDetails.getUsername());
+            refreshTokenRepository.save(newToken);
 
             Map<String, String> tokens = Map.of("accessToken", accessToken, "refreshToken", refreshToken);
 
@@ -113,5 +123,7 @@ public class AuthController {
             // 401에러 발생
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
+
+
     }
 }
