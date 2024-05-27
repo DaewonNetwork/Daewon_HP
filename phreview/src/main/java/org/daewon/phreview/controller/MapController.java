@@ -51,20 +51,6 @@ public class MapController {
         }
     }
 
-    // 병원 이름만
-    @GetMapping("/search/keyword")
-    public ResponseEntity<List<PharmacyDTO>> keywordSearch(@RequestParam String keyword) {
-        try {
-            List<PharmacyDTO> pharmacyDTO = pharmacyService.NameSearch(keyword);
-            log.info(pharmacyDTO);
-    
-            return ResponseEntity.ok(pharmacyDTO);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     // 지역 내 병원 이름
     @GetMapping("/search/city")
     public ResponseEntity<List<PharmacyDTO>> citySearch(@RequestParam String city, @RequestParam String keyword) {

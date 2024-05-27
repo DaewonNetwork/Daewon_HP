@@ -6,6 +6,7 @@ const authSigninFetch = async (data: any) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: localStorage.getItem("access_token") || ""
         },
         body: JSON.stringify(data),
     });

@@ -45,7 +45,6 @@ const AuthSignupForm = () => {
 
     const onSuccess = (data: any) => {
         router.push("/");
-        console.log(data);
     }
 
     const onError = () => {

@@ -32,8 +32,8 @@ const AuthSigninForm = () => {
     const router = useRouter();
 
     const onSuccess = (data: any) => {
-        console.log(data);
-
+        localStorage.setItem("access_token", data);
+        
         router.push("/");
     }
 
