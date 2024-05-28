@@ -40,8 +40,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                     .timeSatStartDate(p.getTimeSatStartDate())
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
-                    .phPageIndex(p.getPhPageIndex())
-                    .phPageTotal(p.getPhPageTotal())
                     .build();
             pharmacyDTOList.add(dto);
 
@@ -70,8 +68,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                     .timeSatStartDate(p.getTimeSatStartDate())
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
-                    .phPageIndex(p.getPhPageIndex())
-                    .phPageTotal(p.getPhPageTotal())
                     .build();
             pharmacyDTOList.add(dto);
         }
@@ -103,8 +99,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                     .timeSatStartDate(p.getTimeSatStartDate())
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
-                    .phPageIndex(p.getPhPageIndex())
-                    .phPageTotal(p.getPhPageTotal())
                     .build();
             pharmacyDTOList.add(dto);
         }
@@ -134,8 +128,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                     .timeSatStartDate(p.getTimeSatStartDate())
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
-                    .phPageIndex(p.getPhPageIndex())
-                    .phPageTotal(p.getPhPageTotal())
                     .build();
             pharmacyDTOList.add(dto);
         }
@@ -165,8 +157,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                     .timeSatStartDate(p.getTimeSatStartDate())
                     .timeWeekEndDate(p.getTimeWeekEndDate())
                     .timeWeekStartDate(p.getTimeWeekStartDate())
-                    .phPageIndex(p.getPhPageIndex())
-                    .phPageTotal(p.getPhPageTotal())
                     .build();
             pharmacyDTOList.add(dto); // 4
         }
