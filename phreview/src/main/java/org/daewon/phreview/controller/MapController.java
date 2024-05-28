@@ -55,5 +55,5 @@ public class MapController {
         model.addAttribute("pharmacyDTO", pharmacyDTO);
         return pharmacyDTO;
     }
-    
+
 }

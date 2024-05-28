@@ -29,7 +29,7 @@ public class ReviewController {
         log.info(reviewDTO);
         Long reviewId;
         try {
-             reviewId =  reviewService.createReview(reviewDTO);
+            reviewId =  reviewService.createReview(reviewDTO);
         } catch (RuntimeException e ){
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
