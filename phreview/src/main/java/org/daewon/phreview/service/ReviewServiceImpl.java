@@ -74,6 +74,17 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+    @Override
+    public void addStar(Long reviewId, int star) {
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+        Review review = reviewOptional.orElseThrow();
+        review.setStar(star);
+        reviewRepository.save(review);
+    }
 
+    @Override
+    
+
+    @Override
 
 }

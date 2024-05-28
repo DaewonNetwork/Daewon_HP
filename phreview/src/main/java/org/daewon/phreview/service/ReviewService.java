@@ -15,5 +15,10 @@ public interface ReviewService {
 
     void deleteReview(Long reviewId);
 
+    void addStar(Long reviewId, int rating);
+
+    void updateStar(Long reviewId, int rating);
+
+    void getStar(Long reviewId);
 
 }

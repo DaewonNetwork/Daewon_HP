@@ -44,4 +44,7 @@ public class Review extends BaseEntity{
     public void setUsers(Long userId) {
         this.users = Users.builder().userId(userId).build();
     }
+
+    public void setStar(int rating) {
+    }
 }
