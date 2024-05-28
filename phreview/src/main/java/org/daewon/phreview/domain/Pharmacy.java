@@ -30,6 +30,6 @@ public class Pharmacy {
     private double phX;  // 경도
     private double phY;  // 위도
     private int enjoyIndex; // 즐겨찾기 인덱스
-    private int starIndex; // 별점 인덱스getPhPageIndex
-}
+    private int starIndex; // 별점 인덱스
 
+}

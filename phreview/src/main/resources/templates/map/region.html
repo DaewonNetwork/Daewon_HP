@@ -11,8 +11,6 @@
 <form action="/map/region/search" name="form" method="get" >
     키워드 : <input type="text" name="keyword"><br>
     <input type="hidden" name="city" value="" ><br>
-    <input type="hidden" name="lat" value="" ><br>
-    <input type="hidden" name="long" value="" ><br>
     <button type="submit">지역 내 병원</button>
 </form>
 
@@ -31,12 +29,10 @@
     let param = new URLSearchParams(query);
 
     const city = param.get('city') // 지역 카테고리
-    const lat = param.get('lat') // 지역 위도
-    const long = param.get('long') // 지역 경도
+
 
     document.form.city.value = city
-    document.form.lat.value = lat
-    document.form.long.value = long
+
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {

@@ -13,6 +13,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -27,10 +29,12 @@ public class Reply extends BaseEntity {
 
     @ManyToOne
 //    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+    @OnDelete(action = OnDeleteAction.CASCADE) // 리뷰 삭제하면 댓글 삭제
     private Review review;
 
     @ManyToOne
 //    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @OnDelete(action = OnDeleteAction.CASCADE) // 유저 삭제하면 댓글 같이 삭제
     private Users users;
 
     @Column(length = 255)
