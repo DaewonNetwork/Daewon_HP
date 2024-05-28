@@ -48,6 +48,7 @@ public class ReplyController {
         return replyDTO;
     }
 
+    // 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @DeleteMapping(value = "/{replyId}")
     public Map<String, String> deleteReply(@PathVariable("replyId") Long replyId) {
@@ -55,6 +56,7 @@ public class ReplyController {
         return Map.of("result", "success");
     }
 
+    // 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @PutMapping(value = "/{replyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> modifyReply(@PathVariable("replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
