@@ -2,10 +2,13 @@ package org.daewon.phreview.domain;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
@@ -45,6 +48,28 @@ public class Review extends BaseEntity{
         this.users = Users.builder().userId(userId).build();
     }
 
-    public void setStar(int rating) {
+    @OneToMany(mappedBy = "review",
+               cascade = {CascadeType.ALL},
+               fetch = FetchType.LAZY,
+               orphanRemoval = true)
+    @Builder.Default
+    @BatchSize(size = 20)
+    private Set<ReviewImage> imageSet = new HashSet<>();
+
+    public void addImage(String uuid, String fileName) {
+        ReviewImage reviewImage = ReviewImage.builder()
+                .uuid(uuid)
+                .fileName(fileName)
+                .review(this)
+                .ord(imageSet.size())
+                .build();
+        imageSet.add(reviewImage);
     }
+
+    public void clearImage() {
+        imageSet.forEach(reviewImage -> reviewImage.changeBoard(null));
+
+        this.imageSet.clear();
+    }
+
 }

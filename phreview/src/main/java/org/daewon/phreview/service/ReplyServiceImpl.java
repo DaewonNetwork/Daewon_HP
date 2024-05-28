@@ -72,6 +72,4 @@ public class ReplyServiceImpl implements ReplyService {
         replyRepository.deleteById(replyId);
     }
 
-
-
 }

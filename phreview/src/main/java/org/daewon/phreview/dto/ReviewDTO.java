@@ -11,6 +11,7 @@ import org.daewon.phreview.domain.Users;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -31,4 +32,7 @@ public class ReviewDTO {
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
+
+    private List<String> fileNames;
+
 }

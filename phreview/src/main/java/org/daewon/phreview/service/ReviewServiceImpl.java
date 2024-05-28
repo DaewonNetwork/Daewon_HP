@@ -3,24 +3,16 @@ package org.daewon.phreview.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.PharmacyDTO;
-import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.dto.*;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -35,11 +27,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
         Review review = modelMapper.map(reviewDTO, Review.class);
+        dtoToEntity(reviewDTO);
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
         Long reviewId = reviewRepository.save(review).getReviewId();
         return reviewId;
     }
+
+
+
 
     @Override
     public List<ReviewDTO> readReview(Long phId) {
@@ -75,16 +71,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void addStar(Long reviewId, int star) {
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-        Review review = reviewOptional.orElseThrow();
-        review.setStar(star);
-        reviewRepository.save(review);
+    public PageResponseDTO<ReviewListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+        return null;
     }
 
-    @Override
-    
 
-    @Override
 
 }
