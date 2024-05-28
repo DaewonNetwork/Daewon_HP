@@ -21,7 +21,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     private final ModelMapper modelMapper;
 
-    public List<PharmacyDTO> regionCategorySearch(String city) {
+    public List<PharmacyDTO> cityCategorySearch(String city) {
         List<Pharmacy> result = pharmacyRepository.findByCity(city);
         List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
         for(Pharmacy p : result){
@@ -46,6 +46,8 @@ public class PharmacyServiceImpl implements PharmacyService {
             pharmacyDTOList.add(dto);
 
         }
+
+        log.info(pharmacyDTOList);
         return pharmacyDTOList;
     }
 

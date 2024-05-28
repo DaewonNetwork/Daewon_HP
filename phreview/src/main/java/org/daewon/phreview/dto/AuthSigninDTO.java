@@ -15,7 +15,7 @@ public class AuthSigninDTO implements UserDetails {
 
     private String userName;
     private String password;
-    @Column(name = "users_email", unique = true)
+    @Column(unique = true)
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
 
