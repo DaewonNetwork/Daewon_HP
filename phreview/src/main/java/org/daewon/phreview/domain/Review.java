@@ -13,13 +13,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "pharmacy")
-public class Review {
+public class Review extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "userId", referencedColumnName = "userId")
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,15 +29,7 @@ public class Review {
     @Column(length = 500, nullable = false)
     private String reviewText;
 
-    private int star =0; // 평점
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
-
-    @PrePersist
-    public void onCreate() {
-        createAt = new Date();
-    }
+    private int star = 0; // 평점
 
     // 리뷰작성 내용 수정
     public void setReviewText(String reviewText) {
@@ -47,5 +39,9 @@ public class Review {
     // pharmacy 값 설정 -> phId를 받아서 생성
     public void setPharmacy(Long phId) {
         this.pharmacy = Pharmacy.builder().phId(phId).build();
+    }
+
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
     }
 }
