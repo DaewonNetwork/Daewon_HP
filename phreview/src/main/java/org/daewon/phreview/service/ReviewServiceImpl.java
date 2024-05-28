@@ -88,4 +88,15 @@ public class ReviewServiceImpl implements ReviewService {
                 .build();
     }
 
+    // 현재 사용자가 리뷰의 작성자인지 확인하는 메서드
+    @Override
+    public boolean isReviewOwner(Long reviewId, String userName) {
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+        if (reviewOptional.isPresent()) {
+            Review review = reviewOptional.get();
+            return review.getUsers().getUserName().equals(userName);
+        }
+
+        return false;
+    }
 }

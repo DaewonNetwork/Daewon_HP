@@ -49,13 +49,14 @@ public class ReviewController {
         return responseDTO;
     }
 
-
+    @PreAuthorize("@reviewAndReplySecurity.hasPermissionToModifyOrDelete(#reviewId)")
     @DeleteMapping(value = "/{reviewId}")
     public Map<String, String> deleteReview(@PathVariable("reviewId") Long reviewId) {
         reviewService.remove(reviewId);
         return Map.of("result", "success");
     }
 
+    @PreAuthorize("@reviewAndReplySecurity.hasPermissionToModifyOrDelete(#reviewId)")
     @PutMapping(value = "/{reviewId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> modifyReview(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);
