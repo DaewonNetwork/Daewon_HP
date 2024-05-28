@@ -17,4 +17,13 @@ public interface AuthService {
 
     Users signin(final String email, final String password);
 
+    // 이미지 업로드 메서드
+    void uploadImage(String userId, byte[] imageData) throws ImageUploadException;
+
+    static class ImageUploadException extends Exception {
+        public ImageUploadException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
 }
