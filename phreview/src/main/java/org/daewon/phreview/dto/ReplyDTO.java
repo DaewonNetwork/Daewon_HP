@@ -25,9 +25,6 @@ public class ReplyDTO {
     @NotEmpty
     private String replyText;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")  //날짜 형식 설정...
-    private LocalDateTime regDate;
-
-    @JsonIgnore                                   // 날짜 변환 무시...
-    private LocalDateTime modDate;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }
