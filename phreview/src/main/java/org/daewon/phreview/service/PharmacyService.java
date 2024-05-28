@@ -1,17 +1,17 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.domain.EnjoyPh;
+import org.daewon.phreview.dto.*;
 
-import java.util.List;
 
 public interface PharmacyService {
 
-    List<PharmacyDTO> cityCategorySearch(String phAdd);
+     PageResponseDTO<PharmacyDTO> regionCategorySearch(String city, PageRequestDTO pageRequestDTO);
+     PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng, PageRequestDTO pageRequestDTO);
+//   PageResponseDTO<PharmacyDTO> NameSearch(String keyword);
+     PageResponseDTO<PharmacyDTO> NameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO);
+     PageResponseDTO<PharmacyDTO> NameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
+  
     PharmacyDTO getPharmacyInfo(Long phId);
-    List<PharmacyDTO> nearSearch(double lat, double lng);
-
-
-    List<PharmacyDTO> NameSearch(String keyword);
-    List<PharmacyDTO> NameOrAddSearch(String keyword);
-    List<PharmacyDTO> NameSearchInCity(String keyword, String city);
+    void enjoyPharmacy(Long phId);
 }

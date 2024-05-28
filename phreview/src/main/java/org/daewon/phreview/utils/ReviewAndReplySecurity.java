@@ -37,7 +37,7 @@ public class ReviewAndReplySecurity {
         // reviewId 기준으로 리뷰작성자의 userId를 DB에서 찾는 쿼리를 실행
         // 값이 있을 수도 있고 없을 수도 있는 상황을 표현하기 위해 Optional 사용
         Optional<Long> authorUserIdOptional = reviewRepository.findAuthorUserIdById(reviewId);
-        log.info("authorUserIdOptional :"+authorUserIdOptional);
+        log.info("authorUserIdOptional :" +authorUserIdOptional);
 
         if (authorUserIdOptional.isEmpty()) {
             return false;
