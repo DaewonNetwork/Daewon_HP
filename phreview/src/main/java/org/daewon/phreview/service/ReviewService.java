@@ -1,18 +1,22 @@
 package org.daewon.phreview.service;
 
+import org.daewon.phreview.dto.PageRequestDTO;
+import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.dto.ReviewImageDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ReviewService {
-    Long register(ReviewDTO reviewDTO);
+    Long createReview(ReviewDTO reviewDTO);
 
-    ReviewDTO read(Long reviewId);
+    List<ReviewDTO> readReview(Long phId);
 
-    void modify(ReviewDTO reviewDTO);
+    void updateReview(ReviewDTO reviewDTO);
 
-    void remove(Long reviewId);
+    void deleteReview(Long reviewId);
 
-    Page<ReviewImageDTO> getImagesByReviewIdPaginated(Long reviewId, int page, int size);
+
 
 }

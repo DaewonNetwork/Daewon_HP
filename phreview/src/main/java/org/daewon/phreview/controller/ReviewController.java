@@ -3,15 +3,15 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.dto.PageRequestDTO;
+import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.dto.ReviewImageDTO;
 import org.daewon.phreview.service.ReviewService;
-import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,20 +22,40 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @Operation(summary = "Replies Post")
+
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Long>> register(@RequestBody ReviewDTO reviewDTO) {
+    public Long createReview(@RequestBody ReviewDTO reviewDTO) {
         log.info(reviewDTO);
-
-        Map<String, Long> resultMap = Map.of("reviewId", 1L);
-
-        return ResponseEntity.ok(resultMap);
+        Long reviewId;
+        try {
+             reviewId =  reviewService.createReview(reviewDTO);
+        } catch (RuntimeException e ){
+            log.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
+        }
+        return reviewId;
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/register")
-    public void registerGET() {
 
+    @GetMapping(value = "/")
+    public List<ReviewDTO> readReview(
+            @RequestParam(name = "phId") Long phId) {
+        List<ReviewDTO> reviewList = reviewService.readReview(phId);
+        log.info("dto:"+reviewList);
+        return reviewList;
+    }
+
+    @DeleteMapping(value = "/")
+    public Map<String, String> deleteReview( @RequestParam(name = "reviewId") Long reviewId) {
+        reviewService.deleteReview(reviewId);
+        return Map.of("result", "success");
+    }
+
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> updateReview( @RequestParam(name = "reviewId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
+        reviewDTO.setReviewId(reviewId);
+        reviewService.updateReview(reviewDTO);
+        return Map.of("result", "success");
     }
 
     @GetMapping("/reviews/{reviewId}/images")

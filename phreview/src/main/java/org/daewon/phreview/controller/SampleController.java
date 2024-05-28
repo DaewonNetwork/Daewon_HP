@@ -2,12 +2,17 @@ package org.daewon.phreview.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import org.daewon.phreview.dto.PharmacyDTO;
+
 import org.daewon.phreview.service.PharmacyService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SampleController {
 
     private final PharmacyService pharmacyService;
+
 
     @GetMapping("/home")
     public void home() {
@@ -29,6 +35,8 @@ public class SampleController {
     public void pharmacyInfo(Long phId, Model model) {
         PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
         log.info("1번째인포:"+pharmacyDTO);
+
         model.addAttribute("pharmacyDTO", pharmacyDTO);
     }
+
 }

@@ -1,52 +1,66 @@
 package org.daewon.phreview.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.dto.ReviewImageDTO;
 import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
+import org.daewon.phreview.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final ReviewImageRepository reviewImageRepository;
 
     @Override
-    public Long register(ReviewDTO reviewDTO) { // 리뷰 등록
+    public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
         Review review = modelMapper.map(reviewDTO, Review.class);
         review.setPharmacy(reviewDTO.getPhId());
-
+        review.setUsers(reviewDTO.getUserId());
         Long reviewId = reviewRepository.save(review).getReviewId();
         return reviewId;
     }
 
     @Override
-    public ReviewDTO read(Long reviewId) {
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-        Review review = reviewOptional.orElseThrow();
-
-        ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
-        log.info("read ReviewDTO : "+reviewDTO);
-        reviewDTO.setPhId(review.getPharmacy().getPhId());  // phId 값을 넣어줌
-
-        return reviewDTO;
+    public List<ReviewDTO> readReview(Long phId) {
+        List<Review> result = reviewRepository.listOfPharmacy(phId);
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewDTO dto = ReviewDTO.builder()
+                     .reviewId(r.getReviewId())
+                     .reviewText(r.getReviewText())
+                     .star(r.getStar())
+                     .userId(r.getUsers().getUserId())
+                     .phId(r.getPharmacy().getPhId())
+                     .createAt(r.getCreateAt())
+                     .updateAt(r.getUpdateAt())
+                     .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
     }
 
     @Override
-    public void modify(ReviewDTO reviewDTO) {   // 댓글 수정
+    public void updateReview(ReviewDTO reviewDTO) {   // 댓글 수정
         Optional<Review> reviewOptional = reviewRepository.findById(reviewDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
 
@@ -55,15 +69,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void remove(Long reviewId) {
+    public void deleteReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);
     }
 
-    @Override
-    public Page<ReviewImageDTO> getImagesByReviewIdPaginated(Long reviewId, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("Invalid review ID"));
-        Page<ReviewImage> images = reviewImageRepository.findByReview(review, pageRequest);
-        return images.map(image -> modelMapper.map(image, ReviewImageDTO.class));
-    }
+
 }

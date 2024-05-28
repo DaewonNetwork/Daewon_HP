@@ -20,31 +20,29 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Reply {
+public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long replyId;
 
     @ManyToOne
-    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+//    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "phId", referencedColumnName = "phId")
-    private Pharmacy pharmacy;
 
     @Column(length = 255)
     private String replyText;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+    // 리뷰 댓글 작성 내용 수정
+    public void setReplyText(String replyText) {
+        this.replyText = replyText;
+    }
 
-    @PrePersist
-    protected void onCreate() {
-        createAt = new Date();
+    public void setReview(Long reviewId) {this.review = review.builder().reviewId(reviewId).build();}
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
     }
 }
