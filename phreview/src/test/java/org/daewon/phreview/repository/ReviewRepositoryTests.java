@@ -2,8 +2,10 @@ package org.daewon.phreview.repository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.ReviewImage;
+import org.daewon.phreview.domain.Users;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,10 @@ public class ReviewRepositoryTests {
     private ReplyRepository replyRepository;
     @Autowired
     private ReviewImageRepository reviewImageRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PharmacyRepository pharmacyRepository;
 
     @Test
     public void testInsertWithImages() {
@@ -100,8 +106,13 @@ public class ReviewRepositoryTests {
 
     @Test
     public void testFindImagesByReview() {
+        Users user = userRepository.findById(10L).orElseThrow();
+//        Pharmacy pharmacy = pharmacyRepository.findById(1L).orElseThrow();
+
         Review review = Review.builder()
                 .reviewText("Hello world")
+                .users(user)
+//                .pharmacy(pharmacy)
                 .build();
         review.addImage(UUID.randomUUID().toString(), "image1.jpg");
         reviewRepository.save(review);
