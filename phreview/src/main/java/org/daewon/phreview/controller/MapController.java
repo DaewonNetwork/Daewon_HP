@@ -49,5 +49,5 @@ public class MapController {
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.NameOrAddSearch(keyword,pageRequestDTO);
         return responseDTO;
     }
-    
+
 }
