@@ -3,17 +3,13 @@ package org.daewon.phreview.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
 
 import org.daewon.phreview.service.PharmacyService;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @Log4j2
@@ -42,7 +38,7 @@ public class SampleController {
 
     @GetMapping("/pharmacyInfo/enjoy")
     public void favoriteBoard(@RequestParam Long phId) {
-        pharmacyService.enjoyPharmacy(phId,1L);
+        pharmacyService.enjoyPharmacy(phId);
     }
 
 }

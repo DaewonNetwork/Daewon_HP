@@ -1,14 +1,11 @@
 package org.daewon.phreview.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.Pharmacy;
-import org.daewon.phreview.domain.Reply;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
@@ -23,8 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -183,10 +178,13 @@ public class PharmacyServiceImpl implements PharmacyService {
 
 
     @Override
-    public void enjoyPharmacy(Long phId, Long userId) {
+    public void enjoyPharmacy(Long phId) {
+        Pharmacy pharmacy = pharmacyRepository.findById(phId).orElseThrow(() -> new EntityNotFoundException("약국을 찾을 수 없습니다. ID: " + phId));
 
-        Pharmacy pharmacy = pharmacyRepository.findById(phId).orElseThrow();
-        Users users = userRepository.findById(userId).orElseThrow();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Users users = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+        Long userId = users.getUserId();
 
         if(enjoyRepository.findByPharmacyAndUsers(phId,userId) == null){
             pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex()+1);
@@ -204,7 +202,6 @@ public class PharmacyServiceImpl implements PharmacyService {
             enjoyRepository.delete(enjoyPh);
             log.info(pharmacy);
             log.info(enjoyPh);
-
             log.info("즐겨찾기 취소");
         }
 
