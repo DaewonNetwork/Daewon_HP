@@ -2,7 +2,8 @@
 
 import { useSearchCity } from "@/(FSD)/entities/map/api/search/useSearchCity";
 import { useParams } from "next/navigation";
-import React from "react";
+import Script from "next/script";
+import React, { useEffect } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
 const Page = () => {
@@ -11,6 +12,10 @@ const Page = () => {
     const { data } = useSearchCity(word);
 
     console.log(data);
+
+    useEffect(() => {
+
+    }, []);
     
     
     return (
@@ -22,6 +27,7 @@ const Page = () => {
             >
 
             </Map>
+            <Script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2394155f8d491f33d2e132cb5633c658&libraries=services&autoload=false" />
         </div>
     );
 };
