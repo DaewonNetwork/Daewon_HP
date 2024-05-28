@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "roleSet")
-public class Users extends BaseEntity{
+public class Users extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

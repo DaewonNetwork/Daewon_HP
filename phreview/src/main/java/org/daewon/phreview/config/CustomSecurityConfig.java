@@ -8,6 +8,7 @@ import org.daewon.phreview.security.filter.TokenCheckFilter;
 import org.daewon.phreview.security.handler.Custom403Handler;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -133,6 +134,18 @@ public class CustomSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);  // "/**" - 하위 모든 폴더.....
         return source;
+    }
+
+    // refreshTokenFilter 설정
+    @Bean
+    public FilterRegistrationBean<RefreshTokenFilter> refreshTokenFilter() {
+        FilterRegistrationBean<RefreshTokenFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+
+        filterRegistrationBean.setFilter(new RefreshTokenFilter("/refreshToken", jwtUtil));
+        // 'api/*' 패턴의 모든 요청에 refreshToken Filter 적용
+        filterRegistrationBean.addUrlPatterns("/api/*");
+
+        return filterRegistrationBean;
     }
 
 }

@@ -17,4 +17,5 @@ public interface ReviewService {
 
     PageResponseDTO<ReviewDTO> getListOfPharmacy(Long bno, PageRequestDTO pageRequestDTO);
 
+
 }

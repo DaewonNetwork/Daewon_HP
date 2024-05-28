@@ -9,6 +9,7 @@ import org.daewon.phreview.dto.ReplyDTO;
 import org.daewon.phreview.service.ReplyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReply(@RequestBody ReplyDTO replyDTO) {
@@ -45,6 +47,7 @@ public class ReplyController {
         log.info("댓글의 답글"+replyDTO);
         return replyDTO;
     }
+
 
     @DeleteMapping(value = "/{replyId}")
     public Map<String, String> deleteReply(@PathVariable("replyId") Long replyId) {
