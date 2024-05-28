@@ -11,6 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 @Log4j2
 @Service
@@ -68,4 +72,17 @@ public class AuthServiceImpl implements AuthService {
             return null;
         }
     }
+
+    @Override
+    public void uploadImage(String userId, byte[] imageData) throws ImageUploadException {
+        try {
+            Path imagePath = Paths.get("images/" + userId + ".jpg");
+            Files.write(imagePath, imageData);
+            log.info(userId + "의 이미지가 업로드됨");
+        } catch (IOException e) {
+            log.error(userId + "의 이미지 업로드 실패", e);
+            throw new ImageUploadException("이미지 업로드 실패", e);
+        }
+    }
+
 }
