@@ -6,15 +6,14 @@ import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.PharmacyDTO;
-import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.dto.*;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -90,12 +89,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     // 현재 사용자가 리뷰의 작성자인지 확인하는 메서드
     @Override
-    public boolean isReviewOwner(Long reviewId, String userName) {
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-        if (reviewOptional.isPresent()) {
-            Review review = reviewOptional.get();
-            return review.getUsers().getUserName().equals(userName);
-        }
+    public boolean isReviewOwner(Long reviewId) {
+        // 현재 인증된 사용자의 정보를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserId값을 빼옴
+        Users user = (Users) authentication.getPrincipal();
+        Long userId = user.getUserId();
 
         return false;
     }
