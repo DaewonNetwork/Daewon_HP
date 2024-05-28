@@ -5,11 +5,14 @@
     position: relative;
 
     .header {
-        padding: 0 20px;
-        height: 60px;
-        display: block;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        .header_inner {
+            padding: 0 20px;
+            height: 60px;
+            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
     }
+
 }

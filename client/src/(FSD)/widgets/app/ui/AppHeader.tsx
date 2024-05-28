@@ -14,8 +14,8 @@ const logo = Barlow_Condensed({
 
 const AppHeader = () => {
     return (
-        <header className={`bg-background`}>
-            <div className={`${styles.header}`}>
+        <header className={`bg-background ${styles.header}`}>
+            <div className={`${styles.header_inner}`}>
                 <div>
                     <h1 className={"text-logo"}>
                         <Link className={logo.className} href={"/"}>HP</Link>

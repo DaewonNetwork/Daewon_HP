@@ -42,14 +42,14 @@ public class PharmacyServiceImpl implements PharmacyService {
         Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable);
         log.info(result);
 
-        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+        List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             return pharmacyDTO;
         }).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info(phList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+                .phList(phList)
                 .total((int) result.getTotalElements())
                 .build();
     }
@@ -79,14 +79,14 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 변경된 부분
         log.info(result);
-        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+        List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             return pharmacyDTO;
         }).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info(phList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+                .phList(phList)
                 .total((int) result.getTotalElements())
                 .build();
     }
@@ -131,14 +131,14 @@ public class PharmacyServiceImpl implements PharmacyService {
         Page<Pharmacy> result = pharmacyRepository.findAddOrNameByKeyword(keyword, pageable);
         log.info(result);
 
-        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+        List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             return pharmacyDTO;
         }).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info(phList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+                .phList(phList)
                 .total((int) result.getTotalElements())
                 .build();
     }
@@ -152,14 +152,14 @@ public class PharmacyServiceImpl implements PharmacyService {
         Page<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(city, keyword, pageable);
         log.info(result);
 
-        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+        List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             return pharmacyDTO;
         }).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info(phList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+                .phList(phList)
                 .total((int) result.getTotalElements())
                 .build();
     }
