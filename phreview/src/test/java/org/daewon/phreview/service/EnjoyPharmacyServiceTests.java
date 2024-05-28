@@ -33,7 +33,8 @@ public class EnjoyPharmacyServiceTests {
 
     @Test
     public void testEnjoyPharmacy(){
-        pharmacyService.enjoyPharmacy(1L,1L);
+
+        pharmacyService.enjoyPharmacy(1L);
 
     }
 
