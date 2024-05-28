@@ -15,13 +15,15 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseEntity {
     // 시간 설정 - 등록, 수정 시간 설정....
-    @CreatedDate     //생성시간 설정
-    @Column(name = "regdate", updatable = false)
-    private LocalDateTime regDate;
+
+    @CreatedDate
+    @Column(name = "createAt", updatable = false)
+    private LocalDateTime createAt;
 
     @LastModifiedDate
-    @Column(name = "moddate")
-    private LocalDateTime modDate;
+    @Column(name = "updateAt")
+    private LocalDateTime updateAt;
+
 
 
 }

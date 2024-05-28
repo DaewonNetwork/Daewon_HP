@@ -26,24 +26,23 @@ public class Reply extends BaseEntity {
     private Long replyId;
 
     @ManyToOne
-    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+//    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private Review review;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+//    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Users users;
 
     @Column(length = 255)
     private String replyText;
-
 
     // 리뷰 댓글 작성 내용 수정
     public void setReplyText(String replyText) {
         this.replyText = replyText;
     }
 
-    // pharmacy 값 설정 -> phId를 받아서 생성
-    public void setReview(Long reviewId) {
-        this.review = review.builder().reviewId(reviewId).build();
+    public void setReview(Long reviewId) {this.review = review.builder().reviewId(reviewId).build();}
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
     }
 }

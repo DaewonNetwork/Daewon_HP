@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Log4j2
 public class ReviewServiceTests {
@@ -25,17 +27,14 @@ public class ReviewServiceTests {
                 .userId(1L)
                 .star(1)
                 .build();
-        Long reviewId = reviewService.register(reviewDTO);
+        Long reviewId = reviewService.createReview(reviewDTO);
         log.info(reviewId);
     }
 
 
-
     @Test
     public void testRead() {
-        Long reviewId = 1L;
-
-        ReviewDTO reviewDTO = reviewService.read(reviewId);
+        List<ReviewDTO> reviewDTO = reviewService.readReview(1L);
         log.info(reviewDTO);
     }
 
@@ -45,15 +44,14 @@ public class ReviewServiceTests {
                 .reviewId(1L)
                 .reviewText("siuuuuuuuuuu")
                 .build();
-        reviewService.modify(reviewDTO);
+        reviewService.updateReview(reviewDTO);
     }
 
     @Test
     public void testDelete() {
 
 
-        reviewService.remove(101L);
-        reviewService.remove(102L);
-        reviewService.remove(103L);
+        reviewService.deleteReview(101L);
+
     }
 }

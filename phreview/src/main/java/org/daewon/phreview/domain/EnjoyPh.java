@@ -30,4 +30,15 @@ public class EnjoyPh extends BaseEntity {
     private Pharmacy pharmacy;
 
     private boolean isEnjoy;
+
+    public EnjoyPh(Pharmacy pharmacy, Users users) {
+        this.pharmacy = pharmacy;
+        this.users = users;
+        this.isEnjoy = true;
+    }
+
+    public void unEnjoyPh(Pharmacy pharmacy) {
+        this.isEnjoy = false;
+        pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() - 1);
+    }
 }
