@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Users users = modelMapper.map(authSignupDTO, Users.class);
-        
+
         users.setPassword(passwordEncoder.encode(authSignupDTO.getPassword()));
         users.addRole(UserRole.USER);
 

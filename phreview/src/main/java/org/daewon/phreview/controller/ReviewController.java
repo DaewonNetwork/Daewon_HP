@@ -6,8 +6,9 @@ import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
-import org.daewon.phreview.dto.ReviewImageDTO;
 import org.daewon.phreview.service.ReviewService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,7 +29,7 @@ public class ReviewController {
         log.info(reviewDTO);
         Long reviewId;
         try {
-             reviewId =  reviewService.createReview(reviewDTO);
+            reviewId =  reviewService.createReview(reviewDTO);
         } catch (RuntimeException e ){
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
@@ -56,14 +57,5 @@ public class ReviewController {
         reviewDTO.setReviewId(reviewId);
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
-    }
-
-    @GetMapping("/reviews/{reviewId}/images")
-    public ResponseEntity<Page<ReviewImageDTO>> getReviewImages(
-            @PathVariable Long reviewId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Page<ReviewImageDTO> images = reviewService.getImagesByReviewIdPaginated(reviewId, page, size);
-        return ResponseEntity.ok(images);
     }
 }

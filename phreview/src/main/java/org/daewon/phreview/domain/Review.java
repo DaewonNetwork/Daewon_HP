@@ -1,12 +1,11 @@
 package org.daewon.phreview.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
@@ -42,5 +41,7 @@ public class Review extends BaseEntity{
         this.pharmacy = Pharmacy.builder().phId(phId).build();
     }
 
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
     }
 }
