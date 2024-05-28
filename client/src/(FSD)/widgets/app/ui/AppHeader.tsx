@@ -4,6 +4,7 @@ import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
+import MapSearchCity from "@/(FSD)/entities/map/ui/MapSearchCity";
 
 const logo = Barlow_Condensed({
     weight: "500",
@@ -13,15 +14,18 @@ const logo = Barlow_Condensed({
 
 const AppHeader = () => {
     return (
-        <header className={`bg-background ${styles.header}`}>
-            <div>
-                <h1 className={"text-logo"}>
-                    <Link className={logo.className} href={"/"}>HP</Link>
-                </h1>
+        <header className={`bg-background`}>
+            <div className={`${styles.header}`}>
+                <div>
+                    <h1 className={"text-logo"}>
+                        <Link className={logo.className} href={"/"}>HP</Link>
+                    </h1>
+                </div>
+                <div>
+                    <Button isIconOnly variant={"light"} endContent={<IconShared className={"text-logo"} iconType={"menu"} />}></Button>
+                </div>
             </div>
-            <div>
-                <Button isIconOnly variant={"light"} endContent={<IconShared className={"text-logo"} iconType={"menu"} />}></Button>
-            </div>
+            <MapSearchCity />
         </header>
     );
 };

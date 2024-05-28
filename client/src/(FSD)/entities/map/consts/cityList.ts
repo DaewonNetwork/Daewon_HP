@@ -1,4 +1,5 @@
 export const cityList = [
+    "전체",
     "강남구",
     "강동구",
     "강북구",

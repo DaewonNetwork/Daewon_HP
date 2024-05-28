@@ -4,7 +4,7 @@ import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 
 const MapRankEnjoy = () => {
     return (
-        <section className={styles.section}>
+        <section className={""}>
             <TextTitleShared>사람들이 즐겨찾는 약국 TOP 10</TextTitleShared>
         </section>
     )
