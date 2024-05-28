@@ -27,6 +27,6 @@ public class PharmacyDTO {
     private double phY;  // 위도
     private int enjoyIndex; // 즐겨찾기 인덱스
     private int starIndex; // 별점 인덱스
-    private double distance; // 내 현재 위치에서의 가까운 약국
+
 
 }
