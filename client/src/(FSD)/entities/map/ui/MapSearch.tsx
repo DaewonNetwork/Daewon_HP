@@ -6,11 +6,11 @@ import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import { cityList } from "../consts/cityList";
 import { useRouter } from "next/navigation";
 
-const MapSearchCity = () => {
+const MapSearchRegion = () => {
     const router = useRouter();
 
-    const onClick = (keyword: string) => {
-        router.push(`/map/city/${keyword}`);
+    const onClick = (city: string) => {
+        router.push(`/map/region/${city}`);
     };
 
     return (
@@ -31,4 +31,4 @@ const MapSearchCity = () => {
     )
 }
 
-export default MapSearchCity;
+export default MapSearchRegion;

@@ -4,7 +4,7 @@ import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
-import MapSearchCity from "@/(FSD)/entities/map/ui/MapSearchCity";
+import MapSearchRegion from "@/(FSD)/entities/map/ui/MapSearch";
 
 const logo = Barlow_Condensed({
     weight: "500",
@@ -25,7 +25,7 @@ const AppHeader = () => {
                     <Button isIconOnly variant={"light"} endContent={<IconShared className={"text-logo"} iconType={"menu"} />}></Button>
                 </div>
             </div>
-            <MapSearchCity />
+            <MapSearchRegion />
         </header>
     );
 };
