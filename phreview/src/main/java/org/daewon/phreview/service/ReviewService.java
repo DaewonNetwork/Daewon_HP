@@ -17,7 +17,4 @@ public interface ReviewService {
 
     PageResponseDTO<ReviewDTO> getListOfPharmacy(Long bno, PageRequestDTO pageRequestDTO);
 
-    // 작성자 검증 메서드
-    boolean isReviewOwner(Long reviewId);
-
 }

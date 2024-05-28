@@ -24,7 +24,8 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Long register(ReplyDTO replyDTO) { // 리뷰 답글 등록
         Reply reply = modelMapper.map(replyDTO, Reply.class);
-        reply.setReview(replyDTO.getReviewId());
+        reply.setReview(replyDTO.getReviewId()); // reviewId 설정
+        reply.setUsers(replyDTO.getUserId());   // userId 설정
         Long replyId = replyRepository.save(reply).getReplyId();
         return replyId;
     }

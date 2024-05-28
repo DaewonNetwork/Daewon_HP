@@ -42,8 +42,14 @@ public class Reply extends BaseEntity {
         this.replyText = replyText;
     }
 
-    // pharmacy 값 설정 -> phId를 받아서 생성
+    // pharmacy 값 설정 -> phId를 받아서 생성    // pharmacy 값 설정하는거 맞나요?
+    // review 값 설정 -> reviewId를 받아서 생성
     public void setReview(Long reviewId) {
         this.review = review.builder().reviewId(reviewId).build();
+    }
+
+    // users 값 설정 -> userId를 받아서 생성
+    public void setUsers(Long userId) {
+        this.users = Users.builder().userId(userId).build();
     }
 }

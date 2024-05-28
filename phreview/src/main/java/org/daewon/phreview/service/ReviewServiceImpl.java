@@ -86,16 +86,4 @@ public class ReviewServiceImpl implements ReviewService {
                 .total((int)result.getTotalElements())
                 .build();
     }
-
-    // 현재 사용자가 리뷰의 작성자인지 확인하는 메서드
-    @Override
-    public boolean isReviewOwner(Long reviewId) {
-        // 현재 인증된 사용자의 정보를 가져옴
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // UserId값을 빼옴
-        Users user = (Users) authentication.getPrincipal();
-        Long userId = user.getUserId();
-
-        return false;
-    }
 }

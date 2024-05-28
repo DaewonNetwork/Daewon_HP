@@ -15,6 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.pharmacy.phId = :phId")
     Page<Review> listOfPharmacy(Long phId, Pageable pageable);
 
+    // 리뷰 작성자의 userId를 반환하도록 하는 메서드
     @Query("select r.users.userId from Review r where r.reviewId = :reviewId")
     Optional<Long> findAuthorUserIdById(Long reviewId);
 }

@@ -48,13 +48,14 @@ public class ReplyController {
         return replyDTO;
     }
 
-
+    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @DeleteMapping(value = "/{replyId}")
     public Map<String, String> deleteReply(@PathVariable("replyId") Long replyId) {
         replyService.remove(replyId);
         return Map.of("result", "success");
     }
 
+    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @PutMapping(value = "/{replyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> modifyReply(@PathVariable("replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setReplyId(replyId);
