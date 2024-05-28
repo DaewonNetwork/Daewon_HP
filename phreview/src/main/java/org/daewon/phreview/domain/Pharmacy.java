@@ -3,10 +3,6 @@ package org.daewon.phreview.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @Entity
 @Getter
 @Setter
@@ -31,7 +27,5 @@ public class Pharmacy {
     private double phY;  // 위도
     private int enjoyIndex; // 즐겨찾기 인덱스
     private int starIndex; // 별점 인덱스
-    private int phPageIndex;
-    private int phPageTotal;
-}
 
+}

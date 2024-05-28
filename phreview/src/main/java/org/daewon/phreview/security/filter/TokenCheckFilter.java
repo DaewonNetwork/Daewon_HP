@@ -57,7 +57,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {    // OncePerReques
             // 등록 사용자 인증 정보 생성
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
+                            userDetails, userDetails.getPassword(), userDetails.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -68,12 +68,16 @@ public class TokenCheckFilter extends OncePerRequestFilter {    // OncePerReques
         }
     }
 
-    // Access Token 검증
+    // 클라이언트에서 보낸 Access Token 검증
     private Map<String, Object> validateAccessToken(HttpServletRequest request) throws AccessTokenException {
 
+        // 클라이언트가 서버로 요청을 보낼 때 HTTP 요청 헤더에 포함된 AccessToken을 추출
+        // "Authorization" 헤더를 사용하여 토큰을 전달한 토큰을 받아옴
+        // Authorization: Bearer ${access_token} - 클라이언트에서 이 값으로 보내줘야 함
         String headerStr = request.getHeader("Authorization");
 
         // Authorization 헤더가 없거나 길이가 8미만이면 UNACCEPT 예외를 던짐
+        // 8미만으로 짜르는 이유는 headerStr이 "Bearer <access_token>" 이렇게 이루어져 있기 때문
         if(headerStr == null || headerStr.length() < 8) {
             throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.UNACCEPT);
         }

@@ -6,6 +6,8 @@ import java.util.Date;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -20,6 +22,7 @@ public class Review extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @OnDelete(action = OnDeleteAction.CASCADE) // 유저 삭제하면 리뷰 같이 삭제
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)

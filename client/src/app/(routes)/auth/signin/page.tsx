@@ -1,4 +1,4 @@
-import SigninForm from "@/(FSD)/features/auth/ui/SigninForm";
+import AuthSigninForm from "@/(FSD)/features/auth/ui/AuthSigninForm";
 import { Metadata } from "next";
 import React from "react";
 
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const Page = () => {
     return (
-        <SigninForm />
+        <AuthSigninForm />
     );
 };
 

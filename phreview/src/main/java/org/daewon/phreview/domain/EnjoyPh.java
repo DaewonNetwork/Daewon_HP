@@ -1,7 +1,4 @@
 package org.daewon.phreview.domain;
-
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -23,6 +22,7 @@ public class EnjoyPh extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Users users;
 
     @ManyToOne
@@ -39,6 +39,5 @@ public class EnjoyPh extends BaseEntity {
 
     public void unEnjoyPh(Pharmacy pharmacy) {
         this.isEnjoy = false;
-        pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() - 1);
     }
 }
