@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface EnjoyRepository extends JpaRepository<EnjoyPh, Long> {
-
     @Query(value = "SELECT * from enjoy_ph ep where ph_id=:phId and user_id=:userId",nativeQuery = true)
     EnjoyPh findByPharmacyAndUsers(Long phId, Long userId);
 }

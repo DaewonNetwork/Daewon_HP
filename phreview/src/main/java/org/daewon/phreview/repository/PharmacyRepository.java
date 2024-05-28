@@ -11,9 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
-
-
-
     @Query("select p from Pharmacy p where p.phAdd like concat('%',:city,'%')")
     Page<Pharmacy> findByCity(String city, Pageable pageable);
 
