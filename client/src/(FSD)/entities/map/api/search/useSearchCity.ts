@@ -1,20 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 
 const mapSearchCityFetch = async (word: string) => {
-    const response = await fetch(`http://localhost:8090/map/region?city=${encodeURIComponent(word)}`, {
+    const response = await fetch(`http://localhost:8090/map/region?city=${word}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         }
     });
 
-    console.log(response);
-    
-
-    const responseData = await response.json();
-
-    console.log(responseData);
-    
+    const responseData = await response.json();    
 
     return responseData;
 }

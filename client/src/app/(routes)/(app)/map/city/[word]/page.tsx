@@ -9,6 +9,9 @@ const Page = () => {
     const { word } = useParams<{ word: string }>();
 
     const { data } = useSearchCity(word);
+
+    console.log(data);
+    
     
     return (
         <div>
