@@ -29,7 +29,7 @@ public class ReplyController {
         log.info(replyDTO);
         Long replyId;
         try {
-            replyId =  replyService.register(replyDTO);
+            replyId =  replyService.createReply(replyDTO);
         } catch (RuntimeException e ){
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
@@ -38,24 +38,24 @@ public class ReplyController {
     }
 
     @Operation(summary = "Replies Post")
-    @GetMapping(value = "/list/{reviewId}")
+    @GetMapping(value = "/")
     public List<ReplyDTO> getList(
-            @PathVariable(name = "reviewId") Long reviewId) {
-        List<ReplyDTO> replyDTO = replyService.getListOfReview(reviewId);
+            @RequestParam(name = "reviewId") Long reviewId) {
+        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
         log.info("댓글의 답글"+replyDTO);
         return replyDTO;
     }
 
-    @DeleteMapping(value = "/{replyId}")
-    public Map<String, String> deleteReply(@PathVariable("replyId") Long replyId) {
-        replyService.remove(replyId);
+    @DeleteMapping(value = "/")
+    public Map<String, String> deleteReply(@RequestParam(name = "reviewId") Long replyId) {
+        replyService.deleteReply(replyId);
         return Map.of("result", "success");
     }
 
-    @PutMapping(value = "/{replyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> modifyReply(@PathVariable("replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> modifyReply(@RequestParam(name = "reviewId") Long replyId, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setReplyId(replyId);
-        replyService.modify(replyDTO);
+        replyService.updateReply(replyDTO);
         return Map.of("result", "success");
     }
 }

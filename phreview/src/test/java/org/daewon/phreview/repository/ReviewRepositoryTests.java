@@ -51,20 +51,7 @@ public class ReviewRepositoryTests {
 //        replyRepository.save(reply);
     }
 
-    @Transactional  // 쿼리가 다 성공해야 성공 처리...
-    @Test
-    public void testBoardReplies() {
-        // 실제 게시물 번호
 
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("reviewId").descending());
-
-        Page<Review> result = reviewRepository.listOfPharmacy(1L, pageable);
-        log.info("게시물의 댓글 수 : "+result.getTotalElements());
-        result.getContent().forEach(reply -> {
-            log.info(reply);
-        });
-
-    }
 //
 //    @Test
 //    public void testDelete() {

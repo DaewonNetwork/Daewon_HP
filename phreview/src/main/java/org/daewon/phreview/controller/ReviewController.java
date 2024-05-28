@@ -29,7 +29,7 @@ public class ReviewController {
         log.info(reviewDTO);
         Long reviewId;
         try {
-             reviewId =  reviewService.register(reviewDTO);
+             reviewId =  reviewService.createReview(reviewDTO);
         } catch (RuntimeException e ){
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
@@ -38,25 +38,24 @@ public class ReviewController {
     }
 
 
-    @GetMapping(value = "/list/{phId}")
-    public PageResponseDTO<ReviewDTO> getList(
-            @PathVariable(name = "phId") Long phId,
-            PageRequestDTO pageRequestDTO) {
-        PageResponseDTO<ReviewDTO> responseDTO = reviewService.getListOfPharmacy(phId, pageRequestDTO);
-        log.info("dto:"+responseDTO.getDtoList());
-        return responseDTO;
+    @GetMapping(value = "/")
+    public List<ReviewDTO> readReview(
+            @RequestParam(name = "phId") Long phId) {
+        List<ReviewDTO> reviewList = reviewService.readReview(phId);
+        log.info("dto:"+reviewList);
+        return reviewList;
     }
 
-    @DeleteMapping(value = "/{reviewId}")
-    public Map<String, String> deleteReview(@PathVariable("reviewId") Long reviewId) {
-        reviewService.remove(reviewId);
+    @DeleteMapping(value = "/")
+    public Map<String, String> deleteReview( @RequestParam(name = "phId") Long reviewId) {
+        reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
     }
 
-    @PutMapping(value = "/{reviewId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> modifyReview(@PathVariable("reviewId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> updateReview( @RequestParam(name = "phId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);
-        reviewService.modify(reviewDTO);
+        reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
     }
 }

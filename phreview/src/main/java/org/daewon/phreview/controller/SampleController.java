@@ -39,10 +39,4 @@ public class SampleController {
         model.addAttribute("pharmacyDTO", pharmacyDTO);
     }
 
-
-    @PostMapping("/pharmacyInfo/{phId}/enjoies")
-    @ResponseStatus(HttpStatus.OK)
-    public void favoriteBoard(@PathVariable Long phId, @RequestParam("userName") String userName) {
-        pharmacyService.enjoyPharmacy(phId, userName);
-    }
 }
