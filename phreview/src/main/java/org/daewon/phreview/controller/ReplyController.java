@@ -47,13 +47,13 @@ public class ReplyController {
     }
 
     @DeleteMapping(value = "/")
-    public Map<String, String> deleteReply(@RequestParam(name = "reviewId") Long replyId) {
+    public Map<String, String> deleteReply(@RequestParam(name = "replyId") Long replyId) {
         replyService.deleteReply(replyId);
         return Map.of("result", "success");
     }
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> modifyReply(@RequestParam(name = "reviewId") Long replyId, @RequestBody ReplyDTO replyDTO) {
+    public Map<String, String> modifyReply(@RequestParam(name = "replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setReplyId(replyId);
         replyService.updateReply(replyDTO);
         return Map.of("result", "success");

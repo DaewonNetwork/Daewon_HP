@@ -47,13 +47,13 @@ public class ReviewController {
     }
 
     @DeleteMapping(value = "/")
-    public Map<String, String> deleteReview( @RequestParam(name = "phId") Long reviewId) {
+    public Map<String, String> deleteReview( @RequestParam(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
     }
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> updateReview( @RequestParam(name = "phId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
+    public Map<String, String> updateReview( @RequestParam(name = "reviewId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
