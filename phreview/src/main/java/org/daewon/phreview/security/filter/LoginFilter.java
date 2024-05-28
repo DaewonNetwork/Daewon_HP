@@ -45,11 +45,11 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         // UsernamePasswordAuthenticationToken에 이메일과 비밀번호를 담음
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                jsonData.get("users_email"),
+                jsonData.get("email"),
                 jsonData.get("password")
         );
 
-        if (jsonData.get("users_email") == null || jsonData.get("users_email").isEmpty()) {
+        if (jsonData.get("email") == null || jsonData.get("email").isEmpty()) {
             throw new AuthenticationServiceException("Email is missing");
         }
         if (jsonData.get("password") == null || jsonData.get("password").isEmpty()) {

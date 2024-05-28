@@ -3,10 +3,6 @@ package org.daewon.phreview.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @Entity
 @Getter
 @Setter
