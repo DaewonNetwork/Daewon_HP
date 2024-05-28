@@ -9,7 +9,7 @@ import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
 
-const MapSearchForm = () => {
+const MapSearcCityhForm = () => {
     const schema = z.object({
         word: z.string().min(1).max(20)
     });
@@ -25,9 +25,9 @@ const MapSearchForm = () => {
 
     return (
         <form className={""} onSubmit={handleSubmit(onSubmit)}>
-            <FormInputShared isInvalid={!!errors.word} placeholder={"병원 이름 또는 지역"} size={"lg"} control={control} name={"word"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
+            <FormInputShared isInvalid={!!errors.word} placeholder={"지역 내 병원"} size={"lg"} control={control} name={"word"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
         </form>
     )
 }
 
-export default MapSearchForm;
+export default MapSearcCityhForm;

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -20,133 +17,7 @@
 <div th:text="${pharmacyDTO.timeHoliStartDate}"></div>
 <div th:text="${pharmacyDTO.timeHoliEndDate}"></div>
 
-<!--<h1>약국의 리뷰 댓글</h1>-->
-<!--<div th:text="${reviewDTO[0].reviewText}"></div>-->
-<!--<div th:text="${reviewDTO[1].reviewText}"></div>-->
 
-<!--<h1>약국의 리뷰 댓글의 답글</h1>-->
-<!--<div th:text="${replyDTO[0].replyText}"></div>-->
-
-
-
-<!-- 댓글 처리 영역 만들기...  -->
-<div class="row mt-3">
-    <div class="col-md-12">
-        <div class="my-4">
-            <button class="btn btn-info addReplyBtn">ADD REPLY</button>
-        </div>
-        <ul class="list-group replyList">
-
-        </ul>
-    </div>
-</div>
-<div class="row mt-3">
-    <div class="col">
-        <ul class="pagination replyPaging">
-
-        </ul>
-    </div>
-</div>
 </body>
-
-<!-- reply를 처리하기 위한 javascript 라이브러리 불러오기...  -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="/static/js/reply.js"></script>
-
-
-<script layout:fragment="script" th:inline="javascript">
-    const phId = [[${pharmacyDTO.phId}]]
-    const replyList = document.querySelector('.replyList')      // 댓글 목록 DOM
-    const replyPaging = document.querySelector('.replyPaging')  // 댓글 페이지 목록 DOM
-    let selectedReviewId = null;  // 선택된 리뷰의 ID
-
-    function printReviewList(dtoList) {
-        let str = '';
-
-        if(dtoList && dtoList.length > 0) {
-            for (const dto of dtoList) {
-                str +=`<li class="list-group-item d-flex replyItem">
-              <span class="col-2">${dto.reviewId}</span>
-              <span class="col-6" data-reviewId="${dto.reviewId}">${dto.reviewText}</span>
-              <span class="col-2">${dto.regDate}</span>
-              <button class="btn btn-info addReplyBtn" onclick="selectReview(${dto.reviewId})">답글</button>
-              </li>`
-                console.log(dto)
-            }
-        }
-        replyList.innerHTML = str
-    }
-
-    function selectReview(reviewId) {
-        selectedReviewId = reviewId;  // 선택된 리뷰의 ID 설정
-        printReplies();  // 선택된 리뷰에 대한 답글 출력
-    }
-
-    function printPages(data) {   //댓글 페이지 목록 출력
-        //pagination
-        let pageStr = '';
-        //이전 버튼
-        if(data.prev) {
-            pageStr += `<li class="page-item">
-                    <a class="page-link" data-page="${data.start - 1}">PREV</a>
-                 </li>`
-        }
-        //페이지 번호...
-        for (let i = data.start; i <= data.end; i++ ){
-            pageStr += `<li class="page-item ${i == data.page? "active":""}">
-                    <a class="page-link" data-page="${i}">${i}</a>
-                </li>`
-        }
-        // 다음 버튼
-        if(data.next) {
-            pageStr += `<li class="page-item">
-                    <a class="page-link" data-page="${data.end + 1}">NEXT</a>
-                 </li>`
-        }
-        replyPaging.innerHTML = pageStr
-    }
-
-    function printReviews(page, size, goLast) {
-        getReviewList({phId, page, size, goLast}).then(
-            data => {
-                printReviewList(data.dtoList)  //목록 처리
-                printPages(data)         //페이지 처리
-            }
-        ).catch(e => {
-            console.log(e)
-        })
-    }
-
-    function printReplyList(dtoList) {
-        let str = '';
-
-        if(dtoList && dtoList.length > 0) {
-            for (const dto of dtoList) {
-                str +=`<li class="list-group-item d-flex replyItem">
-              <span class="col-2">${dto.replyId}</span>
-              <span class="col-6" data-replyId="${dto.replyId}">${dto.replyText}</span>
-              <span class="col-2">${dto.regDate}</span>
-              </li>`
-            }
-        }
-        replyList.innerHTML = str
-    }
-
-    function printReplies() {
-        if(selectedReviewId !== null) {
-            getReplyList({reviewId: selectedReviewId}).then(
-                data => {
-                    printReplyList(data.dtoList)  //목록 처리
-                }
-            ).catch(e => {
-                console.log(e)
-            })
-        }
-    }
-
-    // 초기에 리뷰 목록을 출력합니다.
-    printReviews(1, 10, true);
-
-</script>
 
 </html>

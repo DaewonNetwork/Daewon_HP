@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -20,6 +22,7 @@ public class EnjoyPh extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Users users;
 
     @ManyToOne
@@ -27,4 +30,14 @@ public class EnjoyPh extends BaseEntity {
     private Pharmacy pharmacy;
 
     private boolean isEnjoy;
+
+    public EnjoyPh(Pharmacy pharmacy, Users users) {
+        this.pharmacy = pharmacy;
+        this.users = users;
+        this.isEnjoy = true;
+    }
+
+    public void unEnjoyPh(Pharmacy pharmacy) {
+        this.isEnjoy = false;
+    }
 }

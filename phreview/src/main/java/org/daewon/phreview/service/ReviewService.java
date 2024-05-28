@@ -7,14 +7,13 @@ import org.daewon.phreview.dto.ReviewDTO;
 import java.util.List;
 
 public interface ReviewService {
-    Long register(ReviewDTO reviewDTO);
+    Long createReview(ReviewDTO reviewDTO);
 
-    ReviewDTO read(Long reviewId);
+    List<ReviewDTO> readReview(Long phId);
 
-    void modify(ReviewDTO reviewDTO);
+    void updateReview(ReviewDTO reviewDTO);
 
-    void remove(Long reviewId);
+    void deleteReview(Long reviewId);
 
-    PageResponseDTO<ReviewDTO> getListOfPharmacy(Long bno, PageRequestDTO pageRequestDTO);
 
 }

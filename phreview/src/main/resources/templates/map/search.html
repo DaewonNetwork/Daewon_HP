@@ -16,13 +16,6 @@
     var pharmacyDTO = [[${pharmacyDTO}]];
     console.log(pharmacyDTO)
     // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-    let query = window.location.search;
-    let param = new URLSearchParams(query);
-
-
-    const lat = param.get('lat') // 지역 위도
-    const long = param.get('long') // 지역 경도
-
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {

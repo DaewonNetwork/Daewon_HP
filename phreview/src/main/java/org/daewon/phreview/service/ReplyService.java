@@ -3,17 +3,17 @@ package org.daewon.phreview.service;
 
 import org.daewon.phreview.dto.ReplyDTO;
 
+
 import java.util.List;
 
 public interface ReplyService {
 
-    Long register(ReplyDTO replyDTO);
+    Long createReply(ReplyDTO replyDTO);
 
-    ReplyDTO read(Long replyId);
+    List<ReplyDTO> readReply(Long phId);
 
-    void modify(ReplyDTO replyDTO);
+    void updateReply(ReplyDTO replyDTO);
 
-    void remove(Long replyId);
+    void deleteReply(Long replyId);
 
-    List<ReplyDTO> getListOfReview(Long reviewId);
 }
