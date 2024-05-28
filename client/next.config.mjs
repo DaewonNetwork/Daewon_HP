@@ -8,6 +8,10 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, "/src/(FSD)/shareds/styles")],
     },
+    i18n: {
+        locales: ["ko-KR"],
+        defaultLocale: "ko-KR",
+    },
 };
 
 export default nextConfig;

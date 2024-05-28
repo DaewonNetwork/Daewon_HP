@@ -33,4 +33,3 @@ public class Pharmacy {
     private int starIndex; // 별점 인덱스
 
 }
-

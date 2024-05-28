@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { MutationType } from "../types/mutation.type";
+import { MutationType } from "../../types/mutation.type";
 
 const authSignupFetch = async (data: any) => {
     const response = await fetch("http://localhost:8090/auth/signup", {
