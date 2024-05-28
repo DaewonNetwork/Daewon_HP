@@ -3,6 +3,7 @@ package org.daewon.phreview.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
 
 import org.daewon.phreview.service.PharmacyService;
@@ -37,6 +38,11 @@ public class SampleController {
         log.info("1번째인포:"+pharmacyDTO);
 
         model.addAttribute("pharmacyDTO", pharmacyDTO);
+    }
+
+    @GetMapping("/pharmacyInfo/enjoy")
+    public void favoriteBoard(@RequestParam Long phId) {
+        pharmacyService.enjoyPharmacy(phId,1L);
     }
 
 }
