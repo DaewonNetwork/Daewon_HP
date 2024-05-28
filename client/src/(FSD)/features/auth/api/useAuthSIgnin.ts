@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { MutationType } from "../types/mutation.type";
+import { MutationType } from "../../types/mutation.type";
 
 const authSigninFetch = async (data: any) => {
     const response = await fetch("http://localhost:8090/auth/signin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
         },
         body: JSON.stringify(data),
     });

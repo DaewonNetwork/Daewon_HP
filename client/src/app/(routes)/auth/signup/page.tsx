@@ -1,4 +1,4 @@
-import SignupForm from "@/(FSD)/features/auth/ui/SignupForm";
+import AuthSignupForm from "@/(FSD)/features/auth/ui/AuthSignupForm";
 import { Metadata } from "next";
 import React from "react";
 
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const Page = () => {
 
     return (
-        <SignupForm />
+        <AuthSignupForm />
     );
 };
 

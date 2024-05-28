@@ -3,14 +3,15 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
 import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import { useAuthSignup } from "../api/useAuthSignup";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
 
-const SignupForm = () => {
+const AuthSignupForm = () => {
     const userNameRegex = /^[가-힣a-zA-Z\s]{1,20}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
@@ -40,8 +41,10 @@ const SignupForm = () => {
         mode: "onChange"
     });
 
+    const router = useRouter();
+
     const onSuccess = (data: any) => {
-        console.log(data);
+        router.push("/");
     }
 
     const onError = () => {
@@ -72,4 +75,4 @@ const SignupForm = () => {
     );
 };
 
-export default SignupForm;
+export default AuthSignupForm;
