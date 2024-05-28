@@ -17,6 +17,7 @@ const MapSearchCity = () => {
         <nav className={styles.nav}>
             <div className={styles.city_container}>
                 <div className={styles.city_list}>
+                    <div>전체</div>
                     {
                         cityList.map((item, index) => (
                             <React.Fragment key={index}>
