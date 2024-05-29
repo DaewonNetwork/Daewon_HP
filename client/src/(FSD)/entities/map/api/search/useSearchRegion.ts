@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useInView } from 'react-intersection-observer';
+import { useEffect, useMemo } from "react";
 
 const mapSearchRegionFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
     const [, city] = queryKey;
@@ -21,34 +20,33 @@ export const useSearchRegion = (city: string) => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
+        isError,
+        isLoading,
         status,
         error
     } = useInfiniteQuery({
         queryKey: ["searchCity", city],
         queryFn: mapSearchRegionFetch,
         getNextPageParam: (lastPage, pages: any) => {
-            console.log(pages[0]?.page + 1);
+            console.log(lastPage);
             
             return pages[0]?.page + 1;
-            // console.log(lastPage, pages);
-            
-            // if (lastPage.length === 10) {
-            //     return pages.page + 1;
-            // }
-            // return undefined;
         },
         initialPageParam: 1,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
     });
 
-    const { ref, inView } = useInView();
-
-    useEffect(() => {
-        // console.log(inView);
+    const pharmacyList = useMemo(() => {
+        const pharmacyList = data?.pages || [];
         
-        if (inView) {
-            fetchNextPage();
+        if(pharmacyList[0]?.phList) {
+            return pharmacyList[0].phList as Array<any>;
+        } else {
+            return [];
         }
-    }, [inView, hasNextPage, fetchNextPage]);
+    }, [data]);
 
-    return { data, ref, isFetchingNextPage, status, error };
+    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage };
 };
