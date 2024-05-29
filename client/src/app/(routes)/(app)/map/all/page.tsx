@@ -1,10 +1,10 @@
-import RegionPharmacyList from "@/(FSD)/widgets/pharmacy/ui/RegionPharmacyList";
 import React from "react";
+import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
 
 const Page = () => {
     return (
         <div>
-            <RegionPharmacyList />
+            <AllPharmacyList />
         </div>
     );
 };

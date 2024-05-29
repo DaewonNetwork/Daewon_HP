@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 const mapSearchRegionFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
     const [, city] = queryKey;
-    const response = await fetch(`http://localhost:8090/map/region?city=${city}&pageIndex=${pageParam}&size=10`, {
+    const response = await fetch(`http://localhost:8090/pharmacy/region?city=${city}&pageIndex=${pageParam}&size=10`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const useSearchRegion = (city: string) => {
         isError,
         isLoading,
     } = useInfiniteQuery({
-        queryKey: ["searchCity", city],
+        queryKey: ["search_region", city],
         queryFn: mapSearchRegionFetch,
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {

@@ -1,17 +1,14 @@
 "use client";
 
-import { useSearchRegion } from "@/(FSD)/features/pharmacy/api/search/useSearchRegion";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
+import { useSearchAll } from "@/(FSD)/features/pharmacy/api/search/useSearchAll";
 
-const RegionPharmacyList = () => {
-    const { city } = useParams<{ city: string }>();
-
-    const { pharmacyList, fetchNextPage } = useSearchRegion(city);
-
+const AllPharmacyList = () => {
+    const { pharmacyList, fetchNextPage } = useSearchAll();
 
     const { ref, inView } = useInView();
 
@@ -29,4 +26,4 @@ const RegionPharmacyList = () => {
     );
 };
 
-export default RegionPharmacyList;
+export default AllPharmacyList;

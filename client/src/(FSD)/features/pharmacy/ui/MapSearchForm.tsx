@@ -8,10 +8,11 @@ import { z } from "zod";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
 
 const MapSearchForm = () => {
     const schema = z.object({
-        word: z.string().min(1).max(20)
+        keyword: z.string().min(1).max(20)
     });
 
     const { control, handleSubmit, formState: { errors, isValid, submitCount } } = useForm({
@@ -19,13 +20,17 @@ const MapSearchForm = () => {
         mode: "onChange"
     });
 
+    const router = useRouter();
+
     const onSubmit = (data: any) => {
-        
+        if(data.keyword) {
+            router.push(`/map/search/${data.keyword}`); 
+        }
     }
 
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <FormInputShared isInvalid={!!errors.word} placeholder={"병원 이름 또는 지역"} size={"lg"} control={control} name={"word"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
+            <FormInputShared isInvalid={!!errors.keyword} placeholder={"병원 이름 또는 지역"} size={"lg"} control={control} name={"keyword"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
         </form>
     )
 }

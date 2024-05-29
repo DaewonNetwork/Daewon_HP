@@ -4,7 +4,7 @@ import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
-import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearch";
+import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
 
 const logo = Barlow_Condensed({
     weight: "500",

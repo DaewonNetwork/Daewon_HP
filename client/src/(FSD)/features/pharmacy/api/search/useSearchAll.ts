@@ -2,9 +2,8 @@ import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-const mapSearchKeywordFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
-    const [, keyword] = queryKey;
-    const response = await fetch(`http://localhost:8090/pharmacy/search?keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
+const mapSearchAllFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
+    const response = await fetch(`http://localhost:8090/pharmacy/all?pageIndex=${pageParam}&size=10`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -16,7 +15,7 @@ const mapSearchKeywordFetch = async ({ pageParam = 1, queryKey }: { pageParam?: 
     return data;
 };
 
-export const useSearchKeyword = (keyword: string) => {
+export const useSearchAll = () => {
     const {
         data,
         fetchNextPage,
@@ -25,8 +24,8 @@ export const useSearchKeyword = (keyword: string) => {
         isError,
         isLoading,
     } = useInfiniteQuery({
-        queryKey: ["search_keyword", keyword],
-        queryFn: mapSearchKeywordFetch,
+        queryKey: ["search_all"],
+        queryFn: mapSearchAllFetch,
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;
