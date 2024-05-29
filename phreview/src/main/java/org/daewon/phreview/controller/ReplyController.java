@@ -9,6 +9,7 @@ import org.daewon.phreview.dto.ReplyDTO;
 import org.daewon.phreview.service.ReplyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReply(@RequestBody ReplyDTO replyDTO) {
@@ -37,21 +39,25 @@ public class ReplyController {
         return replyId;
     }
 
-    @Operation(summary = "Replies Post")
-    @GetMapping(value = "/")
-    public List<ReplyDTO> getList(
-            @RequestParam(name = "reviewId") Long reviewId) {
-        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
-        log.info("댓글의 답글"+replyDTO);
-        return replyDTO;
-    }
+//    @Operation(summary = "Replies Post")
+//    @GetMapping(value = "/")
+//    public List<ReplyDTO> getList(
+//            @RequestParam(name = "reviewId") Long reviewId) {
+//        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
+//        log.info("댓글의 답글"+replyDTO);
+//        return replyDTO;
+//    }
 
+    // 작성한 유저만 삭제 가능
+    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @DeleteMapping(value = "/")
     public Map<String, String> deleteReply(@RequestParam(name = "replyId") Long replyId) {
         replyService.deleteReply(replyId);
         return Map.of("result", "success");
     }
 
+    // 작성한 유저만 수정 가능
+    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> modifyReply(@RequestParam(name = "replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setReplyId(replyId);

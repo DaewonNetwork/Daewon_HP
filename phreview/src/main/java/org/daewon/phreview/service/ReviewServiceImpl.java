@@ -87,11 +87,9 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+
     @Override
     public PageResponseDTO<ReviewListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
         return null;
     }
-
-
-
-}
+  
