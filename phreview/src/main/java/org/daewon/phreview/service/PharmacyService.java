@@ -9,9 +9,10 @@ public interface PharmacyService {
      PageResponseDTO<PharmacyDTO> regionCategorySearch(String city, PageRequestDTO pageRequestDTO);
      PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng, PageRequestDTO pageRequestDTO);
 //   PageResponseDTO<PharmacyDTO> NameSearch(String keyword);
-     PageResponseDTO<PharmacyDTO> NameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO);
-     PageResponseDTO<PharmacyDTO> NameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
-  
+     PageResponseDTO<PharmacyDTO> nameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO);
+     PageResponseDTO<PharmacyDTO> nameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
+     PageResponseDTO<PharmacyDTO> allSearch(PageRequestDTO pageRequestDTO);
+
     PharmacyDTO getPharmacyInfo(Long phId);
 
 }

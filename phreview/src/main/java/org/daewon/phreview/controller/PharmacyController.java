@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/map")
+@RequestMapping("/pharmacy")
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
@@ -35,13 +35,19 @@ public class PharmacyController {
 
     @GetMapping("/region/search")
     public PageResponseDTO<PharmacyDTO> searchNameInCity(@RequestParam String city, @RequestParam String keyword, PageRequestDTO pageRequestDTO) { // 지역 내 병원 이름
-        PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.NameSearchInCity(city,keyword,pageRequestDTO);
+        PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nameSearchInCity(city,keyword,pageRequestDTO);
         return responseDTO;
     }
 
     @GetMapping("/search")
     public PageResponseDTO<PharmacyDTO> searchNameOrAdd(@RequestParam String keyword, PageRequestDTO pageRequestDTO) { // 병원 이름이랑 주소 둘다
-        PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.NameOrAddSearch(keyword,pageRequestDTO);
+        PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nameOrAddSearch(keyword,pageRequestDTO);
+        return responseDTO;
+    }
+
+    @GetMapping("/all")
+    public PageResponseDTO<PharmacyDTO> searchAll(PageRequestDTO pageRequestDTO) { // 병원 이름이랑 주소 둘다
+        PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.allSearch(pageRequestDTO);
         return responseDTO;
     }
 
