@@ -36,7 +36,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     public PageResponseDTO<PharmacyDTO> regionCategorySearch(String city, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable);
@@ -49,8 +49,8 @@ public class PharmacyServiceImpl implements PharmacyService {
         log.info(dtoList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int) result.getTotalElements())
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
                 .build();
     }
 
@@ -74,7 +74,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 변경된 부분
@@ -86,8 +86,8 @@ public class PharmacyServiceImpl implements PharmacyService {
         log.info(dtoList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int) result.getTotalElements())
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
                 .build();
     }
 
@@ -125,7 +125,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public PageResponseDTO<PharmacyDTO> NameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findAddOrNameByKeyword(keyword, pageable);
@@ -138,15 +138,15 @@ public class PharmacyServiceImpl implements PharmacyService {
         log.info(dtoList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int) result.getTotalElements())
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
                 .build();
     }
 
     @Override
     public PageResponseDTO<PharmacyDTO> NameSearchInCity(String city, String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(city, keyword, pageable);
@@ -159,8 +159,8 @@ public class PharmacyServiceImpl implements PharmacyService {
         log.info(dtoList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total((int) result.getTotalElements())
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
                 .build();
     }
 
