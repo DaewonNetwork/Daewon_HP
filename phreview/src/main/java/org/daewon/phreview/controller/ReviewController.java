@@ -9,6 +9,7 @@ import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,8 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReview(@RequestBody ReviewDTO reviewDTO) {
         log.info(reviewDTO);
@@ -44,12 +47,16 @@ public class ReviewController {
         return reviewList;
     }
 
+    // 리뷰 작성한 유저만 삭제 가능
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @DeleteMapping(value = "/")
     public Map<String, String> deleteReview(@RequestParam(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
     }
 
+    // 리뷰 작성한 유저만 수정 가능
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
             @RequestBody ReviewDTO reviewDTO) {
