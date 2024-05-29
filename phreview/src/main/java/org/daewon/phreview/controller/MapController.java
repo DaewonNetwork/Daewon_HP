@@ -22,35 +22,31 @@ public class MapController {
 
     private final MapService mapService;
     @GetMapping("/region")
-    public List<PharmacyDTO> searchRegionCategory(String city,Model model){ // 지역 별 검색
+    public List<PharmacyDTO> searchRegionCategory(String city){ // 지역 별 검색
         List<PharmacyDTO> pharmacyDTO = mapService.regionCategorySearch(city);
         log.info(pharmacyDTO);
-        model.addAttribute("pharmacyDTO", pharmacyDTO);
         return pharmacyDTO;
     }
 
     @GetMapping("/near")
-    public List<PharmacyDTO> searchNear(double lat, double lng,Model model){ // 내 위치 반경 500m 가까운 약국 검색
+    public List<PharmacyDTO> searchNear(double lat, double lng){ // 내 위치 반경 500m 가까운 약국 검색
         log.info("좌표값 :"+lat+","+lng);
         List<PharmacyDTO> pharmacyDTO = mapService.nearSearch(lat,lng);
         log.info(pharmacyDTO);
-        model.addAttribute("pharmacyDTO", pharmacyDTO);
         return pharmacyDTO;
     }
 
     @GetMapping("/region/search")
-    public List<PharmacyDTO> searchNameInCity(String city, String keyword,Model model) { // 지역 내 병원 이름
+    public List<PharmacyDTO> searchNameInCity(String city, String keyword) { // 지역 내 병원 이름
         List<PharmacyDTO> pharmacyDTO = mapService.NameSearchInCity(keyword,city);
         log.info(pharmacyDTO);
-        model.addAttribute("pharmacyDTO", pharmacyDTO);
         return pharmacyDTO;
     }
 
     @GetMapping("/search")
-    public List<PharmacyDTO> searchNameOrAdd(String keyword,Model model) { // 병원 이름이랑 주소 둘다
+    public List<PharmacyDTO> searchNameOrAdd(String keyword) { // 병원 이름이랑 주소 둘다
         List<PharmacyDTO> pharmacyDTO = mapService.NameOrAddSearch(keyword);
         log.info(pharmacyDTO);
-        model.addAttribute("pharmacyDTO", pharmacyDTO);
         return pharmacyDTO;
     }
 
