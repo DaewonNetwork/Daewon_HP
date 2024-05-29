@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Log4j2
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -22,6 +22,7 @@ public class UserController {
 
     // 클라이언트가 accessToken을 서버에 보내면
     // 서버에서 해당 토큰을 검증하고 payload 전체를 JSON 형식으로 클라이언트에게 반환이 가능
+    // 테스트할때 Authorization에 Bearer (accessToken Value) - 이렇게 보내면 됨
     @GetMapping()
     public ResponseEntity<?> readUser(@RequestHeader("Authorization") String token) {
         try {
@@ -33,6 +34,7 @@ public class UserController {
             // 토큰에서 payload 추출
             Map<String, Object> claims = jwtUtil.validateToken(token);
 
+            log.info("payload값 서버 -> 클라이언트 : " + claims);
             // payload 반환
             return ResponseEntity.ok(claims);
         } catch (JwtException e) {
@@ -54,4 +56,13 @@ public class UserController {
 
         return ResponseEntity.ok("Logout successful");
     }
-}
+
+//    public ResponseEntity<?> getUserReviews(@RequestHeader("Authorization") String token) {
+//        try {
+//            // Bearer 토큰에서 "Bearer" 부분 제거
+//            if (token.startsWith("Bearer ")) {
+//                token = token.substring(7);
+//            }
+//        }
+    }
+//}
