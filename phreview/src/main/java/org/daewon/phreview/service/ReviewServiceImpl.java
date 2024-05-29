@@ -80,7 +80,20 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviews = reviewRepository.findByUserId(userId);
 
         return reviews.stream()
-                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
+    }
+
+    private ReviewDTO mapToDTO(Review review) {
+
+        return ReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .phId(review.getPharmacy().getPhId())
+                .userId(review.getUsers().getUserId())
+                .reviewText(review.getReviewText())
+                .star(review.getStar())
+                .createAt(review.getCreateAt())
+                .updateAt(review.getUpdateAt())
+                .build();
     }
 }

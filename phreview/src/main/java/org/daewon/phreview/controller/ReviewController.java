@@ -39,13 +39,13 @@ public class ReviewController {
         return reviewId;
     }
 
-    @GetMapping(value = "/")
-    public List<ReviewDTO> readReview(
-            @RequestParam(name = "phId") Long phId) {
-        List<ReviewDTO> reviewList = reviewService.readReview(phId);
-        log.info("dto:" + reviewList);
-        return reviewList;
-    }
+//    @GetMapping(value = "/")
+//    public List<ReviewDTO> readReview(
+//            @RequestParam(name = "phId") Long phId) {
+//        List<ReviewDTO> reviewList = reviewService.readReview(phId);
+//        log.info("dto:" + reviewList);
+//        return reviewList;
+//    }
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
