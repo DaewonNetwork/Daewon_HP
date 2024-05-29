@@ -5,6 +5,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.*;
+import org.daewon.phreview.dto.PharmacyStarDTO;
+import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.repository.PharmacyRepository;
 import org.daewon.phreview.repository.PharmacyStarRepository;
@@ -107,5 +109,18 @@ public class ReviewServiceImpl implements ReviewService {
                 .createAt(review.getCreateAt())
                 .updateAt(review.getUpdateAt())
                 .build();
+    }
+
+    @Override
+    public List<PharmacyStarDTO> getPharmaciesByStarAvgDesc() { // 병원 평점 평균 많은 순부터 내림차순 정렬
+        List<PharmacyStar> list = pharmacyStarRepository.findAllByOrderByStarAvgDesc();
+        return list.stream()
+                .map(p -> {
+                    PharmacyStarDTO dto = new PharmacyStarDTO();
+                    dto.setPhId(p.getPharmacy().getPhId());
+                    dto.setStarAvg(p.getStarAvg());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }

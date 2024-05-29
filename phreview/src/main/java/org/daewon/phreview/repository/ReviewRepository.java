@@ -23,5 +23,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.users.userId = :userId")
     List<Review> findByUserId(Long userId);
 
-    int countByPharmacyPhId(Long phId);
+    int countByPharmacyPhId(Long phId); // 리뷰 작성한 수
 }
