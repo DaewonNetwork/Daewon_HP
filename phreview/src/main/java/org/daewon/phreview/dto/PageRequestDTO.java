@@ -18,13 +18,13 @@ import java.net.URLEncoder;
 public class PageRequestDTO {
 
     @Builder.Default
-    private int page = 1;
+    private int pageIndex = 1;
 
     @Builder.Default
     private int size = 10;
 
     public Pageable getPageable(String...props) {
-        return PageRequest.of(this.page - 1, this.size, Sort.by(props).descending());
+        return PageRequest.of(this.pageIndex - 1, this.size, Sort.by(props).descending());
     }
 
     private String link;
@@ -33,7 +33,7 @@ public class PageRequestDTO {
 
         if(link == null) {
             StringBuilder builder = new StringBuilder();
-            builder.append("page=" + this.page);
+            builder.append("page=" + this.pageIndex);
             builder.append("&size=" + this.size);
 
             link = builder.toString();
