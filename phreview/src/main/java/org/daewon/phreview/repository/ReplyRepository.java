@@ -15,7 +15,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query("select r.users.userId from Reply r where r.replyId = :replyId")
     Optional<Long> findAuthorUserIdById(Long replyId);
 
-    // 사용자 ID로 작성한 글을 조회하는 메서드
+    // 사용자 ID로 작성한 댓글을 조회하는 메서드
     @Query("select r from Reply r where r.users.userId = :userId")
     List<Reply> findByUserId(Long userId);
 }
