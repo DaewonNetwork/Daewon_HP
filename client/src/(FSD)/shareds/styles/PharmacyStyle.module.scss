@@ -1,9 +1,23 @@
 .container {
     display: block;
-    padding: 0 20px;
-
+    
     .item {
         display: block;
-        height: 200px;
+        padding: 20px;
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 4px;
+
+            &.text_add {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
     }
 }

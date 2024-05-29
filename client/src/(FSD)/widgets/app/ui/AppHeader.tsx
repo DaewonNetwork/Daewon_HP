@@ -12,7 +12,7 @@ const logo = Barlow_Condensed({
     display: "swap",
 });
 
-const AppHeader = () => {
+const AppHeader = ({ children }: { children: React.ReactNode }) => {
     return (
         <header className={`bg-background ${styles.header}`}>
             <div className={`${styles.header_inner}`}>
@@ -26,6 +26,7 @@ const AppHeader = () => {
                 </div>
             </div>
             <MapSearchRegion />
+            {children}
         </header>
     );
 };

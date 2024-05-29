@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

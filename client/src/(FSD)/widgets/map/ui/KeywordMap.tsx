@@ -2,21 +2,21 @@
 
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
-import { useMapRegion } from "@/(FSD)/features/map/api/useMapRegion";
+import { useMapKeyword } from "@/(FSD)/features/map/api/useMapKeyword";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 
-const RegionMap = () => {
-    const { city } = useParams<{ city: string }>();
+const KeywordMap = () => {
+    const { keyword } = useParams<{ keyword: string }>();
 
-    const { data, isError, isLoading, refetch } = useMapRegion(city);
+    const { data, isError, isLoading, refetch } = useMapKeyword(keyword);
 
     const pharmacyList: PharmacyType[] = data;
     
 
     useEffect(() => {
         refetch();
-    }, [city]);
+    }, [keyword]);
 
     if(isError) return <></>;
     if(isLoading) return <></>;
@@ -28,4 +28,4 @@ const RegionMap = () => {
     );
 };
 
-export default RegionMap;
+export default KeywordMap;

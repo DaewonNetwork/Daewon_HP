@@ -1,22 +1,14 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
-import { useMapRegion } from "@/(FSD)/features/map/api/useMapRegion";
+import React from "react";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { useMapAll } from "@/(FSD)/features/map/api/useMapAll";
 
-const RegionMap = () => {
-    const { city } = useParams<{ city: string }>();
-
-    const { data, isError, isLoading, refetch } = useMapRegion(city);
+const RegionAll = () => {
+    const { data, isError, isLoading, refetch } = useMapAll();
 
     const pharmacyList: PharmacyType[] = data;
-    
-
-    useEffect(() => {
-        refetch();
-    }, [city]);
 
     if(isError) return <></>;
     if(isLoading) return <></>;
@@ -28,4 +20,4 @@ const RegionMap = () => {
     );
 };
 
-export default RegionMap;
+export default RegionAll;

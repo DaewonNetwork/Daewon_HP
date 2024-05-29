@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { cityList } from "../consts/cityList";
 import { useRouter } from "next/navigation";
 

@@ -1,37 +1,11 @@
 .container {
     display: block;
-
-    .form {
-        display: block;
-        padding: 0 20px;
-        padding-top: 20px;
-    }
-
+    padding-top: 144px;
+    height: 100%;
+    
     .section {
         display: block;
         padding: 0 20px;
         padding-top: 20px;
-    }
-}
-
-.nav {
-    display: block;
-    
-    .city_container {
-        display: block;
-        overflow-x: scroll;
-        scrollbar-width: none;
-
-        .city_list {
-            display: flex;
-            width: max-content;
-
-            & > div {
-                margin-left: 20px;
-                &:last-child {
-                    margin-right: 20px;
-                }
-            }
-        }
     }
 }

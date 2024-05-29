@@ -7,7 +7,7 @@ import { z } from "zod";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { useParams, useRouter } from "next/navigation";
 
 const MapSearchRegionKeywordForm = () => {

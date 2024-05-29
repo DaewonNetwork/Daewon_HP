@@ -2,15 +2,23 @@ import MapSearchRegionKeywordForm from "@/(FSD)/features/pharmacy/ui/MapSearchRe
 import RegionPharmacyList from "@/(FSD)/widgets/pharmacy/ui/RegionPharmacyList";
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
 import RegionMap from "@/(FSD)/widgets/map/ui/RegionMap";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 
 const Page = () => {
     return (
-        <div className={styles.container}>
-            <MapSearchRegionKeywordForm />
-            <RegionMap />
-            <RegionPharmacyList />
-        </div>
+        <>
+            <AppHeader>
+                <MapSearchRegionKeywordForm />
+            </AppHeader>
+            <div className={styles.container}>
+                <RegionMap />
+                <ModalShared>
+                    <RegionPharmacyList />
+                </ModalShared>
+            </div>
+        </>
     );
 };
 

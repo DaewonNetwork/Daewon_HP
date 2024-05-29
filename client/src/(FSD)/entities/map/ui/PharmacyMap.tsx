@@ -4,7 +4,7 @@ import { PharmacyListType } from "@/(FSD)/shareds/types/PharmacyList.type";
 import React, { useEffect, useState } from "react";
 import { MapMarker, Map } from "react-kakao-maps-sdk";
 
-const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {  
+const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {
     const { kakao } = window;
     const [map, setMap] = useState<any>();
 
@@ -24,7 +24,7 @@ const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {
     if(!kakao?.maps) return <></>;
 
     return (
-        <Map level={5} onCreate={setMap} style={{ width: "200px", height: "200px" }} center={{ lat: 0, lng: 0}}>
+        <Map level={5} onCreate={setMap} style={{ width: "100%", height: "100%" }} center={{ lat: 0, lng: 0}}>
             {
                 pharmacyList.map((pharmacy, index) => {
                     return (
