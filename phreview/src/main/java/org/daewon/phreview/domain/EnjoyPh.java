@@ -27,17 +27,17 @@ public class EnjoyPh extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "phId", referencedColumnName = "phId")
-    private Pharmacy pharmacy;
+    private PharmacyEnjoy pharmacyEnjoy;
 
     private boolean isEnjoy;
 
-    public EnjoyPh(Pharmacy pharmacy, Users users) {
-        this.pharmacy = pharmacy;
+    public EnjoyPh(PharmacyEnjoy pharmacyEnjoy, Users users) {
+        this.pharmacyEnjoy = pharmacyEnjoy;
         this.users = users;
         this.isEnjoy = true;
     }
 
-    public void unEnjoyPh(Pharmacy pharmacy) {
+    public void unEnjoyPh(PharmacyEnjoy pharmacyEnjoy) {
         this.isEnjoy = false;
     }
 }

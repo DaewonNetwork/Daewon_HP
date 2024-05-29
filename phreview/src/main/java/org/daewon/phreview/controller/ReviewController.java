@@ -39,13 +39,13 @@ public class ReviewController {
         return reviewId;
     }
 
-    @GetMapping(value = "/")
-    public List<ReviewDTO> readReview(
-            @RequestParam(name = "phId") Long phId) {
-        List<ReviewDTO> reviewList = reviewService.readReview(phId);
-        log.info("dto:" + reviewList);
-        return reviewList;
-    }
+//    @GetMapping(value = "/")
+//    public List<ReviewDTO> readReview(
+//            @RequestParam(name = "phId") Long phId) {
+//        List<ReviewDTO> reviewList = reviewService.readReview(phId);
+//        log.info("dto:" + reviewList);
+//        return reviewList;
+//    }
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
@@ -63,5 +63,12 @@ public class ReviewController {
         reviewDTO.setReviewId(reviewId);
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
+    }
+
+    // 특정 사용자가 작성한 리뷰 목록 조회
+    @GetMapping(value = "/user/{userId}")
+    public List<ReviewDTO> getUserReviews(@PathVariable(name = "userId") Long userId) {
+
+        return reviewService.getReivewsByUserId(userId);
     }
 }

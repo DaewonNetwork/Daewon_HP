@@ -123,7 +123,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     // }
 
     @Override
-    public PageResponseDTO<PharmacyDTO> NameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PharmacyDTO> nameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
@@ -144,7 +144,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
-    public PageResponseDTO<PharmacyDTO> NameSearchInCity(String city, String keyword, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PharmacyDTO> nameSearchInCity(String city, String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
@@ -165,6 +165,27 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
+    public PageResponseDTO<PharmacyDTO> allSearch(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
+                pageRequestDTO.getSize(),
+                Sort.by("phId").ascending());
+        Page<Pharmacy> result = pharmacyRepository.findAll(pageable);
+        log.info(result);
+
+        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+            PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            return pharmacyDTO;
+        }).collect(Collectors.toList());
+        log.info(dtoList);
+        return PageResponseDTO.<PharmacyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
+                .build();
+    }
+
+    @Override
     public PharmacyDTO getPharmacyInfo(Long phId) {
 
         Optional<Pharmacy> result = pharmacyRepository.findById(phId);
@@ -175,34 +196,5 @@ public class PharmacyServiceImpl implements PharmacyService {
         return pharmacyDTO;
     }
 
-    @Override
-    public void enjoyPharmacy(Long phId) {
-        Pharmacy pharmacy = pharmacyRepository.findById(phId)
-                .orElseThrow(() -> new EntityNotFoundException("약국을 찾을 수 없습니다. ID: " + phId));
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = userRepository.findByUserName(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
-        Long userId = users.getUserId();
-
-        if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) {
-            pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() + 1);
-            pharmacyRepository.save(pharmacy);
-            EnjoyPh enjoyPh = new EnjoyPh(pharmacy, users);
-            enjoyRepository.save(enjoyPh);
-            log.info(pharmacy);
-            log.info(enjoyPh);
-            log.info("즐겨찾기");
-        } else {
-            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() - 1);
-            pharmacyRepository.save(pharmacy);
-            enjoyPh.unEnjoyPh(pharmacy);
-            enjoyRepository.delete(enjoyPh);
-            log.info(pharmacy);
-            log.info(enjoyPh);
-            log.info("즐겨찾기 취소");
-        }
-
-    }
 }

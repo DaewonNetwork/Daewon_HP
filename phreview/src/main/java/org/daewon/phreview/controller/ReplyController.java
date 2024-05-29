@@ -39,14 +39,14 @@ public class ReplyController {
         return replyId;
     }
 
-    @Operation(summary = "Replies Post")
-    @GetMapping(value = "/")
-    public List<ReplyDTO> getList(
-            @RequestParam(name = "reviewId") Long reviewId) {
-        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
-        log.info("댓글의 답글"+replyDTO);
-        return replyDTO;
-    }
+//    @Operation(summary = "Replies Post")
+//    @GetMapping(value = "/")
+//    public List<ReplyDTO> getList(
+//            @RequestParam(name = "reviewId") Long reviewId) {
+//        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
+//        log.info("댓글의 답글"+replyDTO);
+//        return replyDTO;
+//    }
 
     // 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
