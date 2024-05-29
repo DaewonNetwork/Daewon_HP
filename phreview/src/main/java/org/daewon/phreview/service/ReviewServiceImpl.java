@@ -43,14 +43,14 @@ public class ReviewServiceImpl implements ReviewService {
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         for(Review r : result){
             ReviewDTO dto = ReviewDTO.builder()
-                     .reviewId(r.getReviewId())
-                     .reviewText(r.getReviewText())
-                     .star(r.getStar())
-                     .userId(r.getUsers().getUserId())
-                     .phId(r.getPharmacy().getPhId())
-                     .createAt(r.getCreateAt())
-                     .updateAt(r.getUpdateAt())
-                     .build();
+                    .reviewId(r.getReviewId())
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userId(r.getUsers().getUserId())
+                    .phId(r.getPharmacy().getPhId())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
             reviewDTOList.add(dto);
         }
         return reviewDTOList;

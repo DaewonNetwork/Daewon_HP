@@ -15,17 +15,19 @@ public class AuthSigninDTO implements UserDetails {
 
     private String userName;
     private String password;
-    @Column(name = "users_email", unique = true)
+    @Column(unique = true)
     private String email;
     private Collection<? extends GrantedAuthority> authorities;
+    private Long userId;
 
     public AuthSigninDTO(String userName, String password, String email,
-                         Collection<? extends GrantedAuthority> authorities) {
+                         Collection<? extends GrantedAuthority> authorities, Long userId) {
 
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.authorities = authorities;
+        this.userId = userId;
     }
 
     @Override

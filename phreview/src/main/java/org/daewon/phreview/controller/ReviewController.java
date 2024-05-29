@@ -23,37 +23,36 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReview(@RequestBody ReviewDTO reviewDTO) {
         log.info(reviewDTO);
         Long reviewId;
         try {
-             reviewId =  reviewService.createReview(reviewDTO);
-        } catch (RuntimeException e ){
+            reviewId = reviewService.createReview(reviewDTO);
+        } catch (RuntimeException e) {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
         return reviewId;
     }
 
-
     @GetMapping(value = "/")
     public List<ReviewDTO> readReview(
             @RequestParam(name = "phId") Long phId) {
         List<ReviewDTO> reviewList = reviewService.readReview(phId);
-        log.info("dto:"+reviewList);
+        log.info("dto:" + reviewList);
         return reviewList;
     }
 
     @DeleteMapping(value = "/")
-    public Map<String, String> deleteReview( @RequestParam(name = "reviewId") Long reviewId) {
+    public Map<String, String> deleteReview(@RequestParam(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
     }
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> updateReview( @RequestParam(name = "reviewId") Long reviewId, @RequestBody ReviewDTO reviewDTO) {
+    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
+            @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");

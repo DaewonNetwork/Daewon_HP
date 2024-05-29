@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Users users = modelMapper.map(authSignupDTO, Users.class);
-        
+
         users.setPassword(passwordEncoder.encode(authSignupDTO.getPassword()));
         users.addRole(UserRole.USER);
 
@@ -84,5 +84,4 @@ public class AuthServiceImpl implements AuthService {
             throw new ImageUploadException("이미지 업로드 실패", e);
         }
     }
-
 }

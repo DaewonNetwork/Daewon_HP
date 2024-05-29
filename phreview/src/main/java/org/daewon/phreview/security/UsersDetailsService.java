@@ -59,10 +59,11 @@ public class UsersDetailsService implements UserDetailsService {
         }
 
         return new AuthSigninDTO(
-                users.getUserName(),
-                users.getPassword(),
-                users.getEmail(),
-                authorities
-        );
+                        users.getUserName(),
+                        users.getPassword(),
+                        users.getEmail(),
+                        authorities,
+                        users.getUserId()
+                );
     }
 }

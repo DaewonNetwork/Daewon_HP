@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.pharmacy.phId = :phId")
     List<Review> listOfPharmacy(Long phId);
+
+    @Query("select r.users.userId from Review r where r.reviewId = :reviewId")
+    Optional<Long> findAuthorUserIdById(Long reviewId);
 }

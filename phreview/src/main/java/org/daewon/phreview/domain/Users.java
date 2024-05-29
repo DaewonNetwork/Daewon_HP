@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "roleSet")
-public class Users extends BaseEntity{
+public class Users extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Users extends BaseEntity{
     @Setter
     private String password;
     private String userName;
-    @Column(name = "users_email", unique = true)
+    @Column(unique = true)
     private String email;
     private boolean social;
 
