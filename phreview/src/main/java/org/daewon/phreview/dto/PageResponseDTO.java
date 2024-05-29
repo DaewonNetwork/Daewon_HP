@@ -10,41 +10,33 @@ import java.util.List;
 @ToString
 public class PageResponseDTO<E> {
 
-    private int page;
+    private int pageIndex;
     private int size;
-    private int total;
-
-    // 시작페이지 번호
-    private int start;
-    // 끝페이지 번호
-    private int end;
-
-    // 이전페이지 여부
+    private int totalPageIndex;
+    private int totalIndex;
+    private int viewStart;
+    private int viewEnd;
     private boolean prev;
-    // 다음페이지 여부
     private boolean next;
-
-    private List<E> dtoList;  // 게시글 내용!
+    private List<E> phList;
 
     @Builder(builderMethodName = "withAll")
-    public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
-        if(total <= 0) {
+    public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> phList, int totalIndex) {
+        if(totalIndex <= 0) {
             return;
         }
-        this.page = pageRequestDTO.getPage();
+        this.pageIndex = pageRequestDTO.getPageIndex();
         this.size = pageRequestDTO.getSize();
-        this.total = total;
+        this.totalIndex = totalIndex;
+        this.totalPageIndex = (int)(Math.ceil((double)totalIndex / size)); // 전체 페이지 수 계산
 
-        this.dtoList = dtoList;
+        this.phList = phList;
 
-        this.end = (int)(Math.ceil(this.page / 10.0)) * 10; // 화면에 표시할 페이지번호 갯수...
-        this.start = this.end - 9; // 화면에서 시작번호
-        int last = (int)(Math.ceil((total/(double)size))); // 데이터 개수로 계산한 마지막 페이지 번호
-
-        this.end = end > last ? last : end;
-
-        this.prev = this.start > 1;
-        this.next = total > this.end * this.size;
+        this.viewEnd = Math.min((int)(Math.ceil((double)(pageIndex + 1) / 10.0)) * 10, totalPageIndex); // 화면에 표시할 페이지번호 갯수...
+        this.viewStart = this.viewEnd - 9; // 화면에서 시작번호
+        this.prev = this.viewStart > 1;
+        this.next = totalPageIndex > this.viewEnd;
     }
-
 }
+
+
