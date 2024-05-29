@@ -1,13 +1,10 @@
 package org.daewon.phreview.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.daewon.phreview.domain.Users;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -24,6 +21,7 @@ public class ReviewDTO {
     private Long phId;      // 특정한 병원 번호를 선언
     private Long userId;    // 특정한 유저 id를 선언
 //    private Users users;
+    private String fileName;
 
     @NotEmpty
     private String reviewText;
@@ -33,6 +31,6 @@ public class ReviewDTO {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    private List<String> fileNames;
+    private List<String> fileNames; // 리뷰와 연관된 파일 이름 목록
 
 }

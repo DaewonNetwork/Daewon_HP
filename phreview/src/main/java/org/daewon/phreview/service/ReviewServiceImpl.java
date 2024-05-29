@@ -24,18 +24,34 @@ public class ReviewServiceImpl implements ReviewService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+    // @Override
+    // public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
+    //      Review review = modelMapper.map(reviewDTO, Review.class);
+    //      log.info("review : " + review);
+    //      review.setPharmacy(reviewDTO.getPhId());
+    //      review.setUsers(reviewDTO.getUserId());
+    //      Long reviewId = reviewRepository.save(review).getReviewId();
+    //      return reviewId;
+    // }
+
     @Override
     public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
-        Review review = modelMapper.map(reviewDTO, Review.class);
-        dtoToEntity(reviewDTO);
-        review.setPharmacy(reviewDTO.getPhId());
-        review.setUsers(reviewDTO.getUserId());
+        Review review = mapToEntity(reviewDTO); // modelMapper 대신 mapToEntity 사용
         Long reviewId = reviewRepository.save(review).getReviewId();
         return reviewId;
     }
 
-
-
+    // ReviewDTO를 Review 엔티티로 변환합니다.
+    private Review mapToEntity(ReviewDTO reviewDTO) {
+        Review review = new Review();
+        review.setReviewId(reviewDTO.getReviewId());
+        review.setPharmacy(reviewDTO.getPhId());
+        review.setUsers(reviewDTO.getUserId());
+        review.setReviewText(reviewDTO.getReviewText());
+        review.setStar(reviewDTO.getStar());
+        review.setReviewImage(reviewDTO.getFileName());
+        return review;
+    }
 
     @Override
     public List<ReviewDTO> readReview(Long phId) {

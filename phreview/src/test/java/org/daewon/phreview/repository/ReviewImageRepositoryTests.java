@@ -33,6 +33,8 @@ public class ReviewImageRepositoryTests {
     private ReviewServiceImpl reviewServiceImpl;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void testInsertWithImages() {
@@ -105,26 +107,6 @@ public class ReviewImageRepositoryTests {
 
         result.getContent().forEach(reviewListAllDTO -> log.info(reviewListAllDTO));
 
-    }
-
-    @Test
-    public void testRegisterWithImages() {
-        log.info(reviewServiceImpl.getClass().getName());
-
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-                .reviewId(110L)
-                .reviewText("sample")
-                .build();
-        reviewDTO.setFileNames(
-                Arrays.asList(
-                        UUID.randomUUID()+"_aaa.jpg",
-                        UUID.randomUUID()+"_bbb.jpg",
-                        UUID.randomUUID()+"_bbb.jpg"
-                ));
-
-        Long reviewId = reviewService.createReview(reviewDTO);
-
-        log.info("reviewId : " + reviewId);
     }
 
 }

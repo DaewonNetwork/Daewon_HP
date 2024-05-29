@@ -1,8 +1,6 @@
 package org.daewon.phreview.repository.search;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPQLQuery;
-import org.daewon.phreview.domain.QReply;
 import org.daewon.phreview.domain.QReview;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.ReviewImageDTO;

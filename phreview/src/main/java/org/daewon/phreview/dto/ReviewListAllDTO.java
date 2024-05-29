@@ -14,12 +14,12 @@ import java.util.List;
 @Builder
 public class ReviewListAllDTO {
 
-    private Long review_Id;
-    private Long user_Id;
-    private String review_text;
-    private Date createAt;
-    private Date updateAt;
+    private Long review_Id; // 리뷰 식별
+    private Long user_Id; // 리뷰 작성자 식별
+    private String review_text; // 리뷰 본문 내용
+    private LocalDateTime createAt; // 리뷰 생성시간
+    private LocalDateTime updateAt; // 리뷰 수정시간
 
-    private List<ReviewImageDTO> reviewImages;
+    private List<ReviewImageDTO> reviewImages; // 리뷰와 연관된 이미지 목록
 
 }

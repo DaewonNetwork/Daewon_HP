@@ -37,6 +37,9 @@ public class Review extends BaseEntity{
 
     private int star; // 평점
 
+    @JoinColumn(name = "fileName", referencedColumnName = "fileName")
+    private String reviewImage;
+
     // 리뷰작성 내용 수정
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
@@ -47,8 +50,21 @@ public class Review extends BaseEntity{
         this.pharmacy = Pharmacy.builder().phId(phId).build();
     }
 
+    // setter설정
     public void setUsers(Long userId) {
         this.users = Users.builder().userId(userId).build();
+    }
+
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
+    }
+    
+    public void setStar(int star) {
+        this.star = star;
+    }
+    
+    public void setReviewImage(String reviewImage) {
+        this.reviewImage = reviewImage;
     }
 
     @OneToMany(mappedBy = "review",
@@ -57,7 +73,7 @@ public class Review extends BaseEntity{
                orphanRemoval = true)
     @Builder.Default
     @BatchSize(size = 20)
-    private Set<ReviewImage> imageSet = new HashSet<>();
+    private Set<ReviewImage> imageSet = new HashSet<>(); // 리뷰에 연결된 이미지를 하나의 그룹으로 묶어서 관리
 
     public void addImage(String uuid, String fileName) {
         ReviewImage reviewImage = ReviewImage.builder()
@@ -66,13 +82,12 @@ public class Review extends BaseEntity{
                 .review(this)
                 .ord(imageSet.size())
                 .build();
-        imageSet.add(reviewImage);
+        imageSet.add(reviewImage); // 새 이미지를 리뷰의 이미지 그룹에 추가
     }
 
     public void clearImage() {
-        imageSet.forEach(reviewImage -> reviewImage.changeBoard(null));
+        imageSet.forEach(reviewImage -> reviewImage.changeBoard(null)); // 리뷰와 연결된 모든 이미지의 review참조를 null로 설정
 
         this.imageSet.clear();
     }
-
 }

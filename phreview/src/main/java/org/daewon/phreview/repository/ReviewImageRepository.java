@@ -13,7 +13,6 @@ public interface ReviewImageRepository extends JpaRepository<Review, Long>, Revi
 
     @EntityGraph(attributePaths = {"imageSet"})
     @Query("select r from Review r where r.reviewId = :reviewId")
-    Optional<Review> findByIdWithImages(Long reviewId);
-
+    Optional<Review> findByIdWithImages(Long reviewId); // revviewId로 리뷰를 조회하고, 연관된 이미지들도 함께 로드합니다.
 
 }
