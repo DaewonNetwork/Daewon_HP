@@ -17,17 +17,14 @@ const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {
         });
         
         if(!map) return;
-        map.setLevel(1);
-        map.setBounds(bounds);
-
-        console.log(map);
-        
+        map.setBounds(bounds);        
+        map.setLevel(5);
     }, [map, pharmacyList]);
 
     if(!kakao?.maps) return <></>;
 
     return (
-        <Map level={1} onCreate={setMap} style={{ width: "200px", height: "200px" }} center={{ lat: 0, lng: 0}}>
+        <Map level={3} onCreate={setMap} style={{ width: "200px", height: "200px" }} center={{ lat: 0, lng: 0}}>
             {
                 pharmacyList.map((pharmacy, index) => {
                     return (
