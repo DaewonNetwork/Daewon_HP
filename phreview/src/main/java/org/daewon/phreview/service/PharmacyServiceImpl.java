@@ -123,7 +123,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     // }
 
     @Override
-    public PageResponseDTO<PharmacyDTO> NameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PharmacyDTO> nameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
@@ -144,12 +144,33 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
-    public PageResponseDTO<PharmacyDTO> NameSearchInCity(String city, String keyword, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<PharmacyDTO> nameSearchInCity(String city, String keyword, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(city, keyword, pageable);
+        log.info(result);
+
+        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+            PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            return pharmacyDTO;
+        }).collect(Collectors.toList());
+        log.info(dtoList);
+        return PageResponseDTO.<PharmacyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .phList(dtoList)
+                .totalIndex((int) result.getTotalElements())
+                .build();
+    }
+
+    @Override
+    public PageResponseDTO<PharmacyDTO> allSearch(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
+                pageRequestDTO.getSize(),
+                Sort.by("phId").ascending());
+        Page<Pharmacy> result = pharmacyRepository.findAll(pageable);
         log.info(result);
 
         List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
