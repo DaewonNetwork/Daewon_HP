@@ -21,12 +21,16 @@ public class Review extends BaseEntity{
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "userId", referencedColumnName = "userId")
+
     @OnDelete(action = OnDeleteAction.CASCADE) // 유저 삭제하면 리뷰 같이 삭제
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "phId", referencedColumnName = "phId")
+
     private Pharmacy pharmacy;
 
     @Column(length = 500, nullable = false)

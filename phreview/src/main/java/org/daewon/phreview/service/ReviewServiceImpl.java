@@ -74,6 +74,26 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+    // 사용자 ID로 리뷰 목록을 조회하는 메서드
+    @Override
+    public List<ReviewDTO> getReivewsByUserId(Long userId) {
+        List<Review> reviews = reviewRepository.findByUserId(userId);
 
+        return reviews.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
 
+    private ReviewDTO mapToDTO(Review review) {
+
+        return ReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .phId(review.getPharmacy().getPhId())
+                .userId(review.getUsers().getUserId())
+                .reviewText(review.getReviewText())
+                .star(review.getStar())
+                .createAt(review.getCreateAt())
+                .updateAt(review.getUpdateAt())
+                .build();
+    }
 }
