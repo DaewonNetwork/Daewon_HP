@@ -28,9 +28,13 @@ export const useSearchRegion = (city: string) => {
         queryKey: ["searchCity", city],
         queryFn: mapSearchRegionFetch,
         getNextPageParam: (lastPage, pages: any) => {
-            console.log(lastPage);
+            console.log(pages[0]);
             
-            return pages[0]?.page + 1;
+            const pageIndex = pages[0].page = pages[0]?.page + 1;
+            console.log(pageIndex);
+            
+
+            return pageIndex;
         },
         initialPageParam: 1,
         refetchOnMount: false,
