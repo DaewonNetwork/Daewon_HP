@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PharmacyEnjoyRepository extends JpaRepository<PharmacyEnjoy, Long> {
     List<PharmacyEnjoy> findAllByOrderByEnjoyIndexDesc();
+    List<PharmacyEnjoy> findByIdOrderByPharmacyEnjoyIdDesc(Long userId);
 }

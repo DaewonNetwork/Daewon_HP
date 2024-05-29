@@ -41,10 +41,6 @@ public class EnjoyPharmacyServiceTests {
 
 
 
-        enjoyService.enjoyPharmacy(3L, 1L);
-        enjoyService.enjoyPharmacy(3L, 2L);
-
-
     }
 
 

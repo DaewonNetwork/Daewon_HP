@@ -31,22 +31,21 @@ public class EnjoyServiceImpl implements EnjoyService {
     private final PharmacyRepository pharmacyRepository;
 
     @Override
-    public void enjoyPharmacy(Long phId, Long userId) {
+    public void enjoyPharmacy(Long phId) { // 즐겨찾기 기능
 
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Users users = userRepository.findByUserName(authentication.getName())
-//                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        Users users = userRepository.findByUserName(currentUserName)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
 
-        Users users = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new); // 임의 유저 생성
-//        Long userId = users.getUserId();
-
+        Long userId = users.getUserId();
 
         Pharmacy pharmacy = pharmacyRepository.findById(phId)
                 .orElseThrow(() -> new PharmacyNotFoundException(phId));
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findById(phId)
-                .orElseGet(() -> {
+                .orElseGet(() -> { // 해당하는 phId가 없을경우 새로 생성
                     PharmacyEnjoy newPharmacyEnjoy = PharmacyEnjoy.builder()
                             .pharmacy(pharmacy)
                             .build();
@@ -75,17 +74,39 @@ public class EnjoyServiceImpl implements EnjoyService {
     }
 
     @Override
-    public List<PharmacyEnjoyDTO> pharmacyEnjoyRank() {
+    public List<PharmacyEnjoyDTO> getPharmaciesByEnjoyIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
         List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findAllByOrderByEnjoyIndexDesc();
-
-        // PharmacyEnjoy를 PharmacyEnjoyDTO로 변환하여 바로 반환
         return list.stream()
                 .map(p -> {
                     PharmacyEnjoyDTO dto = new PharmacyEnjoyDTO();
                     dto.setPhId(p.getPharmacy().getPhId());
-                    dto.setEnjoyIndex(p.getEnjoyIndex()); // 필요한 다른 필드도 추가할 수 있습니다.
+                    dto.setEnjoyIndex(p.getEnjoyIndex());
                     return dto;
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<PharmacyEnjoyDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String currentUserName = authentication.getName();
+        Users users = userRepository.findByUserName(currentUserName)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+
+        Long userId = users.getUserId();
+
+        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findByIdOrderByPharmacyEnjoyIdDesc(userId);
+
+        return list.stream()
+                .map(p -> {
+                    PharmacyEnjoyDTO dto = new PharmacyEnjoyDTO();
+                    dto.setPhId(p.getPharmacy().getPhId());
+                    dto.setEnjoyIndex(p.getEnjoyIndex());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
 }
