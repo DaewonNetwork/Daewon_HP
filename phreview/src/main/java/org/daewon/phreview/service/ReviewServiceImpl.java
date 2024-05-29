@@ -1,20 +1,17 @@
 package org.daewon.phreview.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.Pharmacy;
-import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.domain.*;
 import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.repository.PharmacyRepository;
+import org.daewon.phreview.repository.PharmacyStarRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
+import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,16 +26,31 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PharmacyStarRepository pharmacyStarRepository;
 
     @Override
     public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
+
         Review review = modelMapper.map(reviewDTO, Review.class);
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
-        Long reviewId = reviewRepository.save(review).getReviewId();
-        return reviewId;
+        reviewRepository.save(review);
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findById(reviewDTO.getPhId()).orElse(null);
+        if (pharmacyStar == null) {
+            pharmacyStar = PharmacyStar.builder()
+                    .pharmacy(Pharmacy.builder().phId(reviewDTO.getPhId()).build())
+                    .starTotal(reviewDTO.getStar())
+                    .starAvg(reviewDTO.getStar())
+                    .build();
+        } else {
+            pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() + reviewDTO.getStar());
+            double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(reviewDTO.getPhId()) * 10.0) / 10.0;
+            pharmacyStar.setStarAvg(starAvg);
+        }
+        pharmacyStarRepository.save(pharmacyStar);
+
+        return review.getReviewId();
     }
 
     @Override
