@@ -83,7 +83,6 @@ public class ReviewImageRepositoryTests {
             Review review = Review.builder()
                     .reviewText("Text" + i)
                     .build();
-
             for (int j = 0; j < 3; j++) {
                 if(i % 5 == 0) {
                     continue;
