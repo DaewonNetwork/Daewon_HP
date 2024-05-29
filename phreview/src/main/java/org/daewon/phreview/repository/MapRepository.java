@@ -12,6 +12,7 @@ import java.util.List;
 public interface MapRepository extends JpaRepository<Pharmacy, Long> {
 
 
+
     @Query("select p from Pharmacy p where p.phAdd like concat('%',:city,'%')")
     List<Pharmacy> findByCity(String city);
 

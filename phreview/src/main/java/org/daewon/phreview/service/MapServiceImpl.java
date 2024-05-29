@@ -133,4 +133,31 @@ public class MapServiceImpl implements MapService {
     }
 
 
+    @Override
+    public List<PharmacyDTO> AllSearch(){
+
+        List<Pharmacy> result = mapRepository.findAll();
+        log.info(result);
+        List<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
+        for(Pharmacy p : result){
+            PharmacyDTO dto = PharmacyDTO.builder()
+                    .phId(p.getPhId())
+                    .phName(p.getPhName())
+                    .phAdd(p.getPhAdd())
+                    .phTel(p.getPhTel())
+                    .phX(p.getPhX())
+                    .phY(p.getPhY())
+                    .starIndex(p.getStarIndex())
+                    .timeHoliEndDate(p.getTimeHoliEndDate())
+                    .timeHoliStartDate(p.getTimeHoliStartDate())
+                    .timeSatEndDate(p.getTimeSatEndDate())
+                    .timeSatStartDate(p.getTimeSatStartDate())
+                    .timeWeekEndDate(p.getTimeWeekEndDate())
+                    .timeWeekStartDate(p.getTimeWeekStartDate())
+                    .build();
+            pharmacyDTOList.add(dto); // 4
+        }
+        return pharmacyDTOList;
+    }
+
 }
