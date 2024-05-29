@@ -13,5 +13,5 @@ public interface PharmacyService {
      PageResponseDTO<PharmacyDTO> NameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
   
     PharmacyDTO getPharmacyInfo(Long phId);
-    void enjoyPharmacy(Long phId);
+
 }

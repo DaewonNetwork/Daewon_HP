@@ -79,14 +79,14 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 변경된 부분
         log.info(result);
-        List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
+        List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             return pharmacyDTO;
         }).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info(phList);
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
-                .phList(dtoList)
+                .phList(phList)
                 .totalIndex((int) result.getTotalElements())
                 .build();
     }
@@ -175,34 +175,5 @@ public class PharmacyServiceImpl implements PharmacyService {
         return pharmacyDTO;
     }
 
-    @Override
-    public void enjoyPharmacy(Long phId) {
-        Pharmacy pharmacy = pharmacyRepository.findById(phId)
-                .orElseThrow(() -> new EntityNotFoundException("약국을 찾을 수 없습니다. ID: " + phId));
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = userRepository.findByUserName(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
-        Long userId = users.getUserId();
-
-        if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) {
-            pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() + 1);
-            pharmacyRepository.save(pharmacy);
-            EnjoyPh enjoyPh = new EnjoyPh(pharmacy, users);
-            enjoyRepository.save(enjoyPh);
-            log.info(pharmacy);
-            log.info(enjoyPh);
-            log.info("즐겨찾기");
-        } else {
-            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacy.setEnjoyIndex(pharmacy.getEnjoyIndex() - 1);
-            pharmacyRepository.save(pharmacy);
-            enjoyPh.unEnjoyPh(pharmacy);
-            enjoyRepository.delete(enjoyPh);
-            log.info(pharmacy);
-            log.info(enjoyPh);
-            log.info("즐겨찾기 취소");
-        }
-
-    }
 }
