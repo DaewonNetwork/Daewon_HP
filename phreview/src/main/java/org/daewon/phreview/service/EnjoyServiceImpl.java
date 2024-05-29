@@ -7,6 +7,7 @@ import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Users;
+import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.daewon.phreview.dto.PharmacyEnjoyDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.PharmacyEnjoyRepository;
@@ -87,23 +88,22 @@ public class EnjoyServiceImpl implements EnjoyService {
     }
 
     @Override
-    public List<PharmacyEnjoyDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)
+    public List<EnjoyPhDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        String currentUserName = authentication.getName();
+//        Users users = userRepository.findByUserName(currentUserName)
+//                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+//
+//        Long userId = users.getUserId();
 
-        String currentUserName = authentication.getName();
-        Users users = userRepository.findByUserName(currentUserName)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
-
-        Long userId = users.getUserId();
-
-        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findByIdOrderByPharmacyEnjoyIdDesc(userId);
+        List<EnjoyPh> list = enjoyRepository.findByUsersUserIdOrderByEnjoyIdDesc(1L);
 
         return list.stream()
-                .map(p -> {
-                    PharmacyEnjoyDTO dto = new PharmacyEnjoyDTO();
-                    dto.setPhId(p.getPharmacy().getPhId());
-                    dto.setEnjoyIndex(p.getEnjoyIndex());
+                .map(e -> {
+                    EnjoyPhDTO dto = new EnjoyPhDTO();
+                    dto.setPhId(e.getPharmacyEnjoy().getPharmacy().getPhId());
                     return dto;
                 })
                 .collect(Collectors.toList());

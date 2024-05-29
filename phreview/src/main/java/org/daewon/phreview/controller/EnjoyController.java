@@ -3,12 +3,12 @@ package org.daewon.phreview.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
+import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.daewon.phreview.dto.PharmacyEnjoyDTO;
 import org.daewon.phreview.repository.PharmacyEnjoyRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.service.EnjoyService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,14 +35,14 @@ public class EnjoyController {
     }
 
     @GetMapping("/list")
-    public List<PharmacyEnjoyDTO> enjoyRank(){ // 즐겨찾기 수가 높은 병원 내림차순
-        List<PharmacyEnjoyDTO> list = enjoyService.pharmacyEnjoyRank();
+    public List<PharmacyEnjoyDTO> enjoyRankList(){ // 즐겨찾기 수가 높은 병원 내림차순
+        List<PharmacyEnjoyDTO> list = enjoyService.getPharmaciesByEnjoyIndexDesc();
         return list;
     }
 
-    @GetMapping("/list")
-    public List<PharmacyEnjoyDTO> enjoyRank(){ // 즐겨찾기 수가 높은 병원 내림차순
-        List<PharmacyEnjoyDTO> list = enjoyService.pharmacyEnjoyRank();
+    @GetMapping("/list/user")
+    public List<EnjoyPhDTO> enjoyedPharmaciesList(){
+        List<EnjoyPhDTO> list = enjoyService.getUserEnjoyedPharmacies();
         return list;
     }
 

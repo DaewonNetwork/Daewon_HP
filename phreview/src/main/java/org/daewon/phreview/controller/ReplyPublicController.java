@@ -22,7 +22,7 @@ public class ReplyPublicController {
 
     @Operation(summary = "Replies Post")
     @GetMapping(value = "/")
-    public List<ReplyDTO> getList(
+    public List<ReplyDTO> readReply(
             @RequestParam(name = "reviewId") Long reviewId) {
         List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
         log.info("댓글의 답글"+replyDTO);
