@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
-import { useSearchRegion } from "@/(FSD)/features/pharmacy/api/useSearchRegion";
+import { useSearchRegionKeyword } from "@/(FSD)/features/pharmacy/api/useSearchRegionKeyword";
 
-const RegionPharmacyList = () => {
-    const { city } = useParams<{ city: string }>();
+const RegionKeywordPharmacyList = () => {
+    const { city, keyword } = useParams<{ city: string, keyword: string }>();
 
-    const { pharmacyList, fetchNextPage } = useSearchRegion(city);
+    const { pharmacyList, fetchNextPage } = useSearchRegionKeyword(city, keyword);
 
     const { ref, inView } = useInView();
 
@@ -19,7 +19,7 @@ const RegionPharmacyList = () => {
             fetchNextPage();
         }
     }, [inView]);
-
+    
     return (
         <div className={styles.container}>
             <PharmacyList pharmacyList={pharmacyList} />
@@ -28,4 +28,4 @@ const RegionPharmacyList = () => {
     );
 };
 
-export default RegionPharmacyList;
+export default RegionKeywordPharmacyList;

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
-import { useSearchKeyword } from "@/(FSD)/features/pharmacy/api/search/useSearchKeyword";
+import { useSearchKeyword } from "@/(FSD)/features/pharmacy/api/useSearchKeyword";
 
 const KeywordPharmacyList = () => {
     const { keyword } = useParams<{ keyword: string }>();

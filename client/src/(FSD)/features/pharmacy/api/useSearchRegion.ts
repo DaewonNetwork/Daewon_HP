@@ -2,9 +2,9 @@ import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-const mapSearchNearFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: any[] }) => {
-    const [, [lat, lng]] = queryKey;
-    const response = await fetch(`http://localhost:8090/pharmacy/near?lat=${lat}&lng=${lng}&pageIndex=${pageParam}&size=10`, {
+const phSearchRegionFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
+    const [, city] = queryKey;
+    const response = await fetch(`http://localhost:8090/pharmacy/region?city=${city}&pageIndex=${pageParam}&size=10`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const mapSearchNearFetch = async ({ pageParam = 1, queryKey }: { pageParam?: num
     return data;
 };
 
-export const useSearchNear = (lat: number, lng: number) => {
+export const useSearchRegion = (city: string) => {
     const {
         data,
         fetchNextPage,
@@ -25,8 +25,8 @@ export const useSearchNear = (lat: number, lng: number) => {
         isError,
         isLoading,
     } = useInfiniteQuery({
-        queryKey: ["search_near", [lat, lng]],
-        queryFn: mapSearchNearFetch,
+        queryKey: ["search_region", city],
+        queryFn: phSearchRegionFetch,
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;

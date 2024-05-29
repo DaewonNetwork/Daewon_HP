@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
-import { useSearchNear } from "@/(FSD)/features/pharmacy/api/search/useSearchNear";
+import { useSearchNear } from "@/(FSD)/features/pharmacy/api/useSearchNear";
 
 const NearPharmacyList = () => {
     const [lat, setLat] = useState<number>(0);

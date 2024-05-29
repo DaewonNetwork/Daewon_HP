@@ -17,6 +17,7 @@ const MapSearchRegion = () => {
         <nav className={styles.nav}>
             <div className={styles.city_container}>
                 <div className={styles.city_list}>
+                    <div onClick={_ => router.push("/")}>홈</div>
                     <div onClick={_ => router.push("/map/all")}>전체</div>
                     <div onClick={_ => router.push("/map/near")}>근처</div>
                     {

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
-import { useSearchAll } from "@/(FSD)/features/pharmacy/api/search/useSearchAll";
+import { useSearchAll } from "@/(FSD)/features/pharmacy/api/useSearchAll";
 
 const AllPharmacyList = () => {
     const { pharmacyList, fetchNextPage } = useSearchAll();
