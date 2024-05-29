@@ -1,14 +1,17 @@
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
-import MapRankEnjoy from "@/(FSD)/entities/map/ui/MapRankEnjoy";
-import MapRankStar from "@/(FSD)/entities/map/ui/MapRankStar";
+
+import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
+import PhRankEnjoy from "@/(FSD)/entities/pharmacy/ui/PhRankEnjoy";
+import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
 
 
 const Page = () => {
     return (
-        <div>
-            <MapRankEnjoy />
-            <MapRankStar />
+        <div className={styles.container}>
+            <MapSearchForm />
+            <PhRankEnjoy />
+            <PhRankStar />
         </div>
     )
 }
