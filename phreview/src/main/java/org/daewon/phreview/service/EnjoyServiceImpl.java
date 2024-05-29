@@ -36,8 +36,10 @@ public class EnjoyServiceImpl implements EnjoyService {
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         String currentUserName = authentication.getName();
-        Users users = userRepository.findByUserName(currentUserName)
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
 
         Long userId = users.getUserId();
@@ -90,15 +92,16 @@ public class EnjoyServiceImpl implements EnjoyService {
     @Override
     public List<EnjoyPhDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        String currentUserName = authentication.getName();
-//        Users users = userRepository.findByUserName(currentUserName)
-//                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
-//
-//        Long userId = users.getUserId();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        List<EnjoyPh> list = enjoyRepository.findByUsersUserIdOrderByEnjoyIdDesc(1L);
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+
+        Long userId = users.getUserId();
+
+        List<EnjoyPh> list = enjoyRepository.findByUsersUserIdOrderByEnjoyIdDesc(userId);
 
         return list.stream()
                 .map(e -> {

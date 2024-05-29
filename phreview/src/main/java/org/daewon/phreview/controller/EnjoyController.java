@@ -27,21 +27,15 @@ public class EnjoyController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/")
-    public int enjoy(@RequestParam Long phId){ // 즐겨찾기 기능
+    public int enjoy(@RequestParam Long phId){ // 즐겨찾기
         enjoyService.enjoyPharmacy(phId);
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findById(phId).orElseThrow(() -> new PharmacyNotFoundException(phId));
         log.info(pharmacyEnjoy.getEnjoyIndex());
         return pharmacyEnjoy.getEnjoyIndex(); // 즐겨찾기 수 반환
     }
 
-    @GetMapping("/list")
-    public List<PharmacyEnjoyDTO> enjoyRankList(){ // 즐겨찾기 수가 높은 병원 내림차순
-        List<PharmacyEnjoyDTO> list = enjoyService.getPharmaciesByEnjoyIndexDesc();
-        return list;
-    }
-
-    @GetMapping("/list/user")
-    public List<EnjoyPhDTO> enjoyedPharmaciesList(){
+    @GetMapping("/list/user") // 자신이 즐겨찾기한 병원 목록 (즐겨찾기한 순 정렬)
+    public List<EnjoyPhDTO> enjoyedPharmaciesList(){ //
         List<EnjoyPhDTO> list = enjoyService.getUserEnjoyedPharmacies();
         return list;
     }
