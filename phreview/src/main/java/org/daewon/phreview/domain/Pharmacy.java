@@ -26,6 +26,4 @@ public class Pharmacy {
     private double phX;  // 경도
     private double phY;  // 위도
 
-    private int starIndex; // 별점 인덱스
-
 }
