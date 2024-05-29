@@ -54,6 +54,7 @@ public class ReplyServiceImpl implements ReplyService {
                     .updateAt(r.getUpdateAt())
                     .build();
             replyDTOList.add(dto);
+            log.info("dto" + dto);
         }
         return replyDTOList;
     }
@@ -72,6 +73,10 @@ public class ReplyServiceImpl implements ReplyService {
         replyRepository.deleteById(replyId);
     }
 
-
-
+//    @Override
+//    public List<ReplyDTO> getReplysByUserId(Long userId) {
+//        List<Reply> reply =
+//
+//        return List.of();
+//    }
 }

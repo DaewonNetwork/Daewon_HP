@@ -79,21 +79,36 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDTO> getReivewsByUserId(Long userId) {
         List<Review> reviews = reviewRepository.findByUserId(userId);
 
+        // .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
+        // Review 엔티티의 Pharmacy 관계를 통해 phId를 가져온다.
+        // Pharmacy 객체가 null이 아닌 경우에만 phId 값을 추출
+
+        // .userId(review.getUsers() != null ? review.getUsers().getUserId() : null)
+        // Review 엔티티의 Users 관계를 통해 userId를 가져온다.
+        // Users 객체가 null이 아닌 경우에만 userId 값을 추출
         return reviews.stream()
-                .map(this::mapToDTO)
+                .map(review -> ReviewDTO.builder()
+                        .reviewId(review.getReviewId())
+                        .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
+                        .userId(review.getUsers() != null ? review.getUsers().getUserId() : null)
+                        .reviewText(review.getReviewText())
+                        .star(review.getStar())
+                        .createAt(review.getCreateAt())
+                        .updateAt(review.getUpdateAt())
+                        .build())
                 .collect(Collectors.toList());
     }
 
-    private ReviewDTO mapToDTO(Review review) {
-
-        return ReviewDTO.builder()
-                .reviewId(review.getReviewId())
-                .phId(review.getPharmacy().getPhId())
-                .userId(review.getUsers().getUserId())
-                .reviewText(review.getReviewText())
-                .star(review.getStar())
-                .createAt(review.getCreateAt())
-                .updateAt(review.getUpdateAt())
-                .build();
-    }
+//    private ReviewDTO mapToDTO(Review review) {
+//
+//        return ReviewDTO.builder()
+//                .reviewId(review.getReviewId())
+//                .phId(review.getPharmacy().getPhId())
+//                .userId(review.getUsers().getUserId())
+//                .reviewText(review.getReviewText())
+//                .star(review.getStar())
+//                .createAt(review.getCreateAt())
+//                .updateAt(review.getUpdateAt())
+//                .build();
+//    }
 }
