@@ -74,6 +74,13 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+    // 사용자 ID로 리뷰 목록을 조회하는 메서드
+    @Override
+    public List<ReviewDTO> getReivewsByUserId(Long userId) {
+        List<Review> reviews = reviewRepository.findByUserId(userId);
 
-
+        return reviews.stream()
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .collect(Collectors.toList());
+    }
 }

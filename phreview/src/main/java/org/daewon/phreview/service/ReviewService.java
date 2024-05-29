@@ -15,5 +15,6 @@ public interface ReviewService {
 
     void deleteReview(Long reviewId);
 
-
+    // 특정 사용자가 작성한 리뷰 목록에 가져오는 메서드
+    List<ReviewDTO> getReivewsByUserId(Long userId);
 }
