@@ -33,7 +33,6 @@ public class ReviewServiceImpl implements ReviewService {
     //      Long reviewId = reviewRepository.save(review).getReviewId();
     //      return reviewId;
     // }
-    
 
     @Override
     public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
@@ -87,9 +86,4 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
-
-    @Override
-    public PageResponseDTO<ReviewListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
-        return null;
-    }
-  
+}

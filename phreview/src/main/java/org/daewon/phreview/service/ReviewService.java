@@ -25,8 +25,5 @@ public interface ReviewService {
     void updateReview(ReviewDTO reviewDTO);
 
     void deleteReview(Long reviewId);
-
-
-    PageResponseDTO<ReviewListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
-  
+    
 }
