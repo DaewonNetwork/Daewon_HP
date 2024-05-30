@@ -1,5 +1,6 @@
 package org.daewon.phreview.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
 import org.daewon.phreview.utils.JWTUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Log4j2
@@ -39,28 +45,39 @@ public class ReviewController {
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
 
+    @Value("${org.daewon.upload.path}")
+    private String uploadPath;
+
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Long createReview(@RequestBody ReviewDTO reviewDTO) {
-        log.info(reviewDTO);
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createReview(
+            @RequestPart("reviewDTO") String reviewDTOStr,
+            @RequestPart(name = "files", required = false) Optional<MultipartFile> files) {
+        log.info("Review DTO String: " + reviewDTOStr);
+
+        ReviewDTO reviewDTO;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            reviewDTO = objectMapper.readValue(decodedReviewDTO, ReviewDTO.class);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid JSON format", e);
+        }
+
         Long reviewId;
         try {
-            reviewId = reviewService.createReview(reviewDTO);
+            reviewId = reviewService.createReview(reviewDTO, files.orElse(null), uploadPath);
+
+            return ResponseEntity.ok(reviewId);
+
         } catch (RuntimeException e) {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
-        return reviewId;
     }
 
-//    @GetMapping(value = "/")
-//    public List<ReviewDTO> readReview(
-//            @RequestParam(name = "phId") Long phId) {
-//        List<ReviewDTO> reviewList = reviewService.readReview(phId);
-//        log.info("dto:" + reviewList);
-//        return reviewList;
-//    }
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")

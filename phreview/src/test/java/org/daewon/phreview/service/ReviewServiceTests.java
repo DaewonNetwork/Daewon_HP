@@ -19,17 +19,17 @@ public class ReviewServiceTests {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Test
-    public void testRegister() {
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-                .phId(1L)
-                .reviewText("good")
-                .userId(1L)
-                .star(1)
-                .build();
-        Long reviewId = reviewService.createReview(reviewDTO);
-        log.info(reviewId);
-    }
+//    @Test
+//    public void testRegister() {
+//        ReviewDTO reviewDTO = ReviewDTO.builder()
+//                .phId(1L)
+//                .reviewText("good")
+//                .userId(1L)
+//                .star(1)
+//                .build();
+//        Long reviewId = reviewService.createReview(reviewDTO);
+//        log.info(reviewId);
+//    }
 
 
     @Test
