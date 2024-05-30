@@ -4,6 +4,7 @@ import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Users;
+import org.daewon.phreview.dto.EnjoyPhDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,6 +17,6 @@ public interface EnjoyRepository extends JpaRepository<EnjoyPh, Long> {
 
     List<EnjoyPh> findByUsersUserIdOrderByEnjoyIdDesc(Long userId);
 
-    @Query(value = "SELECT * from enjoy_ph where ph_id=:phId",nativeQuery = true)
-    EnjoyPh findByPhId(Long phId);
+    @Query(value = "SELECT is_enjoy from enjoy_ph where ph_id=:phId and user_id=:userId",nativeQuery = true)
+    EnjoyPhDTO findIsEnjoyByPharmacyAndUsers(Long phId, Long userId);
 }

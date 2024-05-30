@@ -20,7 +20,7 @@ public class EnjoyPublicController {
 
     private final EnjoyService enjoyService;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<PharmacyEnjoyDTO> PharmaciesByEnjoyCountDesc() { // 즐겨찾기 수가 높은 병원 내림차순
         List<PharmacyEnjoyDTO> list = enjoyService.getPharmaciesByEnjoyIndexDesc();
         return list;
