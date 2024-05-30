@@ -27,6 +27,7 @@ const PharmacyInfo = () => {
         <section className={styles.ph_info}>
             <div className={styles.ph_box}>
                 <h1 className={"text-large font-medium"}>{pharmacy.phName}</h1>
+                <p>{pharmacy.starAvg}</p>
             </div>
         </section>
     );
