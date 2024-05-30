@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.daewon.phreview.domain.EnjoyPh;
 
 @Data
 @NoArgsConstructor
@@ -28,5 +29,6 @@ public class PharmacyDTO {
     private int enjoyIndex;
     private double starAvg;
     private int reviewIndex;
+    private EnjoyPh enjoyPh;
 
 }
