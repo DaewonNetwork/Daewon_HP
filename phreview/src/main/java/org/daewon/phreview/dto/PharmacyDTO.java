@@ -27,5 +27,6 @@ public class PharmacyDTO {
     private double phY;  // 위도
     private int enjoyIndex;
     private double starAvg;
+    private int reviewIndex;
 
 }

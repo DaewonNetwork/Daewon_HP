@@ -10,6 +10,7 @@ import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
 import org.daewon.phreview.repository.PharmacyEnjoyRepository;
 import org.daewon.phreview.repository.PharmacyStarRepository;
+import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.service.EnjoyService;
 import org.daewon.phreview.service.PharmacyService;
 import org.daewon.phreview.service.ReviewService;
@@ -30,6 +31,7 @@ public class PharmacyController {
     private final PharmacyService pharmacyService;
     private final PharmacyStarRepository pharmacyStarRepository;
     private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
+    private final ReviewRepository reviewRepository;
 
     @GetMapping("/region")
     public PageResponseDTO<PharmacyDTO> searchRegionCategory(@RequestParam String city, PageRequestDTO pageRequestDTO){ // 지역 별 검색
@@ -69,9 +71,8 @@ public class PharmacyController {
         pharmacyDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
-
         pharmacyDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
-
+        pharmacyDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
         return pharmacyDTO;
     }
 }
