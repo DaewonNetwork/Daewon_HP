@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RestController
@@ -39,11 +40,9 @@ public class ReviewController {
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
 
-    // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
-    // 파일과 리뷰 데이터를 받는 엔드포인트
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> uploadReviewData(
+    public ResponseEntity<?> createReview(
             @RequestPart("reviewDTO") String reviewDTOStr,
             @RequestPart("files") List<MultipartFile> files) {
         log.info("Review DTO String: " + reviewDTOStr);
@@ -51,21 +50,23 @@ public class ReviewController {
         ReviewDTO reviewDTO;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            reviewDTO = objectMapper.readValue(reviewDTOStr, ReviewDTO.class);
+            // 여기에서 인코딩을 UTF-8로 변환
+            String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            reviewDTO = objectMapper.readValue(decodedReviewDTO, ReviewDTO.class);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("Error parsing reviewDTO: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid JSON format", e);
         }
 
-        Long reviewId;
         try {
-            reviewId = reviewService.createReview(reviewDTO, files, uploadPath);
-            return ResponseEntity.ok().body(Map.of("reviewId", reviewId));
+            Long reviewId = reviewService.createReview(reviewDTO, files, uploadPath);
+            return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
-            log.error(e.getMessage());
+            log.error("Error creating review: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
     }
+
 
 
     // 리뷰 작성한 유저만 삭제 가능

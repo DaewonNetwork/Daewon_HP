@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
         reviewRepository.save(review);
-
+        
 
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(reviewDTO.getPhId()).orElse(null);
         if (pharmacyStar == null) {
