@@ -37,7 +37,7 @@ public class EnjoyController {
     }
 
     @Operation(summary = "자신이 즐겨찾기한 약국 목록")
-    @GetMapping("/") // 자신이 즐겨찾기한 약국 목록 (즐겨찾기한 순 정렬)
+    @GetMapping("/list") // 자신이 즐겨찾기한 약국 목록 (즐겨찾기한 순 정렬)
     public List<EnjoyPhDTO> enjoyedPharmaciesList(){ //
         List<EnjoyPhDTO> Pharmacylist = enjoyService.getUserEnjoyedPharmacies();
         return Pharmacylist;
