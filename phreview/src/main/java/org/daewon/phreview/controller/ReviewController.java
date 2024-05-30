@@ -97,17 +97,18 @@ public class ReviewController {
 
             // 토큰 payload에서 userId 값 추출
             Map<String, Object> claims = jwtUtil.validateToken(token);
+            // payload에서 userId 추출
             Long userId = Long.parseLong(claims.get("userId").toString());
 
             log.info("유저 ID: " + userId);
 
+            // 해당 사용자가 작성한 Review 가져오기
             List<ReviewDTO> userReviews = reviewService.getReivewsByUserId(userId);
             log.info("리뷰 목록: " + userReviews);
 
             // 리뷰 목록 반환
             return ResponseEntity.ok(userReviews);
         } catch (JwtException e) {
-
             // 토큰이 유효하지 않으면 401 상태 코드 반환
             return ResponseEntity.status(401).body("Invalid token");
         }
