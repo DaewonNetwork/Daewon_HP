@@ -1,8 +1,8 @@
 import PharmacyInfo from "@/(FSD)/entities/pharmacy/ui/PharmacyInfo";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 
 const Page = () => {
     return (
