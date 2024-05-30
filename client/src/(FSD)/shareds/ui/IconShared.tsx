@@ -102,7 +102,7 @@ const IconShared = ({ iconType, className, ...props }: IconType) => {
             break;
     }
 
-    return <span className={`icon ${className}`} {...props}>{component}</span>
+    return <span className={`icon ${className || "text-large"}`} {...props}>{component}</span>
 };
 
 export default IconShared;

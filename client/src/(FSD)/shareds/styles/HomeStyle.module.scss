@@ -21,6 +21,18 @@
 
             .ph_box {
                 display: block;
+
+                .ph_star {
+                    display: flex;
+                    align-items: center;
+
+                    span {
+
+                        &:first-child {
+                            color: #F5A524;
+                        }
+                    }
+                }
             }
         }
     }

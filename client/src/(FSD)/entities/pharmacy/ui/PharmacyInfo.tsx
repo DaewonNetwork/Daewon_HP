@@ -5,6 +5,7 @@ import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import IconShared from "@/(FSD)/shareds/ui/IconShared";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -27,7 +28,7 @@ const PharmacyInfo = () => {
         <section className={styles.ph_info}>
             <div className={styles.ph_box}>
                 <h1 className={"text-large font-medium"}>{pharmacy.phName}</h1>
-                <p>{pharmacy.starAvg}</p>
+                <p className={`text-medium font-medium ${styles.ph_star}`}><IconShared iconType={"star"} /><span>{pharmacy.starAvg}</span></p>
             </div>
         </section>
     );
