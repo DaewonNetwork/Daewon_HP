@@ -4,7 +4,7 @@ package org.daewon.phreview.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.LikeForReview;
-;
+
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
 
