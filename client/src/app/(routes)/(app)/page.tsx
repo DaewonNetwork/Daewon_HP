@@ -5,6 +5,7 @@ import PhRankEnjoy from "@/(FSD)/entities/pharmacy/ui/PhRankEnjoy";
 import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 
 const Page = () => {
     return (
@@ -17,6 +18,9 @@ const Page = () => {
                     <PhRankEnjoy />
                     <PhRankStar />
                 </div>
+            </div>
+            <div className={styles.footer}>
+                <AppFooter />
             </div>
         </div>
     )

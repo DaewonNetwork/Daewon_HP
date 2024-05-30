@@ -3,9 +3,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaPlus } from "react-icons/fa";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash } from "react-icons/fa6";
-import { IoCloseCircle, IoPersonSharp, IoChatbubble, IoPersonCircleOutline, IoPersonCircle, IoCopy, IoChatbubbleOutline, IoCopyOutline, IoHeart, IoHeartOutline, IoSettingsSharp, IoMenu, IoSearch } from "react-icons/io5";
+import { IoCloseCircle, IoPersonSharp, IoChatbubble, IoPersonCircleOutline, IoPersonCircle, IoCopy, IoChatbubbleOutline, IoCopyOutline, IoHeart, IoHeartOutline, IoSettingsSharp, IoMenu, IoSearch, IoMap } from "react-icons/io5";
 import { GoHome, GoHomeFill, GoPencil } from "react-icons/go";
 import { IconType } from "../types/Icon.type";
+import { IoMdListBox } from "react-icons/io";
+import { IoPerson } from "react-icons/io5";
 
 const IconShared = ({ iconType, className, ...props }: IconType) => {
     let component = null;
@@ -83,6 +85,15 @@ const IconShared = ({ iconType, className, ...props }: IconType) => {
         case "search":
             component = <IoSearch />;
             break;    
+        case "map":
+            component = <IoMap />;
+            break;
+        case "review": 
+            component = <IoMdListBox />;
+            break;
+        case "person":
+            component = <IoPerson />;
+            break;
         default:
             component = null;
             break;
