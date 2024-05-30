@@ -10,11 +10,12 @@ import java.util.Optional;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-//    @Query("select r from Review r where r.pharmacy.phId = :phId")
-//    List<Review> listOfPharmacy(Long phId);
 
-    @Query("SELECT r FROM Review r WHERE r.pharmacy.phId = :phId")
-    List<Review> listOfPharmacy(@Param("phId") Long phId);
+    @Query("SELECT r FROM Review r WHERE r.pharmacy.phId = :phId ORDER BY r.reviewId DESC")
+    List<Review> listOfPharmacy(@Param("phId") Long phId); // 최신순
+
+    @Query("SELECT r FROM Review r WHERE r.pharmacy.phId = :phId ORDER BY r.likeIndex DESC")
+    List<Review> listOfPharmacyOrderByLikeIndex(@Param("phId") Long phId); // 좋아요순
 
     // 리뷰 작성자의 userId를 반환하도록 하는 메서드
     @Query("select r.users.userId from Review r where r.reviewId = :reviewId")
@@ -26,5 +27,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     int countByPharmacyPhId(Long phId); // 리뷰 작성한 수
 
-    List<Review> findAllByOrderByLikeIndexDesc();
+
+
+
 }

@@ -1,20 +1,20 @@
 package org.daewon.phreview.service;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.LikeForReview;
-import org.daewon.phreview.domain.PharmacyEnjoy;
+;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.PharmacyEnjoyDTO;
+
 import org.daewon.phreview.dto.ReviewDTO;
-import org.daewon.phreview.dto.ReviewLikeDTO;
+
 import org.daewon.phreview.repository.LikeRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
-import org.daewon.phreview.service.LikeService;
+
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,12 +63,18 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<ReviewLikeDTO> getReviewsByLikeIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
-        List<Review> list = reviewRepository.findAllByOrderByLikeIndexDesc();
+    public List<ReviewDTO> getReviewsByLikeIndexDesc(Long phId) { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
+        List<Review> list = reviewRepository.listOfPharmacyOrderByLikeIndex(phId);
         return list.stream()
                 .map(r -> {
-                    ReviewLikeDTO dto = new ReviewLikeDTO();
+                    ReviewDTO dto = new ReviewDTO();
                     dto.setReviewId(r.getReviewId());
+                    dto.setPhId(r.getPharmacy().getPhId());
+                    dto.setUserId(r.getUsers().getUserId());
+                    dto.setStar(r.getStar());
+                    dto.setReviewText(r.getReviewText());
+                    dto.setCreateAt(r.getCreateAt());
+                    dto.setUpdateAt(r.getUpdateAt());
                     dto.setLikeIndex(r.getLikeIndex());
                     return dto;
                 })
