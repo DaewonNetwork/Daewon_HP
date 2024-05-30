@@ -72,7 +72,7 @@ public class PharmacyController {
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
         pharmacyDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
-        pharmacyDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId));
+        pharmacyDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
         return pharmacyDTO;
     }
 }
