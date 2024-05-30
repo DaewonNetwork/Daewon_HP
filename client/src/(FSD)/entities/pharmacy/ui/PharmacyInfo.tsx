@@ -26,7 +26,7 @@ const PharmacyInfo = () => {
     return (
         <section className={styles.ph_info}>
             <div className={styles.ph_box}>
-                <h1 className={"text-large"}>{pharmacy.phName}</h1>
+                <h1 className={"text-large font-medium"}>{pharmacy.phName}</h1>
             </div>
         </section>
     );
