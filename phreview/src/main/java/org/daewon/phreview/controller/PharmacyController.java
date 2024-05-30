@@ -71,27 +71,7 @@ public class PharmacyController {
     @GetMapping("/read")
     public PharmacyInfoDTO readPharmacy(@RequestParam Long phId) {
         PharmacyInfoDTO pharmacyInfoDTO = pharmacyService.getPharmacyInfo(phId);
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
 
-        pharmacyInfoDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
-
-        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
-        pharmacyInfoDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
-        pharmacyInfoDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String currentUserName = authentication.getName();
-        log.info("이름:"+currentUserName);
-        Users users = userRepository.findByEmail(currentUserName)
-                .orElse(null);
-        if(users != null) {
-            Long userId = users.getUserId();
-            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacyInfoDTO.setEnjoyPh(enjoyPh);
-        } else{
-            pharmacyInfoDTO.setEnjoyPh(null);
-        }
         return pharmacyInfoDTO;
     }
 }

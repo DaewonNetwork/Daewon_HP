@@ -3,20 +3,20 @@ package org.daewon.phreview.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.Pharmacy;
+import org.daewon.phreview.domain.*;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
 import org.daewon.phreview.dto.PharmacyInfoDTO;
-import org.daewon.phreview.repository.EnjoyRepository;
-import org.daewon.phreview.repository.PharmacyRepository;
-import org.daewon.phreview.repository.UserRepository;
+import org.daewon.phreview.repository.*;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +28,12 @@ import java.util.stream.Collectors;
 public class PharmacyServiceImpl implements PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
+    private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final EnjoyRepository enjoyRepository;
+    private final PharmacyStarRepository pharmacyStarRepository;
+    private final ReviewRepository reviewRepository;
 
     public PageResponseDTO<PharmacyDTO> regionCategorySearch(String city, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
@@ -191,6 +194,28 @@ public class PharmacyServiceImpl implements PharmacyService {
 
         PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class);
 
+
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
+
+        pharmacyInfoDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
+
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
+        pharmacyInfoDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
+        pharmacyInfoDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
+        if(users != null) {
+            Long userId = users.getUserId();
+            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
+            pharmacyInfoDTO.setEnjoyPh(enjoyPh);
+        } else{
+            pharmacyInfoDTO.setEnjoyPh(null);
+        }
         return pharmacyInfoDTO;
     }
 
