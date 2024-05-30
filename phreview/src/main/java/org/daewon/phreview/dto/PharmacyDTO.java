@@ -25,5 +25,7 @@ public class PharmacyDTO {
     private String timeHoliEndDate; // 공휴일 종료
     private double phX;  // 경도
     private double phY;  // 위도
+    private int enjoyIndex;
+    private double starAvg;
 
 }
