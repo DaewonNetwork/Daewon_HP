@@ -38,7 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
         reviewRepository.save(review);
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findById(reviewDTO.getPhId()).orElse(null);
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(reviewDTO.getPhId()).orElse(null);
         if (pharmacyStar == null) {
             pharmacyStar = PharmacyStar.builder()
                     .pharmacy(Pharmacy.builder().phId(reviewDTO.getPhId()).build())
@@ -78,13 +78,31 @@ public class ReviewServiceImpl implements ReviewService {
     public void updateReview(ReviewDTO reviewDTO) {   // 댓글 수정
         Optional<Review> reviewOptional = reviewRepository.findById(reviewDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
-
-        review.setReviewText(reviewDTO.getReviewText());   // 리뷰 내용 수정
-        reviewRepository.save(review);
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
+        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
+        review.setReview(reviewDTO.getReviewText(),reviewDTO.getStar());
+        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+review.getStar());
+        double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
+        pharmacyStar.setStarAvg(starAvg);
+        reviewRepository.save(review); // 리뷰 내용 수정
+        pharmacyStarRepository.save(pharmacyStar); // 별점 수정
     }
 
     @Override
     public void deleteReview(Long reviewId) {
+        Optional<Review> reviewOptional =  reviewRepository.findById(reviewId);
+        Review review = reviewOptional.orElseThrow();
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
+        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
+        double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
+        pharmacyStar.setStarAvg(starAvg);
+
+        if(pharmacyStar.getStarAvg() == 0){
+            pharmacyStarRepository.delete(pharmacyStar);
+        }else {
+            pharmacyStarRepository.save(pharmacyStar);
+        }
+
         reviewRepository.deleteById(reviewId);
     }
 
