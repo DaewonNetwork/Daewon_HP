@@ -10,6 +10,7 @@ import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.dto.PharmacyInfoDTO;
 import org.daewon.phreview.repository.*;
 import org.daewon.phreview.service.EnjoyService;
 import org.daewon.phreview.service.PharmacyService;
@@ -68,15 +69,15 @@ public class PharmacyController {
     }
 
     @GetMapping("/read")
-    public PharmacyDTO readPharmacy(@RequestParam Long phId) {
-        PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
+    public PharmacyInfoDTO readPharmacy(@RequestParam Long phId) {
+        PharmacyInfoDTO pharmacyInfoDTO = pharmacyService.getPharmacyInfo(phId);
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
 
-        pharmacyDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
+        pharmacyInfoDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
-        pharmacyDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
-        pharmacyDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
+        pharmacyInfoDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
+        pharmacyInfoDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -87,10 +88,10 @@ public class PharmacyController {
         if(users != null) {
             Long userId = users.getUserId();
             EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacyDTO.setEnjoyPh(enjoyPh);
+            pharmacyInfoDTO.setEnjoyPh(enjoyPh);
         } else{
-            pharmacyDTO.setEnjoyPh(null);
+            pharmacyInfoDTO.setEnjoyPh(null);
         }
-        return pharmacyDTO;
+        return pharmacyInfoDTO;
     }
 }

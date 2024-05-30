@@ -12,7 +12,7 @@ import org.daewon.phreview.domain.EnjoyPh;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PharmacyDTO {
+public class PharmacyInfoDTO {
 
     private Long phId;
     private String phName; // 병원 이름
@@ -24,8 +24,9 @@ public class PharmacyDTO {
     private String timeSatEndDate; // 토요일 종료
     private String timeHoliStartDate; // 공휴일 시작
     private String timeHoliEndDate; // 공휴일 종료
-    private double phX;  // 경도
-    private double phY;  // 위도
-
+    private int enjoyIndex;
+    private double starAvg;
+    private int reviewIndex;
+    private EnjoyPh enjoyPh;
 
 }

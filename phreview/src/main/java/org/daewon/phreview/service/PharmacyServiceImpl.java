@@ -3,12 +3,11 @@ package org.daewon.phreview.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.Pharmacy;
-import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.dto.PharmacyInfoDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.PharmacyRepository;
 import org.daewon.phreview.repository.UserRepository;
@@ -17,8 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -186,14 +183,14 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
-    public PharmacyDTO getPharmacyInfo(Long phId) {
+    public PharmacyInfoDTO getPharmacyInfo(Long phId) {
 
         Optional<Pharmacy> result = pharmacyRepository.findById(phId);
         Pharmacy pharmacy = result.orElseThrow(() -> new EntityNotFoundException("약국을 찾을 수 없습니다. ID: " + phId));
 
-        PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+        PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class);
 
-        return pharmacyDTO;
+        return pharmacyInfoDTO;
     }
 
 
