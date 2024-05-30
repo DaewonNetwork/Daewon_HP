@@ -66,18 +66,7 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 8d207c17864850aae81f4f29787b0d8ff7de2423
-//    @GetMapping(value = "/")
-//    public List<ReviewDTO> readReview(
-//            @RequestParam(name = "phId") Long phId) {
-//        List<ReviewDTO> reviewList = reviewService.readReview(phId);
-//        log.info("dto:" + reviewList);
-//        return reviewList;
-//    }
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
