@@ -31,7 +31,7 @@ public class EnjoyController {
 
     @Operation(summary = "즐겨찾기")
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/")
+    @GetMapping()
     public int enjoy(@RequestParam Long phId) {
         enjoyService.enjoyPharmacy(phId);
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)

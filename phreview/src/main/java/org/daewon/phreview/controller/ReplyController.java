@@ -30,7 +30,7 @@ public class ReplyController {
 
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReply(@RequestBody ReplyDTO replyDTO) {
         log.info(replyDTO);
         Long replyId;
@@ -45,7 +45,7 @@ public class ReplyController {
 
     // 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
-    @DeleteMapping(value = "/")
+    @DeleteMapping()
     public Map<String, String> deleteReply(@RequestParam(name = "replyId") Long replyId) {
         replyService.deleteReply(replyId);
         return Map.of("result", "success");
@@ -53,7 +53,7 @@ public class ReplyController {
 
     // 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> modifyReply(@RequestParam(name = "replyId") Long replyId, @RequestBody ReplyDTO replyDTO) {
         replyDTO.setReplyId(replyId);
         replyService.updateReply(replyDTO);

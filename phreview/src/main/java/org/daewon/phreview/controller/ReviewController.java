@@ -42,6 +42,7 @@ public class ReviewController {
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
+
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createReview(
             @RequestPart("reviewDTO") String reviewDTOStr,
@@ -49,6 +50,12 @@ public class ReviewController {
         log.info("Review DTO String: " + reviewDTOStr);
 
         ReviewDTO reviewDTO;
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Long createReview(@RequestBody ReviewDTO reviewDTO) {
+        log.info(reviewDTO);
+        Long reviewId;
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             // 여기에서 인코딩을 UTF-8로 변환
@@ -71,7 +78,7 @@ public class ReviewController {
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @DeleteMapping(value = "/")
+    @DeleteMapping()
     public Map<String, String> deleteReview(@RequestParam(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
@@ -79,7 +86,7 @@ public class ReviewController {
 
     // 리뷰 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
                                             @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);
