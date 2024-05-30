@@ -81,19 +81,7 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
     }
-
-    // 리뷰 ID를 기반으로 리뷰 데이터를 JSON 형식으로 반환하는 엔드포인트
-    @GetMapping(value = "/{reviewId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReviewDTO> getReview(@PathVariable Long reviewId) {
-        try {
-            ReviewDTO reviewDTO = reviewService.getReviewById(reviewId);
-            return ResponseEntity.ok(reviewDTO);
-        } catch (Exception e) {
-            log.error("Review not found", e);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
+    
 //    @GetMapping(value = "/")
 //    public List<ReviewDTO> readReview(
 //            @RequestParam(name = "phId") Long phId) {
