@@ -6,8 +6,7 @@ import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
-import { useReadUser } from "@/(FSD)/entities/user/api/useReadUser";
-import { UserType } from "@/(FSD)/shareds/types/User.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const logo = Barlow_Condensed({
     weight: "500",
@@ -16,9 +15,7 @@ const logo = Barlow_Condensed({
 });
 
 const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
-    const { data } = useReadUser();
-
-    const user: UserType = data;
+    const { user } = useUserStore();
 
     return (
         <header className={`bg-background ${styles.header}`}>

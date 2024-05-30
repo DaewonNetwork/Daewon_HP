@@ -9,7 +9,7 @@ import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { useAuthSignin } from "../api/useAuthSignin";
+import { useAuthSignin } from "../api/useAuthSIgnin";
 
 const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -33,8 +33,8 @@ const AuthSigninForm = () => {
 
     const onSuccess = (data: any) => {
         localStorage.setItem("access_token", data.accessToken);
-        localStorage.setItem("refresh_token", data.refreshToken);
-        
+        localStorage.setItem("refresh_token", data.refreshToken);        
+
         router.push("/");
     }
 
