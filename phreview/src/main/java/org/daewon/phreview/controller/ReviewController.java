@@ -107,19 +107,7 @@ public class ReviewController {
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
     }
-
-//    // 특정 사용자가 작성한 리뷰 목록 조회
-//    // 로그인한 사용자의 리뷰를 가져오는 엔드포인트
-//    @PreAuthorize("hasRole('USER')")
-//    @GetMapping(value = "/user/{userId}")
-//    public List<ReviewDTO> getUserReviews(@PathVariable(name = "userId") Long userId) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        AuthSigninDTO authSigninDTO = (AuthSigninDTO) authentication.getPrincipal();
-//        Long userId = authSigninDTO.getUserId();
-//
-//
-//        return reviewService.getReviewsByUserId(userId);
-//    }
+    
 
     //  특정 사용자가 작성한 리뷰 목록 조회
     // 로그인한 사용자의 리뷰를 가져오는 엔드포인트
