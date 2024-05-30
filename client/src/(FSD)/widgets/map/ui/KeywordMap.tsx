@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useMapKeyword } from "@/(FSD)/features/map/api/useMapKeyword";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 
 const KeywordMap = () => {
     const { keyword } = useParams<{ keyword: string }>();

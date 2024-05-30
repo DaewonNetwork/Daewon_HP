@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Chip } from "@nextui-org/chip";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();

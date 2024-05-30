@@ -1,4 +1,4 @@
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 

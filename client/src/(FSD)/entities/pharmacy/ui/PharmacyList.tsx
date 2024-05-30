@@ -1,10 +1,10 @@
 "use client";
 
-import { PharmacyListType } from "@/(FSD)/shareds/types/PharmacyList.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import React from "react";
 
-const PharmacyList = ({ pharmacyList }: PharmacyListType) => {
+const PharmacyList = ({ pharmacyList }: { pharmacyList: PharmacyType[] }) => {
     return (
         <>
             {

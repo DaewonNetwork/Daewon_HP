@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useMapAll } from "@/(FSD)/features/map/api/useMapAll";
 
 const AllMap = () => {
