@@ -40,6 +40,7 @@ public class ReviewController {
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
 
+    // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createReview(
@@ -68,7 +69,6 @@ public class ReviewController {
     }
 
 
-
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @DeleteMapping(value = "/")
@@ -86,7 +86,6 @@ public class ReviewController {
         reviewService.updateReview(reviewDTO);
         return Map.of("result", "success");
     }
-    
 
     //  특정 사용자가 작성한 리뷰 목록 조회
     // 로그인한 사용자의 리뷰를 가져오는 엔드포인트

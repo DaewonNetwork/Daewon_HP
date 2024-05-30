@@ -21,5 +21,4 @@ public interface ReviewService {
     List<ReviewDTO> getReviewsByUserId(Long userId);
 
     List<PharmacyStarDTO> getPharmaciesByStarAvgDesc(); // 리뷰 별점 평균
-
 }
