@@ -1,7 +1,5 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ReviewService {
-    Long createReview(ReviewDTO reviewDTO, List<MultipartFile> files, String uploadPath);
+    Long createReview(ReviewDTO reviewDTO, MultipartFile files, String uploadPath);
 
     List<ReviewDTO> readReview(Long phId);
 

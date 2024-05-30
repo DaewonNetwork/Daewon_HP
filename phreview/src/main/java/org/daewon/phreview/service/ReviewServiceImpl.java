@@ -39,35 +39,20 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public Long createReview(ReviewDTO reviewDTO, List<MultipartFile> files, String uploadPath) {
+    public Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath) {
         // 리뷰 저장
         Review review = Review.builder()
                 .reviewText(reviewDTO.getReviewText())
                 .star(reviewDTO.getStar())
+                .likeIndex(reviewDTO.getLikeIndex())
                 .build();
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
+
         reviewRepository.save(review);
-        
-
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(reviewDTO.getPhId()).orElse(null);
-        if (pharmacyStar == null) {
-            pharmacyStar = PharmacyStar.builder()
-                    .pharmacy(Pharmacy.builder().phId(reviewDTO.getPhId()).build())
-                    .starTotal(reviewDTO.getStar())
-                    .starAvg(reviewDTO.getStar())
-                    .build();
-        } else {
-            pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() + reviewDTO.getStar());
-            double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(reviewDTO.getPhId()) * 10.0) / 10.0;
-            pharmacyStar.setStarAvg(starAvg);
-        }
-        pharmacyStarRepository.save(pharmacyStar);
-
 
         // 파일 저장
-        int order = 0;
-        for (MultipartFile file : files) {
+        if (file != null) {
             String originalName = file.getOriginalFilename();
             String uuid = UUID.randomUUID().toString();
             Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
@@ -84,7 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
                 ReviewImage reviewImage = ReviewImage.builder()
                         .uuid(uuid)
                         .fileName(originalName)
-                        .ord(order++)
+                        .ord(0) // Change this if necessary
                         .review(review)
                         .build();
                 reviewImageRepository.save(reviewImage);
