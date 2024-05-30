@@ -112,7 +112,7 @@ public class ReviewController {
 
 
             // 해당 사용자가 작성한 Review 가져오기
-            List<ReviewDTO> userReviews = reviewService.getReivewsByUserId(userId);
+            List<ReviewDTO> userReviews = reviewService.getReviewsByUserId(userId);
 
             log.info("리뷰 목록: " + userReviews);
 
