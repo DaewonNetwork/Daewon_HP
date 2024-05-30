@@ -33,7 +33,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Long createReply(ReplyDTO replyDTO) { // 리뷰 등록
+    public Long createReply(ReplyDTO replyDTO) { // 답글 등록
         Reply reply = modelMapper.map(replyDTO, Reply.class);
         reply.setReview(replyDTO.getReviewId());
         reply.setUsers(replyDTO.getUserId());

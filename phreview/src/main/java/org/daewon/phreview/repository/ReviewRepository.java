@@ -1,5 +1,6 @@
 package org.daewon.phreview.repository;
 
+import org.daewon.phreview.domain.LikeForReview;
 import org.daewon.phreview.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByUserId(Long userId);
 
     int countByPharmacyPhId(Long phId); // 리뷰 작성한 수
+
+    List<Review> findAllByOrderByLikeIndexDesc();
 }
