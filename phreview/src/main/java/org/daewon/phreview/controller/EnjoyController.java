@@ -28,11 +28,14 @@ public class EnjoyController {
     @Operation(summary = "즐겨찾기")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/")
-    public int enjoy(@RequestParam Long phId){ // 즐겨찾기
+    public int enjoy(@RequestParam Long phId) {
         enjoyService.enjoyPharmacy(phId);
-        Optional<PharmacyEnjoy> pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId);
-        return pharmacyEnjoy.get().getEnjoyIndex(); // 즐겨찾기 수 반환
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
+                .orElse(null); // 객체가 없을 경우 null 반환
+        return pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0; // 객체가 있을 때 인덱스 반환, 없을 때 0 반환
     }
+
+
 
     @Operation(summary = "자신이 즐겨찾기한 약국 목록")
     @GetMapping("/list") // 자신이 즐겨찾기한 약국 목록 (즐겨찾기한 순 정렬)
