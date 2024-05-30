@@ -11,6 +11,7 @@ import org.daewon.phreview.dto.PharmacyInfoDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.PharmacyRepository;
 import org.daewon.phreview.repository.UserRepository;
+import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -186,7 +187,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     public PharmacyInfoDTO getPharmacyInfo(Long phId) {
 
         Optional<Pharmacy> result = pharmacyRepository.findById(phId);
-        Pharmacy pharmacy = result.orElseThrow(() -> new EntityNotFoundException("약국을 찾을 수 없습니다. ID: " + phId));
+        Pharmacy pharmacy = result.orElseThrow(() -> new PharmacyNotFoundException(phId));
 
         PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class);
 
