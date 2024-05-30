@@ -4,6 +4,7 @@ import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
+import AllMap from "@/(FSD)/widgets/map/ui/AllMap";
 
 const Page = () => {
     return (
@@ -11,9 +12,10 @@ const Page = () => {
             <AppHeader>
                 <MapSearchForm />
             </AppHeader>
-            <div className={styles.container}>
+            <AllMap />
+            <div className={styles.footer}>
                 <ModalShared>
-                     <AllPharmacyList />
+                    <AllPharmacyList />
                 </ModalShared>
             </div>
         </>

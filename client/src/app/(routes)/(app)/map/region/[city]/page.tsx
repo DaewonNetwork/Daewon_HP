@@ -12,8 +12,8 @@ const Page = () => {
             <AppHeader>
                 <MapSearchRegionKeywordForm />
             </AppHeader>
-            <div className={styles.container}>
-                <RegionMap />
+            <RegionMap />
+            <div className={styles.footer}>
                 <ModalShared>
                     <RegionPharmacyList />
                 </ModalShared>

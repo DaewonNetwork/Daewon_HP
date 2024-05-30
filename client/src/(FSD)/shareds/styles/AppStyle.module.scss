@@ -6,6 +6,7 @@
 
     .header_inner {
         padding: 0 20px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -15,18 +16,28 @@
         display: block;
         
         .city_container {
-            display: block;
+            width: 100%;
             overflow-x: scroll;
-            scrollbar-width: none;
+            scrollbar-width: 0px;
+            position: relative;
+            z-index: 11;
+            
+            &::-webkit-scrollbar {
+                display: none;
+            }
     
             .city_list {
                 display: flex;
                 width: max-content;
     
                 & > div {
-                    margin-left: 20px;
+                    padding: 5px 10px;
+                    
+                    &:first-child {
+                        margin-left: 10px;
+                    }
                     &:last-child {
-                        margin-right: 20px;
+                        margin-right: 10px;
                     }
                 }
             }
@@ -42,16 +53,16 @@
 }
 
 .modal {
-    display: block;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    position: relative;
     z-index: 99;
+    display: block;
+    width: 100%;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
     box-shadow: 0 8px 12px 6px rgba(0, 0, 0, .15), 0 4px 4px rgba(0, 0, 0, .3);
 
     .modal_header {
+        width: 100%;
         display: block;
         height: 40px;
         position: relative;
@@ -70,12 +81,22 @@
     .modal_body {
         height: 0px;
         transition: height 0.3s;
-
     }
     &.open {
         .modal_body {
+            z-index: 99;
             height: 400px;
             overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            & > div {
+                height: max-content;
+                display: flex;
+                flex-direction: column;
+            }
         }
     }
 }
@@ -87,4 +108,5 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: -1;
 }

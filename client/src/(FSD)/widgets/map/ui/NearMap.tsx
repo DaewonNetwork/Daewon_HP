@@ -1,31 +1,47 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
-import { useMapRegion } from "@/(FSD)/features/map/api/useMapRegion";
+import React, { useEffect, useState } from "react";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { useMapNear } from "@/(FSD)/features/map/api/useMapNear";
 
-const RegionMap = () => {
-    const { city } = useParams<{ city: string }>();
+const NearMap = () => {
+    const [lat, setLat] = useState<number>(0);
+    const [lng, setLng] = useState<number>(0);
 
-    const { data, isError, isLoading, refetch } = useMapRegion(city);
+    const [isGeoError, setIsGeoError] = useState<boolean>(false);
+
+    const { data, isError, isLoading, refetch } = useMapNear(lat, lng);
+
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLat(position.coords.latitude);
+                    setLng(position.coords.longitude);
+
+                }
+            )
+        } else {
+            setIsGeoError(true);
+        }
+
+        refetch();
+    }, [data, lat, lng]);
 
     const pharmacyList: PharmacyType[] = data;
     
-
-    useEffect(() => {
-        refetch();
-    }, [city]);
-
+    if(isGeoError) return <></>;
     if(isError) return <></>;
     if(isLoading) return <></>;
+    if((!pharmacyList) || (!pharmacyList[0])) return <></>;
+
 
     return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div className={"map_container"}>
             <PharmacyMap pharmacyList={pharmacyList} />
         </div>
     );
 };
 
-export default RegionMap;
+export default NearMap;

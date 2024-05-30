@@ -9,7 +9,7 @@ const phMapNearFetch = async (lat: number, lng: number) => {
     });
 
     const data = await response.json();
-    
+ 
     return data;
 };
 

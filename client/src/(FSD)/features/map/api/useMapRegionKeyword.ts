@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-const phSearchRegionKeywordFetch = async (city: string, keyword: string) => {
+const phMapRegionKeywordFetch = async (city: string, keyword: string) => {
     const response = await fetch(`http://localhost:8090/map/region/search?city=${city}&keyword=${keyword}`, {
         method: "GET",
         headers: {
@@ -13,9 +13,9 @@ const phSearchRegionKeywordFetch = async (city: string, keyword: string) => {
     return data;
 };
 
-export const useSearchRegionKeyword = (city: string, keyword: string) => {
+export const useMapRegionKeyword = (city: string, keyword: string) => {
     return useQuery({
         queryKey: ["map_region_keyword"],
-        queryFn: () => phSearchRegionKeywordFetch(city, keyword)
+        queryFn: () => phMapRegionKeywordFetch(city, keyword)
     });
 };

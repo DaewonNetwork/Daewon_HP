@@ -12,12 +12,13 @@ const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {
         if(!kakao?.maps) return;
         if(!kakao?.maps.LatLngBounds) return;
         const bounds = new kakao.maps.LatLngBounds();
-        pharmacyList.forEach((pharmacy, index) => {
+
+        pharmacyList.forEach((pharmacy) => {
             bounds.extend(new kakao.maps.LatLng(pharmacy.phY, pharmacy.phX));
         });
         
-        if(!map) return;
-        map.setBounds(bounds);        
+        if(!map) return;        
+        map.setBounds(bounds);
         map.setLevel(5);
     }, [map, pharmacyList]);
 

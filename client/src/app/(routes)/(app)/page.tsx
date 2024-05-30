@@ -12,9 +12,11 @@ const Page = () => {
             <AppHeader>
                 <MapSearchForm />
             </AppHeader>
-            <div className={styles.container }>
-                <PhRankEnjoy />
-                <PhRankStar />
+            <div className={styles.container}>
+                <div className={styles.inner_section}>
+                    <PhRankEnjoy />
+                    <PhRankStar />
+                </div>
             </div>
         </div>
     )

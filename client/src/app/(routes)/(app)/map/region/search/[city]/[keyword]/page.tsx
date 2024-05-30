@@ -4,6 +4,7 @@ import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import MapSearchRegionKeywordForm from "@/(FSD)/features/pharmacy/ui/MapSearchRegionKeywordForm";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
+import RegionKeywordMap from "@/(FSD)/widgets/map/ui/RegionKeywordMap";
 
 const Page = () => {
     return (
@@ -11,7 +12,8 @@ const Page = () => {
             <AppHeader>
                 <MapSearchRegionKeywordForm />
             </AppHeader>
-            <div className={styles.container}>
+            <RegionKeywordMap />
+            <div className={styles.footer}>
                 <ModalShared>
                     <RegionKeywordPharmacyList />
                 </ModalShared>

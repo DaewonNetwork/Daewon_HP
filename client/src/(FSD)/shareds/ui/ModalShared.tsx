@@ -19,7 +19,7 @@ const ModalShared = ({ children }: ModalType) => {
                     {children}
                 </div>
             </div>
-            <div className={styles.modal_bg} style={{ zIndex: isOpen ? 1 : 0 }} onClick={_ => isOpen && setOpen(false)}></div>
+            {isOpen && <div className={styles.modal_bg} style={{ zIndex: isOpen ? 1 : -1 }} onClick={_ => isOpen && setOpen(false)}></div>}
         </>
     )
 }

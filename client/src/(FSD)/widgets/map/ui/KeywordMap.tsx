@@ -16,13 +16,13 @@ const KeywordMap = () => {
 
     useEffect(() => {
         refetch();
-    }, [keyword]);
+    }, [data, keyword]);
 
     if(isError) return <></>;
     if(isLoading) return <></>;
 
     return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div className={"map_container"}>
             <PharmacyMap pharmacyList={pharmacyList} />
         </div>
     );
