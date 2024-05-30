@@ -14,11 +14,9 @@ export const metadata: Metadata = {
 const Page = () => {
     return (
         <>
-            <AppHeader>
-                <></>
-            </AppHeader>
+            <AppHeader />
             <NearMap />
-            <div className={styles.footer}>
+            <div className={"footer"}>
                 <ModalShared>
                     <NearPharmacyList />
                 </ModalShared>

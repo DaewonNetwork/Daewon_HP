@@ -51,4 +51,10 @@ public class PharmacyController {
         return responseDTO;
     }
 
+    @GetMapping("/read")
+    public PharmacyDTO readPharmacy(@RequestParam Long phId) {
+        PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
+
+        return pharmacyDTO;
+    }
 }

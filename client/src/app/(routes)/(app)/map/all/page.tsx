@@ -19,7 +19,7 @@ const Page = () => {
                 <MapSearchForm />
             </AppHeader>
             <AllMap />
-            <div className={styles.footer}>
+            <div className={"footer"}>
                 <ModalShared>
                     <AllPharmacyList />
                 </ModalShared>

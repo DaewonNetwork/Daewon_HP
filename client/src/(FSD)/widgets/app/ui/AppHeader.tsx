@@ -11,7 +11,7 @@ const logo = Barlow_Condensed({
     display: "swap",
 });
 
-const AppHeader = ({ children }: { children: React.ReactNode }) => {
+const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
     return (
         <header className={`bg-background ${styles.header}`}>
             <div className={`${styles.header_inner}`}>
@@ -24,7 +24,7 @@ const AppHeader = ({ children }: { children: React.ReactNode }) => {
                     <Button variant={"light"} size={"md"} as={Link} href={"/auth/signin"}>로그인 / 가입하기</Button>
                 </div>
             </div>
-            <MapSearchRegion />
+            {isSearchRegion && <MapSearchRegion />}
             {children}
         </header>
     );

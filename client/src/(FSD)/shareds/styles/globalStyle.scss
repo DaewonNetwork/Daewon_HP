@@ -66,6 +66,15 @@ div[data-overlay-container=true] {
     }
 }
 
+.footer {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    z-index: 99;
+}
+
 .tsqd-parent-container {
     display: none;
 }

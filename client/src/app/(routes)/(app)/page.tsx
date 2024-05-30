@@ -19,7 +19,7 @@ const Page = () => {
                     <PhRankStar />
                 </div>
             </div>
-            <div className={styles.footer}>
+            <div className={"footer"}>
                 <AppFooter />
             </div>
         </div>
