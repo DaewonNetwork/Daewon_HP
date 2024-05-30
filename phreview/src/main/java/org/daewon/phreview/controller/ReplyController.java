@@ -43,15 +43,6 @@ public class ReplyController {
         return replyId;
     }
 
-//    @Operation(summary = "Replies Post")
-//    @GetMapping(value = "/")
-//    public List<ReplyDTO> getList(
-//            @RequestParam(name = "reviewId") Long reviewId) {
-//        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
-//        log.info("댓글의 답글"+replyDTO);
-//        return replyDTO;
-//    }
-
     // 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @DeleteMapping(value = "/")
@@ -67,34 +58,5 @@ public class ReplyController {
         replyDTO.setReplyId(replyId);
         replyService.updateReply(replyDTO);
         return Map.of("result", "success");
-    }
-
-    // 특정 사용자가 작성한 Reply 목록 조회
-    // 로그인한 사용자의 Reply를 가져오는 엔드포인트
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/user")
-    public ResponseEntity<?> getUserReplies(@RequestHeader("Authorization") String token) {
-        try {
-            // Bearer 토큰에서 "Bearer " 부분 제거
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-
-            // 토큰에서 payload 추출
-            Map<String, Object> claims = jwtUtil.validateToken(token);
-            // payload에서 userId 추출
-            Long userId = Long.parseLong(claims.get("userId").toString());
-
-            log.info("유저 ID: " + userId);
-
-            // 해당 사용자가 작성한 Reply 가져오기
-            List<ReplyDTO> replies = replyService.getRepliesByUserId(userId);
-
-            // 댓글 목록 반환
-            return ResponseEntity.ok(replies);
-        } catch (JwtException e) {
-            // 토큰이 유효하지 않으면 401 상태 코드 반환
-            return ResponseEntity.status(401).body("Invalid token");
-        }
     }
 }

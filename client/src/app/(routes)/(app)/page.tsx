@@ -1,15 +1,28 @@
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
-import MapRankEnjoy from "@/(FSD)/entities/map/ui/MapRankEnjoy";
-import MapRankStar from "@/(FSD)/entities/map/ui/MapRankStar";
 
+import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
+import PhRankEnjoy from "@/(FSD)/entities/pharmacy/ui/PhRankEnjoy";
+import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
+import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
+import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 
 const Page = () => {
     return (
-        <div>
-            <MapRankEnjoy />
-            <MapRankStar />
-        </div>
+        <>
+            <AppHeader>
+                <MapSearchForm />
+            </AppHeader>
+            <div className={styles.container}>
+                <div className={styles.nav_inner}>
+                    <PhRankEnjoy />
+                    <PhRankStar />
+                </div>
+            </div>
+            <footer className={"footer"}>
+                <AppFooter />
+            </footer>
+        </>
     )
 }
 

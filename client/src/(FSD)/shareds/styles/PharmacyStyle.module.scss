@@ -1,0 +1,23 @@
+.container {
+    display: block;
+    padding-bottom: 30px;
+    .item {
+        display: block;
+        padding: 20px;
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 4px;
+
+            &.text_add {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}

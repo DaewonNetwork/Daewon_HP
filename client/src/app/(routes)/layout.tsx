@@ -17,10 +17,8 @@ const RootLayout = ({ children, }: { children: React.ReactNode }) => {
             </Head>
             <body>
                 <RootProvider>
-                    <div className={"bg-default-100 root"} suppressHydrationWarning={true}>
-                        <div className="bg-background root_box">
-                            {children}
-                        </div>
+                    <div className={"root"} suppressHydrationWarning={true}>
+                        {children}
                     </div>
                 </RootProvider>
             </body>

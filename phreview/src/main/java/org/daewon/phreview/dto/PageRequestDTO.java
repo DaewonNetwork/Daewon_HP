@@ -8,9 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 @Builder
 @Data
 @AllArgsConstructor

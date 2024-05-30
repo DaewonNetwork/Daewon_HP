@@ -3,14 +3,26 @@ package org.daewon.phreview.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.EnjoyPh;
+import org.daewon.phreview.domain.PharmacyEnjoy;
+import org.daewon.phreview.domain.PharmacyStar;
+import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.dto.PharmacyInfoDTO;
+import org.daewon.phreview.repository.*;
+import org.daewon.phreview.service.EnjoyService;
 import org.daewon.phreview.service.PharmacyService;
+import org.daewon.phreview.service.ReviewService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 
 @RestController
@@ -20,6 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
+    private final PharmacyStarRepository pharmacyStarRepository;
+    private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
+    private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final EnjoyRepository enjoyRepository;
 
     @GetMapping("/region")
     public PageResponseDTO<PharmacyDTO> searchRegionCategory(@RequestParam String city, PageRequestDTO pageRequestDTO){ // 지역 별 검색
@@ -51,4 +68,10 @@ public class PharmacyController {
         return responseDTO;
     }
 
+    @GetMapping("/read")
+    public PharmacyInfoDTO readPharmacy(@RequestParam Long phId) {
+        PharmacyInfoDTO pharmacyInfoDTO = pharmacyService.getPharmacyInfo(phId);
+
+        return pharmacyInfoDTO;
+    }
 }

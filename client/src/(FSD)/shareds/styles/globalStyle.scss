@@ -49,15 +49,30 @@ div[data-overlay-container=true] {
 }
 
 .root {
+    display: block;
     width: 100%;
     height: 100%;
 }
 
-.root_box {
-    width: 480px;
+.map_container {
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
+    position: relative;
+    z-index: 11;
+    
+    * {
+        position: relative;
+        z-index: 11;
+    }
+}
+
+.footer {
     display: block;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    z-index: 99;
 }
 
 .tsqd-parent-container {
@@ -69,6 +84,10 @@ div[data-overlay-container=true] {
         content: "" !important;
         display: none !important;
     }
+}
+
+.text-xlarge {
+    font-size: 20px;
 }
 
 .slick-slider {
