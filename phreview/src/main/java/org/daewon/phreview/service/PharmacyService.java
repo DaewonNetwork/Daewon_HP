@@ -1,6 +1,5 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.dto.*;
 
 
@@ -13,6 +12,6 @@ public interface PharmacyService {
      PageResponseDTO<PharmacyDTO> nameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
      PageResponseDTO<PharmacyDTO> allSearch(PageRequestDTO pageRequestDTO);
 
-    PharmacyDTO getPharmacyInfo(Long phId);
+    PharmacyInfoDTO getPharmacyInfo(Long phId);
 
 }

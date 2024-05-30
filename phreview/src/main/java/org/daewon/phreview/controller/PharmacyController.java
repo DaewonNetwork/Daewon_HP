@@ -3,17 +3,20 @@ package org.daewon.phreview.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.PharmacyStar;
+import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.PharmacyDTO;
-import org.daewon.phreview.repository.PharmacyEnjoyRepository;
-import org.daewon.phreview.repository.PharmacyStarRepository;
-import org.daewon.phreview.repository.ReviewRepository;
+import org.daewon.phreview.dto.PharmacyInfoDTO;
+import org.daewon.phreview.repository.*;
 import org.daewon.phreview.service.EnjoyService;
 import org.daewon.phreview.service.PharmacyService;
 import org.daewon.phreview.service.ReviewService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +35,8 @@ public class PharmacyController {
     private final PharmacyStarRepository pharmacyStarRepository;
     private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final EnjoyRepository enjoyRepository;
 
     @GetMapping("/region")
     public PageResponseDTO<PharmacyDTO> searchRegionCategory(@RequestParam String city, PageRequestDTO pageRequestDTO){ // 지역 별 검색
@@ -64,15 +69,9 @@ public class PharmacyController {
     }
 
     @GetMapping("/read")
-    public PharmacyDTO readPharmacy(@RequestParam Long phId) {
-        PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
+    public PharmacyInfoDTO readPharmacy(@RequestParam Long phId) {
+        PharmacyInfoDTO pharmacyInfoDTO = pharmacyService.getPharmacyInfo(phId);
 
-        pharmacyDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
-
-        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
-        pharmacyDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
-        pharmacyDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
-        return pharmacyDTO;
+        return pharmacyInfoDTO;
     }
 }

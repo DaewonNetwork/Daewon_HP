@@ -3,8 +3,10 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.dto.EnjoyPhDTO;
+import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.PharmacyEnjoyRepository;
 import org.daewon.phreview.service.EnjoyService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +26,8 @@ public class EnjoyController {
 
     private final EnjoyService enjoyService;
     private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
+    private final EnjoyRepository enjoyRepository;
+
 
     @Operation(summary = "즐겨찾기")
     @PreAuthorize("hasRole('USER')")
