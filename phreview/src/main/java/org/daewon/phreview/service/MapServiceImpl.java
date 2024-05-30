@@ -34,12 +34,6 @@ public class MapServiceImpl implements MapService {
                     .phTel(p.getPhTel())
                     .phX(p.getPhX())
                     .phY(p.getPhY())
-                    .timeHoliEndDate(p.getTimeHoliEndDate())
-                    .timeHoliStartDate(p.getTimeHoliStartDate())
-                    .timeSatEndDate(p.getTimeSatEndDate())
-                    .timeSatStartDate(p.getTimeSatStartDate())
-                    .timeWeekEndDate(p.getTimeWeekEndDate())
-                    .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
             pharmacyDTOList.add(dto);
 
@@ -60,12 +54,6 @@ public class MapServiceImpl implements MapService {
                     .phTel(p.getPhTel())
                     .phX(p.getPhX())
                     .phY(p.getPhY())
-                    .timeHoliEndDate(p.getTimeHoliEndDate())
-                    .timeHoliStartDate(p.getTimeHoliStartDate())
-                    .timeSatEndDate(p.getTimeSatEndDate())
-                    .timeSatStartDate(p.getTimeSatStartDate())
-                    .timeWeekEndDate(p.getTimeWeekEndDate())
-                    .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
             pharmacyDTOList.add(dto);
         }
@@ -87,12 +75,6 @@ public class MapServiceImpl implements MapService {
                     .phTel(p.getPhTel())
                     .phX(p.getPhX())
                     .phY(p.getPhY())
-                    .timeHoliEndDate(p.getTimeHoliEndDate())
-                    .timeHoliStartDate(p.getTimeHoliStartDate())
-                    .timeSatEndDate(p.getTimeSatEndDate())
-                    .timeSatStartDate(p.getTimeSatStartDate())
-                    .timeWeekEndDate(p.getTimeWeekEndDate())
-                    .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
             pharmacyDTOList.add(dto);
         }
@@ -114,12 +96,6 @@ public class MapServiceImpl implements MapService {
                     .phTel(p.getPhTel())
                     .phX(p.getPhX())
                     .phY(p.getPhY())
-                    .timeHoliEndDate(p.getTimeHoliEndDate())
-                    .timeHoliStartDate(p.getTimeHoliStartDate())
-                    .timeSatEndDate(p.getTimeSatEndDate())
-                    .timeSatStartDate(p.getTimeSatStartDate())
-                    .timeWeekEndDate(p.getTimeWeekEndDate())
-                    .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
             pharmacyDTOList.add(dto); // 4
         }
@@ -143,12 +119,6 @@ public class MapServiceImpl implements MapService {
                     .phTel(p.getPhTel())
                     .phX(p.getPhX())
                     .phY(p.getPhY())
-                    .timeHoliEndDate(p.getTimeHoliEndDate())
-                    .timeHoliStartDate(p.getTimeHoliStartDate())
-                    .timeSatEndDate(p.getTimeSatEndDate())
-                    .timeSatStartDate(p.getTimeSatStartDate())
-                    .timeWeekEndDate(p.getTimeWeekEndDate())
-                    .timeWeekStartDate(p.getTimeWeekStartDate())
                     .build();
             pharmacyDTOList.add(dto); // 4
         }
