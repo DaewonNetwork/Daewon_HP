@@ -2,21 +2,12 @@ package org.daewon.phreview.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import net.coobird.thumbnailator.Thumbnailator;
-import org.daewon.phreview.dto.*;
-
-import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.dto.AuthSigninDTO;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.daewon.phreview.repository.ReviewRepository;
-import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
 
@@ -27,17 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @RestController
@@ -57,7 +42,7 @@ public class ReviewController {
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
     // 파일과 리뷰 데이터를 받는 엔드포인트
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> uploadReviewData(
             @RequestPart("reviewDTO") String reviewDTOStr,
             @RequestPart("files") List<MultipartFile> files) {
@@ -79,18 +64,6 @@ public class ReviewController {
         } catch (RuntimeException e) {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
-        }
-    }
-
-    // 리뷰 ID를 기반으로 리뷰 데이터를 JSON 형식으로 반환하는 엔드포인트
-    @GetMapping(value = "/{reviewId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReviewDTO> getReview(@PathVariable Long reviewId) {
-        try {
-            ReviewDTO reviewDTO = reviewService.getReviewById(reviewId);
-            return ResponseEntity.ok(reviewDTO);
-        } catch (Exception e) {
-            log.error("Review not found", e);
-            return ResponseEntity.notFound().build();
         }
     }
 
