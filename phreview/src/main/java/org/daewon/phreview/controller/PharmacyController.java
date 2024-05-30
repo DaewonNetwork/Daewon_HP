@@ -64,10 +64,14 @@ public class PharmacyController {
     @GetMapping("/read")
     public PharmacyDTO readPharmacy(@RequestParam Long phId) {
         PharmacyDTO pharmacyDTO = pharmacyService.getPharmacyInfo(phId);
-        Optional<PharmacyStar> pharmacyStar = pharmacyStarRepository.findByPhId(phId);
-        Optional<PharmacyEnjoy> pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId);
-        pharmacyDTO.setEnjoyIndex(pharmacyEnjoy.get().getEnjoyIndex());
-        pharmacyDTO.setStarAvg(pharmacyStar.get().getStarAvg());
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
+
+        pharmacyDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
+
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
+
+        pharmacyDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
+
         return pharmacyDTO;
     }
 }
