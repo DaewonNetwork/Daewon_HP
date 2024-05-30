@@ -13,6 +13,7 @@ const RegionPharmacyList = () => {
     const { pharmacyList, fetchNextPage } = useSearchRegion(city);
 
     const { ref, inView } = useInView();
+    
 
     useEffect(() => {  
         if (inView) {

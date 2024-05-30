@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
 import { useReadUser } from "@/(FSD)/entities/user/api/useReadUser";
+import { UserType } from "@/(FSD)/shareds/types/User.type";
 
 const logo = Barlow_Condensed({
     weight: "500",
@@ -17,9 +18,8 @@ const logo = Barlow_Condensed({
 const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
     const { data } = useReadUser();
 
-    console.log(data);
-    
- 
+    const user: UserType = data;
+
     return (
         <header className={`bg-background ${styles.header}`}>
             <div className={`${styles.header_inner}`}>
@@ -29,7 +29,8 @@ const AppHeader = ({ children, isSearchRegion = true }: { children?: React.React
                     </h1>
                 </div>
                 <div>
-                    <Button variant={"light"} size={"md"} as={Link} href={"/auth/signin"}>로그인 / 가입하기</Button>
+                    {user?.userName && <Button variant={"light"} size={"md"} as={Link} href={"/profile"} className={"text-medium font-medium"}>{user.userName}님</Button>}
+                    {!(user?.userName) && <Button variant={"light"} size={"md"} as={Link} href={"/auth/signin"}>로그인 / 가입하기</Button>}
                 </div>
             </div>
             {isSearchRegion && <MapSearchRegion />}

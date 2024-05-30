@@ -38,7 +38,7 @@ export const useSearchRegion = (city: string) => {
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
     });
-
+     
     const pharmacyList: PharmacyType[] = useMemo(() => {
         const pharmacyList = data?.pages?.flatMap(page => page.phList) || [];
         return pharmacyList;

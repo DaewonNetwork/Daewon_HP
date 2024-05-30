@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Chip } from "@nextui-org/chip";
-import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
+import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -15,8 +15,7 @@ const PharmacyInfo = () => {
 
     console.log(data);
 
-    const pharmacy: PharmacyType = data;
-
+    const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();

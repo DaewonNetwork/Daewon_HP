@@ -1,3 +1,5 @@
+import { PharmacyEnjoyType } from "./PharmacyEnjoy.type";
+
 export interface PharmacyInfoType {
     phId: number;
     phName: string;
@@ -12,4 +14,5 @@ export interface PharmacyInfoType {
     enjoyIndex: number;
     starAvg: number;
     reviewIndex: number;
+    enjoyPhType: PharmacyEnjoyType;
 }
