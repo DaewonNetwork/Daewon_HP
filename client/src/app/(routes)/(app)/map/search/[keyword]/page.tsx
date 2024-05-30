@@ -18,12 +18,12 @@ const Page = () => {
                 <MapSearchRegionKeywordForm />
             </AppHeader>
             <KeywordMap />
-            <div className={"footer"}>
+            <footer className={"footer"}>
                 <ModalShared>
                     <KeywordPharmacyList />
                 </ModalShared>
                 <AppFooter />
-            </div>
+            </footer>
         </>
     );
 };

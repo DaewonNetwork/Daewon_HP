@@ -4,14 +4,12 @@ import React from "react";
 
 const Page = () => {
     return (
-        <div>
-            <div>
-                <AppHeader isSearchRegion={false} />
-            </div>
-            <div className={"footer"}>
+        <>
+            <AppHeader isSearchRegion={false} />
+            <footer className={"footer"}>
                 <AppFooter />
-            </div>
-        </div>
+            </footer>
+        </>
     );
 };
 

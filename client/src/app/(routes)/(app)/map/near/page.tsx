@@ -1,6 +1,5 @@
 import NearPharmacyList from "@/(FSD)/widgets/pharmacy/ui/NearPharmacyList";
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import NearMap from "@/(FSD)/widgets/map/ui/NearMap";
@@ -16,12 +15,12 @@ const Page = () => {
         <>
             <AppHeader />
             <NearMap />
-            <div className={"footer"}>
+            <footer className={"footer"}>
                 <ModalShared>
                     <NearPharmacyList />
                 </ModalShared>
                 <AppFooter />
-            </div>
+            </footer>
         </>
     );
 };

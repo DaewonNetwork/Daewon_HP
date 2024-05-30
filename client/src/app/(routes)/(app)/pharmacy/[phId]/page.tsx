@@ -2,18 +2,21 @@ import PharmacyInfo from "@/(FSD)/entities/pharmacy/ui/PharmacyInfo";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import React from "react";
+import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 
 const Page = () => {
     return (
-        <div>
-            <div>
-                <AppHeader isSearchRegion={false} />
+        <>
+            <AppHeader isSearchRegion={false} />
+            <div className={styles.container}>
+                <div className={styles.container_inner}>
+                    <PharmacyInfo />
+                </div>
             </div>
-            <PharmacyInfo />
-            <div className={"footer"}>
+            <footer className={"footer"}>
                 <AppFooter />
-            </div>
-        </div>
+            </footer>
+        </>
     );
 };
 

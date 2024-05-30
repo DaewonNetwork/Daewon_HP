@@ -9,20 +9,20 @@ import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 
 const Page = () => {
     return (
-        <div>
+        <>
             <AppHeader>
                 <MapSearchForm />
             </AppHeader>
             <div className={styles.container}>
-                <div className={styles.inner_section}>
+                <div className={styles.nav_inner}>
                     <PhRankEnjoy />
                     <PhRankStar />
                 </div>
             </div>
-            <div className={"footer"}>
+            <footer className={"footer"}>
                 <AppFooter />
-            </div>
-        </div>
+            </footer>
+        </>
     )
 }
 
