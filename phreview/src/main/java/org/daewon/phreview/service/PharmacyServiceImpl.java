@@ -4,10 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.*;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.PharmacyDTO;
-import org.daewon.phreview.dto.PharmacyInfoDTO;
+import org.daewon.phreview.dto.*;
 import org.daewon.phreview.repository.*;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -211,10 +208,10 @@ public class PharmacyServiceImpl implements PharmacyService {
                 .orElse(null);
         if(users != null) {
             Long userId = users.getUserId();
-            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacyInfoDTO.setEnjoyPh(enjoyPh);
+            EnjoyPhDTO enjoyPhDTO = enjoyRepository.findIsEnjoyByPharmacyAndUsers(phId,userId);
+            pharmacyInfoDTO.setEnjoyPhDTO(enjoyPhDTO);
         } else{
-            pharmacyInfoDTO.setEnjoyPh(null);
+            pharmacyInfoDTO.setEnjoyPhDTO(null);
         }
         return pharmacyInfoDTO;
     }
