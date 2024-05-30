@@ -1,8 +1,13 @@
 package org.daewon.phreview.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.PharmacyStar;
+import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.ReviewDTO;
+
+import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +23,17 @@ import java.util.List;
 public class ReviewPublicController {
 
     private final ReviewService reviewService;
-
+    private final LikeService likeService;
     @GetMapping(value = "/")
-    public List<ReviewDTO> readReview(
-            @RequestParam(name = "phId") Long phId) {
+    public List<ReviewDTO> readReviews(@RequestParam(name = "phId") Long phId) {
         List<ReviewDTO> reviewList = reviewService.readReview(phId);
-        log.info("dto:" + reviewList);
         return reviewList;
+    }
+
+    @Operation(summary = "좋아요 순")
+    @GetMapping("/list")
+    public List<ReviewDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 좋아요 수가 높은 리뷰 내림차순
+        List<ReviewDTO> reviewlist = likeService.getReviewsByLikeIndexDesc(phId);
+        return reviewlist;
     }
 }

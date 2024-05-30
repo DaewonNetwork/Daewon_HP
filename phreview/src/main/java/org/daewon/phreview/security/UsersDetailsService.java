@@ -29,6 +29,7 @@ public class UsersDetailsService implements UserDetailsService {
         log.info("loadUserByEmail : " + email);
 
         Optional<Users> result = userRepository.findByEmail(email);
+        log.info("result : " + result);
 
         if (!result.isPresent()) {
             throw new UsernameNotFoundException("Cannot find user with Email : " + email);

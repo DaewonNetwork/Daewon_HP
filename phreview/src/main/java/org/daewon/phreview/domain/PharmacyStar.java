@@ -2,6 +2,8 @@ package org.daewon.phreview.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -9,15 +11,16 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PharmacyEnjoy {
+public class PharmacyStar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment와 같은
-    private Long PharmacyEnjoyId;
+    private Long PharmacyStarId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phId", referencedColumnName = "phId", unique = true)
+    @JoinColumn(name = "phId", referencedColumnName = "phId")
     private Pharmacy pharmacy;
 
-    private int enjoyIndex; // 즐겨찾기 인덱스
+    private double starAvg; // 별점 평균
+    private double starTotal; // 별점 총합
 }

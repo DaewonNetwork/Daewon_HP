@@ -16,13 +16,13 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor
 @ToString
 public class EnjoyPh extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enjoyId;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Users users;
 
     @ManyToOne
