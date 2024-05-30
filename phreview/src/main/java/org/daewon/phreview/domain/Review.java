@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,6 @@ public class Review extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
-    @OnDelete(action = OnDeleteAction.CASCADE) // 유저 삭제하면 리뷰 같이 삭제
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,10 +34,14 @@ public class Review extends BaseEntity{
 
     private int star; // 평점
 
+    private int likeIndex; // 좋아요 인덱스
+
     // 리뷰작성 내용 수정
-    public void setReviewText(String reviewText) {
+    public void setReview(String reviewText,int star) {
         this.reviewText = reviewText;
+        this.star = star;
     }
+
 
     // pharmacy 값 설정 -> phId를 받아서 생성
     public void setPharmacy(Long phId) {

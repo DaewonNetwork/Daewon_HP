@@ -17,7 +17,7 @@ public interface ReplyService {
 
     void deleteReply(Long replyId);
 
-    // 특정 사용자가 작성한 댓글 목록 가져오는 메서드
-//    List<ReplyDTO> getReplysByUserId(Long userId);
+     // 특정 사용자가 작성한 댓글 목록 가져오는 메서드
+    List<ReplyDTO> getRepliesByUserId(Long userId);
 
 }

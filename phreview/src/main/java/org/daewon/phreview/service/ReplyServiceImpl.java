@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Reply;
+import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
@@ -32,7 +33,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Long createReply(ReplyDTO replyDTO) { // 리뷰 등록
+    public Long createReply(ReplyDTO replyDTO) { // 답글 등록
         Reply reply = modelMapper.map(replyDTO, Reply.class);
         reply.setReview(replyDTO.getReviewId());
         reply.setUsers(replyDTO.getUserId());
@@ -73,10 +74,20 @@ public class ReplyServiceImpl implements ReplyService {
         replyRepository.deleteById(replyId);
     }
 
-//    @Override
-//    public List<ReplyDTO> getReplysByUserId(Long userId) {
-//        List<Reply> reply =
-//
-//        return List.of();
-//    }
+    // 사용자 ID로 댓글 목록을 조회하는 메서드
+    @Override
+    public List<ReplyDTO> getRepliesByUserId(Long userId) {
+        List<Reply> replies = replyRepository.findByUserId(userId);
+
+        return replies.stream()
+                .map(reply -> ReplyDTO.builder()
+                        .replyId(reply.getReplyId())
+                        .reviewId(reply.getReview().getReviewId())
+                        .userId(reply.getUsers().getUserId())
+                        .replyText(reply.getReplyText())
+                        .createAt(reply.getCreateAt())
+                        .updateAt(reply.getUpdateAt())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

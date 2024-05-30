@@ -47,7 +47,7 @@ public class EnjoyServiceImpl implements EnjoyService {
         Pharmacy pharmacy = pharmacyRepository.findById(phId)
                 .orElseThrow(() -> new PharmacyNotFoundException(phId));
 
-        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findById(phId)
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
                 .orElseGet(() -> { // 해당하는 phId가 없을경우 새로 생성
                     PharmacyEnjoy newPharmacyEnjoy = PharmacyEnjoy.builder()
                             .pharmacy(pharmacy)
@@ -65,10 +65,14 @@ public class EnjoyServiceImpl implements EnjoyService {
             log.info("즐겨찾기");
         } else {
             EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1);
-            pharmacyEnjoyRepository.save(pharmacyEnjoy);
             enjoyPh.unEnjoyPh(pharmacyEnjoy);
             enjoyRepository.delete(enjoyPh);
+            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1);
+            if(pharmacyEnjoy.getEnjoyIndex() == 0){
+                pharmacyEnjoyRepository.delete(pharmacyEnjoy);
+            } else {
+                pharmacyEnjoyRepository.save(pharmacyEnjoy);
+            }
             log.info(pharmacy);
             log.info(enjoyPh);
             log.info("즐겨찾기 취소");

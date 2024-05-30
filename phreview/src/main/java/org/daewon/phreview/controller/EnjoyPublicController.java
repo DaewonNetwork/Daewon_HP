@@ -20,8 +20,8 @@ public class EnjoyPublicController {
 
     private final EnjoyService enjoyService;
 
-    @GetMapping("/list")
-    public List<PharmacyEnjoyDTO> enjoyRankList(){ // 즐겨찾기 수가 높은 병원 내림차순
+    @GetMapping("/")
+    public List<PharmacyEnjoyDTO> PharmaciesByEnjoyCountDesc() { // 즐겨찾기 수가 높은 병원 내림차순
         List<PharmacyEnjoyDTO> list = enjoyService.getPharmaciesByEnjoyIndexDesc();
         return list;
     }
