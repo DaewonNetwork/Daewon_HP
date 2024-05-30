@@ -4,10 +4,16 @@ import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.PharmacyEnjoy;
+import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.AuthSigninDTO;
 import org.daewon.phreview.dto.PageRequestDTO;
 import org.daewon.phreview.dto.PageResponseDTO;
 import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.repository.ReviewRepository;
+import org.daewon.phreview.security.exception.PharmacyNotFoundException;
+import org.daewon.phreview.security.exception.ReviewNotFoundException;
+import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.http.HttpStatus;
@@ -29,7 +35,9 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final LikeService likeService;
     private final JWTUtil jwtUtil;
+    private final ReviewRepository reviewRepository;
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
@@ -82,7 +90,7 @@ public class ReviewController {
 //        Long userId = authSigninDTO.getUserId();
 //
 //
-//        return reviewService.getReivewsByUserId(userId);
+//        return reviewService.getReviewsByUserId(userId);
 //    }
 
     //  특정 사용자가 작성한 리뷰 목록 조회
@@ -101,7 +109,7 @@ public class ReviewController {
 
             log.info("유저 ID: " + userId);
 
-            List<ReviewDTO> userReviews = reviewService.getReivewsByUserId(userId);
+            List<ReviewDTO> userReviews = reviewService.getReviewsByUserId(userId);
             log.info("리뷰 목록: " + userReviews);
 
             // 리뷰 목록 반환
@@ -112,4 +120,13 @@ public class ReviewController {
             return ResponseEntity.status(401).body("Invalid token");
         }
     }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/like")
+    public int like(@RequestParam Long reviewId){ // 좋아요
+        likeService.likeReview(reviewId);
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        return review.getLikeIndex(); // 좋아요 수 반환
+    }
+
 }

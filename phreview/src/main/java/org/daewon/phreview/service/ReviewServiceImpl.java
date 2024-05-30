@@ -90,7 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     // 사용자 ID로 리뷰 목록을 조회하는 메서드
     @Override
-    public List<ReviewDTO> getReivewsByUserId(Long userId) {
+    public List<ReviewDTO> getReviewsByUserId(Long userId) {
         List<Review> reviews = reviewRepository.findByUserId(userId);
 
         // .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)

@@ -13,17 +13,25 @@ public class LikeForReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long LikeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_userId")
+    @JoinColumn(name = "userId")
     private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pharmacy_phId")
-    private Pharmacy pharmacy;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_reviewId")
+    @JoinColumn(name = "reviewId")
     private Review review;
+
+    private boolean isLike;
+
+    public LikeForReview(Review review , Users users) {
+        this.review = review;
+        this.users = users;
+        this.isLike = true;
+    }
+
+    public void unLikeReview(Review review) {
+        this.isLike = false;
+    }
 }
