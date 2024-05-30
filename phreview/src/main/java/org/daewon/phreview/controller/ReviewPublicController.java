@@ -1,5 +1,6 @@
 package org.daewon.phreview.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyStar;
@@ -29,6 +30,7 @@ public class ReviewPublicController {
         return reviewList;
     }
 
+    @Operation(summary = "좋아요 순")
     @GetMapping("/")
     public List<ReviewDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 좋아요 수가 높은 리뷰 내림차순
         List<ReviewDTO> reviewlist = likeService.getReviewsByLikeIndexDesc(phId);

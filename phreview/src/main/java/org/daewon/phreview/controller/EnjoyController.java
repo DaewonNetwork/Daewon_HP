@@ -1,5 +1,6 @@
 package org.daewon.phreview.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
@@ -25,6 +26,7 @@ public class EnjoyController {
     private final EnjoyService enjoyService;
     private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
 
+    @Operation(summary = "즐겨찾기")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/")
     public int enjoy(@RequestParam Long phId){ // 즐겨찾기
@@ -34,7 +36,8 @@ public class EnjoyController {
         return pharmacyEnjoy.getEnjoyIndex(); // 즐겨찾기 수 반환
     }
 
-    @GetMapping("/") // 자신이 즐겨찾기한 병원 목록 (즐겨찾기한 순 정렬)
+    @Operation(summary = "자신이 즐겨찾기한 약국 목록")
+    @GetMapping("/") // 자신이 즐겨찾기한 약국 목록 (즐겨찾기한 순 정렬)
     public List<EnjoyPhDTO> enjoyedPharmaciesList(){ //
         List<EnjoyPhDTO> Pharmacylist = enjoyService.getUserEnjoyedPharmacies();
         return Pharmacylist;
