@@ -41,7 +41,7 @@ public class ReviewController {
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Long createReview(@RequestBody ReviewDTO reviewDTO) {
         log.info(reviewDTO);
         Long reviewId;
@@ -64,7 +64,7 @@ public class ReviewController {
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @DeleteMapping(value = "/")
+    @DeleteMapping()
     public Map<String, String> deleteReview(@RequestParam(name = "reviewId") Long reviewId) {
         reviewService.deleteReview(reviewId);
         return Map.of("result", "success");
@@ -72,7 +72,7 @@ public class ReviewController {
 
     // 리뷰 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
             @RequestBody ReviewDTO reviewDTO) {
         reviewDTO.setReviewId(reviewId);

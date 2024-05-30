@@ -24,7 +24,7 @@ public class ReviewPublicController {
 
     private final ReviewService reviewService;
     private final LikeService likeService;
-    @GetMapping(value = "/")
+    @GetMapping()
     public List<ReviewDTO> readReviews(@RequestParam(name = "phId") Long phId) {
         List<ReviewDTO> reviewList = reviewService.readReview(phId);
         return reviewList;

@@ -21,7 +21,7 @@ public class ReplyPublicController {
     private final ReplyService replyService;
 
     @Operation(summary = "Replies Post")
-    @GetMapping(value = "/")
+    @GetMapping()
     public List<ReplyDTO> readReply(
             @RequestParam(name = "reviewId") Long reviewId) {
         List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
