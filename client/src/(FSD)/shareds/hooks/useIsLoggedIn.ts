@@ -12,12 +12,13 @@ const useIsLoggedIn = (isPrivate: boolean) => {
     const { data } = useReadUser();
 
     useEffect(() => {
+        if(!data) return;
         if (data) {
             setUser(data);
         } else if (isPrivate) {
             router.push("/auth/signin");
         }
-    }, []);
+    }, [data, isPrivate, router, setUser]);
 
 };
 

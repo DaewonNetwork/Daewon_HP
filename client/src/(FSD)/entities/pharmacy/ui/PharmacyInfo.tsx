@@ -7,19 +7,26 @@ import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Chip } from "@nextui-org/chip";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
 
-    console.log(data);
+    const user = useUserStore().user;
+
+    console.log(user);
 
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();
     }, [phId]);
+
+    useEffect(() => {
+
+    }, [user]);
 
     if (isError) return <></>;
     if (isLoading) return <></>;
