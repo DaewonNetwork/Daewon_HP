@@ -10,10 +10,16 @@ import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 import { Button } from "@nextui-org/button";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
+import { useReviewCreate } from "../api/useReviewCreate";
 
 const ReviewCreateForm = () => {
     const { user } = useUserStore();
     const { phId } = useParams<{ phId: string }>();
+
+    const onSuccess = (data: any) => {};
+
+
+    const { mutate } = useReviewCreate({ onSuccess });
 
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
     const [starCount, setStarCount] = useState<number>(0);
@@ -35,7 +41,10 @@ const ReviewCreateForm = () => {
     };
     
     const onSubmit = (data: any) => {
+        const formData = new FormData();
+        formData.append("review_text", data.review_text);
 
+        mutate(formData);
     }
 
 
@@ -50,13 +59,16 @@ const ReviewCreateForm = () => {
                 <h2 className={"text-large font-semibold"}>별점</h2>
                 {
                     stars.map((star, index) => (
-                        <Button onClick={_ => handleStarClick(index)} className={star ? `${styles.star} ${styles.active}` : `${styles.star}`} size={"sm"} variant={"light"} isIconOnly endContent={<IconShared className={"text-xlarge"} iconType={"star"} />} />
+                        <React.Fragment key={index}>
+                            <Button onClick={_ => handleStarClick(index)} className={star ? `${styles.star} ${styles.active}` : `${styles.star}`} size={"sm"} variant={"light"} isIconOnly endContent={<IconShared className={"text-xlarge"} iconType={"star"} />} />
+                        </React.Fragment>
                     ))
                 }
             </div>
             <div className={styles.input_box}>
                 <label htmlFor={"review_text"} className={"text-large font-semibold"}>작성하기</label>
                 <FormTextareaShared isInvalid={!!errors.review_text} placeholder={"내용을 입력해주세요."} size={"lg"} control={control} name={"review_text"} variant={"bordered"} color={"primary"} />
+                <Button fullWidth type={"submit"} size={"md"} isDisabled={!isValid} color={"primary"}>등록하기</Button>
             </div>
         </form>
     )

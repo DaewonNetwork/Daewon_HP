@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Barlow_Condensed } from "next/font/google";
 import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
@@ -16,6 +16,9 @@ const logo = Barlow_Condensed({
 
 const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
     const { user } = useUserStore();
+    
+    useEffect(() => {
+    }, [user]);
 
     return (
         <header className={`bg-background ${styles.header}`}>

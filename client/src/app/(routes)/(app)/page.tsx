@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
@@ -6,8 +8,10 @@ import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
+import useIsLoggedIn from "@/(FSD)/shareds/hooks/useIsLoggedIn";
 
 const Page = () => {
+    useIsLoggedIn(false);
     return (
         <>
             <AppHeader>
