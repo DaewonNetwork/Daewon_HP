@@ -47,7 +47,7 @@ public class EnjoyServiceImpl implements EnjoyService {
         Pharmacy pharmacy = pharmacyRepository.findById(phId)
                 .orElseThrow(() -> new PharmacyNotFoundException(phId));
 
-        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findById(phId)
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
                 .orElseGet(() -> { // 해당하는 phId가 없을경우 새로 생성
                     PharmacyEnjoy newPharmacyEnjoy = PharmacyEnjoy.builder()
                             .pharmacy(pharmacy)

@@ -16,7 +16,7 @@ public class PharmacyEnjoy {
     private Long PharmacyEnjoyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phId", referencedColumnName = "phId")
+    @JoinColumn(name = "phId", referencedColumnName = "phId", unique = true)
     private Pharmacy pharmacy;
 
     private int enjoyIndex; // 즐겨찾기 인덱스
