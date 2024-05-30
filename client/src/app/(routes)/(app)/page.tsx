@@ -3,9 +3,9 @@ import React from "react";
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
 import PhRankEnjoy from "@/(FSD)/entities/pharmacy/ui/PhRankEnjoy";
 import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 
 const Page = () => {
     return (

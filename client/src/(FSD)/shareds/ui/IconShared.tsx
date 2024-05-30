@@ -2,7 +2,7 @@ import React from "react"
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaPlus } from "react-icons/fa";
 import { RiKakaoTalkFill } from "react-icons/ri";
-import { FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaEye, FaEyeSlash, FaStar } from "react-icons/fa6";
 import { IoCloseCircle, IoPersonSharp, IoChatbubble, IoPersonCircleOutline, IoPersonCircle, IoCopy, IoChatbubbleOutline, IoCopyOutline, IoHeart, IoHeartOutline, IoSettingsSharp, IoMenu, IoSearch, IoMap } from "react-icons/io5";
 import { GoHome, GoHomeFill, GoPencil } from "react-icons/go";
 import { IconType } from "../types/Icon.type";
@@ -94,12 +94,15 @@ const IconShared = ({ iconType, className, ...props }: IconType) => {
         case "person":
             component = <IoPerson />;
             break;
+        case "star":
+            component = <FaStar />;
+            break;    
         default:
             component = null;
             break;
     }
 
-    return <span className={`icon ${className}`} {...props}>{component}</span>
+    return <span className={`icon ${className || "text-large"}`} {...props}>{component}</span>
 };
 
 export default IconShared;

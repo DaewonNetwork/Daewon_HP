@@ -1,11 +1,11 @@
 import React from "react";
 import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
 import AllMap from "@/(FSD)/widgets/map/ui/AllMap";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import { Metadata } from "next";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 
 export const metadata: Metadata = {
     title: "HP - 전체 검색",

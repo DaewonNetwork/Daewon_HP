@@ -12,5 +12,6 @@ export interface PharmacyType {
     phX: number;
     phY: number;  
     enjoyIndex: number;
-    starIndex: number;
+    starAvg: number;
+    reviewIndex: number;
 }

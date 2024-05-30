@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 import { Barlow_Condensed } from "next/font/google";
 import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
+import { useReadUser } from "@/(FSD)/entities/user/api/useReadUser";
 
 const logo = Barlow_Condensed({
     weight: "500",
@@ -12,6 +15,11 @@ const logo = Barlow_Condensed({
 });
 
 const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
+    const { data } = useReadUser();
+
+    console.log(data);
+    
+ 
     return (
         <header className={`bg-background ${styles.header}`}>
             <div className={`${styles.header_inner}`}>
