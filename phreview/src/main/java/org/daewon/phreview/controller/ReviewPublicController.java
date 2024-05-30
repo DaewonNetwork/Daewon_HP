@@ -29,7 +29,7 @@ public class ReviewPublicController {
         return reviewList;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public List<ReviewDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 좋아요 수가 높은 리뷰 내림차순
         List<ReviewDTO> reviewlist = likeService.getReviewsByLikeIndexDesc(phId);
         return reviewlist;

@@ -34,7 +34,7 @@ public class EnjoyController {
         return pharmacyEnjoy.getEnjoyIndex(); // 즐겨찾기 수 반환
     }
 
-    @GetMapping("/list/user") // 자신이 즐겨찾기한 병원 목록 (즐겨찾기한 순 정렬)
+    @GetMapping("/") // 자신이 즐겨찾기한 병원 목록 (즐겨찾기한 순 정렬)
     public List<EnjoyPhDTO> enjoyedPharmaciesList(){ //
         List<EnjoyPhDTO> Pharmacylist = enjoyService.getUserEnjoyedPharmacies();
         return Pharmacylist;
