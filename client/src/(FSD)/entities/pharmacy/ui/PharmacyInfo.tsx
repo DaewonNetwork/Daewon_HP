@@ -6,6 +6,7 @@ import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
+import { Chip } from "@nextui-org/chip";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -27,8 +28,14 @@ const PharmacyInfo = () => {
     return (
         <section className={styles.ph_info}>
             <div className={styles.ph_box}>
-                <h1 className={"text-large font-medium"}>{pharmacy.phName}</h1>
-                <p className={`text-medium font-medium ${styles.ph_star}`}><IconShared iconType={"star"} /><span>{pharmacy.starAvg}</span></p>
+                <h1 className={"text-xlarge font-semibold"}>{pharmacy.phName}</h1>
+                <p className={"text-medium"}>{pharmacy.phAdd}</p>
+                <div className={styles.chip_container}>
+                    <Chip variant={"bordered"}><p className={`text-medium font-medium ${styles.ph_star}`}><IconShared iconType={"star"} /><span>{pharmacy.starAvg}</span></p></Chip>
+                    <Chip variant={"bordered"}><p className={"text-medium font-medium"}>리뷰 {pharmacy.reviewIndex}</p></Chip>
+                    <Chip variant={"bordered"}><p className={"text-medium font-medium"}>즐겨찾기 {pharmacy.enjoyIndex}</p></Chip>
+                </div>
+
             </div>
         </section>
     );
