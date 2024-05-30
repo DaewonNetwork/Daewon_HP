@@ -4,21 +4,26 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
 import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.ReviewDTO;
-import org.daewon.phreview.repository.PharmacyRepository;
-import org.daewon.phreview.repository.PharmacyStarRepository;
-import org.daewon.phreview.repository.ReviewRepository;
-import org.daewon.phreview.repository.UserRepository;
+import org.daewon.phreview.repository.*;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,30 +35,51 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
     private final PharmacyStarRepository pharmacyStarRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     @Override
-    public Long createReview(ReviewDTO reviewDTO) { // 리뷰 등록
-
-        Review review = modelMapper.map(reviewDTO, Review.class);
+    @Transactional
+    public Long createReview(ReviewDTO reviewDTO, List<MultipartFile> files, String uploadPath) {
+        // 리뷰 저장
+        Review review = Review.builder()
+                .reviewText(reviewDTO.getReviewText())
+                .star(reviewDTO.getStar())
+                .build();
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
         reviewRepository.save(review);
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findById(reviewDTO.getPhId()).orElse(null);
-        if (pharmacyStar == null) {
-            pharmacyStar = PharmacyStar.builder()
-                    .pharmacy(Pharmacy.builder().phId(reviewDTO.getPhId()).build())
-                    .starTotal(reviewDTO.getStar())
-                    .starAvg(reviewDTO.getStar())
-                    .build();
-        } else {
-            pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() + reviewDTO.getStar());
-            double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(reviewDTO.getPhId()) * 10.0) / 10.0;
-            pharmacyStar.setStarAvg(starAvg);
-        }
-        pharmacyStarRepository.save(pharmacyStar);
 
+        // 파일 저장
+        int order = 0;
+        for (MultipartFile file : files) {
+            String originalName = file.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString();
+            Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
+
+            try {
+                file.transferTo(savePath.toFile());
+
+                boolean isImage = Files.probeContentType(savePath).startsWith("image");
+                if (isImage) {
+                    File thumbnailFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+                    Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 200);
+                }
+
+                ReviewImage reviewImage = ReviewImage.builder()
+                        .uuid(uuid)
+                        .fileName(originalName)
+                        .ord(order++)
+                        .review(review)
+                        .build();
+                reviewImageRepository.save(reviewImage);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return review.getReviewId();
     }
+
 
     @Override
     public List<ReviewDTO> readReview(Long phId) {

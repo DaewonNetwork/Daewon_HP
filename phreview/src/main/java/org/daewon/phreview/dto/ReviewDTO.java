@@ -7,10 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.domain.Users;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -31,4 +33,12 @@ public class ReviewDTO {
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
+
+    private List<ReviewImageDTO> reviewImages; // 리뷰 이미지 리스트
+
+    // 리뷰 이미지 리스트 설정 메서드
+    public void setReviewImages(List<ReviewImageDTO> reviewImages) {
+        this.reviewImages = reviewImages;
+    }
+
 }
