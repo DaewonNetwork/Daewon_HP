@@ -30,7 +30,8 @@ public class ReviewDTO {
 
     private int star;
 
-
+    private Long replyCount; // 댓글 수
+    
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
