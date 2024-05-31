@@ -1,8 +1,9 @@
 export interface UserType {
-    roles: string[];
-    userId: number;
-    userName: string;
+    password: string;
     email: string;
-    exp: number;
-    iat: number;
+    userId?: number;
+    userName?: string;
+    exp?: number;
+    iat?: number;
+    roles?: string[];
 };
