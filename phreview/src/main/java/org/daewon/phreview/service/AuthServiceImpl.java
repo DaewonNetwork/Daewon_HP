@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.UserRole;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.AuthSignupDTO;
+import org.daewon.phreview.dto.Auth.AuthSignupDTO;
 import org.daewon.phreview.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -3,11 +3,10 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.PharmacyEnjoy;
-import org.daewon.phreview.dto.EnjoyPhDTO;
+import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
-import org.daewon.phreview.repository.PharmacyEnjoyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
 import org.daewon.phreview.service.EnjoyService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Log4j2

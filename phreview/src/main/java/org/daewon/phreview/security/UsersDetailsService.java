@@ -3,7 +3,7 @@ package org.daewon.phreview.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.AuthSigninDTO;
+import org.daewon.phreview.dto.Auth.AuthSigninDTO;
 import org.daewon.phreview.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

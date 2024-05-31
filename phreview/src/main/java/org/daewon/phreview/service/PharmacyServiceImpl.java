@@ -1,11 +1,15 @@
 package org.daewon.phreview.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.*;
-import org.daewon.phreview.dto.*;
+import org.daewon.phreview.dto.Page.PageRequestDTO;
+import org.daewon.phreview.dto.Page.PageResponseDTO;
+import org.daewon.phreview.dto.Pharmacy.*;
 import org.daewon.phreview.repository.*;
+import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyStarRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;

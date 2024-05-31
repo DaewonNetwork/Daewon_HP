@@ -6,11 +6,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
-import org.daewon.phreview.dto.*;
 
+import org.daewon.phreview.dto.Review.ReviewDTO;
+import org.daewon.phreview.dto.Review.ReviewReadDTO;
+import org.daewon.phreview.dto.Review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.*;
 
-import org.modelmapper.ModelMapper;
+import org.daewon.phreview.repository.Pharmacy.PharmacyStarRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final PharmacyStarRepository pharmacyStarRepository;
     private final ReviewImageRepository reviewImageRepository;
+    private final UserRepository userRepository;
 
 
     /*
@@ -49,17 +54,24 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath) {
-
         int star = reviewDTO.getStar();
-        log.info(star);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String currentUserName = authentication.getName();
+
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+
         // 리뷰 저장
         Review review = Review.builder()
                 .reviewText(reviewDTO.getReviewText())
                 .star(star)
                 .build();
         review.setPharmacy(reviewDTO.getPhId());
-        review.setUsers(reviewDTO.getUserId());
+        review.setUsers(users.getUserId());
         reviewRepository.save(review);
+
 
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(reviewDTO.getPhId()).orElse(null);
         if (pharmacyStar == null) {

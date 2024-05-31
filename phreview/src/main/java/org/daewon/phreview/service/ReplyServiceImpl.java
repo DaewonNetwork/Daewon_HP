@@ -3,19 +3,16 @@ package org.daewon.phreview.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.Reply;
-import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.PharmacyDTO;
-import org.daewon.phreview.dto.ReplyDTO;
+import org.daewon.phreview.dto.Reply.ReplyDTO;
+import org.daewon.phreview.dto.Reply.ReplyReadDTO;
+import org.daewon.phreview.dto.Reply.ReplyUpdateDTO;
 import org.daewon.phreview.repository.ReplyRepository;
 import org.daewon.phreview.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,12 +28,20 @@ public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
     @Override
     public Long createReply(ReplyDTO replyDTO) { // 답글 등록
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String currentUserName = authentication.getName();
+
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
+
         Reply reply = modelMapper.map(replyDTO, Reply.class);
         reply.setReview(replyDTO.getReviewId());
-        reply.setUsers(replyDTO.getUserId());
+        reply.setUsers(users.getUserId());
         Long replyId = replyRepository.save(reply).getReplyId();
 
 
@@ -46,15 +51,13 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyDTO> readReply(Long reviewId) {
+    public List<ReplyReadDTO> readReply(Long reviewId) {
         List<Reply> result = replyRepository.listOfReview(reviewId);
-        List<ReplyDTO> replyDTOList = new ArrayList<>();
+        List<ReplyReadDTO> replyDTOList = new ArrayList<>();
         for(Reply r : result){
-            ReplyDTO dto = ReplyDTO.builder()
-                    .replyId(r.getReplyId())
+            ReplyReadDTO dto = ReplyReadDTO.builder()
                     .replyText(r.getReplyText())
-                    .userId(r.getUsers().getUserId())
-                    .reviewId(r.getReview().getReviewId())
+                    .userName(r.getUsers().getUserName())
                     .createAt(r.getCreateAt())
                     .updateAt(r.getUpdateAt())
                     .build();
@@ -65,11 +68,12 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void updateReply(ReplyDTO replyDTO) {   // 댓글 수정
-        Optional<Reply> replyOptional = replyRepository.findById(replyDTO.getReplyId());
+    public void updateReply(ReplyUpdateDTO replyUpdateDTO) {   // 댓글 수정
+        Optional<Reply> replyOptional = replyRepository.findById(replyUpdateDTO.getReplyId());
         Reply reply = replyOptional.orElseThrow();
 
-        reply.setReplyText(replyDTO.getReplyText());   // 리뷰 내용 수정
+        reply.setReplyText(replyUpdateDTO.getReplyText());   // 리뷰 내용 수정
+
         replyRepository.save(reply);
     }
 
@@ -80,14 +84,12 @@ public class ReplyServiceImpl implements ReplyService {
 
     // 사용자 ID로 댓글 목록을 조회하는 메서드
     @Override
-    public List<ReplyDTO> getRepliesByUserId(Long userId) {
+    public List<ReplyReadDTO> getRepliesByUserId(Long userId) {
         List<Reply> replies = replyRepository.findByUserId(userId);
 
         return replies.stream()
-                .map(reply -> ReplyDTO.builder()
-                        .replyId(reply.getReplyId())
-                        .reviewId(reply.getReview().getReviewId())
-                        .userId(reply.getUsers().getUserId())
+                .map(reply -> ReplyReadDTO.builder()
+                        .userName(reply.getUsers().getUserName())
                         .replyText(reply.getReplyText())
                         .createAt(reply.getCreateAt())
                         .updateAt(reply.getUpdateAt())

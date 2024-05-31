@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto;
+package org.daewon.phreview.dto.Pharmacy;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PharmacyEnjoyRankListDTO {
+public class PharmacyStarRankListDTO {
     private String phName; // 병원 이름
     private String phTel; // 병원 전화번호
     private String phAdd; // 병원 주소
-    private int enjoyIndex;
+    private double starAvg;
 }

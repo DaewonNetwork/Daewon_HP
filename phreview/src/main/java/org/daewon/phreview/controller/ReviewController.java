@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.*;
+import org.daewon.phreview.dto.Review.ReviewDTO;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;

@@ -1,22 +1,17 @@
 package org.daewon.phreview.controller;
 
-import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.ReplyDTO;
+import org.daewon.phreview.dto.Reply.ReplyDTO;
 import org.daewon.phreview.service.ReplyService;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

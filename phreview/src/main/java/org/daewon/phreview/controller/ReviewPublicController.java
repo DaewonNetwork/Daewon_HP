@@ -3,15 +3,10 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.PharmacyStar;
-import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.dto.PharmacyStarDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 
 import org.daewon.phreview.dto.ReviewReadDTO;
-import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.service.LikeService;
-import org.daewon.phreview.service.PharmacyService;
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
