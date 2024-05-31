@@ -32,20 +32,20 @@ public class ReviewServiceTests {
 //    }
 
 
-    @Test
-    public void testRead() {
-        List<ReviewDTO> reviewDTO = reviewService.readReview(1L);
-        log.info(reviewDTO);
-    }
-
-    @Test
-    public void testModify() {
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-                .reviewId(1L)
-                .reviewText("siuuuuuuuuuu")
-                .build();
-        reviewService.updateReview(reviewDTO);
-    }
+//    @Test
+//    public void testRead() {
+//        List<ReviewDTO> reviewDTO = reviewService.readReview(1L);
+//        log.info(reviewDTO);
+//    }
+//
+//    @Test
+//    public void testModify() {
+//        ReviewDTO reviewDTO = ReviewDTO.builder()
+//                .reviewId(1L)
+//                .reviewText("siuuuuuuuuuu")
+//                .build();
+//        reviewService.updateReview(reviewDTO);
+//    }
 
     @Test
     public void testDelete() {

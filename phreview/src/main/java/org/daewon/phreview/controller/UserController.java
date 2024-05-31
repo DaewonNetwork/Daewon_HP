@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 import org.daewon.phreview.dto.ReplyDTO;
 import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.dto.ReviewReadDTO;
 import org.daewon.phreview.repository.RefreshTokenRepository;
 import org.daewon.phreview.service.ReplyService;
 import org.daewon.phreview.service.ReviewService;
@@ -102,7 +103,7 @@ public class UserController {
             log.info("유저 ID: " + userId);
 
             // 해당 사용자가 작성한 Review 가져오기
-            List<ReviewDTO> userReviews = reviewService.getReviewsByUserId(userId);
+            List<ReviewReadDTO> userReviews = reviewService.getReviewsByUserId(userId);
 
             log.info("리뷰 목록: " + userReviews);
 

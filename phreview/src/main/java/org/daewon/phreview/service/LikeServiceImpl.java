@@ -10,6 +10,7 @@ import org.daewon.phreview.domain.Users;
 
 import org.daewon.phreview.dto.ReviewDTO;
 
+import org.daewon.phreview.dto.ReviewReadDTO;
 import org.daewon.phreview.repository.LikeRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
@@ -63,11 +64,11 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<ReviewDTO> getReviewsByLikeIndexDesc(Long phId) { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
+    public List<ReviewReadDTO> getReviewsByLikeIndexDesc(Long phId) { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
         List<Review> list = reviewRepository.listOfPharmacyOrderByLikeIndex(phId);
         return list.stream()
                 .map(r -> {
-                    ReviewDTO dto = new ReviewDTO();
+                    ReviewReadDTO dto = new ReviewReadDTO();
                     dto.setReviewId(r.getReviewId());
                     dto.setPhId(r.getPharmacy().getPhId());
                     dto.setUserId(r.getUsers().getUserId());

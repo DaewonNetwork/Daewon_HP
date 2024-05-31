@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.dto.AuthSigninDTO;
-import org.daewon.phreview.dto.PageRequestDTO;
-import org.daewon.phreview.dto.PageResponseDTO;
-import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.dto.*;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
@@ -100,9 +97,9 @@ public class ReviewController {
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
-            @RequestBody ReviewDTO reviewDTO) {
-        reviewDTO.setReviewId(reviewId);
-        reviewService.updateReview(reviewDTO);
+            @RequestBody ReviewReadDTO reviewReadDTO) {
+        reviewReadDTO.setReviewId(reviewId);
+        reviewService.updateReview(reviewReadDTO);
         return Map.of("result", "success");
     }
 
