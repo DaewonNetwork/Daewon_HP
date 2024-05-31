@@ -1,16 +1,17 @@
 package org.daewon.phreview.service;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
 import org.daewon.phreview.dto.PharmacyStarDTO;
-import org.daewon.phreview.dto.PharmacyStarDTO;
+
 import org.daewon.phreview.dto.ReviewDTO;
+import org.daewon.phreview.dto.ReviewReadDTO;
 import org.daewon.phreview.repository.*;
-import org.daewon.phreview.security.exception.PharmacyNotFoundException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final ModelMapper modelMapper;
+
     private final PharmacyStarRepository pharmacyStarRepository;
     private final ReviewImageRepository reviewImageRepository;
 
@@ -50,16 +51,30 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath) {
+
+        int star = reviewDTO.getStar();
         // 리뷰 저장
         Review review = Review.builder()
                 .reviewText(reviewDTO.getReviewText())
-                .star(reviewDTO.getStar())
-                .likeIndex(reviewDTO.getLikeIndex())
+                .star(star)
                 .build();
         review.setPharmacy(reviewDTO.getPhId());
         review.setUsers(reviewDTO.getUserId());
-
         reviewRepository.save(review);
+
+        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(reviewDTO.getPhId()).orElse(null);
+        if (pharmacyStar == null) {
+            pharmacyStar = PharmacyStar.builder()
+                    .pharmacy(Pharmacy.builder().phId(reviewDTO.getPhId()).build())
+                    .starTotal(star)
+                    .starAvg(star)
+                    .build();
+        } else {
+            pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() + star);
+            double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(reviewDTO.getPhId()) * 10.0) / 10.0;
+            pharmacyStar.setStarAvg(starAvg);
+        }
+        pharmacyStarRepository.save(pharmacyStar);
 
         // 파일이 존재하는 경우에만 파일 저장 로직 실행
         if (file != null && !file.isEmpty()) {
@@ -103,16 +118,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> readReview(Long phId) {
+    public List<ReviewReadDTO> readReview(Long phId) {
         List<Review> result = reviewRepository.listOfPharmacy(phId);
-        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
         for(Review r : result){
-            ReviewDTO dto = ReviewDTO.builder()
+            ReviewReadDTO dto = ReviewReadDTO.builder()
                     .reviewId(r.getReviewId())
                     .reviewText(r.getReviewText())
                     .star(r.getStar())
                     .userId(r.getUsers().getUserId())
                     .phId(r.getPharmacy().getPhId())
+                    .likeIndex(r.getLikeIndex())
                     .createAt(r.getCreateAt())
                     .updateAt(r.getUpdateAt())
                     .build();
@@ -122,13 +138,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void updateReview(ReviewDTO reviewDTO) {   // 댓글 수정
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewDTO.getReviewId());
+    public void updateReview(ReviewReadDTO reviewReadDTO) {   // 댓글 수정
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewReadDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
         pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
-        review.setReview(reviewDTO.getReviewText(),reviewDTO.getStar());
-        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+review.getStar());
+        review.setReview(reviewReadDTO.getReviewText(),reviewReadDTO.getStar());
+        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+reviewReadDTO.getStar());
         double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
         pharmacyStar.setStarAvg(starAvg);
         reviewRepository.save(review); // 리뷰 내용 수정
@@ -155,7 +171,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     // 사용자 ID로 리뷰 목록을 조회하는 메서드
     @Override
-    public List<ReviewDTO> getReviewsByUserId(Long userId) {
+    public List<ReviewReadDTO> getReviewsByUserId(Long userId) {
         List<Review> reviews = reviewRepository.findByUserId(userId);
 
         // .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
@@ -166,12 +182,13 @@ public class ReviewServiceImpl implements ReviewService {
         // Review 엔티티의 Users 관계를 통해 userId를 가져온다.
         // Users 객체가 null이 아닌 경우에만 userId 값을 추출
         return reviews.stream()
-                .map(review -> ReviewDTO.builder()
+                .map(review -> ReviewReadDTO.builder()
                         .reviewId(review.getReviewId())
                         .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
                         .userId(review.getUsers() != null ? review.getUsers().getUserId() : null)
                         .reviewText(review.getReviewText())
                         .star(review.getStar())
+                        .likeIndex((review.getLikeIndex()))
                         .createAt(review.getCreateAt())
                         .updateAt(review.getUpdateAt())
                         .build())
