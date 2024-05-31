@@ -10,11 +10,6 @@ const userLogoutFetch = async () => {
         },
     });
 
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    };
-
     return response;
 }
 

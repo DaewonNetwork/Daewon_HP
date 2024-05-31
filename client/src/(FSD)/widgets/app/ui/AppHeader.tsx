@@ -17,6 +17,7 @@ const logo = Barlow_Condensed({
 const AppHeader = ({ children, isSearchRegion = true }: { children?: React.ReactNode, isSearchRegion?: boolean }) => {
     const { user } = useUserStore();
     
+    
     useEffect(() => {
     }, [user]);
 
