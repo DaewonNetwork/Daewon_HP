@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
@@ -10,13 +10,18 @@ import { Button } from "@nextui-org/button";
 import { useAuthSignup } from "../api/useAuthSignup";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { UserType } from "@/(FSD)/shareds/types/User.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const AuthSignupForm = () => {
     const userNameRegex = /^[가-힣a-zA-Z\s]{1,20}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
 
+    const [userData, setUserData] = useState<UserType | null>(null);
 
+    const { setUser } = useUserStore();
+    
     const schema = z.object({
         userName: z.string().regex(userNameRegex, { message: "알맞은 이름을 입력해주세요." }),
         email: z.string().regex(emailRegex, {
@@ -44,6 +49,7 @@ const AuthSignupForm = () => {
     const router = useRouter();
 
     const onSuccess = (data: any) => {
+        setUser(userData);
         router.push("/");
     }
 
@@ -55,9 +61,15 @@ const AuthSignupForm = () => {
 
     const onSubmit = (data: any) => {
         if ((!data.userName) || (!data.email) || (!data.password)) return;
-        console.log({ userName: data.userName, email: data.email, password: data.password });
 
-        mutate({ userName: data.userName, email: data.email, password: data.password });
+        const user: UserType = {
+            userName: data.userName,
+            email: data.email,
+            password: data.password
+        };
+
+        setUserData(user);
+        mutate(user);
     };
 
     return (
