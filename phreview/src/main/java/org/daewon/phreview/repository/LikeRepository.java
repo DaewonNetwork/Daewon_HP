@@ -12,5 +12,4 @@ public interface LikeRepository extends JpaRepository<LikeForReview,Long> {
     @Query(value = "SELECT * from like_for_review where review_id=:reviewId and user_id=:userId",nativeQuery = true)
     LikeForReview findByReviewAndUsers(Long reviewId, Long userId);
 
-
 }
