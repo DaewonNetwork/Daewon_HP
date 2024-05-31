@@ -19,8 +19,6 @@ const PharmacyInfo = () => {
 
     const user = useUserStore().user;
 
-    console.log(user);
-
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
