@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto;
+package org.daewon.phreview.dto.Review;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -15,9 +15,8 @@ import java.util.List;
 @Builder
 public class ReviewReadDTO {
 
-    private Long reviewId;
-    private Long phId;      // 특정한 병원 번호를 선언
-    private Long userId;    // 특정한 유저 id를 선언
+    private String phName;
+    private String userName;
 
     @NotEmpty
     private String reviewText;
@@ -25,6 +24,7 @@ public class ReviewReadDTO {
     private int star;
 
     private int likeIndex;
+    private int replyIndex;
 
     private LocalDateTime createAt;
     private LocalDateTime updateAt;

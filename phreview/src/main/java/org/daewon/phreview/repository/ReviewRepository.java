@@ -16,11 +16,16 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> listOfPharmacy(@Param("phId") Long phId); // 최신순
 
     @Query("SELECT r FROM Review r WHERE r.pharmacy.phId = :phId ORDER BY r.likeIndex DESC")
-    List<Review> listOfPharmacyOrderByLikeIndex(@Param("phId") Long phId); // 좋아요순
-
+    List<Review> listOfPharmacyByLikeIndex(@Param("phId") Long phId); // 좋아요 순
 
     @Query("SELECT r FROM Review r ORDER BY r.reviewId DESC")
-    List<Review> listAll(); // 좋아요순
+    List<Review> listAll(); // 리뷰 전체 최신순
+
+    @Query("SELECT r FROM Review r ORDER BY r.likeIndex DESC")
+    List<Review> listAllByLikeIndexDesc(); // 리뷰 전체 좋아요순
+
+
+
 
     // 리뷰 작성자의 userId를 반환하도록 하는 메서드
     @Query("select r.users.userId from Review r where r.reviewId = :reviewId")

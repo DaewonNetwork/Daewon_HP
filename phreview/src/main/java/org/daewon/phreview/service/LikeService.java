@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface LikeService {
     void likeReview (Long reviewId);
-    List<ReviewReadDTO> getReviewsByLikeIndexDesc(Long phId);
+
 }

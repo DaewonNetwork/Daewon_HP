@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EnjoyService {
     void enjoyPharmacy(Long phId);
-    List<PharmacyEnjoyDTO> getPharmaciesByEnjoyIndexDesc();
+
     List<EnjoyPhDTO> getUserEnjoyedPharmacies ();
 }

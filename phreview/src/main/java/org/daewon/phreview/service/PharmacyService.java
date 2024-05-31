@@ -2,6 +2,8 @@ package org.daewon.phreview.service;
 
 import org.daewon.phreview.dto.*;
 
+import java.util.List;
+
 
 public interface PharmacyService {
 
@@ -12,6 +14,8 @@ public interface PharmacyService {
      PageResponseDTO<PharmacyDTO> nameSearchInCity(String keyword, String city, PageRequestDTO pageRequestDTO);
      PageResponseDTO<PharmacyDTO> allSearch(PageRequestDTO pageRequestDTO);
 
-    PharmacyInfoDTO getPharmacyInfo(Long phId);
+     PharmacyInfoDTO getPharmacyInfo(Long phId);
 
+     List<PharmacyEnjoyRankListDTO> pharmaciesListByEnjoyIndexDesc();
+     List<PharmacyStarRankListDTO> reviewsListByStarAvgDesc(); // 리뷰 별점 평균
 }

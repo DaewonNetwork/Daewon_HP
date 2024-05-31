@@ -31,22 +31,31 @@ public class ReviewPublicController {
 
     @GetMapping()
     public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-        List<ReviewReadDTO> reviewList = reviewService.readReview(phId);
+        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
         return reviewList;
+    }
+
+    @Operation(summary = "좋아요 순")
+    @GetMapping("/list/like")
+    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 리뷰 좋아요순
+        List<ReviewReadDTO> reviewlist = reviewService.readReviewsByLikeIndexDesc(phId);
+        return reviewlist;
     }
 
     @Operation(summary = "모든 리뷰")
     @GetMapping("/list")
-    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(){ // 좋아요 수가 높은 리뷰 내림차순
-        List<ReviewReadDTO> reviewlist =  reviewService.readAllReview();
+    public List<ReviewReadDTO> readAllReviews(){ // 리뷰 전체
+        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviews();
+        return reviewlist;
+    }
+
+    @Operation(summary = "모든 리뷰 좋아요순")
+    @GetMapping("/list")
+    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
+        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
         return reviewlist;
     }
 
 
-    @Operation(summary = "좋아요 순")
-    @GetMapping("/list/like")
-    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 좋아요 수가 높은 리뷰 내림차순
-        List<ReviewReadDTO> reviewlist = likeService.getReviewsByLikeIndexDesc(phId);
-        return reviewlist;
-    }
+
 }

@@ -97,9 +97,9 @@ public class ReviewController {
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
-            @RequestBody ReviewReadDTO reviewReadDTO) {
-        reviewReadDTO.setReviewId(reviewId);
-        reviewService.updateReview(reviewReadDTO);
+            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+        reviewUpdateDTO.setReviewId(reviewId);
+        reviewService.updateReview(reviewUpdateDTO);
         return Map.of("result", "success");
     }
 

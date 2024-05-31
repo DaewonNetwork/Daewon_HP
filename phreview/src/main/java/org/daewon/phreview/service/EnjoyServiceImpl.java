@@ -80,18 +80,6 @@ public class EnjoyServiceImpl implements EnjoyService {
 
     }
 
-    @Override
-    public List<PharmacyEnjoyDTO> getPharmaciesByEnjoyIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
-        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findAllByOrderByEnjoyIndexDesc();
-        return list.stream()
-                .map(p -> {
-                    PharmacyEnjoyDTO dto = new PharmacyEnjoyDTO();
-                    dto.setPhId(p.getPharmacy().getPhId());
-                    dto.setEnjoyIndex(p.getEnjoyIndex());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<EnjoyPhDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)

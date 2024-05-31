@@ -6,10 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
-import org.daewon.phreview.dto.PharmacyStarDTO;
+import org.daewon.phreview.dto.*;
 
-import org.daewon.phreview.dto.ReviewDTO;
-import org.daewon.phreview.dto.ReviewReadDTO;
 import org.daewon.phreview.repository.*;
 
 import org.modelmapper.ModelMapper;
@@ -118,54 +116,15 @@ public class ReviewServiceImpl implements ReviewService {
         return review.getReviewId();
     }
 
-    @Override
-    public List<ReviewReadDTO> readReview(Long phId) {
-        List<Review> result = reviewRepository.listOfPharmacy(phId);
-        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
-        for(Review r : result){
-            ReviewReadDTO dto = ReviewReadDTO.builder()
-                    .reviewId(r.getReviewId())
-                    .reviewText(r.getReviewText())
-                    .star(r.getStar())
-                    .userId(r.getUsers().getUserId())
-                    .phId(r.getPharmacy().getPhId())
-                    .likeIndex(r.getLikeIndex())
-                    .createAt(r.getCreateAt())
-                    .updateAt(r.getUpdateAt())
-                    .build();
-            reviewDTOList.add(dto);
-        }
-        return reviewDTOList;
-    }
 
     @Override
-    public List<ReviewReadDTO> readAllReview() {
-        List<Review> result = reviewRepository.listAll();
-        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
-        for(Review r : result){
-            ReviewReadDTO dto = ReviewReadDTO.builder()
-                    .reviewId(r.getReviewId())
-                    .reviewText(r.getReviewText())
-                    .star(r.getStar())
-                    .userId(r.getUsers().getUserId())
-                    .phId(r.getPharmacy().getPhId())
-                    .likeIndex(r.getLikeIndex())
-                    .createAt(r.getCreateAt())
-                    .updateAt(r.getUpdateAt())
-                    .build();
-            reviewDTOList.add(dto);
-        }
-        return reviewDTOList;
-    }
-
-    @Override
-    public void updateReview(ReviewReadDTO reviewReadDTO) {   // 댓글 수정
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewReadDTO.getReviewId());
+    public void updateReview(ReviewUpdateDTO reviewUpdateDTO) {   // 댓글 수정
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewUpdateDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
         pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
-        review.setReview(reviewReadDTO.getReviewText(),reviewReadDTO.getStar());
-        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+reviewReadDTO.getStar());
+        review.setReview(reviewUpdateDTO.getReviewText(),reviewUpdateDTO.getStar());
+        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+reviewUpdateDTO.getStar());
         double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
         pharmacyStar.setStarAvg(starAvg);
         reviewRepository.save(review); // 리뷰 내용 수정
@@ -190,9 +149,85 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.deleteById(reviewId);
     }
 
+    @Override
+    public List<ReviewReadDTO> readReviews(Long phId) {
+        List<Review> result = reviewRepository.listOfPharmacy(phId);
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewReadDTO dto = ReviewReadDTO.builder()
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userName(r.getUsers().getUserName())
+                    .phName(r.getPharmacy().getPhName())
+                    .likeIndex(r.getLikeIndex())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
+    }
+
+    @Override
+    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(Long phId) {
+        List<Review> result = reviewRepository.listOfPharmacyByLikeIndex(phId);
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewReadDTO dto = ReviewReadDTO.builder()
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userName(r.getUsers().getUserName())
+                    .phName(r.getPharmacy().getPhName())
+                    .likeIndex(r.getLikeIndex())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
+    }
+
+    @Override
+    public List<ReviewReadDTO> readAllReviews() {
+        List<Review> result = reviewRepository.listAll();
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewReadDTO dto = ReviewReadDTO.builder()
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userName(r.getUsers().getUserName())
+                    .phName(r.getPharmacy().getPhName())
+                    .likeIndex(r.getLikeIndex())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
+    }
+
+    @Override
+    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc() {
+        List<Review> result = reviewRepository.listAllByLikeIndexDesc();
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewReadDTO dto = ReviewReadDTO.builder()
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userName(r.getUsers().getUserName())
+                    .phName(r.getPharmacy().getPhName())
+                    .likeIndex(r.getLikeIndex())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
+    }
+
     // 사용자 ID로 리뷰 목록을 조회하는 메서드
     @Override
-    public List<ReviewReadDTO> getReviewsByUserId(Long userId) {
+    public List<ReviewReadDTO> readReviewsByUser(Long userId) {
         List<Review> reviews = reviewRepository.findByUserId(userId);
 
         // .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
@@ -204,9 +239,8 @@ public class ReviewServiceImpl implements ReviewService {
         // Users 객체가 null이 아닌 경우에만 userId 값을 추출
         return reviews.stream()
                 .map(review -> ReviewReadDTO.builder()
-                        .reviewId(review.getReviewId())
-                        .phId(review.getPharmacy() != null ? review.getPharmacy().getPhId() : null)
-                        .userId(review.getUsers() != null ? review.getUsers().getUserId() : null)
+                        .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
+                        .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
                         .reviewText(review.getReviewText())
                         .star(review.getStar())
                         .likeIndex((review.getLikeIndex()))
@@ -218,16 +252,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 
-    @Override
-    public List<PharmacyStarDTO> getPharmaciesByStarAvgDesc() { // 병원 평점 평균 많은 순부터 내림차순 정렬
-        List<PharmacyStar> list = pharmacyStarRepository.findAllByOrderByStarAvgDesc();
-        return list.stream()
-                .map(p -> {
-                    PharmacyStarDTO dto = new PharmacyStarDTO();
-                    dto.setPhId(p.getPharmacy().getPhId());
-                    dto.setStarAvg(p.getStarAvg());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
+
+
+
 }

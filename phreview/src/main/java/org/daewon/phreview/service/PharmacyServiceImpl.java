@@ -217,4 +217,34 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
 
+    @Override
+    public List<PharmacyEnjoyRankListDTO> pharmaciesListByEnjoyIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
+        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findAllByOrderByEnjoyIndexDesc();
+        return list.stream()
+                .map(p -> {
+                    PharmacyEnjoyRankListDTO dto = new PharmacyEnjoyRankListDTO();
+                    dto.setPhAdd(p.getPharmacy().getPhAdd());
+                    dto.setPhTel(p.getPharmacy().getPhTel());
+                    dto.setEnjoyIndex(p.getEnjoyIndex());
+                    dto.setPhName(p.getPharmacy().getPhName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PharmacyStarRankListDTO> reviewsListByStarAvgDesc() { // 병원 평점 평균 많은 순부터 내림차순 정렬
+        List<PharmacyStar> list = pharmacyStarRepository.findAllByOrderByStarAvgDesc();
+        return list.stream()
+                .map(p -> {
+                    PharmacyStarRankListDTO dto = new PharmacyStarRankListDTO();
+                    dto.setPhAdd(p.getPharmacy().getPhAdd());
+                    dto.setPhTel(p.getPharmacy().getPhTel());
+                    dto.setStarAvg(p.getStarAvg());
+                    dto.setPhName(p.getPharmacy().getPhName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
 }

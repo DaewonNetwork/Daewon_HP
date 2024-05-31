@@ -1,17 +1,12 @@
-package org.daewon.phreview.dto;
+package org.daewon.phreview.dto.Review;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.daewon.phreview.domain.ReviewImage;
-import org.daewon.phreview.domain.Users;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -31,7 +26,7 @@ public class ReviewDTO {
     private int star;
 
     private Long replyCount; // 댓글 수
-    
+
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 

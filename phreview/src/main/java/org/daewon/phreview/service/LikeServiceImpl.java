@@ -63,24 +63,7 @@ public class LikeServiceImpl implements LikeService {
 
     }
 
-    @Override
-    public List<ReviewReadDTO> getReviewsByLikeIndexDesc(Long phId) { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
-        List<Review> list = reviewRepository.listOfPharmacyOrderByLikeIndex(phId);
-        return list.stream()
-                .map(r -> {
-                    ReviewReadDTO dto = new ReviewReadDTO();
-                    dto.setReviewId(r.getReviewId());
-                    dto.setPhId(r.getPharmacy().getPhId());
-                    dto.setUserId(r.getUsers().getUserId());
-                    dto.setStar(r.getStar());
-                    dto.setReviewText(r.getReviewText());
-                    dto.setCreateAt(r.getCreateAt());
-                    dto.setUpdateAt(r.getUpdateAt());
-                    dto.setLikeIndex(r.getLikeIndex());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
+
 
 
 
