@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import PasswordInputShared from "@/(FSD)/shareds/ui/PasswordInputShared";
 import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
@@ -10,10 +10,16 @@ import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useAuthSignin } from "../api/useAuthSIgnin";
+import { UserType } from "@/(FSD)/shareds/types/User.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+
+    const [userData, setUserData] = useState<UserType | null>(null);
+
+    const { setUser } = useUserStore();
 
     const schema = z.object({
         email: z.string().regex(emailRegex, {
@@ -35,6 +41,7 @@ const AuthSigninForm = () => {
         localStorage.setItem("access_token", data.accessToken);
         localStorage.setItem("refresh_token", data.refreshToken);        
 
+        setUser(userData);
         router.push("/");
     }
 
@@ -47,7 +54,13 @@ const AuthSigninForm = () => {
     const onSubmit = (data: any) => {
         if ((!data.email) || (!data.password)) return;
 
-        mutate({ email: data.email, password: data.password });
+        const user: UserType = {
+            email: data.email,
+            password: data.password
+        };
+
+        setUserData(user);
+        mutate(user);
     };
 
     return (

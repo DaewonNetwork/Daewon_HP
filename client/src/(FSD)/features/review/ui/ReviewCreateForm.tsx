@@ -17,7 +17,9 @@ const ReviewCreateForm = () => {
     const { user } = useUserStore();
     const { phId } = useParams<{ phId: string }>();
 
-    const onSuccess = (data: any) => { };
+    const onSuccess = (data: any) => { 
+        router.push(`/pharmacy/${phId}`);
+    };
 
     const { mutate } = useReviewCreate({ onSuccess });
 
@@ -43,15 +45,14 @@ const ReviewCreateForm = () => {
     const onSubmit = (data: any) => {
         const formData = new FormData();
         
-
         if (!phId) return;
         if (!data.reviewText) return;
         if (!user?.userId) return;
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: stars.filter(star => star).length, phId: phId, userId: user.userId }));
+        
+
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: stars.filter(star => star).length, phId: phId }));
         formData.append("files", JSON.stringify(reviewFile?.files[0] || null));
         mutate(formData);
-
-        router.push(`/pharmacy/${phId}`);
     }
 
 

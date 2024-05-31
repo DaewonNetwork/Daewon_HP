@@ -8,8 +8,8 @@ const PharmacyShared = ({ pharmacy }: { pharmacy: PharmacyType}) => {
     const router = useRouter();
     return (
         <div
-        onMouseOver={e => { e.currentTarget.classList.add("bg-content3"); }}
-        onMouseOut={e => { e.currentTarget.classList.remove("bg-content3"); }}
+        onMouseOver={e => { e.currentTarget.classList.add("bg-content2"); }}
+        onMouseOut={e => { e.currentTarget.classList.remove("bg-content2"); }}
         onClick={_ => {
             router.push(`/pharmacy/${pharmacy.phId}`);
         }}
