@@ -7,7 +7,7 @@ const Page = () => {
     return (
         <>
             <AppHeader isSearchRegion={false} />
-            <div style={{ marginTop: 200 }}></div>
+            <div style={{ height: 200 }}></div>
             <UserLogoutButton />
             <footer className={"footer"}>
                 <AppFooter />
