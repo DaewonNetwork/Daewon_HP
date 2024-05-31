@@ -4,14 +4,18 @@ import { Button } from "@nextui-org/button";
 import React from "react";
 import { useUserLogout } from "../api/useUserLogout";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const UserLogoutButton = () => {
+    const { setUser } = useUserStore();
     const router = useRouter();
+
 
     const onSuccess = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
 
+        setUser(null);
         router.push("/");
     }
     

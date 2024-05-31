@@ -10,6 +10,11 @@ const readUserFetch = async () => {
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
         },
     });
+    
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    };
 
     const data = await response.json();
 

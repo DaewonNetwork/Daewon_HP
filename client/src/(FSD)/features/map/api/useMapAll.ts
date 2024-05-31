@@ -7,6 +7,11 @@ const phMapAllFetch = async () => {
             "Content-Type": "application/json",
         },
     });
+    
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    };
 
     const data = await response.json();
     

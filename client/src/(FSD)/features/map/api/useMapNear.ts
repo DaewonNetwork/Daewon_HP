@@ -8,6 +8,11 @@ const phMapNearFetch = async (lat: number, lng: number) => {
         },
     });
 
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    };
+    
     const data = await response.json();
  
     return data;

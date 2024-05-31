@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import useUserStore from "../stores/useUserStore";
 
 const useIsLoggedIn = (isPrivate: boolean) => {
-    const { setUser } = useUserStore();
+    const { user, setUser } = useUserStore();
     const router = useRouter();
 
     const { data } = useReadUser();
@@ -18,7 +18,7 @@ const useIsLoggedIn = (isPrivate: boolean) => {
         } else if (isPrivate) {
             router.push("/auth/signin");
         }
-    }, [data, isPrivate, router, setUser]);
+    }, [data, isPrivate, router, user]);
 
 };
 
