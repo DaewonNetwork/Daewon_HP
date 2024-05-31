@@ -12,6 +12,7 @@ public interface ReviewService {
     Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath);
 
     List<ReviewReadDTO> readReview(Long phId);
+    List<ReviewReadDTO> readAllReview();
 
     void updateReview(ReviewReadDTO reviewReadDTO);
 
