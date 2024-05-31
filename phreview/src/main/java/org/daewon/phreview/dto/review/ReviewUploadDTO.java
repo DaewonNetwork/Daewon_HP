@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Review;
+package org.daewon.phreview.dto.review;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

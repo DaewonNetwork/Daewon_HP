@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Review;
+package org.daewon.phreview.dto.review;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -6,18 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewDTO {
+public class ReviewReadDTO {
 
-
-    private Long phId;      // 특정한 병원 번호를 선언
+    private Long phId;
+    private String phName;
     private String userName;
 
     @NotEmpty
@@ -25,9 +23,11 @@ public class ReviewDTO {
 
     private int star;
 
-    private Long replyCount; // 댓글 수
+    private int likeIndex;
+    private int replyIndex;
 
-    private LocalDateTime createAt;
+    private String createAt;
+    private String updateAt;
 
     private List<ReviewImageDTO> reviewImages; // 리뷰 이미지 리스트
 
@@ -39,5 +39,4 @@ public class ReviewDTO {
     public int getStar() {
         return star != 0 ? star : 1; // 별점이 0인 경우 기본값으로 1을 사용
     }
-
 }

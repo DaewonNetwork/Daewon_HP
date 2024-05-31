@@ -4,10 +4,8 @@ import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-import org.daewon.phreview.dto.Reply.ReplyDTO;
-
-import org.daewon.phreview.dto.Reply.ReplyReadDTO;
-import org.daewon.phreview.dto.Review.ReviewReadDTO;
+import org.daewon.phreview.dto.reply.ReplyReadDTO;
+import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.repository.RefreshTokenRepository;
 import org.daewon.phreview.service.ReplyService;
 import org.daewon.phreview.service.ReviewService;

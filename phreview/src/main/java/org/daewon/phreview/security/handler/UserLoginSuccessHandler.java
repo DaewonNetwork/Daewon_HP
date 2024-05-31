@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.Auth.AuthSecurityDTO;
+import org.daewon.phreview.dto.auth.AuthSecurityDTO;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;

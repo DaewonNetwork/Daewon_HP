@@ -1,7 +1,6 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyRankListDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyEnjoyRankListDTO;
 
 import java.util.List;
 

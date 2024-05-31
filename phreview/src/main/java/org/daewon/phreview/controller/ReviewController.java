@@ -1,18 +1,12 @@
 package org.daewon.phreview.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.JwtException;
-import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.dto.*;
-import org.daewon.phreview.dto.Review.ReviewDTO;
-import org.daewon.phreview.dto.Review.ReviewUpdateDTO;
+import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.ReviewRepository;
-import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
@@ -22,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,7 +24,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @Log4j2

@@ -2,7 +2,7 @@ package org.daewon.phreview.utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.Auth.AuthSigninDTO;
+import org.daewon.phreview.dto.auth.AuthSigninDTO;
 import org.daewon.phreview.repository.ReplyRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.springframework.security.core.Authentication;

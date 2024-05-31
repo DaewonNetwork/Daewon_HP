@@ -2,8 +2,8 @@ package org.daewon.phreview.service;
 
 import lombok.extern.log4j.Log4j2;
 
-import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyDTO;
+import org.daewon.phreview.dto.pharmacy.EnjoyPhDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyEnjoyDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.Pharmacy.PharmacyRepository;
 import org.daewon.phreview.repository.UserRepository;

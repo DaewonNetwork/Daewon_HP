@@ -3,7 +3,7 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.Review.ReviewReadDTO;
+import org.daewon.phreview.dto.review.ReviewReadDTO;
 
 import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;

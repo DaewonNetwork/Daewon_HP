@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Auth;
+package org.daewon.phreview.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;

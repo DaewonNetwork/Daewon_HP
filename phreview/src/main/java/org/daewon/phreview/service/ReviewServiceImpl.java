@@ -7,9 +7,9 @@ import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
 
-import org.daewon.phreview.dto.Review.ReviewDTO;
-import org.daewon.phreview.dto.Review.ReviewReadDTO;
-import org.daewon.phreview.dto.Review.ReviewUpdateDTO;
+import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewReadDTO;
+import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.*;
 
 import org.daewon.phreview.repository.Pharmacy.PharmacyStarRepository;
@@ -23,9 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

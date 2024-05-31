@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Reply;
+package org.daewon.phreview.dto.reply;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

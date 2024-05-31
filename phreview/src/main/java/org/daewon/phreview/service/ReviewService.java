@@ -1,9 +1,8 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.*;
-import org.daewon.phreview.dto.Review.ReviewDTO;
-import org.daewon.phreview.dto.Review.ReviewReadDTO;
-import org.daewon.phreview.dto.Review.ReviewUpdateDTO;
+import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewReadDTO;
+import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
