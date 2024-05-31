@@ -5,10 +5,9 @@ const reviewCreateFetch = async (data: FormData) => {
     const response = await fetch("http://localhost:8090/api/review", {
         method: "POST",
         headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
         },
-        body: JSON.stringify(data),
+        body: data,
     });
 
     if (!response.ok) {
