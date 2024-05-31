@@ -11,13 +11,16 @@ const ReviewShared = ({ review }: { review: ReviewType }) => {
     const router = useRouter();
     if(!review) return <></>;
 
+    console.log(review);
+    
+
     return (
         <div className={styles.review_item} onClick={_ => {
             router.push(`/reply/${review.reviewId}`);
         }}>
             <div className={styles.review_header}>
                 <div className={styles.review_top_box}>
-                    <h2 className={"text-large"}>{review.star}</h2>
+                    <h2 className={"text-large"}>{review.userName}</h2>
                 </div>
                 <div className={styles.review_btm_box}>
                     <p className={"text-medium"}><IconShared iconType={"star"} /> {review.star}</p>
