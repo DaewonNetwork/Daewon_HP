@@ -1,4 +1,4 @@
-package org.daewon.phreview.repository;
+package org.daewon.phreview.repository.Pharmacy;
 
 import org.daewon.phreview.domain.Pharmacy;
 import org.springframework.data.domain.Page;

@@ -3,7 +3,7 @@ package org.daewon.phreview.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.PharmacyDTO;
+import org.daewon.phreview.dto.Pharmacy.PharmacyDTO;
 import org.daewon.phreview.service.MapService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
