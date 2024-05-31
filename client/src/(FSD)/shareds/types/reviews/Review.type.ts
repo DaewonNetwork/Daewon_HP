@@ -1,5 +1,6 @@
 export interface ReviewType {
-    phId: number;
+    reviewId: number;
+    phName: string;
     userName: string;
     reviewText: string;
     likeIndex: number;
