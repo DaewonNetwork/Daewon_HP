@@ -1,7 +1,7 @@
 package org.daewon.phreview.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.Reply.ReplyDTO;
+import org.daewon.phreview.dto.reply.ReplyDTO;
 import org.daewon.phreview.dto.ReviewDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

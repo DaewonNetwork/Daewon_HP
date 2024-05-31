@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Auth;
+package org.daewon.phreview.dto.auth;
 
 import jakarta.persistence.Column;
 import lombok.Data;

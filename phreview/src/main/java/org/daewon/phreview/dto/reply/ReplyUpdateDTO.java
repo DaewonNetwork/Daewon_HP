@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Reply;
+package org.daewon.phreview.dto.reply;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -12,13 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReplyDTO {
-
-    private Long reviewId;
-    private String userName;    // 특정한 유저 id를 선언
+public class ReplyUpdateDTO {
 
     @NotEmpty
     private String replyText;
-
-    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

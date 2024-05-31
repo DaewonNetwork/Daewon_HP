@@ -1,7 +1,7 @@
 package org.daewon.phreview.repository;
 
 import org.daewon.phreview.domain.EnjoyPh;
-import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
+import org.daewon.phreview.dto.pharmacy.EnjoyPhDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

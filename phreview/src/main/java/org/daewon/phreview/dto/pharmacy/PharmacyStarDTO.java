@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto.Pharmacy;
+package org.daewon.phreview.dto.pharmacy;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

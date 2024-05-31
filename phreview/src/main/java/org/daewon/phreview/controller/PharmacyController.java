@@ -3,12 +3,12 @@ package org.daewon.phreview.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.Page.PageRequestDTO;
-import org.daewon.phreview.dto.Page.PageResponseDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyRankListDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyInfoDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyStarRankListDTO;
+import org.daewon.phreview.dto.page.PageRequestDTO;
+import org.daewon.phreview.dto.page.PageResponseDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyEnjoyRankListDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyInfoDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyStarRankListDTO;
 import org.daewon.phreview.repository.*;
 import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
 import org.daewon.phreview.repository.Pharmacy.PharmacyStarRepository;

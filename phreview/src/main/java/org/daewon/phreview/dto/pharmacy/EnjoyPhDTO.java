@@ -1,16 +1,14 @@
-package org.daewon.phreview.dto.Pharmacy;
+package org.daewon.phreview.dto.pharmacy;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PharmacyEnjoyDTO {
-
+public class EnjoyPhDTO {
     private Long phId;
-    private int enjoyIndex; // 즐겨찾기 인덱스
+    private boolean isEnjoy;
 }

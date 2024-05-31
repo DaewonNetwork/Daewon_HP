@@ -1,5 +1,5 @@
 package org.daewon.phreview.service;
-import org.daewon.phreview.dto.Pharmacy.PharmacyDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyDTO;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package org.daewon.phreview.service;
 
 
-import org.daewon.phreview.dto.Reply.ReplyDTO;
-import org.daewon.phreview.dto.Reply.ReplyReadDTO;
-import org.daewon.phreview.dto.Reply.ReplyUpdateDTO;
+import org.daewon.phreview.dto.reply.ReplyDTO;
+import org.daewon.phreview.dto.reply.ReplyReadDTO;
+import org.daewon.phreview.dto.reply.ReplyUpdateDTO;
 
 
 

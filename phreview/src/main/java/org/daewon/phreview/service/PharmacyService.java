@@ -1,11 +1,11 @@
 package org.daewon.phreview.service;
 
-import org.daewon.phreview.dto.Page.PageRequestDTO;
-import org.daewon.phreview.dto.Page.PageResponseDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyRankListDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyInfoDTO;
-import org.daewon.phreview.dto.Pharmacy.PharmacyStarRankListDTO;
+import org.daewon.phreview.dto.page.PageRequestDTO;
+import org.daewon.phreview.dto.page.PageResponseDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyEnjoyRankListDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyInfoDTO;
+import org.daewon.phreview.dto.pharmacy.PharmacyStarRankListDTO;
 
 import java.util.List;
 
