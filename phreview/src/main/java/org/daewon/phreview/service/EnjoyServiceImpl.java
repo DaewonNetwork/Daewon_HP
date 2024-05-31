@@ -1,17 +1,16 @@
 package org.daewon.phreview.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.EnjoyPh;
 import org.daewon.phreview.domain.Pharmacy;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.EnjoyPhDTO;
-import org.daewon.phreview.dto.PharmacyEnjoyDTO;
+import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
+import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyRankListDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
-import org.daewon.phreview.repository.PharmacyEnjoyRepository;
-import org.daewon.phreview.repository.PharmacyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyRepository;
 import org.daewon.phreview.repository.UserRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -80,21 +79,9 @@ public class EnjoyServiceImpl implements EnjoyService {
 
     }
 
-    @Override
-    public List<PharmacyEnjoyDTO> getPharmaciesByEnjoyIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
-        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findAllByOrderByEnjoyIndexDesc();
-        return list.stream()
-                .map(p -> {
-                    PharmacyEnjoyDTO dto = new PharmacyEnjoyDTO();
-                    dto.setPhId(p.getPharmacy().getPhId());
-                    dto.setEnjoyIndex(p.getEnjoyIndex());
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
 
     @Override
-    public List<EnjoyPhDTO> getUserEnjoyedPharmacies() { // 자신이 즐겨찾기한 병원 (즐겨찾기한 순)
+    public List<PharmacyEnjoyRankListDTO> enjoyedPharmaciesListByUser() { // 자신이 즐겨찾기한 병원
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -109,8 +96,11 @@ public class EnjoyServiceImpl implements EnjoyService {
 
         return list.stream()
                 .map(e -> {
-                    EnjoyPhDTO dto = new EnjoyPhDTO();
-                    dto.setPhId(e.getPharmacyEnjoy().getPharmacy().getPhId());
+                    PharmacyEnjoyRankListDTO dto = new PharmacyEnjoyRankListDTO();
+                    dto.setPhName(e.getPharmacyEnjoy().getPharmacy().getPhName());
+                    dto.setPhAdd(e.getPharmacyEnjoy().getPharmacy().getPhAdd());
+                    dto.setPhTel(e.getPharmacyEnjoy().getPharmacy().getPhTel());
+                    dto.setEnjoyIndex(e.getPharmacyEnjoy().getEnjoyIndex());
                     return dto;
                 })
                 .collect(Collectors.toList());

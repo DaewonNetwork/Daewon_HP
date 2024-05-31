@@ -1,7 +1,7 @@
 package org.daewon.phreview.service;
 
 import org.daewon.phreview.domain.Users;
-import org.daewon.phreview.dto.AuthSignupDTO;
+import org.daewon.phreview.dto.Auth.AuthSignupDTO;
 
 public interface AuthService {
     // 이메일 중복 검사 예외 Exception

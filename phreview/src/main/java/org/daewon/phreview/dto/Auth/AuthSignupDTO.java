@@ -1,6 +1,5 @@
-package org.daewon.phreview.dto;
+package org.daewon.phreview.dto.Auth;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.Date;

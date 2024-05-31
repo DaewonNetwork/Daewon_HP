@@ -3,7 +3,8 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.dto.ReplyDTO;
+import org.daewon.phreview.dto.Reply.ReplyDTO;
+import org.daewon.phreview.dto.Reply.ReplyReadDTO;
 import org.daewon.phreview.service.ReplyService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +23,10 @@ public class ReplyPublicController {
 
     @Operation(summary = "Replies Post")
     @GetMapping()
-    public List<ReplyDTO> readReply(
+    public List<ReplyReadDTO> readReply(
             @RequestParam(name = "reviewId") Long reviewId) {
-        List<ReplyDTO> replyDTO = replyService.readReply(reviewId);
-        log.info("댓글의 답글"+replyDTO);
-        return replyDTO;
+        List<ReplyReadDTO> replyReadDTO = replyService.readReply(reviewId);
+
+        return replyReadDTO;
     }
 }

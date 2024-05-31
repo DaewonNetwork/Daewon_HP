@@ -1,4 +1,4 @@
-package org.daewon.phreview.dto;
+package org.daewon.phreview.dto.Page;
 
 import lombok.Builder;
 import lombok.Getter;

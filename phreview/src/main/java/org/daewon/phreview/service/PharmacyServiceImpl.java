@@ -1,11 +1,15 @@
 package org.daewon.phreview.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.*;
-import org.daewon.phreview.dto.*;
+import org.daewon.phreview.dto.Page.PageRequestDTO;
+import org.daewon.phreview.dto.Page.PageResponseDTO;
+import org.daewon.phreview.dto.Pharmacy.*;
 import org.daewon.phreview.repository.*;
+import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyRepository;
+import org.daewon.phreview.repository.Pharmacy.PharmacyStarRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -216,5 +220,35 @@ public class PharmacyServiceImpl implements PharmacyService {
         return pharmacyInfoDTO;
     }
 
+
+    @Override
+    public List<PharmacyEnjoyRankListDTO> pharmaciesListByEnjoyIndexDesc() { // 병원 즐겨찾기가 많은 순부터 내림차순 정렬
+        List<PharmacyEnjoy> list = pharmacyEnjoyRepository.findAllByOrderByEnjoyIndexDesc();
+        return list.stream()
+                .map(p -> {
+                    PharmacyEnjoyRankListDTO dto = new PharmacyEnjoyRankListDTO();
+                    dto.setPhAdd(p.getPharmacy().getPhAdd());
+                    dto.setPhTel(p.getPharmacy().getPhTel());
+                    dto.setEnjoyIndex(p.getEnjoyIndex());
+                    dto.setPhName(p.getPharmacy().getPhName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PharmacyStarRankListDTO> reviewsListByStarAvgDesc() { // 병원 평점 평균 많은 순부터 내림차순 정렬
+        List<PharmacyStar> list = pharmacyStarRepository.findAllByOrderByStarAvgDesc();
+        return list.stream()
+                .map(p -> {
+                    PharmacyStarRankListDTO dto = new PharmacyStarRankListDTO();
+                    dto.setPhAdd(p.getPharmacy().getPhAdd());
+                    dto.setPhTel(p.getPharmacy().getPhTel());
+                    dto.setStarAvg(p.getStarAvg());
+                    dto.setPhName(p.getPharmacy().getPhName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 
 }
