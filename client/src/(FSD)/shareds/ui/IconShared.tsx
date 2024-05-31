@@ -9,7 +9,7 @@ import { IconType } from "../types/Icon.type";
 import { IoMdListBox } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
 
-const IconShared = ({ iconType, className, ...props }: IconType) => {
+const IconShared = ({ iconType, ...props }: IconType) => {
     let component = null;
 
     switch (iconType) {
@@ -102,7 +102,7 @@ const IconShared = ({ iconType, className, ...props }: IconType) => {
             break;
     }
 
-    return <span className={`icon ${className || "text-large"}`} {...props}>{component}</span>
+    return <span>{component}</span>
 };
 
 export default IconShared;

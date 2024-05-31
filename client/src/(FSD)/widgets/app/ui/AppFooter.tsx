@@ -1,19 +1,18 @@
-"use client";
-
+import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
-import { Button } from "@nextui-org/button";
-import Link from "next/link";
-import IconShared from "@/(FSD)/shareds/ui/IconShared";
+import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 
 const AppFooter = () => {
     return (
-        <div className={`bg-background ${styles.footer}`}>
-            <Button className={"text-large"} variant={"light"} as={Link} href={"/review"} endContent={<IconShared className={"text-large"} iconType={"review"} />}>리뷰</Button>
-            <Button className={"text-large"} variant={"light"} as={Link} href={"/"} endContent={<IconShared className={"text-large"} iconType={"map"} />}>지도</Button>
-            <Button className={"text-large"} variant={"light"} as={Link} href={"/profile"} endContent={<IconShared className={"text-large"} iconType={"person"} />}>프로필</Button>
+        <div className={styles.footer}>
+            <InnerShared>
+                <LinkBtnShared href={"/"}>홈</LinkBtnShared>
+                <LinkBtnShared href={"/"}>홈</LinkBtnShared>
+                <LinkBtnShared href={"/"}>홈</LinkBtnShared>
+            </InnerShared>
         </div>
-    );
-};
+    )
+}
 
 export default AppFooter;

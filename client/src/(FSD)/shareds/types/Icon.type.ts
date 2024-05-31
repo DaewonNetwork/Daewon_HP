@@ -5,6 +5,4 @@ export interface IconType {
     "chat" | "chat_active" | "profile" | "profile_active" |
     "matching" | "matching_active" | "like" | "like_active" | 
     "setting" | "pencil" | "menu" | "search" | "map" | "review" | "person" | "star";
-
-    className?: string;
 }

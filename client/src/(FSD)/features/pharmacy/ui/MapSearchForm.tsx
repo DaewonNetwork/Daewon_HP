@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,7 +28,7 @@ const MapSearchForm = () => {
     }
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <FormInputShared isInvalid={!!errors.keyword} placeholder={"약국 이름 또는 지역"} size={"lg"} control={control} name={"keyword"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
         </form>
     )

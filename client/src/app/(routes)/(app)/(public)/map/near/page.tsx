@@ -1,9 +1,7 @@
 import NearPharmacyList from "@/(FSD)/widgets/pharmacy/ui/NearPharmacyList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import NearMap from "@/(FSD)/widgets/map/ui/NearMap";
-import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,14 +11,10 @@ export const metadata: Metadata = {
 const Page = () => {
     return (
         <>
-            <AppHeader />
             <NearMap />
-            <footer className={"footer"}>
-                <ModalShared>
-                    <NearPharmacyList />
-                </ModalShared>
-                <AppFooter />
-            </footer>
+            <ModalShared>
+                <NearPharmacyList />
+            </ModalShared>
         </>
     );
 };

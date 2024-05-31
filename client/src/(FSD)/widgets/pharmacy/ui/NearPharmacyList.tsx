@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
-import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
 import { useSearchNear } from "@/(FSD)/features/pharmacy/api/useSearchNear";
+import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const NearPharmacyList = () => {
     const [lat, setLat] = useState<number>(0);
@@ -35,15 +34,21 @@ const NearPharmacyList = () => {
             fetchNextPage();
         }
     }, [inView]);
-    
 
-    if(isError || (!pharmacyList) || (!pharmacyList[0])) return <></>;
+
+    if (isError || (!pharmacyList) || (!pharmacyList[0])) return <></>;
 
     return (
-        <div className={styles.container}>
-            <PharmacyList pharmacyList={pharmacyList} />
+        <>
+            {
+                pharmacyList.map((pharmacy, index) => (
+                    <React.Fragment key={index}>
+                        <PharmacyShared pharmacy={pharmacy} />
+                    </React.Fragment>
+                ))
+            }
             <div ref={ref} />
-        </div>
+        </>
     );
 };
 

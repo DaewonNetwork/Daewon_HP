@@ -1,11 +1,9 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
-import PharmacyList from "@/(FSD)/entities/pharmacy/ui/PharmacyList";
 import { useSearchAll } from "@/(FSD)/features/pharmacy/api/useSearchAll";
+import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const AllPharmacyList = () => {
     const { pharmacyList, fetchNextPage } = useSearchAll();
@@ -17,12 +15,18 @@ const AllPharmacyList = () => {
             fetchNextPage();
         }
     }, [inView]);
-    
+
     return (
-        <div className={styles.container}>
-            <PharmacyList pharmacyList={pharmacyList} />
+        <>
+            {
+                pharmacyList.map((pharmacy, index) => (
+                    <React.Fragment key={index}>
+                        <PharmacyShared pharmacy={pharmacy} />
+                    </React.Fragment>
+                ))
+            }
             <div ref={ref} />
-        </div>
+        </>
     );
 };
 

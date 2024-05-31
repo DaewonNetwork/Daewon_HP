@@ -1,31 +1,22 @@
-"use client";
-
 import React from "react";
-
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
 import PhRankEnjoy from "@/(FSD)/entities/pharmacy/ui/PhRankEnjoy";
 import PhRankStar from "@/(FSD)/entities/pharmacy/ui/PhRankStar";
-import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
-import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
-import useIsLoggedIn from "@/(FSD)/shareds/hooks/useIsLoggedIn";
+import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
+import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 
 const Page = () => {
-    useIsLoggedIn(false);
     return (
         <>
-            <AppHeader>
-                <MapSearchForm />
-            </AppHeader>
-            <div className={styles.container}>
-                <div className={styles.nav_inner}>
-                    <PhRankEnjoy />
-                    <PhRankStar />
-                </div>
-            </div>
-            <footer className={"footer"}>
-                <AppFooter />
-            </footer>
+            <HeaderShared>
+                <InnerShared>
+                    <MapSearchForm />
+                </InnerShared>
+            </HeaderShared>
+            <>
+                <PhRankEnjoy />
+                <PhRankStar />
+            </>
         </>
     )
 }
