@@ -15,11 +15,10 @@ import java.time.LocalDateTime;
 public class ReplyDTO {
 
     private Long reviewId;
-    private Long userName;    // 특정한 유저 id를 선언
+    private String userName;    // 특정한 유저 id를 선언
 
     @NotEmpty
     private String replyText;
 
     private LocalDateTime createAt;
-    private LocalDateTime updateAt;
 }

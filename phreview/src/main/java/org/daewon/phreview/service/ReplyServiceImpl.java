@@ -4,12 +4,15 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Reply;
+import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.Users;
 import org.daewon.phreview.dto.Reply.ReplyDTO;
 import org.daewon.phreview.dto.Reply.ReplyReadDTO;
 import org.daewon.phreview.dto.Reply.ReplyUpdateDTO;
 import org.daewon.phreview.repository.ReplyRepository;
+import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.repository.UserRepository;
+import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +32,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Long createReply(ReplyDTO replyDTO) { // 답글 등록
@@ -42,10 +46,11 @@ public class ReplyServiceImpl implements ReplyService {
         Reply reply = modelMapper.map(replyDTO, Reply.class);
         reply.setReview(replyDTO.getReviewId());
         reply.setUsers(users.getUserId());
+
         Long replyId = replyRepository.save(reply).getReplyId();
-
-
-
+        Long reviewId = replyDTO.getReviewId();
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        review.setReplyIndex(review.getReplyIndex() + 1);
 
         return replyId;
     }
@@ -57,6 +62,7 @@ public class ReplyServiceImpl implements ReplyService {
         for(Reply r : result){
             ReplyReadDTO dto = ReplyReadDTO.builder()
                     .replyText(r.getReplyText())
+                    .phName(r.getReview().getPharmacy().getPhName())
                     .userName(r.getUsers().getUserName())
                     .createAt(r.getCreateAt())
                     .updateAt(r.getUpdateAt())
@@ -68,8 +74,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void updateReply(ReplyUpdateDTO replyUpdateDTO) {   // 댓글 수정
-        Optional<Reply> replyOptional = replyRepository.findById(replyUpdateDTO.getReplyId());
+    public void updateReply(ReplyUpdateDTO replyUpdateDTO,Long replyId) {   // 댓글 수정
+        Optional<Reply> replyOptional = replyRepository.findById(replyId);
         Reply reply = replyOptional.orElseThrow();
 
         reply.setReplyText(replyUpdateDTO.getReplyText());   // 리뷰 내용 수정
@@ -79,6 +85,10 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public void deleteReply(Long replyId) {
+        Reply reply = replyRepository.findById(replyId).orElseThrow();
+        Long reviewId = reply.getReview().getReviewId();
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        review.setReplyIndex(review.getReplyIndex() -1);
         replyRepository.deleteById(replyId);
     }
 

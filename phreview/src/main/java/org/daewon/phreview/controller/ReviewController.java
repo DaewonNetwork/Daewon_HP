@@ -10,6 +10,7 @@ import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.*;
 import org.daewon.phreview.dto.Review.ReviewDTO;
+import org.daewon.phreview.dto.Review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.PharmacyNotFoundException;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
@@ -99,8 +100,7 @@ public class ReviewController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
             @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
-        reviewUpdateDTO.setReviewId(reviewId);
-        reviewService.updateReview(reviewUpdateDTO);
+        reviewService.updateReview(reviewUpdateDTO,reviewId);
         return Map.of("result", "success");
     }
 

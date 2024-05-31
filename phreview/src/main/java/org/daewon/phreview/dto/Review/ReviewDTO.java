@@ -28,7 +28,6 @@ public class ReviewDTO {
     private Long replyCount; // 댓글 수
 
     private LocalDateTime createAt;
-    private LocalDateTime updateAt;
 
     private List<ReviewImageDTO> reviewImages; // 리뷰 이미지 리스트
 

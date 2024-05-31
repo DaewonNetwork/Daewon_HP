@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 public class ReviewReadDTO {
 
+    private Long phId;
     private String phName;
     private String userName;
 
@@ -26,8 +27,8 @@ public class ReviewReadDTO {
     private int likeIndex;
     private int replyIndex;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private String createAt;
+    private String updateAt;
 
     private List<ReviewImageDTO> reviewImages; // 리뷰 이미지 리스트
 

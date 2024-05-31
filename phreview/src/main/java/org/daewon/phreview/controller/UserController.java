@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import org.daewon.phreview.dto.Reply.ReplyDTO;
-import org.daewon.phreview.dto.ReviewDTO;
-import org.daewon.phreview.dto.ReviewReadDTO;
+
+import org.daewon.phreview.dto.Reply.ReplyReadDTO;
+import org.daewon.phreview.dto.Review.ReviewReadDTO;
 import org.daewon.phreview.repository.RefreshTokenRepository;
 import org.daewon.phreview.service.ReplyService;
 import org.daewon.phreview.service.ReviewService;
@@ -103,7 +104,7 @@ public class UserController {
             log.info("유저 ID: " + userId);
 
             // 해당 사용자가 작성한 Review 가져오기
-            List<ReviewReadDTO> userReviews = reviewService.getReviewsByUserId(userId);
+            List<ReviewReadDTO> userReviews = reviewService.readReviewsByUser(userId);
 
             log.info("리뷰 목록: " + userReviews);
 
@@ -134,7 +135,7 @@ public class UserController {
             log.info("유저 ID: " + userId);
 
             // 해당 사용자가 작성한 Reply 가져오기
-            List<ReplyDTO> replies = replyService.getRepliesByUserId(userId);
+            List<ReplyReadDTO> replies = replyService.getRepliesByUserId(userId);
 
             // 댓글 목록 반환
             return ResponseEntity.ok(replies);

@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReplyUpdateDTO {
 
-    private Long replyId;
     @NotEmpty
     private String replyText;
-    private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.dto.Pharmacy.EnjoyPhDTO;
+import org.daewon.phreview.dto.Pharmacy.PharmacyEnjoyRankListDTO;
 import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
 import org.daewon.phreview.service.EnjoyService;
@@ -41,8 +42,8 @@ public class EnjoyController {
 
     @Operation(summary = "자신이 즐겨찾기한 약국 목록")
     @GetMapping("/list") // 자신이 즐겨찾기한 약국 목록 (즐겨찾기한 순 정렬)
-    public List<EnjoyPhDTO> enjoyedPharmaciesList(){ //
-        List<EnjoyPhDTO> Pharmacylist = enjoyService.getUserEnjoyedPharmacies();
+    public List<PharmacyEnjoyRankListDTO> enjoyedPharmaciesList(){ //
+        List<PharmacyEnjoyRankListDTO> Pharmacylist = enjoyService.enjoyedPharmaciesListByUser();
         return Pharmacylist;
     }
 

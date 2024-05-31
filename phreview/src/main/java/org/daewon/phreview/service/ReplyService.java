@@ -4,7 +4,7 @@ package org.daewon.phreview.service;
 import org.daewon.phreview.dto.Reply.ReplyDTO;
 import org.daewon.phreview.dto.Reply.ReplyReadDTO;
 import org.daewon.phreview.dto.Reply.ReplyUpdateDTO;
-import org.daewon.phreview.dto.ReviewDTO;
+
 
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface ReplyService {
 
     List<ReplyReadDTO> readReply(Long phId);
 
-    void updateReply(ReplyUpdateDTO replyUpdateDTO);
+    void updateReply(ReplyUpdateDTO replyUpdateDTO,Long replyId);
 
     void deleteReply(Long replyId);
 
