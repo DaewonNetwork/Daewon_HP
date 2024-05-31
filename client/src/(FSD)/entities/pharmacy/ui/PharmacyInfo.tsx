@@ -10,6 +10,7 @@ import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.t
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import ReviewList from "../../review/ui/ReviewList";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -25,10 +26,6 @@ const PharmacyInfo = () => {
     useEffect(() => {
         refetch();
     }, [phId]);
-
-    useEffect(() => {
-
-    }, [user]);
 
     if (isError) return <></>;
     if (isLoading) return <></>;
@@ -47,6 +44,8 @@ const PharmacyInfo = () => {
             <div className={styles.review_box}>
                 <h2 className={"text-large font-medium"}>리뷰</h2>
                 <Button as={Link} href={`/review/create/${phId}`} color={"primary"} size={"lg"} fullWidth>리뷰 작성하기</Button>
+
+                <ReviewList />
             </div>
         </section>
     );

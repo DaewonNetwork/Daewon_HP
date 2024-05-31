@@ -54,6 +54,8 @@ const ReviewCreateForm = () => {
         formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: starCount, phId: phId, userId: user.userId }));
         formData.append("files", JSON.stringify(reviewFile?.files[0] || null));
         mutate(formData);
+
+        router.push(`/pharmacy/${phId}`);
     }
 
 
