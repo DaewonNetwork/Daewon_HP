@@ -26,7 +26,7 @@ const ReviewCreateForm = () => {
     const [reviewFile, setReviewFile] = useState<any>();
 
     const schema = z.object({
-        review_text: z.string().min(10).max(200)
+        reviewText: z.string().min(10).max(200)
     });
 
     const { control, handleSubmit, formState: { errors, isValid, submitCount } } = useForm({
@@ -49,9 +49,9 @@ const ReviewCreateForm = () => {
         
 
         if (!phId) return;
-        if (!data.review_text) return;
+        if (!data.reviewText) return;
         if (!user?.userId) return;
-        formData.append("reviewDTO", JSON.stringify({ review_text: data.review_text, star: starCount, phId: phId, userId: user.userId }));
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: starCount, phId: phId, userId: user.userId }));
         formData.append("files", JSON.stringify(reviewFile?.files[0] || null));
         mutate(formData);
     }
@@ -77,8 +77,8 @@ const ReviewCreateForm = () => {
                 </div>
             </div>
             <div className={styles.input_box}>
-                <label htmlFor={"review_text"} className={"text-medium font-medium"}>작성하기</label>
-                <FormTextareaShared isInvalid={!!errors.review_text} placeholder={"내용을 입력해주세요."} size={"lg"} control={control} name={"review_text"} variant={"bordered"} color={"primary"} />
+                <label htmlFor={"reviewText"} className={"text-medium font-medium"}>작성하기</label>
+                <FormTextareaShared isInvalid={!!errors.reviewText} placeholder={"내용을 입력해주세요."} size={"lg"} control={control} name={"reviewText"} variant={"bordered"} color={"primary"} />
                 <FileInputShared setFile={setReviewFile} variant={"ghost"} id={"review_image"} size={"md"} fullWidth>이미지 업로드</FileInputShared>
                 <Button fullWidth type={"submit"} size={"lg"} isDisabled={!isValid} color={"primary"}>등록하기</Button>
             </div>
