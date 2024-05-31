@@ -22,7 +22,6 @@ const ReviewCreateForm = () => {
     const { mutate } = useReviewCreate({ onSuccess });
 
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
-    const [starCount, setStarCount] = useState<number>(0);
     const [reviewFile, setReviewFile] = useState<any>();
 
     const schema = z.object({
@@ -39,19 +38,16 @@ const ReviewCreateForm = () => {
     const handleStarClick = (index: number) => {
         const newStars = stars.map((_, i) => i <= index);
         setStars(newStars);
-        setStarCount(stars.filter(star => star).length);
     };
 
     const onSubmit = (data: any) => {
         const formData = new FormData();
-
-        console.log(reviewFile?.files[0]);
         
 
         if (!phId) return;
         if (!data.reviewText) return;
         if (!user?.userId) return;
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: starCount, phId: phId, userId: user.userId }));
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: stars.filter(star => star).length, phId: phId, userId: user.userId }));
         formData.append("files", JSON.stringify(reviewFile?.files[0] || null));
         mutate(formData);
 
