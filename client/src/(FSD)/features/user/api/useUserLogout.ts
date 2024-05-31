@@ -15,9 +15,7 @@ const userLogoutFetch = async () => {
         throw new Error(errorMessage);
     };
 
-    const data = await response.json();
-    
-    return data;
+    return response;
 }
 
 export const useUserLogout = ({ onSuccess, onError }: MutationNullType) => {
