@@ -48,11 +48,9 @@ const ReviewCreateForm = () => {
         if (!phId) return;
         if (!data.reviewText) return;
         if (!user?.userId) return;
-
-        console.log(user.userId);
         
 
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: stars.filter(star => star).length, phId: phId, userId: user.userId }));
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, star: stars.filter(star => star).length, phId: phId }));
         formData.append("files", JSON.stringify(reviewFile?.files[0] || null));
         mutate(formData);
     }
