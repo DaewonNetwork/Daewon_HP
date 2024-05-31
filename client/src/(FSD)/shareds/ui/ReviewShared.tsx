@@ -15,7 +15,11 @@ const ReviewShared = ({ review }: { review: ReviewType }) => {
     
 
     return (
-        <div className={styles.review_item} onClick={_ => {
+        <div 
+        onMouseOver={e => { e.currentTarget.classList.add("bg-content2"); }}
+        onMouseOut={e => { e.currentTarget.classList.remove("bg-content2"); }}
+
+        className={styles.review_item} onClick={_ => {
             router.push(`/reply/${review.reviewId}`);
         }}>
             <div className={styles.review_header}>
@@ -28,7 +32,7 @@ const ReviewShared = ({ review }: { review: ReviewType }) => {
                 </div>
             </div>
             <div className={styles.review_body}>
-                <p className={`bg-content3 rounded-medium text-medium ${styles.review_text}`}>{review.reviewText}</p>
+                <p className={`bg-content4 rounded-medium text-medium ${styles.review_text}`}>{review.reviewText}</p>
             </div>
         </div>
     )
