@@ -1,0 +1,69 @@
+.container {
+    display: block;
+
+    .header {
+        display: block;
+        padding: 0 20px;
+
+        .header_inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 60px;
+            justify-content: center;
+            position: relative;
+
+            .back_btn {
+                position: absolute;
+                left: 0;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        }
+    }
+
+    .form {
+        display: block;
+        padding: 0 20px;
+
+        .input_box {
+            display: block;
+            margin-bottom: 20px;
+
+            h2 {
+                margin-bottom: 5px;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .star_box {
+                .star {
+                    color: #aaa;
+                    &.active {
+                        color: #F5A524;
+                    }
+                }
+            }
+            
+
+            & > button {
+                &:last-child {
+                    margin-top: 20px;
+                }
+            }
+
+            & > label {
+                margin-top: 20px;
+            }
+        }
+    }
+}

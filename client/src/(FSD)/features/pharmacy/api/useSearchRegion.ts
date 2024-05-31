@@ -1,4 +1,4 @@
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
@@ -38,7 +38,7 @@ export const useSearchRegion = (city: string) => {
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
     });
-
+     
     const pharmacyList: PharmacyType[] = useMemo(() => {
         const pharmacyList = data?.pages?.flatMap(page => page.phList) || [];
         return pharmacyList;

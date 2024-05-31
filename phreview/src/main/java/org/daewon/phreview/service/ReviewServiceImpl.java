@@ -53,6 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath) {
 
         int star = reviewDTO.getStar();
+        log.info(star);
         // 리뷰 저장
         Review review = Review.builder()
                 .reviewText(reviewDTO.getReviewText())
@@ -120,6 +121,26 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewReadDTO> readReview(Long phId) {
         List<Review> result = reviewRepository.listOfPharmacy(phId);
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        for(Review r : result){
+            ReviewReadDTO dto = ReviewReadDTO.builder()
+                    .reviewId(r.getReviewId())
+                    .reviewText(r.getReviewText())
+                    .star(r.getStar())
+                    .userId(r.getUsers().getUserId())
+                    .phId(r.getPharmacy().getPhId())
+                    .likeIndex(r.getLikeIndex())
+                    .createAt(r.getCreateAt())
+                    .updateAt(r.getUpdateAt())
+                    .build();
+            reviewDTOList.add(dto);
+        }
+        return reviewDTOList;
+    }
+
+    @Override
+    public List<ReviewReadDTO> readAllReview() {
+        List<Review> result = reviewRepository.listAll();
         List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
         for(Review r : result){
             ReviewReadDTO dto = ReviewReadDTO.builder()

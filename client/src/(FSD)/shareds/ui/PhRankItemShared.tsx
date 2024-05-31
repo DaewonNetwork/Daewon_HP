@@ -1,7 +1,6 @@
 import React from "react";
-import { PhRankItemType } from "../types/PhRankItem.type";
 
-const PhRankItemShared = ({} : PhRankItemType) => {
+const PhRankItemShared = ({}) => {
     return (
         <div>PhRankItemShared</div>
     );

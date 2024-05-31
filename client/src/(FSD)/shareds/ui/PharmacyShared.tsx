@@ -1,9 +1,10 @@
 import React from "react"
-import { PharmacyType } from "../types/Pharmacy.type";
+import { PharmacyType } from "../types/pharmacys/Pharmacy.type";
 import styles from "@/(FSD)/shareds/styles/PharmacyStyle.module.scss";
 import { useRouter } from "next/navigation";
 
 const PharmacyShared = ({ pharmacy }: { pharmacy: PharmacyType}) => {
+    if(!pharmacy) return;
     const router = useRouter();
     return (
         <div

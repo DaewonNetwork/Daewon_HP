@@ -1,10 +1,10 @@
 "use client";
 
-import { PharmacyListType } from "@/(FSD)/shareds/types/PharmacyList.type";
+import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import React, { useEffect, useState } from "react";
 import { MapMarker, Map } from "react-kakao-maps-sdk";
 
-const PharmacyMap = ({ pharmacyList }: PharmacyListType) => {
+const PharmacyMap = ({ pharmacyList }: { pharmacyList: PharmacyType[] }) => {
     const { kakao } = window;
     const [map, setMap] = useState<any>();
 

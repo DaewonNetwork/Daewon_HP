@@ -1,22 +1,27 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { PharmacyType } from "@/(FSD)/shareds/types/Pharmacy.type";
 import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/HomeStyle.module.scss";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Chip } from "@nextui-org/chip";
+import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
+import { Button } from "@nextui-org/button";
+import Link from "next/link";
+import ReviewList from "../../review/ui/ReviewList";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
 
-    console.log(data);
+    const user = useUserStore().user;
 
-    const pharmacy: PharmacyType = data;
+    console.log(user);
 
+    const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();
@@ -35,7 +40,12 @@ const PharmacyInfo = () => {
                     <Chip variant={"bordered"}><p className={"text-medium font-medium"}>리뷰 {pharmacy.reviewIndex}</p></Chip>
                     <Chip variant={"bordered"}><p className={"text-medium font-medium"}>즐겨찾기 {pharmacy.enjoyIndex}</p></Chip>
                 </div>
+            </div>
+            <div className={styles.review_box}>
+                <h2 className={"text-large font-medium"}>리뷰</h2>
+                <Button as={Link} href={`/review/create/${phId}`} color={"primary"} size={"lg"} fullWidth>리뷰 작성하기</Button>
 
+                <ReviewList />
             </div>
         </section>
     );
