@@ -6,7 +6,7 @@ const reviewCreateFetch = async (data: FormData) => {
         method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
         },
         body: JSON.stringify(data),
     });

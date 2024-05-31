@@ -27,7 +27,7 @@ const ReviewHeader = () => {
         <header className={styles.header}>
             <div className={styles.header_inner}>
                 <Button onClick={_ => router.back()} variant={"light"} className={styles.back_btn} isIconOnly endContent={<IconShared iconType={"left"} />} />
-                <h1 className={"text-medium font-medium"}>{pharmacyInfo.phName}</h1>
+                <h1 className={"text-large font-semibold"}>{pharmacyInfo.phName}</h1>
             </div>
         </header>
     );

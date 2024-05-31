@@ -30,17 +30,39 @@
 
         .input_box {
             display: block;
+            margin-bottom: 20px;
+
+            h2 {
+                margin-bottom: 5px;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
 
             label {
                 display: block;
                 margin-bottom: 5px;
             }
-            
-            .star {
-                color: #aaa;
-                &.active {
-                    color: #F5A524;
+
+            .star_box {
+                .star {
+                    color: #aaa;
+                    &.active {
+                        color: #F5A524;
+                    }
                 }
+            }
+            
+
+            & > button {
+                &:last-child {
+                    margin-top: 20px;
+                }
+            }
+
+            & > label {
+                margin-top: 20px;
             }
         }
     }
