@@ -19,8 +19,6 @@ const PharmacyInfo = () => {
 
     const user = useUserStore().user;
 
-    console.log(user);
-
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
@@ -44,7 +42,6 @@ const PharmacyInfo = () => {
             <div className={styles.review_box}>
                 <h2 className={"text-large font-medium"}>리뷰</h2>
                 <Button as={Link} href={`/review/create/${phId}`} color={"primary"} size={"lg"} fullWidth>리뷰 작성하기</Button>
-
                 <ReviewList />
             </div>
         </section>

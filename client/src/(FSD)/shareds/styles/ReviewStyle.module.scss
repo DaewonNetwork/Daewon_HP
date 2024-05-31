@@ -67,3 +67,57 @@
         }
     }
 }
+
+.review_list {
+    width: 100%;
+    display: block;
+    margin-top: 30px;
+    padding-bottom: 150px;
+    .review_item {
+        width: 100%;
+        display: block;
+        margin-bottom: 30px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .review_header {
+            width: 100%;
+            margin-bottom: 20px;
+
+            .review_top_box {
+                display: block;
+            }
+
+            .review_btm_box {
+                display: flex;
+
+                p {
+                    display: flex;
+                    align-items: center;
+
+                    span {
+                        color: #F5A524;
+                    }
+
+                    margin-right: 20px;
+                }
+            }
+        } 
+
+        .review_body {
+            width: 100%;
+            display: block;
+
+            
+            .review_text {
+                display: inline-block;
+                max-width: 70%;
+                overflow: hidden;
+                word-wrap: break-word;
+                padding: 10px;
+            }
+        }
+    }
+}
