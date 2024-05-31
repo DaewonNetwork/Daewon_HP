@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class ReviewReadDTO {
 
-    private Long phId;
+    private Long reviewId;
     private String phName;
     private String userName;
 

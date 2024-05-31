@@ -227,7 +227,7 @@ public class ReviewServiceImpl implements ReviewService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
         return reviews.stream()
                 .map(review -> ReviewReadDTO.builder()
-                        .phId(review.getPharmacy() != null? review.getPharmacy().getPhId() : null)
+                        .reviewId(review.getReviewId())
                         .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
                         .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
                         .reviewText(review.getReviewText())
