@@ -71,13 +71,13 @@ public class PharmacyController {
         return pharmacyInfoDTO;
     }
 
-    @GetMapping("/list/EnjoyIndex")
+    @GetMapping("/rank/enjoy")
     public List<PharmacyEnjoyRankListDTO> PharmaciesListByEnjoyInexDesc() { // 즐겨찾기 수가 높은 병원 내림차순
         List<PharmacyEnjoyRankListDTO> list = pharmacyService.pharmaciesListByEnjoyIndexDesc();
         return list;
     }
 
-    @GetMapping("/list/StarAvg")
+    @GetMapping("/rank/star")
     public List<PharmacyStarRankListDTO> PharmaciesListByStarAvgDesc() { // 즐겨찾기 수가 높은 병원 내림차순
         List<PharmacyStarRankListDTO> list = pharmacyService.reviewsListByStarAvgDesc();
         return list;

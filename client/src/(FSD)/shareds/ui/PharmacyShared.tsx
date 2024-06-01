@@ -1,21 +1,30 @@
 import React from "react"
 import { PharmacyType } from "../types/pharmacys/Pharmacy.type";
 import { useRouter } from "next/navigation";
+import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
+import TextLargeShared from "./TextLargeShared";
+import TextMediumShared from "./TextMediumShared";
+import ItemShared from "./ItemShared";
 
-const PharmacyShared = ({ pharmacy }: { pharmacy: PharmacyType}) => {
-    if(!pharmacy) return;
+const PharmacyShared = ({ pharmacy }: { pharmacy: PharmacyType }) => {
+    if (!pharmacy) return;
     const router = useRouter();
+
+    console.log(pharmacy);
+    
+
     return (
         <div
-        onMouseOver={e => { e.currentTarget.classList.add("bg-content2"); }}
-        onMouseOut={e => { e.currentTarget.classList.remove("bg-content2"); }}
         onClick={_ => {
             router.push(`/pharmacy/${pharmacy.phId}`);
         }}
+        className={styles.pharmacy_item}
         >
-            <h1 className={"text-large font-medium"}>{ pharmacy.phName }</h1>
-            <p className={`text-medium`}>{ pharmacy.phAdd }</p>
-            <p className={"text-medium"}>{ pharmacy.phTel }</p>
+            <ItemShared>
+                <TextLargeShared>{pharmacy.phName}</TextLargeShared>
+                <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+            </ItemShared>
         </div>
     )
 }

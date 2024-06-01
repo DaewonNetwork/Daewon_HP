@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useMapNear } from "@/(FSD)/features/map/api/useMapNear";
@@ -38,7 +39,7 @@ const NearMap = () => {
 
 
     return (
-        <div className={"map_container"}>
+        <div className={styles.map}>
             <PharmacyMap pharmacyList={pharmacyList} />
         </div>
     );

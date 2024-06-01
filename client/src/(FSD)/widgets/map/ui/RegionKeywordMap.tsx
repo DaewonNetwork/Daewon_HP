@@ -1,7 +1,8 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
+import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
+import { useParams } from "next/navigation";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useMapRegionKeyword } from "@/(FSD)/features/map/api/useMapRegionKeyword";
@@ -21,7 +22,7 @@ const RegionKeywordMap = () => {
     if(isLoading) return <></>; 
 
     return (
-        <div className={"map_container"}>
+        <div className={styles.map}>
             <PharmacyMap pharmacyList={pharmacyList} />
         </div>
     );

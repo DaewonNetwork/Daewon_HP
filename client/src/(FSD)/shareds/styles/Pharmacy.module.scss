@@ -1,0 +1,57 @@
+.pharmacy_item {
+    display: block;
+
+    h1[data-slot="text_large"] {
+        padding-bottom: 8px;
+    }
+
+    p[data-slot="text_medium"] {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        padding-bottom: 5px;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.pharmacy_info {
+    display: block;
+    padding-top: 20px;
+    
+    .top_bar {
+        display: block;
+
+        h1[data-slot="text_xlarge"] {
+            padding-bottom: 8px;
+        }
+        p[data-slot="text_medium"] {
+            text-wrap: pretty;
+        }
+    }
+
+    .btm_bar {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+
+        & > div {
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0px;
+            }
+
+            & > span {
+                display: flex;
+    
+                & p[data-slot="text_medium"] {
+                    margin-left: 5px;
+                }
+            }   
+        }
+    }
+}

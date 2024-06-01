@@ -1,8 +1,12 @@
 import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
 import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
-import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import AllMap from "@/(FSD)/widgets/map/ui/AllMap";
 import { Metadata } from "next";
+import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
+import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
+import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
+import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
+import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
+import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 
 export const metadata: Metadata = {
     title: "HP - 전체 검색",
@@ -11,11 +15,18 @@ export const metadata: Metadata = {
 const Page = () => {
     return (
         <>
-            <MapSearchForm />
-            <AllMap />
-            <ModalShared>
+            <HeaderShared>
+                <AppHeader>
+                    <MapSearchForm />
+                    <MapSearchRegion />
+                </AppHeader>
+            </HeaderShared>
+            <SectionShared>
                 <AllPharmacyList />
-            </ModalShared>
+            </SectionShared>
+            <FooterShared>
+                <AppFooter />
+            </FooterShared>
         </>
     );
 };

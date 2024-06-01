@@ -11,6 +11,19 @@
     .form {
         display: block;
         padding-bottom: 10px;
+
+    }
+    
+    .nav {
+        scrollbar-width: none;
+        padding-bottom: 10px;
+        overflow-x: scroll;
+        
+        div[data-slot="container"] {
+            width: max-content;
+            display: flex;
+        }
+
     }
 }
 

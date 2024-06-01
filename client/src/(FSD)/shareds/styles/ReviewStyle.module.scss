@@ -1,0 +1,19 @@
+.container {
+    display: block;
+
+    .review_list {
+        display: block;
+
+        .review_item {
+            display: block;
+
+            .top_item {
+                display: block;
+            }
+
+            .btm_item {
+                display: block;
+            }
+        }
+    }
+}

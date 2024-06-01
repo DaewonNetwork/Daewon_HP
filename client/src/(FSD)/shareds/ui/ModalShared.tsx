@@ -9,9 +9,9 @@ const ModalShared = ({ children }: ModalType) => {
     const openClick = () => setOpen(!isOpen);
 
     return (
-        <>
-        
-        </>
+        <div data-slot={"modal"}>
+            {/* {children} */}
+        </div>
     )
 }
 

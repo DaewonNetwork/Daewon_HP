@@ -3,20 +3,18 @@
 import React, { useEffect } from "react";
 import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
-import IconShared from "@/(FSD)/shareds/ui/IconShared";
-import { Chip } from "@nextui-org/chip";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
-import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
-import { Button } from "@nextui-org/button";
-import Link from "next/link";
-import ReviewList from "../../review/ui/ReviewList";
+import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
+import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
+import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
+import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
+import { Chip } from "@nextui-org/chip";
+import StarShared from "@/(FSD)/shareds/ui/StarShared";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
-
-    const user = useUserStore().user;
 
     const pharmacy: PharmacyInfoType = data;
 
@@ -28,13 +26,19 @@ const PharmacyInfo = () => {
     if (isLoading) return <></>;
 
     return (
-        <>
-            <Chip variant={"bordered"}><p className={`text-medium font-medium`}><IconShared iconType={"star"} /><span>{pharmacy.starAvg}</span></p></Chip>
-            <Chip variant={"bordered"}><p className={"text-medium font-medium"}>리뷰 {pharmacy.reviewIndex}</p></Chip>
-            <Chip variant={"bordered"}><p className={"text-medium font-medium"}>즐겨찾기 {pharmacy.enjoyIndex}</p></Chip>
-            <Button as={Link} href={`/review/create/${phId}`} color={"primary"} size={"lg"} fullWidth>리뷰 작성하기</Button>
-            <ReviewList />
-        </>
+        <div className={styles.pharmacy_info}>
+            <InnerShared>
+                <div className={styles.top_bar}>
+                    <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
+                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                </div>
+                <div className={styles.btm_bar}>
+                    <Chip size={"lg"} variant={"bordered"}><StarShared isActive={true} /><TextMediumShared>{pharmacy.starAvg}</TextMediumShared></Chip>
+                    <Chip size={"lg"} variant={"bordered"}><TextMediumShared>리뷰 {pharmacy.reviewIndex}</TextMediumShared></Chip>
+                    <Chip size={"lg"} variant={"bordered"}><TextMediumShared>즐겨찾기 {pharmacy.enjoyIndex}</TextMediumShared></Chip>
+                </div>
+            </InnerShared>
+        </div>
     );
 };
 

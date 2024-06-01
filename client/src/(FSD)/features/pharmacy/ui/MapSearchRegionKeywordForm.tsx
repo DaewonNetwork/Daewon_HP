@@ -30,7 +30,7 @@ const MapSearchRegionKeywordForm = () => {
     }
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} data-slot={"form"} onSubmit={handleSubmit(onSubmit)}>
             <FormInputShared isInvalid={!!errors.keyword} placeholder={"지역 내 약국"} size={"lg"} control={control} name={"keyword"} variant={"bordered"} color={"primary"} endContent={<Button isIconOnly size={"sm"} variant={"light"} className={"text-large"} type={"submit"}><IconShared iconType={"search"} /></Button>} />
         </form>
     )

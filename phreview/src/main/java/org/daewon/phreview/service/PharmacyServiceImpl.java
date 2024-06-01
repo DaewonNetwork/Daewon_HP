@@ -227,6 +227,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         return list.stream()
                 .map(p -> {
                     PharmacyEnjoyRankListDTO dto = new PharmacyEnjoyRankListDTO();
+                    dto.setPhId(p.getPharmacy().getPhId());
                     dto.setPhAdd(p.getPharmacy().getPhAdd());
                     dto.setPhTel(p.getPharmacy().getPhTel());
                     dto.setEnjoyIndex(p.getEnjoyIndex());
@@ -242,6 +243,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         return list.stream()
                 .map(p -> {
                     PharmacyStarRankListDTO dto = new PharmacyStarRankListDTO();
+                    dto.setPhId(p.getPharmacy().getPhId());
                     dto.setPhAdd(p.getPharmacy().getPhAdd());
                     dto.setPhTel(p.getPharmacy().getPhTel());
                     dto.setStarAvg(p.getStarAvg());

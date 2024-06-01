@@ -8,6 +8,7 @@ import { GoHome, GoHomeFill, GoPencil } from "react-icons/go";
 import { IconType } from "../types/Icon.type";
 import { IoMdListBox } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
+import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 
 const IconShared = ({ iconType, ...props }: IconType) => {
     let component = null;
@@ -102,7 +103,7 @@ const IconShared = ({ iconType, ...props }: IconType) => {
             break;
     }
 
-    return <span>{component}</span>
+    return <span className={`text-default-400 ${styles.icon}`}>{component}</span>
 };
 
 export default IconShared;
