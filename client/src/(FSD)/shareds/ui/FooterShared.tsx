@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
-import ContainerShared from "./SectionShared";
+import ContainerShared from "./ContainerShared";
 
 const FooterShared = ({ children }: { children: React.ReactNode }) => {
     return (

@@ -3,6 +3,8 @@
 import React from "react";
 import { cityList } from "../consts/cityList";
 import { useRouter } from "next/navigation";
+import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
+import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 
 const MapSearchRegion = () => {
     const router = useRouter();
@@ -12,18 +14,17 @@ const MapSearchRegion = () => {
     };
 
     return (
-        <>
-            <div className={"text-medium"} onClick={_ => router.push("/")}>홈</div>
-            <div className={"text-medium"} onClick={_ => router.push("/map/all")}>전체</div>
-            <div className={"text-medium"} onClick={_ => router.push("/map/near")}>근처</div>
+        <nav>
+            <LinkBtnShared size={"sm"} href={"/map/all"}><TextMediumShared>전체</TextMediumShared></LinkBtnShared>
+            <LinkBtnShared size={"sm"} href={"/map/near"}><TextMediumShared>근처</TextMediumShared></LinkBtnShared>
             {
-                cityList.map((item, index) => (
+                cityList.map((city, index) => (
                     <React.Fragment key={index}>
-                        <div className={"text-medium"} onClick={_ => onClick(item)}>{item}</div>
+                        <LinkBtnShared size={"sm"} href={`/map/region/${city}`}><TextMediumShared>{city}</TextMediumShared></LinkBtnShared>
                     </React.Fragment>
                 ))
             }
-        </>
+        </nav>
     )
 }
 

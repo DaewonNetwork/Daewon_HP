@@ -1,9 +1,21 @@
 .header {
     display: flex;
+
+    .top_bar {
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form {
+        display: block;
+        padding-bottom: 10px;
+    }
 }
 
 .footer {
-    display: flex;
+    display: block;
     height: 80px;
 
     div[data-slot="inner"] {

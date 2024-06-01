@@ -1,6 +1,7 @@
 import React from "react";
 import RootProvider from "@/(FSD)/apps/providers/RootProvider";
 import "@/(FSD)/shareds/styles/globalStyle.scss";
+import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 
 import type { Metadata } from "next";
 import Head from "next/head";
@@ -17,7 +18,7 @@ const RootLayout = ({ children, }: { children: React.ReactNode }) => {
             </Head>
             <body>
                 <RootProvider>
-                    <div className={"root"} suppressHydrationWarning={true}>
+                    <div className={styles.root} suppressHydrationWarning={true}>
                         {children}
                     </div>
                 </RootProvider>
