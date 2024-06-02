@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../../types/mutation.type";
 
-const reviewCreateFetch = async (data: FormData) => {
-    const response = await fetch("http://localhost:8090/api/review", {
+const replyCreateFetch = async (data: any) => {
+    const response = await fetch("http://localhost:8090/api/reply", {
         method: "POST",
         headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
@@ -20,10 +20,10 @@ const reviewCreateFetch = async (data: FormData) => {
     return responseData;
 }
 
-export const useReviewCreate = ({ onSuccess, onError }: MutationType) => {
+export const useReplyCreate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (userData: FormData) => {
-            return reviewCreateFetch(userData);
+        mutationFn: (userData: any) => {
+            return replyCreateFetch(userData);
         },
         onSuccess: (data: any) => {
             onSuccess(data);

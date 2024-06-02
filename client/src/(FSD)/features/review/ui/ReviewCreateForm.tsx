@@ -53,8 +53,8 @@ const ReviewCreateForm = () => {
             <InnerShared>
                 <TextLargeShared>리뷰 작성하기</TextLargeShared>
                 <FormTextareaShared isInvalid={!!errors.reviewText} size={"lg"} control={control} name="reviewText" placeholder="10자 이상 200자 이하" />
-                <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 등록하기</FileInputShared>
-                <Button type={"submit"} color={"primary"} fullWidth size={"lg"}>리뷰 등록</Button>
+                <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 업로드</FileInputShared>
+                <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>리뷰 등록</Button>
             </InnerShared>
         </form>
     )
