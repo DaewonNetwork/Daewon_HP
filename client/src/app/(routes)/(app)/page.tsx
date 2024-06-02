@@ -6,8 +6,8 @@ import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import PharmacyRankEnjoyList from "@/(FSD)/entities/pharmacy/ui/PharmacyRankEnjoyList";
 import PharmacyRankStarList from "@/(FSD)/entities/pharmacy/ui/PharmacyRankStarList";
+import PharmacyRankEnjoyList from "@/(FSD)/entities/pharmacy/ui/PharmacyRankEnjoyList";
 
 const Page = () => {
     return (

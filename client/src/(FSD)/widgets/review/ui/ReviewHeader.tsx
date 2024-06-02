@@ -4,8 +4,10 @@ import { useReadPharmacy } from "@/(FSD)/entities/pharmacy/api/useReadPharmacy";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
-import { Button } from "@nextui-org/button";
-import IconShared from "@/(FSD)/shareds/ui/IconShared";
+import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
+import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
+import BackBtnShared from "@/(FSD)/shareds/ui/BackBtnShared";
+import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 
 const ReviewHeader = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -23,10 +25,12 @@ const ReviewHeader = () => {
     if (isLoading) return <></>;
 
     return (
-        <>
-            <Button onClick={_ => router.back()} variant={"light"} isIconOnly endContent={<IconShared iconType={"left"} />} />
-            <h1 className={"text-large font-semibold"}>{pharmacyInfo.phName}</h1>
-        </>
+        <div className={styles.header}>
+            <InnerShared>
+                <BackBtnShared />
+                <TextLargeShared>{pharmacyInfo.phName}</TextLargeShared>
+            </InnerShared>
+        </div>
     );
 };
 

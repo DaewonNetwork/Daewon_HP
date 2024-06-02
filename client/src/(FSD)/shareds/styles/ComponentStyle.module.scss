@@ -104,6 +104,14 @@ $form_height: 58px;
     font-size: 20px;
 }
 
+.star_list {
+    display: flex;
+
+    .star span {
+        font-size: 16px;
+    }
+}
+
 .star {
     display: block;
 
@@ -113,5 +121,54 @@ $form_height: 58px;
         span {
             color: #FFD700;
         }
+    }
+}
+
+.file_container {
+    display: block;
+
+    .file_input_box {
+        input[type="file"] {
+            display: none;
+        }
+    
+        .file_btn {
+            display: block;
+    
+            label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        margin-bottom: 30px;
+    }
+
+    .preview_img_box {
+        display: block;
+
+        .preview_img_item {
+            width: 100%;
+            height: 300px;
+            position: relative;
+
+            .preview_img_close_btn {
+                position: absolute;
+                display: block;
+                right: 0;
+                top: 0;
+                z-index: 11;
+            }
+        
+            img {
+                position: static !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+
     }
 }

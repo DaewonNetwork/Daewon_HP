@@ -51,7 +51,8 @@ public class ReviewController {
             // required = false 로 설정하여 파일이 없어도 요청이 처리됨
             @RequestPart(name = "files", required = false) List<MultipartFile> files) {
         log.info("Review DTO String: " + reviewDTOStr);
-
+        log.info("Files: " + files);
+        
         ReviewDTO reviewDTO;
         try {
             // JSON 문자열을 ReviewDTO 객체로 변환

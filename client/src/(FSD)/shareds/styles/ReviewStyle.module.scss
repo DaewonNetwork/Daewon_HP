@@ -17,3 +17,40 @@
         }
     }
 }
+
+.header {
+    height: 60px;
+    position: relative;
+
+    div[data-slot="inner"] {
+        display: flex;
+        align-items: center;
+    }
+
+    h1[data-slot="text_large"] {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.form {
+    margin-top: 20px;
+
+    & > div[data-slot="inner"] {
+        h1[data-slot="text_large"] {
+            margin-bottom: 10px;
+        }
+
+        & > div {
+            &:nth-child(2) {
+                margin-bottom: 20px;
+            }
+            &:nth-child(3) {
+                margin-bottom: 30px;
+            }
+        }
+    }
+}
