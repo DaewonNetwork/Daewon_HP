@@ -10,7 +10,7 @@ const FileInputShared = ({ id, children, setFile, ...props }: FileInputType) => 
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
-        setFile(e.target.files);
+        setFile(file);
 
         if (file) {
             const reader = new FileReader();
