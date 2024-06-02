@@ -24,14 +24,16 @@ const ReviewContaner = () => {
 
     if (!reviewList) return;
     console.log(reviewList);
-    
+
 
     return (
         <div className={styles.container}>
-            <InnerShared>
-                <TextLargeShared>리뷰</TextLargeShared>
-                <LinkBtnShared href={`/review/create/${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>
-            </InnerShared>
+            <div className={styles.review_box}>
+                <InnerShared>
+                    <TextLargeShared>리뷰</TextLargeShared>
+                    <LinkBtnShared href={`/review/create/${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>
+                </InnerShared>
+            </div>
             <div className={styles.review_list}>
                 {
                     reviewList.map((review, index) => (

@@ -35,7 +35,10 @@ const FileInputShared = ({ id, children, setFile, ...props }: FileInputType) => 
                 <div className={styles.preview_img_box}>
                     <div className={styles.preview_img_item}>
                         <div className={styles.preview_img_close_btn}>
-                            <Button onClick={_ => setPreview(null)} variant={"light"} size={"md"} isIconOnly endContent={<IconShared iconType={"close"} />} />
+                            <Button onClick={_ => {
+                                setPreview(null);
+                                setFile(null);
+                            }} variant={"light"} size={"md"} isIconOnly endContent={<IconShared iconType={"close"} />} />
                         </div>
                         <Image src={preview} alt={"preview"} layout="fill" objectFit="contain" />
                     </div>

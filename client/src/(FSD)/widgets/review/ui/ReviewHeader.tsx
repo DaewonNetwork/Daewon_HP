@@ -7,7 +7,7 @@ import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.t
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import BackBtnShared from "@/(FSD)/shareds/ui/BackBtnShared";
-import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
+import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
 
 const ReviewHeader = () => {
     const { phId } = useParams<{ phId: string }>();
@@ -28,7 +28,7 @@ const ReviewHeader = () => {
         <div className={styles.header}>
             <InnerShared>
                 <BackBtnShared />
-                <TextLargeShared>{pharmacyInfo.phName}</TextLargeShared>
+                <TextXlargeShared>{pharmacyInfo.phName}</TextXlargeShared>
             </InnerShared>
         </div>
     );

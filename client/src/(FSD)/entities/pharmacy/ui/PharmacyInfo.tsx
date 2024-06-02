@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useReadPharmacy } from "../api/useReadPharmacy";
 import { useParams } from "next/navigation";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
@@ -10,17 +10,20 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
 import { Chip } from "@nextui-org/chip";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
+import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 
 const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
 
+    const [isEnjoi, setIsEnjoy] = useState<boolean>(false);
+
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();
-    }, [phId]);
+    }, [phId, isEnjoi]);
 
     if (isError) return <></>;
     if (isLoading) return <></>;
@@ -28,11 +31,16 @@ const PharmacyInfo = () => {
     return (
         <div className={styles.pharmacy_info}>
             <InnerShared>
-                <div className={styles.top_bar}>
-                    <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
-                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                <div className={styles.pharmacy_header}>
+                    <div className={styles.top_item}>
+                        <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
+                        <PharmacyEnjoyBtn phId={pharmacy.phId} set={setIsEnjoy} />
+                    </div>
+                    <div className={styles.btm_item}>
+                        <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                    </div>
                 </div>
-                <div className={styles.btm_bar}>
+                <div className={styles.pharmacy_content}>
                     <Chip size={"lg"} variant={"bordered"}><StarShared isActive={true} /><TextMediumShared>{pharmacy.starAvg}</TextMediumShared></Chip>
                     <Chip size={"lg"} variant={"bordered"}><TextMediumShared>리뷰 {pharmacy.reviewIndex}</TextMediumShared></Chip>
                     <Chip size={"lg"} variant={"bordered"}><TextMediumShared>즐겨찾기 {pharmacy.enjoyIndex}</TextMediumShared></Chip>

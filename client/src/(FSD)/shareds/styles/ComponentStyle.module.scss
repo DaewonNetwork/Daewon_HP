@@ -64,7 +64,7 @@ $form_height: 58px;
 
 .section {
     display: block;
-    height: 100%;
+    height: auto;
     padding-bottom: 80px;
 
     @include content_pad_top_mixin;

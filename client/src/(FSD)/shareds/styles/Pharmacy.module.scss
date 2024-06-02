@@ -21,19 +21,26 @@
 .pharmacy_info {
     display: block;
     padding-top: 20px;
-    
-    .top_bar {
-        display: block;
 
-        h1[data-slot="text_xlarge"] {
-            padding-bottom: 8px;
-        }
+    .pharmacy_header {
         p[data-slot="text_medium"] {
             text-wrap: pretty;
         }
+        
+        .top_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+    
+        .btm_item {
+            display: block;
+        }
     }
+    
 
-    .btm_bar {
+    .pharmacy_content {
         display: flex;
         align-items: center;
         margin-top: 20px;
