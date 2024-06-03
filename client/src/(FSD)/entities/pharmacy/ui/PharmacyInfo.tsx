@@ -34,7 +34,7 @@ const PharmacyInfo = () => {
                 <div className={styles.pharmacy_header}>
                     <div className={styles.top_item}>
                         <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
-                        <PharmacyEnjoyBtn phId={pharmacy.phId} set={setIsEnjoy} />
+                        <PharmacyEnjoyBtn defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} set={setIsEnjoy} />
                     </div>
                     <div className={styles.btm_item}>
                         <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>

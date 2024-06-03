@@ -12,12 +12,14 @@ import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
 import { useReviewCreate } from "../api/useReviewCreate";
 import { useParams } from "next/navigation";
+import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 
 const ReviewCreateForm = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const schema = z.object({
-        reviewText: z.string().min(10).max(200)
+        reviewText: z.string().min(10).max(200),
+        reviewTitle: z.string().min(1).max(20)
     });
 
     const { control, handleSubmit, formState: { errors, isValid, submitCount } } = useForm({
@@ -37,7 +39,7 @@ const ReviewCreateForm = () => {
     const onSubmit = (data: any) => {
         const formData = new FormData();
 
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, phId: Number(phId) }));
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewTitle: data.reviewTitle, phId: Number(phId) }));
             
         formData.append("files", file);
 
@@ -51,6 +53,7 @@ const ReviewCreateForm = () => {
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>
                 <TextLargeShared>리뷰 작성하기</TextLargeShared>
+                <FormInputShared isClearable control={control} name={"reviewTitle"} placeholder={"구매한 상품 이름을 입력하세요."} />
                 <FormTextareaShared isInvalid={!!errors.reviewText} size={"lg"} control={control} name="reviewText" placeholder="10자 이상 200자 이하" />
                 <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 업로드</FileInputShared>
                 <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>리뷰 등록</Button>
