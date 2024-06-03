@@ -8,6 +8,10 @@ import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 const AllPharmacyList = () => {
     const { pharmacyList, fetchNextPage } = useSearchAll();
 
+
+    console.log(pharmacyList);
+    
+
     const { ref, inView } = useInView();
 
     useEffect(() => {

@@ -1,4 +1,3 @@
-import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 import { useQuery } from "@tanstack/react-query";
 
 const pharmacyReadFetch = async (phId: number, isLoggedIn: boolean) => {
@@ -32,9 +31,8 @@ const pharmacyReadFetch = async (phId: number, isLoggedIn: boolean) => {
 };
 
 export const useReadPharmacy = (phId: number) => {
-    const { isLoggedIn } = useUserStore();
     return useQuery({
         queryKey: ["pharmacy_read"],
-        queryFn: _ => pharmacyReadFetch(phId, isLoggedIn),
+        queryFn: _ => pharmacyReadFetch(phId, !!localStorage.getItem("access_token")),
     });
 };

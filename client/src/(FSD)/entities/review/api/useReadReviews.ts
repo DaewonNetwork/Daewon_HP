@@ -37,6 +37,6 @@ export const useReadReviews = (phId: number) => {
 
     return useQuery({
         queryKey: ["reviews_read"],
-        queryFn: _ => reviewsReadFetch(phId, isLoggedIn)
+        queryFn: _ => reviewsReadFetch(phId, !!localStorage.getItem("access_token"))
     });
 };
