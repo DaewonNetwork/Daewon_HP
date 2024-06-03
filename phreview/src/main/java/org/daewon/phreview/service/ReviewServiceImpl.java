@@ -8,6 +8,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 import org.daewon.phreview.domain.*;
 
 import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.*;
@@ -168,6 +169,16 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewReadDTO readReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+
+        // 리뷰 이미지 리스트 변환
+        List<ReviewImageDTO> reviewImageDTOs = review.getReviewImages().stream()
+                .map(image -> ReviewImageDTO.builder()
+                        .uuid(image.getUuid())
+                        .fileName(image.getFileName())
+                        .ord(image.getOrd())
+                        .build())
+                .collect(Collectors.toList());
+
         ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
                 .reviewId(review.getReviewId())
                 .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
@@ -179,6 +190,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .replyIndex(review.getReplyIndex())
                 .createAt(review.getCreateAt().format(formatter))
                 .updateAt(review.getUpdateAt().format(formatter))
+                .reviewImages(reviewImageDTOs)
                 .build();
         return reviewReadDTO;
     }
