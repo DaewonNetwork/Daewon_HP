@@ -57,6 +57,7 @@ public class ReplyController {
         return Map.of("result", "success");
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
     @GetMapping()
     public List<ReplyReadDTO> readReply(

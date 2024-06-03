@@ -107,18 +107,21 @@ public class ReviewController {
     }
 
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
     public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
         ReviewReadDTO review = reviewService.readReview(reviewId); // 리뷰 최신순
         return review;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/list")
     public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
         List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
         return reviewList;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "좋아요 순")
     @GetMapping("/list/like")
     public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 리뷰 좋아요순
@@ -126,6 +129,7 @@ public class ReviewController {
         return reviewlist;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "모든 리뷰")
     @GetMapping("/AllList")
     public List<ReviewReadDTO> readAllReviews(){ // 리뷰 전체
@@ -133,6 +137,7 @@ public class ReviewController {
         return reviewlist;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "모든 리뷰 좋아요순")
     @GetMapping("/AllList/like")
     public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
