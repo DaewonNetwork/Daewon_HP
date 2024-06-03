@@ -4,8 +4,6 @@ import React from "react";
 import { useDeleteReview } from "../api/useDeleteReview";
 
 const ReviewDeleteBtn = ({ isReview, reviewId, parentRefetch }: { isReview: boolean; reviewId: number; parentRefetch: any; }) => {
-    console.log(isReview);
-    
     const onSuccess = (data: any) => {
         if(parentRefetch) {
             parentRefetch()

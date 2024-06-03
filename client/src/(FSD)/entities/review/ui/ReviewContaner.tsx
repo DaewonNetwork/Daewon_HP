@@ -16,6 +16,8 @@ const ReviewContaner = () => {
 
     const { data, isError, isLoading, refetch } = useReadReviews(Number(phId));
     
+    console.log(data);
+    
     const reviewList: ReviewType[] = data;
 
     useEffect(() => {
