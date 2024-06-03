@@ -19,6 +19,7 @@ public class PharmacyDTO {
     private String phAdd; // 병원 주소
     private double phX;  // 경도
     private double phY;  // 위도
+    private boolean isEnjoy;
 
 
 }
