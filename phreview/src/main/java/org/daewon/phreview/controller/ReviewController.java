@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.connector.Response;
 import org.daewon.phreview.domain.Review;
+import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
+import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
@@ -37,6 +41,7 @@ public class ReviewController {
     private final LikeService likeService;
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
@@ -51,7 +56,7 @@ public class ReviewController {
             @RequestPart("reviewDTO") String reviewDTOStr,
             // 클라이언트로부터 전달된 파일 리스트를 받음.
             // required = false 로 설정하여 파일이 없어도 요청이 처리됨
-            @RequestPart(name = "files", required = false) List<MultipartFile> files) {
+            @RequestPart(name = "files", required = false) MultipartFile files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
         
@@ -71,7 +76,7 @@ public class ReviewController {
         Long reviewId;
         try {
             // 리뷰 생성 메서드 호출
-            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files.get(0) : null, uploadPath);
+            reviewId = reviewService.createReview(reviewDTO, files, uploadPath);
 
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
@@ -143,6 +148,22 @@ public class ReviewController {
     public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
         List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
         return reviewlist;
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "이미지")
+    @GetMapping("/read/image")
+    public ReviewImageDTO readReviewImage(Long reviewId){
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+        log.info("Review Image: " + reviewImage);
+        // ReviewImage를 ReviewImageDTO로 변환하여 반환
+        ReviewImageDTO reviewImageDTO = new ReviewImageDTO();
+        reviewImageDTO.setUuid(reviewImage.getUuid());
+        // ReviewImage의 다른 필드를 ReviewImageDTO에 설정
+        reviewImageDTO.setOrd(reviewImage.getOrd());
+        reviewImageDTO.setFileName(reviewImage.getFileName());
+        // 필요한 경우 더 많은 속성을 설정할 수 있습니다.
+        return reviewImageDTO;
     }
 
 

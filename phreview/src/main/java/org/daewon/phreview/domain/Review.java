@@ -42,9 +42,6 @@ public class Review extends BaseEntity{
     private int likeIndex; // 좋아요 인덱스
     private int replyIndex; // 좋아요 인덱스
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReviewImage> reviewImages;
-
     // 리뷰작성 내용 수정
     public void setReview(String reviewText,int star) {
         this.reviewText = reviewText;
