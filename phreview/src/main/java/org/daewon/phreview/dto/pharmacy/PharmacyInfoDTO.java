@@ -26,6 +26,6 @@ public class PharmacyInfoDTO {
     private int enjoyIndex;
     private double starAvg;
     private int reviewIndex;
-    private EnjoyPhDTO enjoyPhDTO;
+    private boolean isEnjoy;
 
 }

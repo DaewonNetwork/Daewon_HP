@@ -22,7 +22,12 @@ public class ReviewDTO {
     @NotEmpty
     private String reviewText;
 
+    @NotEmpty
+    private String reviewTitle;
+
     private int star;
+
+
 
     private Long replyCount; // 댓글 수
 

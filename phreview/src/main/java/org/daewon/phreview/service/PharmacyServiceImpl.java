@@ -195,6 +195,18 @@ public class PharmacyServiceImpl implements PharmacyService {
 
         PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
+        if(users != null) {
+            Long userId = users.getUserId();
+            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId,userId);
+            pharmacyInfoDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+        } else{
+            pharmacyInfoDTO.setEnjoy(false);
+        }
 
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
 
@@ -204,19 +216,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         pharmacyInfoDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
         pharmacyInfoDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String currentUserName = authentication.getName();
-        log.info("이름:"+currentUserName);
-        Users users = userRepository.findByEmail(currentUserName)
-                .orElse(null);
-        if(users != null) {
-            Long userId = users.getUserId();
-            EnjoyPhDTO enjoyPhDTO = enjoyRepository.findIsEnjoyByPharmacyAndUsers(phId,userId);
-            pharmacyInfoDTO.setEnjoyPhDTO(enjoyPhDTO);
-        } else{
-            pharmacyInfoDTO.setEnjoyPhDTO(null);
-        }
         return pharmacyInfoDTO;
     }
 

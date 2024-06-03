@@ -14,12 +14,14 @@ import java.time.LocalDateTime;
 @Builder
 public class ReplyReadDTO {
 
-    private String phName;
+
     private String userName;
 
     @NotEmpty
     private String replyText;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private boolean isReply;
+
+    private String createAt;
+    private String updateAt;
 }
