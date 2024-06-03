@@ -1,10 +1,12 @@
 package org.daewon.phreview.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
@@ -103,5 +105,41 @@ public class ReviewController {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
         return review.getLikeIndex(); // 좋아요 수 반환
     }
+
+
+    @GetMapping("/read")
+    public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
+        ReviewReadDTO review = reviewService.readReview(reviewId); // 리뷰 최신순
+        return review;
+    }
+
+    @GetMapping("/list")
+    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
+        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
+        return reviewList;
+    }
+
+    @Operation(summary = "좋아요 순")
+    @GetMapping("/list/like")
+    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 리뷰 좋아요순
+        List<ReviewReadDTO> reviewlist = reviewService.readReviewsByLikeIndexDesc(phId);
+        return reviewlist;
+    }
+
+    @Operation(summary = "모든 리뷰")
+    @GetMapping("/AllList")
+    public List<ReviewReadDTO> readAllReviews(){ // 리뷰 전체
+        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviews();
+        return reviewlist;
+    }
+
+    @Operation(summary = "모든 리뷰 좋아요순")
+    @GetMapping("/AllList/like")
+    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
+        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
+        return reviewlist;
+    }
+
+
 
 }

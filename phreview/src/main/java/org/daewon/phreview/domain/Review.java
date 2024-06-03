@@ -33,6 +33,9 @@ public class Review extends BaseEntity{
     @Column(length = 500, nullable = false)
     private String reviewText;
 
+    @Column(length = 500, nullable = false)
+    private String reviewTitle;
+
     private int star; // 평점
 
     private int likeIndex; // 좋아요 인덱스

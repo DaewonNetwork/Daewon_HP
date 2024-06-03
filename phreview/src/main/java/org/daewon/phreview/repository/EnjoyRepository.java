@@ -12,7 +12,4 @@ public interface EnjoyRepository extends JpaRepository<EnjoyPh, Long> {
     EnjoyPh findByPharmacyAndUsers(Long phId, Long userId);
 
     List<EnjoyPh> findByUsersUserIdOrderByEnjoyIdDesc(Long userId);
-
-    @Query(value = "SELECT is_enjoy from enjoy_ph where ph_id=:phId and user_id=:userId",nativeQuery = true)
-    EnjoyPhDTO findIsEnjoyByPharmacyAndUsers(Long phId, Long userId);
 }

@@ -21,6 +21,12 @@ public class ReviewReadDTO {
     @NotEmpty
     private String reviewText;
 
+    @NotEmpty
+    private String reviewTitle;
+
+    private boolean isReview;
+
+
     private int star;
 
     private int likeIndex;

@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -67,6 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
         // 리뷰 저장
         Review review = Review.builder()
                 .reviewText(reviewDTO.getReviewText())
+                .reviewTitle(reviewDTO.getReviewTitle())
                 .star(star)
                 .build();
         review.setPharmacy(reviewDTO.getPhId());
@@ -163,6 +165,25 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public ReviewReadDTO readReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
+                .reviewId(review.getReviewId())
+                .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
+                .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
+                .reviewText(review.getReviewText())
+                .reviewTitle(review.getReviewTitle())
+                .star(review.getStar())
+                .likeIndex(review.getLikeIndex())
+                .replyIndex(review.getReplyIndex())
+                .createAt(review.getCreateAt().format(formatter))
+                .updateAt(review.getUpdateAt().format(formatter))
+                .build();
+        return reviewReadDTO;
+    }
+
+    @Override
     public List<ReviewReadDTO> readReviews(Long phId) {
         List<Review> result = reviewRepository.listOfPharmacy(phId);
 
@@ -225,19 +246,47 @@ public class ReviewServiceImpl implements ReviewService {
     // 리뷰 정보를 가져와서 DTO 리스트로 변환하는 메서드
     private List<ReviewReadDTO> getReviewDTOList(List<Review> reviews) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-        return reviews.stream()
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
+        List<ReviewReadDTO> reviewDTOList = new ArrayList<>();
+        if(users != null){
+           reviewDTOList = reviews.stream()
                 .map(review -> ReviewReadDTO.builder()
                         .reviewId(review.getReviewId())
                         .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
                         .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
                         .reviewText(review.getReviewText())
+                        .reviewTitle(review.getReviewTitle())
                         .star(review.getStar())
                         .likeIndex(review.getLikeIndex())
                         .replyIndex(review.getReplyIndex())
                         .createAt(review.getCreateAt().format(formatter))
                         .updateAt(review.getUpdateAt().format(formatter))
+                        .isReview(review.getUsers().getUserId() == users.getUserId())
                         .build())
                 .collect(Collectors.toList());
+        }else{
+            reviewDTOList = reviews.stream()
+                    .map(review -> ReviewReadDTO.builder()
+                            .reviewId(review.getReviewId())
+                            .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
+                            .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
+                            .reviewText(review.getReviewText())
+                            .reviewTitle(review.getReviewTitle())
+                            .star(review.getStar())
+                            .likeIndex(review.getLikeIndex())
+                            .replyIndex(review.getReplyIndex())
+                            .createAt(review.getCreateAt().format(formatter))
+                            .updateAt(review.getUpdateAt().format(formatter))
+                            .isReview(false)
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        return reviewDTOList;
     }
 
 
