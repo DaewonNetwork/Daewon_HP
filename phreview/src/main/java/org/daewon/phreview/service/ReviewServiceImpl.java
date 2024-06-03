@@ -133,7 +133,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId) {   // 댓글 수정
+    public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 댓글 수정
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
         Review review = reviewOptional.orElseThrow();
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
@@ -144,6 +144,44 @@ public class ReviewServiceImpl implements ReviewService {
         pharmacyStar.setStarAvg(starAvg);
         reviewRepository.save(review); // 리뷰 내용 수정
         pharmacyStarRepository.save(pharmacyStar); // 별점 수정
+
+        // 파일이 존재하는 경우에만 파일 저장 로직 실행
+        if (file != null && !file.isEmpty()) {
+            // 원본 파일명 가져오기
+            String originalName = file.getOriginalFilename();
+            // UUID 생성 (파일명 중복 방지)
+            String uuid = UUID.randomUUID().toString();
+            // 파일을 저장할 경로 생성 (컨트롤러에서 @Value로 지정해준 디렉토리에 UUID_원본파일명 형식으로 저장)
+            Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
+
+            try {
+                // 파일을 지정된 경로에 저장
+                file.transferTo(savePath.toFile());
+
+                // 파일 타입이 이미지인 경우 썸네일 생성
+                boolean isImage = Files.probeContentType(savePath).startsWith("image");
+                if (isImage) {
+                    // 썸네일 파일명 생성 (s_UUID_원본파일명)
+                    File thumbnailFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+                    // 썸네일 생성 (원본 파일, 썸네일 파일, 너비 200px, 높이 200px)
+                    Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 200);
+                }
+
+                // ReviewImage 엔티티 생성 및 저장
+                ReviewImage reviewImage = ReviewImage.builder()
+                        .uuid(uuid)
+                        .fileName(originalName)
+                        .ord(0) // 단일 파일이므로 order는 0으로 설정
+                        .review(review)
+                        .build();
+                reviewImageRepository.save(reviewImage);
+
+            } catch (IOException e) {
+                // 파일 저장 또는 썸네일 생성 중 오류가 발생할 경우
+                log.error("파일 저장하는 도중 오류가 발생했습니다: ", e);
+                throw new RuntimeException("File processing error", e);
+            }
+        }
     }
 
     @Override

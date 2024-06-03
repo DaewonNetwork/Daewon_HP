@@ -1,5 +1,6 @@
 package org.daewon.phreview.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -90,11 +91,36 @@ public class ReviewController {
     }
 
     // 리뷰 작성한 유저만 수정 가능
+//    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
+//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
+//            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+//        reviewService.updateReview(reviewUpdateDTO,reviewId);
+//        return Map.of("result", "success");
+//    }
+
+    // 리뷰 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
-            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
-        reviewService.updateReview(reviewUpdateDTO,reviewId);
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> updateReview(
+            @RequestParam(name = "reviewId") Long reviewId, // reviewId를 URL 파라미터로 받음
+            @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
+            @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
+
+        // reviewUpdateDTOString을 올바르게 디코딩
+        String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+        // decodedReviewDTO를 ReviewUpdateDTO 객체로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        ReviewUpdateDTO reviewUpdateDTO;
+        try {
+            reviewUpdateDTO = objectMapper.readValue(decodedReviewDTO, ReviewUpdateDTO.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to parse reviewUpdateDTO", e); // 변환 실패 시 예외 처리
+        }
+
+        // 기존의 updateReview 서비스 호출
+        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
         return Map.of("result", "success");
     }
 
