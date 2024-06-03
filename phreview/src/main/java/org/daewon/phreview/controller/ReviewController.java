@@ -108,8 +108,8 @@ public class ReviewController {
       //  return Map.of("result", "success");
   //  }
 
-    // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
-    @PreAuthorize("hasRole('USER')")
+
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     // Content-Type : multipart/form-data, Accept : application/json 형태 이어야함
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateReview(
@@ -139,7 +139,7 @@ public class ReviewController {
         try {
             // 리뷰 생성 메서드 호출
             reviewService.updateReview(reviewUpdateDTO,reviewId,files, uploadPath);
-
+log.info("성공:");
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
@@ -213,7 +213,7 @@ public class ReviewController {
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
-        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
 
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();

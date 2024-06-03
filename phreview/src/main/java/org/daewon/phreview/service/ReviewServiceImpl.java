@@ -154,11 +154,14 @@ public class ReviewServiceImpl implements ReviewService {
             // 파일을 저장할 경로 생성 (컨트롤러에서 @Value로 지정해준 디렉토리에 UUID_원본파일명 형식으로 저장)
             Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
 
+            log.info(uuid);
+            log.info(originalName);
             // 파일을 지정된 경로에 저장
             try {
                 // 파일을 지정된 경로에 저장
-                ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+                ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
                 file.transferTo(savePath.toFile());
+                log.info(reviewImage);
                 // 기존 객체가 있는 경우 수정
                 if (reviewImage != null) {
                     reviewImage.setUuid(uuid);

@@ -72,7 +72,7 @@ public class ReviewPublicController {
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
-        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
 
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();
