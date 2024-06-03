@@ -7,8 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface ReviewImageRepository extends JpaRepository<ReviewImage, String> {
 
     @Query("SELECT r FROM ReviewImage r WHERE r.review.reviewId = :reviewId")
-    ReviewImage findByReviewId(Long reviewId);
+    List<ReviewImage> findByReviewId(Long reviewId);
 }

@@ -36,10 +36,10 @@ public class ReviewReadDTO {
     private String createAt;
     private String updateAt;
 
-    private ReviewImage reviewImages; // 리뷰 이미지
+    private List<ReviewImage> reviewImages; // 리뷰 이미지
 
     // 리뷰 이미지 리스트 설정 메서드
-    public void setReviewImages(ReviewImageDTO reviewImages) {
+    public void setReviewImages(List<ReviewImage> reviewImages) {
         this.reviewImages = reviewImages;
     }
 
