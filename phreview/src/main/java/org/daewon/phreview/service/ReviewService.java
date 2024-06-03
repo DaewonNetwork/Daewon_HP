@@ -24,6 +24,4 @@ public interface ReviewService {
     List<ReviewReadDTO> readReviewsByUser(Long userId);
     List<ReviewReadDTO> readLikedReviewsListByUser();
 
-
-
 }
