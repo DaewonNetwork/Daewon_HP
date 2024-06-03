@@ -148,42 +148,7 @@ public class ReviewServiceImpl implements ReviewService {
 //    }\
 
 
-    @Override
-    public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 리뷰 수정
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-        Review review = reviewOptional.orElseThrow();
 
-        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
-        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() - review.getStar());
-        review.setReview(reviewUpdateDTO.getReviewText(), reviewUpdateDTO.getStar());
-        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal() + reviewUpdateDTO.getStar());
-        double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
-        pharmacyStar.setStarAvg(starAvg);
-        reviewRepository.save(review); // 리뷰 내용 수정
-        pharmacyStarRepository.save(pharmacyStar); // 별점 수정
-
-        // 파일이 존재하는 경우에만 파일 저장 로직 실행
-        if (file != null && !file.isEmpty()) {
-            List<ReviewImage> existingImages = reviewImageRepository.findByReviewReviewId(reviewId);
-            for (ReviewImage existingImage : existingImages) {
-                String filePath = uploadPath + File.separator + existingImage.getUuid() + "_" + existingImage.getFileName();
-                Path path = Paths.get(filePath);
-                try {
-                    Files.deleteIfExists(path); // 파일 시스템에서 파일 삭제
-                } catch (IOException e) {
-                    log.error("파일 삭제 중 오류가 발생했습니다: ", e);
-                }
-                reviewImageRepository.delete(existingImage); // 데이터베이스에서 엔티티 삭제
-            }
-            // 파일이 존재하는 경우에만 파일 저장 로직 실행
-            if (file != null && !file.isEmpty()) {
-
-                // 원본 파일명 가져오기
-                String originalName = file.getOriginalFilename();
-                // UUID 생성 (파일명 중복 방지)
-                String uuid = UUID.randomUUID().toString();
-                // 파일을 저장할 경로 생성 (컨트롤러에서 @Value로 지정해준 디렉토리에 UUID_원본파일명 형식으로 저장)
-                Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
 
 @Override
     public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 리뷰 수정
