@@ -137,6 +137,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 댓글 수정
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
         Review review = reviewOptional.orElseThrow();
+
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
         pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
         review.setReview(reviewUpdateDTO.getReviewText(),reviewUpdateDTO.getStar());
@@ -148,6 +149,19 @@ public class ReviewServiceImpl implements ReviewService {
 
         // 파일이 존재하는 경우에만 파일 저장 로직 실행
         if (file != null && !file.isEmpty()) {
+            List<ReviewImage> existingImages = reviewImageRepository.findByReviewReviewId(reviewId);
+            for (ReviewImage existingImage : existingImages) {
+                String filePath = uploadPath + File.separator + existingImage.getUuid() + "_" + existingImage.getFileName();
+                Path path = Paths.get(filePath);
+                try {
+                    Files.deleteIfExists(path); // 파일 시스템에서 파일 삭제
+                } catch (IOException e) {
+                    log.error("파일 삭제 중 오류가 발생했습니다: ", e);
+                }
+                reviewImageRepository.delete(existingImage); // 데이터베이스에서 엔티티 삭제
+            }
+            }
+
             // 원본 파일명 가져오기
             String originalName = file.getOriginalFilename();
             // UUID 생성 (파일명 중복 방지)
@@ -155,33 +169,29 @@ public class ReviewServiceImpl implements ReviewService {
             // 파일을 저장할 경로 생성 (컨트롤러에서 @Value로 지정해준 디렉토리에 UUID_원본파일명 형식으로 저장)
             Path savePath = Paths.get(uploadPath, uuid + "_" + originalName);
 
-            try {
-                // 파일을 지정된 경로에 저장
-                file.transferTo(savePath.toFile());
-
-                // 파일 타입이 이미지인 경우 썸네일 생성
-                boolean isImage = Files.probeContentType(savePath).startsWith("image");
-                if (isImage) {
-                    // 썸네일 파일명 생성 (s_UUID_원본파일명)
-                    File thumbnailFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-                    // 썸네일 생성 (원본 파일, 썸네일 파일, 너비 200px, 높이 200px)
-                    Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 200);
-                }
-
-                // ReviewImage 엔티티 생성 및 저장
-                ReviewImage reviewImage = ReviewImage.builder()
+        try {
+            // 파일을 지정된 경로에 저장
+            ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+            file.transferTo(savePath.toFile());
+            // 기존 객체가 있는 경우 수정
+            if (reviewImage != null) {
+                reviewImage.setUuid(uuid);
+                reviewImage.setFileName(originalName);
+                // 다른 필드들도 필요에 따라 수정
+                reviewImageRepository.save(reviewImage);
+            } else {
+                // 기존 객체가 없는 경우 새로 생성하여 저장
+                reviewImage = ReviewImage.builder()
                         .uuid(uuid)
                         .fileName(originalName)
                         .ord(0) // 단일 파일이므로 order는 0으로 설정
                         .review(review)
                         .build();
                 reviewImageRepository.save(reviewImage);
-
-            } catch (IOException e) {
-                // 파일 저장 또는 썸네일 생성 중 오류가 발생할 경우
-                log.error("파일 저장하는 도중 오류가 발생했습니다: ", e);
-                throw new RuntimeException("File processing error", e);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            // 파일 저장 또는 썸네일 생성 중 오류가 발생할 경우
         }
     }
 

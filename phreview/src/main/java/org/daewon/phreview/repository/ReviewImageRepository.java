@@ -14,4 +14,6 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, String
 
     @Query("SELECT r FROM ReviewImage r WHERE r.review.reviewId = :reviewId")
     ReviewImage findByReviewId(@Param("reviewId") Long reviewId);
+
+    List<ReviewImage> findByReviewReviewId(Long reviewId);
 }
