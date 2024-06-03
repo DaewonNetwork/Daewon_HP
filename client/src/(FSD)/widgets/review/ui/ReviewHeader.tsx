@@ -12,7 +12,7 @@ import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
 const ReviewHeader = () => {
     const { phId } = useParams<{ phId: string }>();
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
-
+    
     const router = useRouter();
 
     const pharmacyInfo: PharmacyInfoType = data;

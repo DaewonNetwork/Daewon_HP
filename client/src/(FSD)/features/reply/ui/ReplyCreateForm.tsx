@@ -27,10 +27,7 @@ const ReplyCreateForm = () => {
         console.log(data);
     }
 
-    const [file, setFile] = useState<any>();
-
     const { mutate } = useReplyCreate({ onSuccess });
-
 
     const onSubmit = (data: any) => {
         mutate({ reviewId, replyText: data.replyText });

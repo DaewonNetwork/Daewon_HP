@@ -28,6 +28,7 @@ public class ReviewImage implements Comparable<ReviewImage>{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Review review;
 
+
     @Override
     public int compareTo(ReviewImage ord) {
         return this.ord - ord.ord;

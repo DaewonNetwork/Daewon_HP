@@ -2,13 +2,25 @@ import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-const phSearchAllFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
-    const response = await fetch(`http://localhost:8090/pharmacy/all?pageIndex=${pageParam}&size=10`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+const phSearchAllFetch = async ({ pageParam = 1, isLoggedIn }: { pageParam?: number, isLoggedIn: boolean }) => {
+    let response;
+
+    if(isLoggedIn) {
+        response = await fetch(`http://localhost:8090/api/pharmacy/all?pageIndex=${pageParam}&size=10`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
+            },
+        });
+    } else {
+        response = await fetch(`http://localhost:8090/pharmacy/all?pageIndex=${pageParam}&size=10`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    }
 
     if (!response.ok) {
         const errorMessage = await response.text();
@@ -30,7 +42,7 @@ export const useSearchAll = () => {
         isLoading,
     } = useInfiniteQuery({
         queryKey: ["search_all"],
-        queryFn: phSearchAllFetch,
+        queryFn: _ => phSearchAllFetch({ isLoggedIn: !!localStorage.getItem("access_token") }),
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;
