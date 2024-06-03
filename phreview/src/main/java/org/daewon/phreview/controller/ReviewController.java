@@ -63,7 +63,7 @@ public class ReviewController {
             @RequestPart(name = "files", required = false) MultipartFile files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
-        
+
         ReviewDTO reviewDTO;
         try {
             // JSON 문자열을 ReviewDTO 객체로 변환
@@ -236,4 +236,3 @@ public class ReviewController {
 
 
 }
-

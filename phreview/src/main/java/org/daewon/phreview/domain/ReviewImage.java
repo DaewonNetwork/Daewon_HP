@@ -24,6 +24,8 @@ public class ReviewImage implements Comparable<ReviewImage>{
 
     private int ord;
 
+    private String originalName;
+
     @ManyToOne
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -39,4 +41,11 @@ public class ReviewImage implements Comparable<ReviewImage>{
         this.review = review;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setFileName(String originalName) {
+        this.originalName = originalName;
+    }
 }
