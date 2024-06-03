@@ -16,6 +16,9 @@ const ReviewContaner = () => {
 
     const { data, isError, isLoading, refetch } = useReadReviews(Number(phId));
 
+    console.log(data);
+    
+
     const reviewList: ReviewType[] = data;
 
     useEffect(() => {
@@ -23,8 +26,6 @@ const ReviewContaner = () => {
     }, [phId]);
 
     if (!reviewList) return;
-    console.log(reviewList);
-
 
     return (
         <div className={styles.container}>

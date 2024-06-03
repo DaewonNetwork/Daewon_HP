@@ -23,7 +23,7 @@ const useIsLoggedIn = (isPrivate: boolean) => {
         } else if (isPrivate) {
             router.push("/auth/signin");
         }
-    }, [data, isPrivate, localStorage]);
+    }, [data, isPrivate]);
 
 };
 
