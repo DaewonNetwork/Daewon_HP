@@ -49,7 +49,7 @@ const ReviewShared = ({ review, parentRefetch, isDeleteBtn = false }: { review: 
                 {
                     replyList && replyList.map((reply, index) => (
                         <React.Fragment key={index}>
-                            <ReplyShared reply={reply} />
+                            <ReplyShared parentRefetch={parentRefetch} reply={reply} />
                         </React.Fragment>
                     ))
                 }

@@ -5,8 +5,7 @@ import TextLargeShared from "./TextLargeShared";
 import TextMediumShared from "./TextMediumShared";
 import ReplyDeleteBtn from "@/(FSD)/entities/reply/ui/ReplyDeleteBtn";
 
-const ReplyShared = ({ reply }: { reply: ReplyType}) => {
-
+const ReplyShared = ({ reply, parentRefetch }: { reply: ReplyType; parentRefetch?: any }) => {
     return (
         <div className={styles.reply_item}>
             <div className={styles.left_box}>
@@ -17,7 +16,7 @@ const ReplyShared = ({ reply }: { reply: ReplyType}) => {
                 <TextMediumShared>{reply.replyText}</TextMediumShared>
             </div>
             <div>
-                <ReplyDeleteBtn replyId={reply.replyId} isReply={reply.reply} />
+                <ReplyDeleteBtn parentRefetch={parentRefetch} replyId={reply.replyId} isReply={reply.reply} />
             </div>
         </div>
     );
