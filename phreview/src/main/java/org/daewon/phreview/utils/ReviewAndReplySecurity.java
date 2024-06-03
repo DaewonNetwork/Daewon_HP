@@ -59,8 +59,8 @@ public class ReviewAndReplySecurity {
 
         log.info("userId :"+userId);
 
-        // 리뷰 작성자의 ID를 가져와 현재 인증된 사용자와 비교
-        // reviewId 기준으로 리뷰작성자의 userId를 DB에서 찾는 쿼리를 실행
+        // 댓글 작성자의 ID를 가져와 현재 인증된 사용자와 비교
+        // replyId 기준으로 댓글작성자의 userId를 DB에서 찾는 쿼리를 실행
         // 값이 있을 수도 있고 없을 수도 있는 상황을 표현하기 위해 Optional 사용
         Optional<Long> authorUserIdOptional = replyRepository.findAuthorUserIdById(replyId);
         log.info("authorUserIdOptional :"+authorUserIdOptional);
