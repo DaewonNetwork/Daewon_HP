@@ -48,11 +48,4 @@ public class MapController {
         return pharmacyDTO;
     }
 
-    @GetMapping("/all")
-    public List<PharmacyDTO> searchAll() {
-        List<PharmacyDTO> pharmacyDTO = mapService.AllSearch();
-        log.info(pharmacyDTO);
-        return pharmacyDTO;
-    }
-
 }
