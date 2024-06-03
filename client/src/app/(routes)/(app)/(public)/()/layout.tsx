@@ -1,3 +1,5 @@
+"use client";
+
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import React from "react";

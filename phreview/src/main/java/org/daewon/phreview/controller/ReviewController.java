@@ -5,10 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.connector.Response;
 import org.daewon.phreview.domain.Review;
+import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
+import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
+import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
@@ -25,6 +29,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +45,7 @@ public class ReviewController {
     private final LikeService likeService;
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
@@ -52,7 +60,7 @@ public class ReviewController {
             @RequestPart("reviewDTO") String reviewDTOStr,
             // 클라이언트로부터 전달된 파일 리스트를 받음.
             // required = false 로 설정하여 파일이 없어도 요청이 처리됨
-            @RequestPart(name = "files", required = false) List<MultipartFile> files) {
+            @RequestPart(name = "files", required = false) MultipartFile files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
         
@@ -72,7 +80,7 @@ public class ReviewController {
         Long reviewId;
         try {
             // 리뷰 생성 메서드 호출
-            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files.get(0) : null, uploadPath);
+            reviewId = reviewService.createReview(reviewDTO, files, uploadPath);
 
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
@@ -204,6 +212,28 @@ public class ReviewController {
         return reviewlist;
     }
 
+    private static final String UPLOAD_FOLDER = "C:\\upload\\";
+
+    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "이미지")
+    @GetMapping("/read/image")
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
+
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
 
 
 }
+

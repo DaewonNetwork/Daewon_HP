@@ -51,26 +51,6 @@ public class UserController {
             return ResponseEntity.status(401).body("Invalid token");
         }
     }
-    // @GetMapping()
-    // public Object readUser(@RequestHeader("Authorization") String token) {
-    // try {
-    // // Bearer 토큰에서 "Bearer " 부분 제거
-    // if (token.startsWith("Bearer ")) {
-    // token = token.substring(7);
-    // }
-
-    // // 토큰에서 payload 추출
-    // Map<String, Object> claims = jwtUtil.validateToken(token);
-
-    // log.info("payload값 서버 -> 클라이언트 : " + claims);
-
-    // // payload 반환
-    // return claims;
-    // } catch (JwtException e) {
-    // // 토큰이 유효하지 않으면 401 상태 코드 반환
-    // return "Invalid token";
-    // }
-    // }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {

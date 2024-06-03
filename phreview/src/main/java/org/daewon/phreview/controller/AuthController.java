@@ -74,7 +74,6 @@ public class AuthController {
     @Operation(summary = "로그인 처리", description = "로그인 요청을 처리합니다.")
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> signin(@RequestBody AuthSigninDTO dto) {
-//        log.info("AuthSecurityDTO : " + authSecurityDTO.toString());
         log.info(dto.getEmail());
 
         // AuthService를 사용하여 사용자의 인증을 시도

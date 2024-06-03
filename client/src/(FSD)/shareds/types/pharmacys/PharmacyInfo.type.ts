@@ -14,5 +14,5 @@ export interface PharmacyInfoType {
     enjoyIndex: number;
     starAvg: number;
     reviewIndex: number;
-    enjoyPhType: PharmacyEnjoyType;
+    enjoy: boolean;
 }

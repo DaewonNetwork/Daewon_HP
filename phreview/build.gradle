@@ -40,7 +40,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.12.5'
 	// 테스트 환경에서 lombok 라이브러리를 쓰기위해 추가
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'

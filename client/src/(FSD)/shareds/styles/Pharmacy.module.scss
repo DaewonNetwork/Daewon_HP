@@ -18,6 +18,12 @@
     }
 }
 
+.active_like {
+    p, svg {
+        color: red !important;
+    }
+}
+
 .pharmacy_info {
     display: block;
     padding-top: 20px;

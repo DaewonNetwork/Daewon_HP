@@ -81,12 +81,6 @@ public class JWTUtil {
             log.error("토큰이 유효하지 않습니다: " + e.getMessage());
             throw e;
         }
-//        claim = Jwts.parser()
-//                .setSigningKey(key.getBytes()).build()  // 서명 검증을 위한 키 설정
-//                .parseSignedClaims(token)               // 토큰 파싱 및 클레임 추출
-//                .getBody();                             // 클레임 반환
-//        log.info("claim : " + claims);
-//        return claim;
     }
 }
 
