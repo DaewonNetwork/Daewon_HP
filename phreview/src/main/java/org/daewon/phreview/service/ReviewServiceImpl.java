@@ -105,13 +105,13 @@ public class ReviewServiceImpl implements ReviewService {
                 file.transferTo(savePath.toFile());
 
                 // 파일 타입이 이미지인 경우 썸네일 생성
-                boolean isImage = Files.probeContentType(savePath).startsWith("image");
-                if (isImage) {
-                    // 썸네일 파일명 생성 (s_UUID_원본파일명)
-                    File thumbnailFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-                    // 썸네일 생성 (원본 파일, 썸네일 파일, 너비 200px, 높이 200px)
-                    Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 200);
-                }
+//                boolean isImage = Files.probeContentType(savePath).startsWith("image");
+//                if (isImage) {
+//                    // 썸네일 파일명 생성 (s_UUID_원본파일명)
+//                    File thumbnailFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+//                    // 썸네일 생성 (원본 파일, 썸네일 파일, 너비 200px, 높이 200px)
+//                    Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 200, 200);
+//                }
 
                 // ReviewImage 엔티티 생성 및 저장
                 ReviewImage reviewImage = ReviewImage.builder()
@@ -265,7 +265,6 @@ public class ReviewServiceImpl implements ReviewService {
                         .reviewText(review.getReviewText())
                         .reviewTitle(review.getReviewTitle())
                         .star(review.getStar())
-                        .reviewImages(reviewImageRepository.findByReviewId(review.getReviewId()))
                         .likeIndex(review.getLikeIndex())
                         .replyIndex(review.getReplyIndex())
                         .createAt(review.getCreateAt().format(formatter))
@@ -282,7 +281,6 @@ public class ReviewServiceImpl implements ReviewService {
                             .reviewText(review.getReviewText())
                             .reviewTitle(review.getReviewTitle())
                             .star(review.getStar())
-                            .reviewImages(reviewImageRepository.findByReviewId(review.getReviewId()))
                             .likeIndex(review.getLikeIndex())
                             .replyIndex(review.getReplyIndex())
                             .createAt(review.getCreateAt().format(formatter))
