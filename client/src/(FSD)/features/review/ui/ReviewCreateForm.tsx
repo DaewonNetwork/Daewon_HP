@@ -13,8 +13,6 @@ import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
 import { useReviewCreate } from "../api/useReviewCreate";
 import { useParams } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
-import StarListShared from "@/(FSD)/shareds/ui/StarListShared";
-import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 
 const ReviewCreateForm = () => {
@@ -62,17 +60,25 @@ const ReviewCreateForm = () => {
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>
-                {
-                    stars.map((star, index) => (
-                        <React.Fragment key={index}>
-                            <button type={"button"} onClick={_ => handleStarClick(index)}><StarShared isActive={star} /></button>
-                        </React.Fragment>
-                    ))
-                }
-                <TextLargeShared>상품 이름 작성하기</TextLargeShared>
-                <FormInputShared isInvalid={!!errors.reviewTitle} isClearable control={control} name={"reviewTitle"} placeholder={"구매한 상품 이름을 입력하세요."} />
-                <TextLargeShared>리뷰 작성하기</TextLargeShared>
-                <FormTextareaShared isInvalid={!!errors.reviewText} size={"lg"} control={control} name="reviewText" placeholder="10자 이상 200자 이하" />
+                <div className={styles.star_list}>
+                    <div className={styles.star_list_inner}>
+                        {
+                            stars.map((star, index) => (
+                                <React.Fragment key={index}>
+                                    <button type={"button"} onClick={_ => handleStarClick(index)}><StarShared isActive={star} /></button>
+                                </React.Fragment>
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className={styles.review_input_box}>
+                    <TextLargeShared>상품 이름 작성하기</TextLargeShared>
+                    <FormInputShared isInvalid={!!errors.reviewTitle} isClearable control={control} name={"reviewTitle"} placeholder={"구매한 상품 이름을 입력하세요."} />
+                </div>
+                <div className={styles.review_input_box}>
+                    <TextLargeShared>리뷰 작성하기</TextLargeShared>
+                    <FormTextareaShared isInvalid={!!errors.reviewText} size={"lg"} control={control} name="reviewText" placeholder="10자 이상 200자 이하" />
+                </div>
                 <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 업로드</FileInputShared>
                 <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>리뷰 등록</Button>
             </InnerShared>

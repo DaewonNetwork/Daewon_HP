@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { PharmacyType } from "../types/pharmacys/Pharmacy.type";
 import { useRouter } from "next/navigation";
 import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
@@ -7,7 +7,7 @@ import TextMediumShared from "./TextMediumShared";
 import ItemShared from "./ItemShared";
 import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 
-const PharmacyShared = ({ pharmacy, set }: { pharmacy: PharmacyType; set?: any }) => {
+const PharmacyShared = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyType; parentRefetch?: any }) => {
     if (!pharmacy) return;
     const router = useRouter();
 
@@ -21,7 +21,7 @@ const PharmacyShared = ({ pharmacy, set }: { pharmacy: PharmacyType; set?: any }
             <ItemShared>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                     <TextLargeShared>{pharmacy.phName}</TextLargeShared>
-                    <PharmacyEnjoyBtn set={set} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
+                    <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
                 </div>
                 <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
                 <TextMediumShared>{pharmacy.phTel}</TextMediumShared>

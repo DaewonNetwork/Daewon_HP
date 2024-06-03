@@ -5,9 +5,10 @@ const replyCreateFetch = async (data: any) => {
     const response = await fetch("http://localhost:8090/api/reply", {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
         },
-        body: data,
+        body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -22,8 +23,8 @@ const replyCreateFetch = async (data: any) => {
 
 export const useReplyCreate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (userData: any) => {
-            return replyCreateFetch(userData);
+        mutationFn: (data: any) => {
+            return replyCreateFetch(data);
         },
         onSuccess: (data: any) => {
             onSuccess(data);
