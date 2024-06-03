@@ -14,17 +14,19 @@ const PharmacyShared = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyType; p
     return (
         <div
             onClick={_ => {
-                router.push(`/pharmacy/${pharmacy.phId}`);
+            router.push(`/pharmacy/${pharmacy.phId}`);
             }}
             className={styles.pharmacy_item}
         >
             <ItemShared>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                <div className={styles.top_item}>
                     <TextLargeShared>{pharmacy.phName}</TextLargeShared>
                     <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
                 </div>
-                <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
-                <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+                <div className={styles.btm_item}>
+                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                    <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+                </div>
             </ItemShared>
         </div>
     )

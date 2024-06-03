@@ -12,6 +12,7 @@ import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
 import ReviewDeleteBtn from "@/(FSD)/entities/review/ui/ReviewDeleteBtn";
+import { useReadReviewImage } from "@/(FSD)/entities/review/api/useReadReviewImage";
 
 const ReviewShared = ({ review, parentRefetch, isDeleteBtn = false }: { review: ReviewType; parentRefetch?: any; isDeleteBtn?: boolean }) => {
     const router = useRouter();
@@ -19,6 +20,9 @@ const ReviewShared = ({ review, parentRefetch, isDeleteBtn = false }: { review: 
     if (!review) return <></>;
     
     const { data, refetch } = useReadReply(review.reviewId);
+    const img = useReadReviewImage(review.reviewId).data;
+
+    console.log(img);
     
     const replyList: ReplyType[] = data;
     
