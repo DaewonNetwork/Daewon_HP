@@ -43,9 +43,20 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable);
         log.info(result);
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            if(users != null) {
+                Long userId = users.getUserId();
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(), userId);
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            } else{
+                pharmacyDTO.setEnjoy(false);
+            }
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(phList);
@@ -55,23 +66,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                 .totalIndex((int) result.getTotalElements())
                 .build();
     }
-
-    // @Override
-    // public PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng,
-    // PageRequestDTO pageRequestDTO) {
-    // Pageable pageable = PageRequest.of(
-    // pageRequestDTO.getPage() <= 0 ? 0: pageRequestDTO.getPage() - 1,
-    // pageRequestDTO.getSize(),
-    // Sort.by("phId").ascending());
-    // Page<PharmacyDTO> result = pharmacyRepository.findByLoc(lat,lng,pageable);
-    // // log.info(result); // 필요한 경우에만 로그를 남기는 것이 좋습니다.
-    //
-    // return PageResponseDTO.<PharmacyDTO>withAll()
-    // .pageRequestDTO(pageRequestDTO)
-    // .dtoList(result.getContent()) // 변경된 부분
-    // .total((int)result.getTotalElements())
-    // .build();
-    // }
 
     @Override
     public PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng, PageRequestDTO pageRequestDTO) {
@@ -81,8 +75,22 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 변경된 부분
         log.info(result);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
+
+
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            if(users != null) {
+                Long userId = users.getUserId();
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(),userId);
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            } else{
+                pharmacyDTO.setEnjoy(false);
+            }
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(phList);
@@ -93,36 +101,6 @@ public class PharmacyServiceImpl implements PharmacyService {
                 .build();
     }
 
-    // @Override
-    // public PageResponseDTO<PharmacyDTO> NameSearch(String keyword) {
-    // List<Pharmacy> result = pharmacyRepository.findNameByKeyword(keyword);
-    // log.info("name");
-    // PageResponseDTO<PharmacyDTO> pharmacyDTOList = new ArrayList<>();
-    // for(Pharmacy p : result){
-    // PharmacyDTO dto = PharmacyDTO.builder()
-    // .phId(p.getPhId())
-    // .phName(p.getPhName())
-    // .phAdd(p.getPhAdd())
-    // .phTel(p.getPhTel())
-    // .phX(p.getPhX())
-    // .phY(p.getPhY())
-    // .enjoyIndex(p.getEnjoyIndex())
-    // .starIndex(p.getStarIndex())
-    // .timeHoliEndDate(p.getTimeHoliEndDate())
-    // .timeHoliStartDate(p.getTimeHoliStartDate())
-    // .timeSatEndDate(p.getTimeSatEndDate())
-    // .timeSatStartDate(p.getTimeSatStartDate())
-    // .timeWeekEndDate(p.getTimeWeekEndDate())
-    // .timeWeekStartDate(p.getTimeWeekStartDate())
-    // .phPageIndex(p.getPhPageIndex())
-    // .phPageTotal(p.getPhPageTotal())
-    // .build();
-    // pharmacyDTOList.add(dto);
-    // }
-    //
-    //
-    // return pharmacyDTOList;
-    // }
 
     @Override
     public PageResponseDTO<PharmacyDTO> nameOrAddSearch(String keyword, PageRequestDTO pageRequestDTO) {
@@ -132,9 +110,21 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findAddOrNameByKeyword(keyword, pageable);
         log.info(result);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
 
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            if(users != null) {
+                Long userId = users.getUserId();
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(),userId);
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            } else{
+                pharmacyDTO.setEnjoy(false);
+            }
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(phList);
@@ -153,9 +143,21 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findNameByCityAndKeyword(city, keyword, pageable);
         log.info(result);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
 
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            if(users != null) {
+                Long userId = users.getUserId();
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(),userId);
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            } else{
+                pharmacyDTO.setEnjoy(false);
+            }
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(phList);
@@ -174,9 +176,21 @@ public class PharmacyServiceImpl implements PharmacyService {
                 Sort.by("phId").ascending());
         Page<Pharmacy> result = pharmacyRepository.findAll(pageable);
         log.info(result);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName)
+                .orElse(null);
 
         List<PharmacyDTO> dtoList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
+            if(users != null) {
+                Long userId = users.getUserId();
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(),userId);
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            } else{
+                pharmacyDTO.setEnjoy(false);
+            }
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(dtoList);

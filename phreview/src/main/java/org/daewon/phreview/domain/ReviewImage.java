@@ -2,8 +2,11 @@ package org.daewon.phreview.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -21,6 +24,8 @@ public class ReviewImage implements Comparable<ReviewImage>{
     private int ord;
 
     @ManyToOne
+    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Review review;
 
     @Override
