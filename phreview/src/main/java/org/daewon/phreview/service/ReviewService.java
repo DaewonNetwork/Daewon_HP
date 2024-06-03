@@ -15,6 +15,7 @@ public interface ReviewService {
 
     void deleteReview(Long reviewId);
 
+    ReviewReadDTO readReview(Long reviewId);
 
     List<ReviewReadDTO> readReviews(Long phId);
     List<ReviewReadDTO> readReviewsByLikeIndexDesc(Long phId);

@@ -21,7 +21,13 @@ import java.util.List;
 public class ReviewPublicController {
 
     private final ReviewService reviewService;
-    private final LikeService likeService;
+
+
+    @GetMapping("/read")
+    public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
+        ReviewReadDTO review = reviewService.readReview(reviewId); // 리뷰 최신순
+        return review;
+    }
 
     @GetMapping("/list")
     public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
