@@ -1,17 +1,14 @@
 package org.daewon.phreview.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.catalina.connector.Response;
 import org.daewon.phreview.domain.Review;
-import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
-import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
-import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 import org.daewon.phreview.security.exception.ReviewNotFoundException;
 import org.daewon.phreview.service.LikeService;
@@ -41,7 +38,6 @@ public class ReviewController {
     private final LikeService likeService;
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
-    private final ReviewImageRepository reviewImageRepository;
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
@@ -56,10 +52,10 @@ public class ReviewController {
             @RequestPart("reviewDTO") String reviewDTOStr,
             // 클라이언트로부터 전달된 파일 리스트를 받음.
             // required = false 로 설정하여 파일이 없어도 요청이 처리됨
-            @RequestPart(name = "files", required = false) MultipartFile files) {
+            @RequestPart(name = "files", required = false) List<MultipartFile> files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
-        
+
         ReviewDTO reviewDTO;
         try {
             // JSON 문자열을 ReviewDTO 객체로 변환
@@ -76,7 +72,7 @@ public class ReviewController {
         Long reviewId;
         try {
             // 리뷰 생성 메서드 호출
-            reviewId = reviewService.createReview(reviewDTO, files, uploadPath);
+            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files.get(0) : null, uploadPath);
 
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
@@ -95,11 +91,36 @@ public class ReviewController {
     }
 
     // 리뷰 작성한 유저만 수정 가능
+//    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
+//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
+//            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+//        reviewService.updateReview(reviewUpdateDTO,reviewId);
+//        return Map.of("result", "success");
+//    }
+
+    // 리뷰 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
-            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
-        reviewService.updateReview(reviewUpdateDTO,reviewId);
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> updateReview(
+            @RequestParam(name = "reviewId") Long reviewId, // reviewId를 URL 파라미터로 받음
+            @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
+            @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
+
+        // reviewUpdateDTOString을 올바르게 디코딩
+        String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+        // decodedReviewDTO를 ReviewUpdateDTO 객체로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        ReviewUpdateDTO reviewUpdateDTO;
+        try {
+            reviewUpdateDTO = objectMapper.readValue(decodedReviewDTO, ReviewUpdateDTO.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to parse reviewUpdateDTO", e); // 변환 실패 시 예외 처리
+        }
+
+        // 기존의 updateReview 서비스 호출
+        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
         return Map.of("result", "success");
     }
 
@@ -148,22 +169,6 @@ public class ReviewController {
     public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
         List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
         return reviewlist;
-    }
-
-    @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "이미지")
-    @GetMapping("/read/image")
-    public ReviewImageDTO readReviewImage(Long reviewId){
-        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
-        log.info("Review Image: " + reviewImage);
-        // ReviewImage를 ReviewImageDTO로 변환하여 반환
-        ReviewImageDTO reviewImageDTO = new ReviewImageDTO();
-        reviewImageDTO.setUuid(reviewImage.getUuid());
-        // ReviewImage의 다른 필드를 ReviewImageDTO에 설정
-        reviewImageDTO.setOrd(reviewImage.getOrd());
-        reviewImageDTO.setFileName(reviewImage.getFileName());
-        // 필요한 경우 더 많은 속성을 설정할 수 있습니다.
-        return reviewImageDTO;
     }
 
 
