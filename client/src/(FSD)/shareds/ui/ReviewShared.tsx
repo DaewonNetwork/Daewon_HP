@@ -8,11 +8,16 @@ import ItemShared from "./ItemShared";
 import TextLargeShared from "./TextLargeShared";
 import StarListShared from "./StarListShared";
 import TextMediumShared from "./TextMediumShared";
+import { useReadReviewImage } from "@/(FSD)/entities/review/api/useReadReviewImage";
 
 const ReviewShared = ({ review }: { review: ReviewType }) => {
     const router = useRouter();
 
     if (!review) return <></>;
+    
+    const { data } = useReadReviewImage(review.reviewId);
+    console.log(data);
+    
 
 
     return (
