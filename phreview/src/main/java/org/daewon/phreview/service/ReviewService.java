@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReviewService {
     Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath);
 
-    void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId);
+    void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile files, String uploadPath);
 
     void deleteReview(Long reviewId);
 
@@ -23,7 +23,5 @@ public interface ReviewService {
     List<ReviewReadDTO> readAllReviewsByLikeIndexDesc();
     List<ReviewReadDTO> readReviewsByUser(Long userId);
     List<ReviewReadDTO> readLikedReviewsListByUser();
-
-
 
 }

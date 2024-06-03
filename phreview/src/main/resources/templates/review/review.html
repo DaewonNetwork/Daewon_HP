@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{layout/basic.html}">
+
+<head>
+    <title>Board Register</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Board Register
+                </div>
+                <div class="card-body">
+                    <form action="/review/register" method="post">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Images</span>
+                            <div class="float-end uploadHidden">
+                                <button type="button" class="btn btn-primary uploadFileBtn">ADD Files</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> <!-- end card-body -->
+            </div> <!--end card -->
+        </div> <!-- end col -->
+    </div> <!--end row -->
+    <!--  첨부파일 섬네일 보여주기 -->
+    <div class="row mt-3">
+        <div class="col ">
+            <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
+
+            </div>
+        </div>
+    </div>
+    <!-- 첨부파일 추가를 위한 모달창   -->
+    <div class="modal uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="file" name="files" class="form-control" multiple>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary uploadBtn">Upload</button>
+                    <button type="button" class="btn btn-outline-dark closeUploadBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/upload.js"></script>
+<script layout:fragment="script" th:inline="javascript">
+    const errors = [[${errors}]];
+    console.log(errors);
+
+    let errorMsg = '';
+
+    if (errors) {
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`;
+        }
+        alert(errorMsg);
+    }
+
+    const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"));
+
+    document.querySelector(".uploadFileBtn").addEventListener("click", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        uploadModal.show();
+    }, false);
+
+    document.querySelector(".uploadBtn").addEventListener("click", function (e) {
+        const formObj = new FormData();
+        const fileInput = document.querySelector("input[name='files']");
+        console.log(fileInput.files);
+        const files = fileInput.files;
+
+        for (let i = 0; i < files.length; i++) {
+            formObj.append("files", files[i]);
+        }
+
+        uploadToServer(formObj).then(result => {
+            console.log(result);
+            uploadModal.hide();
+        }).catch(e => {
+            console.log(e);
+            uploadModal.hide();
+        });
+    }, false);
+</script>
+</body>
+</html>
