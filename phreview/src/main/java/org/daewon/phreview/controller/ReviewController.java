@@ -89,8 +89,29 @@ public class ReviewController {
         }
     }
 
-    // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
-    @PreAuthorize("hasRole('USER')")
+
+  // @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
+  //  @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+   // public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
+   //                                         @RequestPart("reviewDTO") String reviewDTOStr,@RequestPart(name = "files", required = false) MultipartFile files) {
+   //     ReviewUpdateDTO reviewUpdateDTO;
+    //    try {
+    //        // JSON 문자열을 ReviewDTO 객체로 변환
+     //       ObjectMapper objectMapper = new ObjectMapper();
+     //       // @RequestPart 부분에서 한글 처리하는데 문제가 생겨서 강제로 UTF-8로 변환해 줌
+    //       String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+     //       reviewUpdateDTO = objectMapper.readValue(decodedReviewDTO, ReviewUpdateDTO.class);
+     //   } catch (IOException e) {
+            // JSON 변환 중 오류가 발생하면 로그를 남기고 예외 발생
+        //    log.error(e.getMessage());
+     //       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid JSON format", e);
+     //   }
+     //   reviewService.updateReview(reviewUpdateDTO,reviewId,files,uploadPath);
+      //  return Map.of("result", "success");
+  //  }
+
+
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     // Content-Type : multipart/form-data, Accept : application/json 형태 이어야함
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateReview(
@@ -120,7 +141,7 @@ public class ReviewController {
         try {
             // 리뷰 생성 메서드 호출
             reviewService.updateReview(reviewUpdateDTO,reviewId,files, uploadPath);
-
+log.info("성공:");
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
             log.error(e.getMessage());
@@ -258,7 +279,7 @@ public class ReviewController {
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
-        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
 
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();
