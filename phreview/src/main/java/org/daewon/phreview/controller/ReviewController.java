@@ -63,7 +63,7 @@ public class ReviewController {
             @RequestPart(name = "files", required = false) MultipartFile files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
-
+        
         ReviewDTO reviewDTO;
         try {
             // JSON 문자열을 ReviewDTO 객체로 변환
@@ -159,39 +159,6 @@ log.info("성공:");
     }
 
 //    // 리뷰 작성한 유저만 수정 가능
-//    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-//    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Map<String, String> updateReview(
-//            @RequestParam(name = "reviewId") Long reviewId,
-//            @RequestPart("reviewUpdateDTO") ReviewUpdateDTO reviewUpdateDTO,
-//            @RequestPart(name = "files", required = false) MultipartFile files) {
-//        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
-//        return Map.of("result", "success");
-//    }
-
-//    // 리뷰 작성한 유저만 수정 가능
-//    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-//    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Map<String, String> updateReview(
-//            @RequestParam(name = "reviewId") Long reviewId,
-//            @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString,
-//            @RequestPart(name = "files", required = false) MultipartFile files) {
-//        // reviewUpdateDTOString을 ReviewUpdateDTO 객체로 변환
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        ReviewUpdateDTO reviewUpdateDTO;
-//        try {
-//            String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-//            reviewUpdateDTO = objectMapper.readValue(reviewUpdateDTOString, ReviewUpdateDTO.class);
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException("Failed to parse reviewUpdateDTO", e);
-//        }
-//
-//        // 기존의 updateReview 서비스 호출
-//        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
-//        return Map.of("result", "success");
-//    }
-
-    // 리뷰 작성한 유저만 수정 가능
 //    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
 //    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
@@ -296,3 +263,4 @@ log.info("성공:");
 
 
 }
+
