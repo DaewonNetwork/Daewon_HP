@@ -15,8 +15,6 @@ const AllPharmacyList = () => {
             fetchNextPage();
         }
     }, [inView]);
-
-    console.log(pharmacyList);
     
 
     return (
