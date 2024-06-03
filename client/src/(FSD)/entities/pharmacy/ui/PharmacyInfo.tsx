@@ -16,7 +16,7 @@ const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
-
+    
     const [isEnjoi, setIsEnjoy] = useState<boolean>(false);
 
     const pharmacy: PharmacyInfoType = data;
