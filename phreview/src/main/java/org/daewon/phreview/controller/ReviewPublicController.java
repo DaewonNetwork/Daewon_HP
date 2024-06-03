@@ -10,12 +10,18 @@ import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -61,20 +67,24 @@ public class ReviewPublicController {
         return reviewlist;
     }
 
-   
+    private static final String UPLOAD_FOLDER = "C:\\upload\\";
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
-    public ReviewImageDTO readReviewImage(Long reviewId){
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
+
         ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
-        log.info("Review Image: " + reviewImage);
-        // ReviewImage를 ReviewImageDTO로 변환하여 반환
-        ReviewImageDTO reviewImageDTO = new ReviewImageDTO();
-        reviewImageDTO.setUuid(reviewImage.getUuid());
-        // ReviewImage의 다른 필드를 ReviewImageDTO에 설정
-        reviewImageDTO.setOrd(reviewImage.getOrd());
-        reviewImageDTO.setFileName(reviewImage.getFileName());
-        // 필요한 경우 더 많은 속성을 설정할 수 있습니다.
-        return reviewImageDTO;
+
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
 
