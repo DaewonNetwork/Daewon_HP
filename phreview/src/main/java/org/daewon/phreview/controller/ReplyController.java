@@ -60,8 +60,7 @@ public class ReplyController {
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
     @GetMapping()
-    public List<ReplyReadDTO> readReply(
-            @RequestParam(name = "reviewId") Long reviewId) {
+    public List<ReplyReadDTO> readReply(@RequestParam(name = "reviewId") Long reviewId) {
         List<ReplyReadDTO> replyReadDTO = replyService.readReply(reviewId);
 
         return replyReadDTO;

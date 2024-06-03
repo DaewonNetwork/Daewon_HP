@@ -6,6 +6,7 @@ import TextMediumShared from "./TextMediumShared";
 import ReplyDeleteBtn from "@/(FSD)/entities/reply/ui/ReplyDeleteBtn";
 
 const ReplyShared = ({ reply }: { reply: ReplyType}) => {
+
     return (
         <div className={styles.reply_item}>
             <div className={styles.left_box}>
@@ -16,7 +17,7 @@ const ReplyShared = ({ reply }: { reply: ReplyType}) => {
                 <TextMediumShared>{reply.replyText}</TextMediumShared>
             </div>
             <div>
-                <ReplyDeleteBtn replyId={reply.reviewId} isReply={reply.reply} />
+                <ReplyDeleteBtn replyId={reply.replyId} isReply={reply.reply} />
             </div>
         </div>
     );

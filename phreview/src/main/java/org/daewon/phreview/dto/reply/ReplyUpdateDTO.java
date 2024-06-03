@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class ReplyUpdateDTO {
 
     @NotEmpty
+    private Long replyId;
     private String replyText;
     private LocalDateTime updateAt;
 }

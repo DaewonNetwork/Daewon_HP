@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReplyDTO {
-
     private Long reviewId;
-
     @NotEmpty
     private String replyText;
 

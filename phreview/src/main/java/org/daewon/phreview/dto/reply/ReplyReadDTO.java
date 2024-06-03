@@ -16,6 +16,7 @@ public class ReplyReadDTO {
 
 
     private String userName;
+    private Long replyId;
 
     @NotEmpty
     private String replyText;

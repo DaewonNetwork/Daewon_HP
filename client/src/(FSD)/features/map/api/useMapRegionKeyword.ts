@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const phMapRegionKeywordFetch = async (city: string, keyword: string) => {
     const response = await fetch(`http://localhost:8090/map/region/search?city=${city}&keyword=${keyword}`, {
@@ -21,6 +21,8 @@ const phMapRegionKeywordFetch = async (city: string, keyword: string) => {
 export const useMapRegionKeyword = (city: string, keyword: string) => {
     return useQuery({
         queryKey: ["map_region_keyword"],
-        queryFn: () => phMapRegionKeywordFetch(city, keyword)
+        queryFn: () => phMapRegionKeywordFetch(city, keyword),
+        placeholderData: keepPreviousData,
+        
     });
 };
