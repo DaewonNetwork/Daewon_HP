@@ -171,13 +171,6 @@ public class ReviewServiceImpl implements ReviewService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 
         // 리뷰 이미지 리스트 변환
-        List<ReviewImageDTO> reviewImageDTOs = review.getReviewImages().stream()
-                .map(image -> ReviewImageDTO.builder()
-                        .uuid(image.getUuid())
-                        .fileName(image.getFileName())
-                        .ord(image.getOrd())
-                        .build())
-                .collect(Collectors.toList());
 
         ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
                 .reviewId(review.getReviewId())
@@ -190,7 +183,6 @@ public class ReviewServiceImpl implements ReviewService {
                 .replyIndex(review.getReplyIndex())
                 .createAt(review.getCreateAt().format(formatter))
                 .updateAt(review.getUpdateAt().format(formatter))
-                .reviewImages(reviewImageDTOs)
                 .build();
         return reviewReadDTO;
     }
