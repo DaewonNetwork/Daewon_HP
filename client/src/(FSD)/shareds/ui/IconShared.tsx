@@ -9,6 +9,7 @@ import { IconType } from "../types/Icon.type";
 import { IoMdListBox } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
+import { GoHeartFill } from "react-icons/go";
 
 const IconShared = ({ iconType, ...props }: IconType) => {
     let component = null;
@@ -69,10 +70,7 @@ const IconShared = ({ iconType, ...props }: IconType) => {
             component = <IoCopy />;
             break;
         case "like":
-            component = <IoHeartOutline />;
-            break;
-        case "like_active":
-            component = <IoHeart />;
+            component = <GoHeartFill />;
             break;
         case "setting":
             component = <IoSettingsSharp />;

@@ -3,15 +3,25 @@ package org.daewon.phreview.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.daewon.phreview.domain.ReviewImage;
+import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 
+import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.service.LikeService;
 import org.daewon.phreview.service.ReviewService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -21,6 +31,7 @@ import java.util.List;
 public class ReviewPublicController {
 
     private final ReviewService reviewService;
+    private final ReviewImageRepository reviewImageRepository;
 
 
     @GetMapping("/read")
@@ -56,6 +67,25 @@ public class ReviewPublicController {
         return reviewlist;
     }
 
+    private static final String UPLOAD_FOLDER = "C:\\upload\\";
+    @Operation(summary = "이미지")
+    @GetMapping("/read/image")
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
+
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId);
+
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
 
 
 }

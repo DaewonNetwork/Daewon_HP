@@ -3,6 +3,7 @@ package org.daewon.phreview.domain;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -46,7 +47,6 @@ public class Review extends BaseEntity{
         this.reviewText = reviewText;
         this.star = star;
     }
-
 
     // pharmacy 값 설정 -> phId를 받아서 생성
     public void setPharmacy(Long phId) {

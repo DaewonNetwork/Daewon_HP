@@ -75,6 +75,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {    // OncePerReques
         // "Authorization" 헤더를 사용하여 토큰을 전달한 토큰을 받아옴
         // Authorization: Bearer ${access_token} - 클라이언트에서 이 값으로 보내줘야 함
         String headerStr = request.getHeader("Authorization");
+        log.info("headerStr의 length : " + headerStr.length());
 
         // Authorization 헤더가 없거나 길이가 8미만이면 UNACCEPT 예외를 던짐
         // 8미만으로 짜르는 이유는 headerStr이 "Bearer <access_token>" 이렇게 이루어져 있기 때문

@@ -33,10 +33,10 @@ public class ReviewDTO {
 
     private LocalDateTime createAt;
 
-    private List<ReviewImageDTO> reviewImages; // 리뷰 이미지 리스트
+    private ReviewImageDTO reviewImages; // 리뷰 이미지 리스트
 
     // 리뷰 이미지 리스트 설정 메서드
-    public void setReviewImages(List<ReviewImageDTO> reviewImages) {
+    public void setReviewImages(ReviewImageDTO reviewImages) {
         this.reviewImages = reviewImages;
     }
 
