@@ -15,6 +15,7 @@
 
     .review_list {
         display: block;
+        padding-bottom: 40px;
     }
 }
 
@@ -62,27 +63,53 @@
 .review_item {
     display: block;
 
-    .review_header {
-        .top_item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    .review_inner {
+        display: block;
+        
+        .review_header {
+            .top_item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+    
+                .writer_item {
+                    display: flex;
+                }
+            }
+    
+            .btm_item {
+                display: flex;
+                align-items: center;
+                margin-top: 5px;
+    
+                p[data-slot="text_medium"] {
+                    margin-left: 20px;
+                }
+            }
+    
+            margin-bottom: 10px;
         }
+    
+        .review_content {
+            display: block;
 
-        .btm_item {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
+            .text_content {
+                display: block;
+                h1 {
+                    margin-bottom: 2px;
+                }
+            }
 
-            p[data-slot="text_medium"] {
-                margin-left: 20px;
+            .img_content {
+                margin-top: 10px;
+                display: block;
+
+                img {
+                    width: 100%;
+                    max-height: 500px;
+                }
             }
         }
-
-        margin-bottom: 10px;
     }
 
-    .review_content {
-        display: block;
-    }
 }

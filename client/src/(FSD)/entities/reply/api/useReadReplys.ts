@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-const readRankEnjoyPharmacysFetch = async (isLoggedIn: boolean) => {
-    let response;
+const replysReadFetch = async (reviewId: number, isLoggedIn: boolean) => {
+    let response = null;
 
-    if(isLoggedIn) {
-        response = await fetch("http://localhost:8090/api/pharmacy/rank/enjoy", {
+    if (isLoggedIn) {
+        response = await fetch(`http://localhost:8090/api/reply/list?reviewId=${reviewId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -12,7 +12,7 @@ const readRankEnjoyPharmacysFetch = async (isLoggedIn: boolean) => {
             },
         });
     } else {
-        response = await fetch("http://localhost:8090/pharmacy/rank/enjoy", {
+        response = await fetch(`http://localhost:8090/reply/list?reviewId=${reviewId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -26,13 +26,13 @@ const readRankEnjoyPharmacysFetch = async (isLoggedIn: boolean) => {
     };
 
     const data = await response.json();
-    
+
     return data;
 };
 
-export const useReadRankEnjoyPharmacys = () => {
+export const useReadReplys = (reviewId: number) => {
     return useQuery({
-        queryKey: ["read_rank_enjoy_pharmacys"],
-        queryFn: _ => readRankEnjoyPharmacysFetch(!!localStorage.getItem("access_token")),
+        queryKey: ["reply_list"],
+        queryFn: _ => replysReadFetch(reviewId, !!localStorage.getItem("access_token")),
     });
 };

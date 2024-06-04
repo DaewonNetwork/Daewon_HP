@@ -13,9 +13,10 @@ public interface ReplyService {
 
     Long createReply(ReplyDTO replyDTO);
 
-    List<ReplyReadDTO> readReply(Long phId);
+    List<ReplyReadDTO> readReplys(Long phId);
+    ReplyReadDTO readReply(Long replyId);
 
-    void updateReply(ReplyUpdateDTO replyUpdateDTO,Long replyId);
+    void updateReply(ReplyUpdateDTO replyUpdateDTO);
 
     void deleteReply(Long replyId);
 

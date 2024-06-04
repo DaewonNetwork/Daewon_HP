@@ -8,8 +8,6 @@ import { useReadRankStarPharmacys } from "../api/useReadRankStarPharmacys";
 const PharmacyRankStarList = () => {
     const { data } = useReadRankStarPharmacys();
 
-    console.log(data);
-    
     return (
         <div>
             <InnerShared>

@@ -10,12 +10,20 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
-import { useReviewCreate } from "../api/useReviewCreate";
 import { useParams, useRouter } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
+import { useReviewUpdate } from "../api/useReviewUpdate";
+import { useReadReview } from "@/(FSD)/entities/review/api/useReadReview";
+import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
-const ReviewCreateForm = () => {
+const ReviewUpdateForm = () => {
+    const { reviewId } = useParams<{ reviewId: string }>();
+
+    const { data } = useReadReview(Number(reviewId));
+
+    const review: ReviewType = data;
+
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
 
     const router = useRouter();
@@ -25,11 +33,8 @@ const ReviewCreateForm = () => {
         setStars(newStars);
     };
 
-    const { phId } = useParams<{ phId: string }>();
-
     const schema = z.object({
         reviewText: z.string().min(10).max(200),
-        reviewTitle: z.string().min(1).max(20)
     });
 
     const { control, handleSubmit, formState: { errors, isValid, submitCount } } = useForm({
@@ -38,23 +43,31 @@ const ReviewCreateForm = () => {
     });
 
     const onSuccess = (data: any) => {
-        router.push(`/pharmacy/${phId}`);
+        router.push(`/reply/create/${reviewId}`);
     }
 
     const [file, setFile] = useState<any>();
 
-    const { mutate } = useReviewCreate({ onSuccess });
+    const { mutate } = useReviewUpdate({ onSuccess });
 
 
     const onSubmit = (data: any) => {
         const formData = new FormData();
 
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewTitle: data.reviewTitle, phId: Number(phId), star: stars.filter(star => star).length }));
+        formData.append("reviewUpdateDTO", JSON.stringify({ reviewText: data.reviewText, reviewId: Number(reviewId), star: stars.filter(star => star).length }));
 
         formData.append("files", file);
 
-        mutate(formData);
+        mutate({ data: formData, reviewId: Number(reviewId) });
     }
+
+    useEffect(() => {
+        if(review) {
+            setStars(Array.from({ length: 5 }, (_, i) => i < review.star));
+        }
+    }, [review]);
+
+    if(!review) return <></>;
 
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -72,17 +85,17 @@ const ReviewCreateForm = () => {
                 </div>
                 <div className={styles.review_input_box}>
                     <TextLargeShared>상품 이름 작성하기</TextLargeShared>
-                    <FormInputShared isInvalid={!!errors.reviewTitle} isClearable control={control} name={"reviewTitle"} placeholder={"구매한 상품 이름을 입력하세요."} />
+                    <FormInputShared placeholder={review.reviewTitle} isDisabled isInvalid={!!errors.reviewTitle} isClearable control={control} name={"reviewTitle"} />
                 </div>
                 <div className={styles.review_input_box}>
                     <TextLargeShared>리뷰 작성하기</TextLargeShared>
-                    <FormTextareaShared isInvalid={!!errors.reviewText} size={"lg"} control={control} name="reviewText" placeholder="10자 이상 200자 이하" />
+                    <FormTextareaShared placeholder={review.reviewText} isInvalid={!!errors.reviewText} size={"lg"} control={control} name={"reviewText"} />
                 </div>
                 <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 업로드</FileInputShared>
-                <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>등록하기</Button>
+                <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>수정하기</Button>
             </InnerShared>
         </form>
     )
 }
 
-export default ReviewCreateForm;
+export default ReviewUpdateForm;

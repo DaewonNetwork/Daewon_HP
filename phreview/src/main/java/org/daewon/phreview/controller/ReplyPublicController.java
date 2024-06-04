@@ -21,10 +21,18 @@ public class ReplyPublicController {
     private final ReplyService replyService;
 
     @Operation(summary = "Replies Post")
-    @GetMapping()
-    public List<ReplyReadDTO> readReply(
+    @GetMapping("/list")
+    public List<ReplyReadDTO> readReplys(
             @RequestParam(name = "reviewId") Long reviewId) {
-        List<ReplyReadDTO> replyReadDTO = replyService.readReply(reviewId);
+        List<ReplyReadDTO> replyReadDTO = replyService.readReplys(reviewId);
+
+        return replyReadDTO;
+    }
+
+    @Operation(summary = "Replies Post")
+    @GetMapping("/read")
+    public ReplyReadDTO readReply(@RequestParam(name = "replyId") Long replyId) {
+        ReplyReadDTO replyReadDTO = replyService.readReply(replyId);
 
         return replyReadDTO;
     }

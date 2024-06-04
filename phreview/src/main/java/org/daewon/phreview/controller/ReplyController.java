@@ -33,8 +33,8 @@ public class ReplyController {
         log.info(replyDTO);
         Long replyId;
         try {
-            replyId =  replyService.createReply(replyDTO);
-        } catch (RuntimeException e ){
+            replyId = replyService.createReply(replyDTO);
+        } catch (RuntimeException e) {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
@@ -50,19 +50,29 @@ public class ReplyController {
     }
 
     // 작성한 유저만 수정 가능
-    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
+    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyUpdateDTO.replyId)")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> modifyReply(@RequestParam(name = "replyId") Long replyId, @RequestBody ReplyUpdateDTO replyUpdateDTO) {
-        replyService.updateReply(replyUpdateDTO,replyId);
+    public Map<String, String> modifyReply(@RequestBody ReplyUpdateDTO replyUpdateDTO) {
+        log.info(replyUpdateDTO);
+        replyService.updateReply(replyUpdateDTO);
         return Map.of("result", "success");
     }
 
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Replies Post")
-    @GetMapping()
-    public List<ReplyReadDTO> readReply(
+    @GetMapping("/list")
+    public List<ReplyReadDTO> readReplys(
             @RequestParam(name = "reviewId") Long reviewId) {
-        List<ReplyReadDTO> replyReadDTO = replyService.readReply(reviewId);
+        List<ReplyReadDTO> replyReadDTO = replyService.readReplys(reviewId);
+
+        return replyReadDTO;
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "Replies Post")
+    @GetMapping("/read")
+    public ReplyReadDTO readReply(@RequestParam(name = "replyId") Long replyId) {
+        ReplyReadDTO replyReadDTO = replyService.readReply(replyId);
 
         return replyReadDTO;
     }

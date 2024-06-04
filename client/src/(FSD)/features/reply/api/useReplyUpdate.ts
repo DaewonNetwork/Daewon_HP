@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../../types/mutation.type";
-import { UserType } from "@/(FSD)/shareds/types/User.type";
 
-const authSignupFetch = async (data: UserType) => {
-    const response = await fetch("http://localhost:8090/auth/signup", {
-        method: "POST",
+const replyUpdateFetch = async (data: any) => {
+    const response = await fetch("http://localhost:8090/api/reply", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
         },
         body: JSON.stringify(data),
     });
@@ -21,12 +21,12 @@ const authSignupFetch = async (data: UserType) => {
     return responseData;
 }
 
-export const useAuthSignup = ({ onSuccess, onError }: MutationType) => {
+export const useReplyUpdate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (userData: UserType) => {
-            return authSignupFetch(userData);
+        mutationFn: (data: any) => {
+            return replyUpdateFetch(data);
         },
-        onSuccess: (data: UserType) => {
+        onSuccess: (data: any) => {
             onSuccess(data);
         },
         onError: _ => {

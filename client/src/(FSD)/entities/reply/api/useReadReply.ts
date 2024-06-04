@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-const replyReadFetch = async (reviewId: number, isLoggedIn: boolean) => {
+const replyReadFetch = async (replyId: number, isLoggedIn: boolean) => {
     let response = null;
 
-    if(isLoggedIn) {
-        response = await fetch(`http://localhost:8090/api/reply?reviewId=${reviewId}`, {
+    if (isLoggedIn) {
+        response = await fetch(`http://localhost:8090/api/reply/read?replyId=${replyId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -12,8 +12,7 @@ const replyReadFetch = async (reviewId: number, isLoggedIn: boolean) => {
             },
         });
     } else {
-
-        response = await fetch(`http://localhost:8090/reply?reviewId=${reviewId}`, {
+        response = await fetch(`http://localhost:8090/reply/read?replyId=${replyId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -27,13 +26,13 @@ const replyReadFetch = async (reviewId: number, isLoggedIn: boolean) => {
     };
 
     const data = await response.json();
-    
+
     return data;
 };
 
-export const useReadReply = (reviewId: number) => {
+export const useReadReply = (replyId: number) => {
     return useQuery({
         queryKey: ["reply_read"],
-        queryFn: _ => replyReadFetch(reviewId, !!localStorage.getItem("access_token")),
+        queryFn: _ => replyReadFetch(replyId, !!localStorage.getItem("access_token")),
     });
 };
