@@ -43,18 +43,17 @@ public class EnjoyServiceImpl implements EnjoyService {
         Long userId = users.getUserId();
 
         Pharmacy pharmacy = pharmacyRepository.findById(phId)
-                .orElseThrow(() -> new PharmacyNotFoundException(phId));
+                .orElseThrow(() -> new PharmacyNotFoundException(phId)); // phId를 통해 약국 찾기
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
-                .orElseGet(() -> { // 해당하는 phId가 없을경우 새로 생성
+                .orElseGet(() -> { // phId를 가지고 즐겨찾기된 약국 찾기, 해당하는 phId가 없을경우 새로 생성
                     PharmacyEnjoy newPharmacyEnjoy = PharmacyEnjoy.builder()
                             .pharmacy(pharmacy)
                             .build();
                     return pharmacyEnjoyRepository.save(newPharmacyEnjoy);
                 });
 
-        // 사용자가 즐겨찾기를 누르지 않았을떄
-        if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) {
+        if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) { // 즐겨찾기 안 했을 때 즐겨찾기 기능
             pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() + 1);
             pharmacyEnjoyRepository.save(pharmacyEnjoy);
             EnjoyPh enjoyPh = new EnjoyPh(pharmacyEnjoy, users);
@@ -62,12 +61,12 @@ public class EnjoyServiceImpl implements EnjoyService {
             log.info(pharmacy);
             log.info(enjoyPh);
             log.info("즐겨찾기");
-        } else {    // 즐겨찾기가 눌러져 있을때
-            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
-            enjoyPh.unEnjoyPh(pharmacyEnjoy);
-            enjoyRepository.delete(enjoyPh);
-            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1);
-            if(pharmacyEnjoy.getEnjoyIndex() == 0){     // 약국의 즐겨찾기수가 0이면 레코드가 삭제된다
+        } else { // 즐겨찾기를 이미 했을 때 즐겨찾기 취소
+            EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId); // EnjoyPh 객체 생성
+            enjoyPh.unEnjoyPh(pharmacyEnjoy); // EnjoyPh의 pharmacyEnjoy 객체에 해당하는 phId isEnjoy를 false로
+            enjoyRepository.delete(enjoyPh); // 레코드 삭제
+            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1); // 즐겨찾기 수 -1
+            if(pharmacyEnjoy.getEnjoyIndex() == 0){ // 즐겨찾기 수가 0일경우 삭제
                 pharmacyEnjoyRepository.delete(pharmacyEnjoy);
             } else {    // 약국의 즐겨찾기수가 1이상이면 save
                 pharmacyEnjoyRepository.save(pharmacyEnjoy);
@@ -81,7 +80,7 @@ public class EnjoyServiceImpl implements EnjoyService {
 
 
     @Override
-    public List<PharmacyEnjoyRankListDTO> enjoyedPharmaciesListByUser() { // 자신이 즐겨찾기한 병원
+    public List<PharmacyEnjoyRankListDTO> enjoyedPharmaciesListByUser() { // 자신이 즐겨찾기한 약국
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -92,7 +91,7 @@ public class EnjoyServiceImpl implements EnjoyService {
 
         Long userId = users.getUserId();
 
-        List<EnjoyPh> list = enjoyRepository.findByUsersUserIdOrderByEnjoyIdDesc(userId);
+        List<EnjoyPh> list = enjoyRepository.findByUsersUserIdOrderByEnjoyIdDesc(userId); // userId를 통해 검색후 EnjoyId가 높은순 내림차순(최신순)
 
         return list.stream()
                 .map(e -> {

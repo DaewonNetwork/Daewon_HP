@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-public interface ReviewImageRepository extends JpaRepository<ReviewImage, String> {
+public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long> {
 
     @Query("SELECT r FROM ReviewImage r WHERE r.review.reviewId = :reviewId")
     Optional<ReviewImage> findByReviewId(@Param("reviewId") Long reviewId);
