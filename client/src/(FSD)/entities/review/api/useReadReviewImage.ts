@@ -27,6 +27,6 @@ export const useReadReviewImage = (reviewId: number) => {
     return useQuery({
         queryKey: ["review_image_read"],
         queryFn: _ => reviewImageReadFetch(reviewId),
-        refetchOnMount: true
+        staleTime: 0
     });
 };
