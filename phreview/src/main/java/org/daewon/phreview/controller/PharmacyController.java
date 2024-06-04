@@ -25,42 +25,42 @@ public class PharmacyController {
     private final PharmacyService pharmacyService;
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/region")
+    @GetMapping("/region") // 지역별 검색
     public PageResponseDTO<PharmacyDTO> searchRegionCategory(@RequestParam String city, PageRequestDTO pageRequestDTO){ // 지역 별 검색
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.regionCategorySearch(city,pageRequestDTO);
         return responseDTO;
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/near")
+    @GetMapping("/near") // 근처 검색
     public PageResponseDTO<PharmacyDTO> searchNear(@RequestParam double lat, @RequestParam double lng, PageRequestDTO pageRequestDTO){ // 내 위치 반경 500m 가까운 약국 검색
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nearSearch(lat,lng,pageRequestDTO);
         return responseDTO;
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/region/search")
+    @GetMapping("/region/search") // 지역 내 약국 검색
     public PageResponseDTO<PharmacyDTO> searchNameInCity(@RequestParam String city, @RequestParam String keyword, PageRequestDTO pageRequestDTO) { // 지역 내 병원 이름
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nameSearchInCity(city,keyword,pageRequestDTO);
         return responseDTO;
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/search")
+    @GetMapping("/search") // 키워드 약국 검색
     public PageResponseDTO<PharmacyDTO> searchNameOrAdd(@RequestParam String keyword, PageRequestDTO pageRequestDTO) { // 병원 이름이랑 주소 둘다
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nameOrAddSearch(keyword,pageRequestDTO);
         return responseDTO;
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/all")
-    public PageResponseDTO<PharmacyDTO> searchAll(PageRequestDTO pageRequestDTO) { // 병원 이름이랑 주소 둘다
+    @GetMapping("/all") // 전체 약국 검색
+    public PageResponseDTO<PharmacyDTO> searchAll(PageRequestDTO pageRequestDTO) {
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.allSearch(pageRequestDTO);
         return responseDTO;
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/read")
+    @GetMapping("/read") // 약국 정보 가져오기
     public PharmacyInfoDTO readPharmacy(@RequestParam Long phId) {
         PharmacyInfoDTO pharmacyInfoDTO = pharmacyService.getPharmacyInfo(phId);
 
