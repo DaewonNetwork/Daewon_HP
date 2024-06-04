@@ -16,7 +16,7 @@ public class ReviewImage implements Comparable<ReviewImage>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String uuid;
 
