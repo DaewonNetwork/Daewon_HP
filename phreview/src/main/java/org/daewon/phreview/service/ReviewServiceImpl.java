@@ -237,13 +237,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDTOList;
     }
 
-    @Override
-    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(Long phId) {
-        List<Review> result = reviewRepository.listOfPharmacyByLikeIndex(phId);
-        List<ReviewReadDTO> reviewDTOList = getReviewDTOList(result);
 
-        return reviewDTOList;
-    }
 
     @Override
     public List<ReviewReadDTO> readAllReviews() {
@@ -253,13 +247,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDTOList;
     }
 
-    @Override
-    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc() {
-        List<Review> result = reviewRepository.listAllByLikeIndexDesc();
-        List<ReviewReadDTO> reviewDTOList = getReviewDTOList(result);
 
-        return reviewDTOList;
-    }
 
     // 사용자 ID로 리뷰 목록을 조회하는 메서드
     @Override
@@ -269,24 +257,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDTOList;
     }
 
-    @Override
-    public List<ReviewReadDTO> readLikedReviewsListByUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String currentUserName = authentication.getName();
-
-
-        Users users = userRepository.findByEmail(currentUserName)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없음"));
-
-        Long userId = users.getUserId();
-
-        List<Review> result = reviewRepository.findByUserId(userId);
-
-        List<ReviewReadDTO> reviewDTOList = getReviewDTOList(result);
-
-        return reviewDTOList;
-    }
 
     // 리뷰 정보를 가져와서 DTO 리스트로 변환하는 메서드
     private List<ReviewReadDTO> getReviewDTOList(List<Review> reviews) {
