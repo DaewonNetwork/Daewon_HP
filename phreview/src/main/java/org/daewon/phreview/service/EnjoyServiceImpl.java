@@ -68,7 +68,7 @@ public class EnjoyServiceImpl implements EnjoyService {
             pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1); // 즐겨찾기 수 -1
             if(pharmacyEnjoy.getEnjoyIndex() == 0){ // 즐겨찾기 수가 0일경우 삭제
                 pharmacyEnjoyRepository.delete(pharmacyEnjoy);
-            } else {
+            } else {    // 약국의 즐겨찾기수가 1이상이면 save
                 pharmacyEnjoyRepository.save(pharmacyEnjoy);
             }
             log.info(pharmacy);
