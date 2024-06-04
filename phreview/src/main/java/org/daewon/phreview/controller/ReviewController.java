@@ -103,7 +103,7 @@ public class ReviewController {
 //    }
 
     // 리뷰 작성한 유저만 수정 가능
-    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewUpdateDTO.reviewId)")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(
             @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
@@ -129,22 +129,15 @@ public class ReviewController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
-    public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
+    public ResponseEntity<ReviewReadDTO> readReview(@RequestParam(name = "reviewId") Long reviewId) {
         ReviewReadDTO review = reviewService.readReview(reviewId); // 리뷰 최신순
-        return review;
+        
+        return ResponseEntity.ok(review);
     }
-
-//    @PreAuthorize("hasRole('USER')")
-//    @GetMapping("/list")
-//    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-//        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
-//        return reviewList;
-//    }
-
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/list")
-    public ResponseEntity<?> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
+    public ResponseEntity<List<ReviewReadDTO>> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
         List<ReviewReadDTO> reviews = reviewService.readReviews(phId);
 
         for(ReviewReadDTO review : reviews) {

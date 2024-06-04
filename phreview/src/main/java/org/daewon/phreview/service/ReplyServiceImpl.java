@@ -58,16 +58,51 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyReadDTO> readReply(Long reviewId) {
-        List<Reply> replies = replyRepository.listOfReview(reviewId);
+    public ReplyReadDTO readReply(Long replyId) {
+        Optional<Reply> replyOptional = replyRepository.findById(replyId);
+        Reply reply = replyOptional.orElseThrow();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName).orElse(null);
+
+        if(users != null) {
+            ReplyReadDTO replyReadDTO = ReplyReadDTO.builder()
+            .replyId(reply.getReplyId())
+            .userName(reply.getUsers().getUserName())
+            .replyText(reply.getReplyText())
+            .createAt(reply.getCreateAt().format(formatter))
+            .updateAt(reply.getUpdateAt().format(formatter))
+            .isReply(reply.getUsers().getUserId() == users.getUserId())
+            .build();
+
+            return replyReadDTO;
+        } else {
+            ReplyReadDTO replyReadDTO = ReplyReadDTO.builder()
+            .replyId(reply.getReplyId())
+            .userName(reply.getUsers().getUserName())
+            .replyText(reply.getReplyText())
+            .createAt(reply.getCreateAt().format(formatter))
+            .updateAt(reply.getUpdateAt().format(formatter))
+            .isReply(false)
+            .build();
+
+            return replyReadDTO;
+        }
+    }
+
+    @Override
+    public List<ReplyReadDTO> readReplys(Long reviewId) {
+        List<Reply> replies = replyRepository.listOfReview(reviewId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:" + currentUserName);
         Users users = userRepository.findByEmail(currentUserName)
                 .orElse(null);
         List<ReplyReadDTO> replyDTOList = new ArrayList<>();
-        if(users != null){
+        if (users != null) {
             replyDTOList = replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
                             .replyId(reply.getReplyId())
@@ -78,7 +113,7 @@ public class ReplyServiceImpl implements ReplyService {
                             .isReply(reply.getUsers().getUserId() == users.getUserId())
                             .build())
                     .collect(Collectors.toList());
-        }else{
+        } else {
             replyDTOList = replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
                             .replyId(reply.getReplyId())
@@ -94,11 +129,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void updateReply(ReplyUpdateDTO replyUpdateDTO) {   // 댓글 수정
+    public void updateReply(ReplyUpdateDTO replyUpdateDTO) { // 댓글 수정
         Optional<Reply> replyOptional = replyRepository.findById(replyUpdateDTO.getReplyId());
         Reply reply = replyOptional.orElseThrow();
 
-        reply.setReplyText(replyUpdateDTO.getReplyText());   // 리뷰 내용 수정
+        reply.setReplyText(replyUpdateDTO.getReplyText()); // 리뷰 내용 수정
 
         replyRepository.save(reply);
     }
@@ -108,7 +143,7 @@ public class ReplyServiceImpl implements ReplyService {
         Reply reply = replyRepository.findById(replyId).orElseThrow();
         Long reviewId = reply.getReview().getReviewId();
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
-        review.setReplyIndex(review.getReplyIndex() -1);
+        review.setReplyIndex(review.getReplyIndex() - 1);
         replyRepository.deleteById(replyId);
     }
 
@@ -119,11 +154,11 @@ public class ReplyServiceImpl implements ReplyService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-        log.info("이름:"+currentUserName);
+        log.info("이름:" + currentUserName);
         Users users = userRepository.findByEmail(currentUserName)
                 .orElse(null);
         List<ReplyReadDTO> replyDTOList = new ArrayList<>();
-        if(users != null){
+        if (users != null) {
             replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
                             .replyId(reply.getReplyId())
@@ -134,7 +169,7 @@ public class ReplyServiceImpl implements ReplyService {
                             .isReply(reply.getUsers().getUserId() == users.getUserId())
                             .build())
                     .collect(Collectors.toList());
-        }else{
+        } else {
             replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
                             .replyId(reply.getReplyId())

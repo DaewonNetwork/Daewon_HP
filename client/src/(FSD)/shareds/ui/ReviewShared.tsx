@@ -6,13 +6,13 @@ import ItemShared from "./ItemShared";
 import TextLargeShared from "./TextLargeShared";
 import StarListShared from "./StarListShared";
 import TextMediumShared from "./TextMediumShared";
-import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
 import MenuBarShared from "./MenuBarShared";
 import { useDeleteReview } from "@/(FSD)/features/review/api/useDeleteReview";
 import TextBoxShared from "./TextBoxShared";
 import { DropdownItem } from "@nextui-org/dropdown";
+import { useReadReplys } from "@/(FSD)/entities/reply/api/useReadReplys";
 
 const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
     const [isViewReply, setIsViewReply] = useState(true);
@@ -20,7 +20,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
 
     if (!review) return <></>;
 
-    const { data, refetch } = useReadReply(review.reviewId);
+    const { data, refetch } = useReadReplys(review.reviewId);
 
     const replyList: ReplyType[] = data;
 
