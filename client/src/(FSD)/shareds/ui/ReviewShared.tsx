@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import type { ReviewType } from "../types/Review.type";
@@ -37,7 +35,7 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
                 </div>
             </ItemShared>
         </div>
-    )
+    );
 };
 
 export default ReviewShared;
