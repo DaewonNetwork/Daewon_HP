@@ -9,6 +9,7 @@ export interface ReviewType {
     star: number;
     createAt: string;
     updateAt: string;
+    reviewImage: Uint8Array;
 }
 /*
  

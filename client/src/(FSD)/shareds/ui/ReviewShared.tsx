@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import type { ReviewType } from "../types/Review.type";
@@ -12,25 +10,17 @@ import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
 import ReviewDeleteBtn from "@/(FSD)/features/review/ui/ReviewDeleteBtn";
-import { useReadReviewImage } from "@/(FSD)/entities/review/api/useReadReviewImage";
+
 
 const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; isWriter?: boolean }) => {
     const router = useRouter();
 
     if (!review) return <></>;
-    
-    const { data, refetch } = useReadReply(review.reviewId);    
 
-    const img = useReadReviewImage(review.reviewId);
-    const imgUrl = img.data;
-    const imgError = img.error;
-
-    console.log(imgUrl);
-    
-    
+    const { data, refetch } = useReadReply(review.reviewId);
 
     const replyList: ReplyType[] = data;
-    
+
     useEffect(() => {
         refetch();
     }, [review]);
@@ -53,7 +43,14 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
                     <div className={styles.review_content}>
                         <TextLargeShared>{review.reviewTitle}</TextLargeShared>
                         <TextMediumShared>{review.reviewText}</TextMediumShared>
-                        {(imgUrl) && <img style={{ width: 100, height: 100 }} src={URL.createObjectURL(imgUrl)} alt="" />}
+                        {/* 이미지 렌더링 */}
+                        {review.reviewImage && (
+                            <img
+                                style={{ width: 100, height: 100 }}
+                                src={`data:image/png;base64,${review.reviewImage}`}
+                                alt=""
+                            />
+                        )}
                     </div>
                 </div>
                 {
@@ -65,7 +62,7 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
                 }
             </ItemShared>
         </div>
-    )
+    );
 };
 
 export default ReviewShared;
