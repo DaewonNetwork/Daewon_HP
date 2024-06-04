@@ -6,13 +6,19 @@ const reviewImageReadFetch = async (reviewId: number) => {
     });
 
     if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    };
+        throw new Error("Network response was not ok");
+    }
 
-    const data = await response.json();
+    const contentType = response.headers.get("content-type");
     
-    return data;
+    if (contentType && contentType.includes("image")) {
+        const blob = await response.blob();
+        console.log(blob);
+        
+        return URL.createObjectURL(blob);
+    } else {
+        throw new Error("Response is not an image");
+    }
 };
 
 export const useReadReviewImage = (reviewId: number) => {
