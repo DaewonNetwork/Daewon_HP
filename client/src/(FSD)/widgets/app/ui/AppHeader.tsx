@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styles from "@/(FSD)/shareds/styles/AppStyle.module.scss";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
@@ -10,9 +12,9 @@ const AppHeader = ({ children }: { children?: React.ReactNode }) => {
             <InnerShared>
                 <div className={styles.top_bar}>
                     <LogoShared />
-                    <LinkBtnShared href={"/auth/signin"}>
+                    {!localStorage.getItem("access_token") && <LinkBtnShared href={"/auth/signin"}>
                         로그인 / 가입하기
-                    </LinkBtnShared>
+                    </LinkBtnShared>}
                 </div>
                 {children}
             </InnerShared>

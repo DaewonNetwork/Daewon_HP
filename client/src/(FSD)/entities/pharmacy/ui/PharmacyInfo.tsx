@@ -18,7 +18,7 @@ const PharmacyInfo = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyInfoType;
                 <div className={styles.pharmacy_header}>
                     <div className={styles.top_item}>
                         <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
-                        <PharmacyEnjoyBtn parentRefetch={parentRefetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />
+                        {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={parentRefetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />}
                     </div>
                     <div className={styles.btm_item}>
                         <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>

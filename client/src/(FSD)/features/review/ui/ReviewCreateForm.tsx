@@ -56,6 +56,8 @@ const ReviewCreateForm = () => {
         mutate(formData);
     }
 
+    if(!localStorage.getItem("access_token")) return <></>;
+
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>
