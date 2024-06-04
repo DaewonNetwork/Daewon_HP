@@ -17,9 +17,6 @@ import java.util.List;
 public class MapServiceImpl implements MapService {
 
     private final MapRepository mapRepository;
-
-
-
     private final ModelMapper modelMapper;
 
     public List<PharmacyDTO> regionCategorySearch(String city) {

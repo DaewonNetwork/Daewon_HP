@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.PharmacyEnjoy;
 import org.daewon.phreview.dto.pharmacy.PharmacyEnjoyRankListDTO;
-import org.daewon.phreview.repository.EnjoyRepository;
 import org.daewon.phreview.repository.Pharmacy.PharmacyEnjoyRepository;
 import org.daewon.phreview.service.EnjoyService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,17 +23,17 @@ public class EnjoyController {
 
     private final EnjoyService enjoyService;
     private final PharmacyEnjoyRepository pharmacyEnjoyRepository;
-    private final EnjoyRepository enjoyRepository;
+
 
 
     @Operation(summary = "즐겨찾기")
     @PreAuthorize("hasRole('USER')")
     @GetMapping()
     public boolean enjoy(@RequestParam Long phId) {
-        enjoyService.enjoyPharmacy(phId);
-        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
-                .orElse(null); // 객체가 없을 경우 null 반환
-        return pharmacyEnjoy != null; 
+        enjoyService.enjoyPharmacy(phId); // phId를 통한 약국 즐겨찾기
+        PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId) // 약국 아이디를 통해 즐겨찾기 된 약국 찾기
+                .orElse(null);
+        return pharmacyEnjoy != null;  // 객체가 있으면 true, 없으면 false 반환
     }
 
 

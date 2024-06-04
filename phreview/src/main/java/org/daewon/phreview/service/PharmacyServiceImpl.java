@@ -40,22 +40,22 @@ public class PharmacyServiceImpl implements PharmacyService {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
-                Sort.by("phId").ascending());
-        Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable);
+                Sort.by("phId").ascending()); // pageable 객체 생성
+        Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable); // city 스트링을 phAdd에 대입하여 검색
         log.info(result);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         log.info("이름:"+currentUserName);
         Users users = userRepository.findByEmail(currentUserName)
-                .orElse(null);
+                .orElse(null); // 유저 객체 생성
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
-            if(users != null) {
+            if(users != null) { // 유저가 있을경우
                 Long userId = users.getUserId();
-                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(), userId);
-                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+                EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(), userId); // EnjoyPh 객체 생성
+                pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false); // 약국 목록 가져올 때 즐겨찾기 여부
             } else{
-                pharmacyDTO.setEnjoy(false);
+                pharmacyDTO.setEnjoy(false); // 로그인 안한경우 무조건 false
             }
             return pharmacyDTO;
         }).collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class PharmacyServiceImpl implements PharmacyService {
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending());
-        Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 변경된 부분
+        Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 좌표 가지고 근처 약국 검색
         log.info(result);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
@@ -205,29 +205,33 @@ public class PharmacyServiceImpl implements PharmacyService {
     public PharmacyInfoDTO getPharmacyInfo(Long phId) {
 
         Optional<Pharmacy> result = pharmacyRepository.findById(phId);
-        Pharmacy pharmacy = result.orElseThrow(() -> new PharmacyNotFoundException(phId));
+        Pharmacy pharmacy = result.orElseThrow(() -> new PharmacyNotFoundException(phId)); // pharmacy 객체 생성
 
-        PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class);
+        PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class); // dto 매핑
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         log.info("이름:"+currentUserName);
         Users users = userRepository.findByEmail(currentUserName)
-                .orElse(null);
-        if(users != null) {
+                .orElse(null); // 유저 객체 생성
+        if(users != null) { // 로그인한 경우
             Long userId = users.getUserId();
             EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId,userId);
-            pharmacyInfoDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
+            pharmacyInfoDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false); // 즐겨찾기 여부
         } else{
-            pharmacyInfoDTO.setEnjoy(false);
+            pharmacyInfoDTO.setEnjoy(false); // 로그인 안한경우 무조건 false
         }
-
+        // 별점 매긴 약국 찾기
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(phId).orElse(null);
-
+        // 결과가 null이 아니라면 그 약국의 별점 평균, null이라면 0
         pharmacyInfoDTO.setStarAvg(pharmacyStar != null ? pharmacyStar.getStarAvg() : 0);
 
+        // 즐겨찾기한 약국 찾기
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId).orElse(null);
+        // 결과가 null이 아니라면 그 약국의 즐겨찾기 수, null이라면 0
         pharmacyInfoDTO.setEnjoyIndex(pharmacyEnjoy != null ? pharmacyEnjoy.getEnjoyIndex() : 0);
+
+        // 약국정보의 총 리뷰 수를 Review 테이블에서 phId를 통해 Select, Count 반환, 없을경우 0
         pharmacyInfoDTO.setReviewIndex(reviewRepository.countByPharmacyPhId(phId) != 0 ? reviewRepository.countByPharmacyPhId(phId) : 0);
 
 
