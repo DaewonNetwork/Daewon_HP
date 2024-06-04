@@ -62,7 +62,7 @@ public class ReviewPublicController {
 
         ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
         if (reviewImage == null) {
-            return null;
+            return ResponseEntity.notFound().build();
         }
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();
@@ -73,6 +73,7 @@ public class ReviewPublicController {
         Path path = Paths.get(filePath);
         byte[] image = Files.readAllBytes(path);
 
+        log.info(image);
         // 응답에 이미지와 Content-Type 설정 후 반환
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
