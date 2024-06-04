@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.daewon.phreview.domain.Review;
 import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
+
 import org.daewon.phreview.repository.ReviewImageRepository;
-import org.daewon.phreview.repository.ReviewRepository;
+
 
 import org.daewon.phreview.service.ReviewService;
-import org.daewon.phreview.utils.JWTUtil;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,12 +40,11 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    private final JWTUtil jwtUtil;
-    private final ReviewRepository reviewRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
-    private ReviewImageRepository reviewImageRepository;
+
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")

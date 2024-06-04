@@ -73,6 +73,7 @@ public class ReviewPublicController {
         Path path = Paths.get(filePath);
         byte[] image = Files.readAllBytes(path);
 
+        log.info(image);
         // 응답에 이미지와 Content-Type 설정 후 반환
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
