@@ -154,7 +154,7 @@ public class ReviewController {
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
+    private static final String UPLOAD_FOLDER = "/Users/cyjoon/upload"; // 업로드듼 폴더(createReview시 파일 경로)
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {

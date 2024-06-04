@@ -20,10 +20,12 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
     if (!review) return <></>;
     
     const { data, refetch } = useReadReply(review.reviewId);
-    const aa = useReadReviewImage(review.reviewId).data;
 
+    
+    const aa = useReadReviewImage(review.reviewId);
+    
+    console.log(aa.data);
 
-    console.log(aa);
     
 
     const replyList: ReplyType[] = data;

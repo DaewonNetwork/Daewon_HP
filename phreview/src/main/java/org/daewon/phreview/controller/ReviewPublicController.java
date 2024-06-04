@@ -57,7 +57,7 @@ public class ReviewPublicController {
 
 
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
+    private static final String UPLOAD_FOLDER = "/Users/cyjoon/upload"; // 업로드듼 폴더(createReview시 파일 경로)
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
@@ -74,6 +74,8 @@ public class ReviewPublicController {
         // 파일을 바이트 배열로 읽기
         Path path = Paths.get(filePath);
         byte[] image = Files.readAllBytes(path);
+
+        log.info("image : " + image);
 
         // 응답에 이미지와 Content-Type 설정 후 반환
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
