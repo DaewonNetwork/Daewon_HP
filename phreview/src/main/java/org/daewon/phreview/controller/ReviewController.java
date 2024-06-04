@@ -10,8 +10,7 @@ import org.daewon.phreview.dto.review.ReviewDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 import org.daewon.phreview.repository.ReviewRepository;
-import org.daewon.phreview.security.exception.ReviewNotFoundException;
-import org.daewon.phreview.service.LikeService;
+
 import org.daewon.phreview.service.ReviewService;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,7 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final LikeService likeService;
+
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
 

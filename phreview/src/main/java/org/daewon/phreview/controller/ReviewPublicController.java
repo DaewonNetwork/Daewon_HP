@@ -8,7 +8,7 @@ import org.daewon.phreview.dto.review.ReviewImageDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 
 import org.daewon.phreview.repository.ReviewImageRepository;
-import org.daewon.phreview.service.LikeService;
+
 import org.daewon.phreview.service.ReviewService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,12 +46,7 @@ public class ReviewPublicController {
         return reviewList;
     }
 
-    @Operation(summary = "좋아요 순")
-    @GetMapping("/list/like")
-    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 리뷰 좋아요순
-        List<ReviewReadDTO> reviewlist = reviewService.readReviewsByLikeIndexDesc(phId);
-        return reviewlist;
-    }
+
 
     @Operation(summary = "모든 리뷰")
     @GetMapping("/AllList")
@@ -60,12 +55,7 @@ public class ReviewPublicController {
         return reviewlist;
     }
 
-    @Operation(summary = "모든 리뷰 좋아요순")
-    @GetMapping("/AllList/like")
-    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
-        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
-        return reviewlist;
-    }
+    
 
     private static final String UPLOAD_FOLDER = "C:\\upload\\";
     @Operation(summary = "이미지")
