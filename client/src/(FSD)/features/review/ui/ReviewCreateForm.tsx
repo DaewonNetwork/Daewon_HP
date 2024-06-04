@@ -11,12 +11,14 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
 import { useReviewCreate } from "../api/useReviewCreate";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 
 const ReviewCreateForm = () => {
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
+
+    const router = useRouter();
 
     const handleStarClick = (index: number) => {
         const newStars: Array<boolean> = stars.map((_, i) => i <= index);
@@ -36,7 +38,7 @@ const ReviewCreateForm = () => {
     });
 
     const onSuccess = (data: any) => {
-        console.log(data);
+        router.push(`/pharmacy/${phId}`);
     }
 
     const [file, setFile] = useState<any>();
@@ -50,9 +52,6 @@ const ReviewCreateForm = () => {
         formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewTitle: data.reviewTitle, phId: Number(phId), star: stars.filter(star => star).length }));
 
         formData.append("files", file);
-
-        console.log(formData.get("files"));
-        console.log(formData.get("reviewDTO"));
 
         mutate(formData);
     }

@@ -38,7 +38,7 @@ const ReviewContaner = () => {
                 {
                     reviewList.map((review, index) => (
                         <React.Fragment key={index}>
-                            <ReviewShared isDeleteBtn={true} parentRefetch={refetch} review={review} />
+                            <ReviewShared isWriter={true} parentRefetch={refetch} review={review} />
                         </React.Fragment>
                     ))
                 }

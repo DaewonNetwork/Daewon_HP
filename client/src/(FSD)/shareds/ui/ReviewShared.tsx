@@ -11,14 +11,21 @@ import TextMediumShared from "./TextMediumShared";
 import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
-import ReviewDeleteBtn from "@/(FSD)/entities/review/ui/ReviewDeleteBtn";
+import ReviewDeleteBtn from "@/(FSD)/features/review/ui/ReviewDeleteBtn";
+import { useReadReviewImage } from "@/(FSD)/entities/review/api/useReadReviewImage";
 
-const ReviewShared = ({ review, parentRefetch, isDeleteBtn = false }: { review: ReviewType; parentRefetch?: any; isDeleteBtn?: boolean }) => {
+const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; isWriter?: boolean }) => {
     const router = useRouter();
 
     if (!review) return <></>;
     
     const { data, refetch } = useReadReply(review.reviewId);
+    const aa = useReadReviewImage(review.reviewId).data;
+
+
+    console.log(aa);
+    
+
     const replyList: ReplyType[] = data;
     
     useEffect(() => {
@@ -33,7 +40,7 @@ const ReviewShared = ({ review, parentRefetch, isDeleteBtn = false }: { review: 
                     <div className={styles.review_header}>
                         <div className={styles.top_item}>
                             <TextLargeShared>{review.userName}님</TextLargeShared>
-                            {isDeleteBtn && <ReviewDeleteBtn parentRefetch={parentRefetch} reviewId={review.reviewId} isReview={review.review} />}
+                            {isWriter && <ReviewDeleteBtn parentRefetch={parentRefetch} reviewId={review.reviewId} isWriter={review.review} />}
                         </div>
                         <div className={styles.btm_item}>
                             <StarListShared star={review.star} />

@@ -3,7 +3,7 @@ import { ReplyType } from "../types/Reply.type";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 import TextLargeShared from "./TextLargeShared";
 import TextMediumShared from "./TextMediumShared";
-import ReplyDeleteBtn from "@/(FSD)/entities/reply/ui/ReplyDeleteBtn";
+import ReplyDeleteBtn from "@/(FSD)/features/reply/ui/ReplyDeleteBtn";
 
 const ReplyShared = ({ reply, parentRefetch }: { reply: ReplyType; parentRefetch?: any }) => {
     return (

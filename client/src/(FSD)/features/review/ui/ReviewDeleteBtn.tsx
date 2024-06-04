@@ -1,16 +1,16 @@
+import { useDeleteReview } from "@/(FSD)/features/review/api/useDeleteReview";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
 import React from "react";
-import { useDeleteReview } from "../api/useDeleteReview";
 
-const ReviewDeleteBtn = ({ isReview, reviewId, parentRefetch }: { isReview: boolean; reviewId: number; parentRefetch: any; }) => {
+const ReviewDeleteBtn = ({ isWriter, reviewId, parentRefetch }: { isWriter: boolean; reviewId: number; parentRefetch: any; }) => {
     const onSuccess = (data: any) => {
         if(parentRefetch) {
             parentRefetch()
         }
     };
     const { mutate } = useDeleteReview({ onSuccess });
-    if (!isReview) return <></>;
+    if (!isWriter) return <></>;
 
 
     return (
