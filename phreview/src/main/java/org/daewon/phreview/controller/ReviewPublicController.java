@@ -10,7 +10,6 @@ import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.repository.ReviewImageRepository;
 
 import org.daewon.phreview.service.ReviewService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,27 +58,24 @@ public class ReviewPublicController {
     private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
-    public ResponseEntity<byte[]> readReviewImage(Long reviewId) {
-        try {
-            ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
-            if (reviewImage == null) {
-                log.info("Review Image Not Found");
-            }
-            String uuid = reviewImage.getUuid();
-            String fileName = reviewImage.getFileName();
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
-            String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
-
-            // 파일을 바이트 배열로 읽기
-            Path path = Paths.get(filePath);
-            byte[] image = Files.readAllBytes(path);
-
-            // 응답에 이미지와 Content-Type 설정 후 반환
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
-        } catch (IOException e) {
-            log.error("Error reading review image: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
+        if (reviewImage == null) {
+            return ResponseEntity.notFound().build();
         }
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        log.info(image);
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
 
