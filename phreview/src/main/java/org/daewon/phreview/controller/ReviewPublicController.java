@@ -62,7 +62,7 @@ public class ReviewPublicController {
 
         ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
         if (reviewImage == null) {
-            return null;
+            return ResponseEntity.notFound().build();
         }
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();
