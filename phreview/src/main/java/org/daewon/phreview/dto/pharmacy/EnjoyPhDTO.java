@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EnjoyPhDTO {
     private Long phId;
-    private boolean isEnjoy;
+    private boolean isEnjoy; // 즐겨찾기 여부
 }
