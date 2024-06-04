@@ -41,12 +41,36 @@ public class ReviewPublicController {
         return review;
     }
 
+//    @GetMapping("/list")
+//    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
+//        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
+//        return reviewList;
+//    }
+
     @GetMapping("/list")
-    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
-        return reviewList;
+    public ResponseEntity<?> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
+        List<ReviewReadDTO> reviews = reviewService.readReviews(phId);
+
+        for(ReviewReadDTO review : reviews) {
+            ReviewImage reviewImage = reviewImageRepository.findByReviewId(review.getReviewId()).orElse(null);
+            if(reviewImage != null) {
+                review.setReviewImage(getImage(reviewImage.getUuid(),reviewImage.getFileName()));
+            } else{
+                review.setReviewImage(null);
+            }
+
+        }
+        return ResponseEntity.ok(reviews);
     }
 
+    public byte[] getImage(String uuid, String fileName) throws IOException {
+        String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+        return image;
+    }
 
 
     @Operation(summary = "모든 리뷰")
