@@ -32,7 +32,6 @@ public class EnjoyServiceImpl implements EnjoyService {
     @Override
     public void enjoyPharmacy(Long phId) { // 즐겨찾기 기능
 
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String currentUserName = authentication.getName();
@@ -54,7 +53,7 @@ public class EnjoyServiceImpl implements EnjoyService {
                 });
 
         if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) { // 즐겨찾기 안 했을 때 즐겨찾기 기능
-            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() + 1);
+            pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() + 1); // EnjoyIndex()가 + 1 추가됨
             pharmacyEnjoyRepository.save(pharmacyEnjoy);
             EnjoyPh enjoyPh = new EnjoyPh(pharmacyEnjoy, users);
             enjoyRepository.save(enjoyPh);
@@ -77,7 +76,6 @@ public class EnjoyServiceImpl implements EnjoyService {
         }
 
     }
-
 
     @Override
     public List<PharmacyEnjoyRankListDTO> enjoyedPharmaciesListByUser() { // 자신이 즐겨찾기한 약국
