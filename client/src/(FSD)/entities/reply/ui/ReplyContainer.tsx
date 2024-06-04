@@ -29,7 +29,7 @@ const ReplyContainer = () => {
     
     return (
         <div>
-            <ReviewShared parentRefetch={refetch} review={review} />
+            <ReviewShared parentRefetch={refetch} review={review} isWriter={review.review} />
             <ReplyCreateForm parentRefetch={refetch} />
         </div>
     )

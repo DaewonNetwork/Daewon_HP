@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import type { ReviewType } from "../types/Review.type";
 import { useRouter } from "next/navigation";
@@ -9,10 +9,13 @@ import TextMediumShared from "./TextMediumShared";
 import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
-import ReviewDeleteBtn from "@/(FSD)/features/review/ui/ReviewDeleteBtn";
-
+import MenuBarShared from "./MenuBarShared";
+import { useDeleteReview } from "@/(FSD)/features/review/api/useDeleteReview";
+import TextBoxShared from "./TextBoxShared";
+import { DropdownItem } from "@nextui-org/dropdown";
 
 const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
+    const [isViewReply, setIsViewReply] = useState(true);
     const router = useRouter();
 
     if (!review) return <></>;
@@ -25,6 +28,16 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
         refetch();
     }, [review]);
 
+    const onSuccess = (data: any) => {
+        if (parentRefetch) {
+            parentRefetch();
+        }
+
+        if (grandParentFetch) {
+            grandParentFetch();
+        }
+    };
+    const { mutate } = useDeleteReview({ onSuccess });
 
     return (
         <div onClick={_ => router.push(`/reply/create/${review.reviewId}`)} className={styles.review_item}>
@@ -35,7 +48,9 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
                             <TextLargeShared>{review.userName}님</TextLargeShared>
                             {isWriter &&
                                 <div className={styles.writer_item}>
-                                    <ReviewDeleteBtn parentRefetch={parentRefetch} grandParentFetch={grandParentFetch} reviewId={review.reviewId} isWriter={review.review} />
+                                    <MenuBarShared path={`/review/update/${review.reviewId}`} mutate={mutate} id={review.reviewId}>
+                                        <DropdownItem onClick={_ => setIsViewReply(!isViewReply)}>{isViewReply ? "답글 숨기기" : "답글 보기"}</DropdownItem>
+                                    </MenuBarShared>
                                 </div>
                             }
                         </div>
@@ -45,20 +60,17 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
                         </div>
                     </div>
                     <div className={styles.review_content}>
-                        <TextLargeShared>{review.reviewTitle}</TextLargeShared>
-                        <TextMediumShared>{review.reviewText}</TextMediumShared>
-                        {/* 이미지 렌더링 */}
+                        <div className={styles.text_content}>
+                            <TextLargeShared>{review.reviewTitle}</TextLargeShared>
+                            <TextBoxShared><TextMediumShared>{review.reviewText}</TextMediumShared></TextBoxShared>
+                        </div>
                         {review.reviewImage && (
-                            <img
-                                style={{ width: 100, height: 100 }}
-                                src={`data:image/png;base64,${review.reviewImage}`}
-                                alt=""
-                            />
+                            <div className={styles.img_content}><img alt={"review_img"} src={`data:image/png;base64,${review.reviewImage}`} /></div>
                         )}
                     </div>
                 </div>
                 {
-                    replyList && replyList.map((reply, index) => (
+                    (isViewReply && replyList) && replyList.map((reply, index) => (
                         <React.Fragment key={index}>
                             <ReplyShared parentRefetch={parentRefetch} reply={reply} />
                         </React.Fragment>

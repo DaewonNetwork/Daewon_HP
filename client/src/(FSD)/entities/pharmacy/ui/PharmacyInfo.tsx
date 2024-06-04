@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useReadPharmacy } from "../api/useReadPharmacy";
-import { useParams } from "next/navigation";
+import React from "react";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
@@ -12,8 +10,7 @@ import { Chip } from "@nextui-org/chip";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 
-const PharmacyInfo = ({ pharmacy, parentRefetch } : {pharmacy: PharmacyInfoType; parentRefetch: any }) => {
-
+const PharmacyInfo = ({ pharmacy, parentRefetch } : {pharmacy: PharmacyInfoType; parentRefetch?: any }) => {
     return (
         <div className={styles.pharmacy_info}>
             <InnerShared>

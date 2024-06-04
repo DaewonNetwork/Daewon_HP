@@ -1,20 +1,36 @@
 .reply_item {
+    width: 100%;
     margin-top: 20px;
     display: flex;
+    justify-content: space-between;
 
-    .left_box {
-        display: block;
-    }
+    .item_inner {
+        max-width: 70%;
+        .top_item {
+            width: 100%;
+            display: flex;
 
-    .right_box {
-        margin-left: 20px;
-        display: block;
-
-        & > p {
-            &:first-child {
-                margin-bottom: 10px;
+            h1 {
+                margin-right: 10px;
             }
         }
+    
+        .btm_item {
+            display: block;
+            margin-top: 10px;
+
+            p {
+                &:first-child {
+                    margin-bottom: 10px;
+                    overflow: hidden;
+                    text-wrap: pretty;
+                }
+            }
+        }
+    }
+
+    .writer_item {
+        display: block;
     }
 }
 

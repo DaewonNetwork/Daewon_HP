@@ -50,10 +50,11 @@ public class ReplyController {
     }
 
     // 작성한 유저만 수정 가능
-    @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
+    // @PreAuthorize("@reviewAndReplySecurity.isReplyOwner(#replyId)")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> modifyReply(@RequestParam(name = "replyId") Long replyId, @RequestBody ReplyUpdateDTO replyUpdateDTO) {
-        replyService.updateReply(replyUpdateDTO,replyId);
+    public Map<String, String> modifyReply(@RequestBody ReplyUpdateDTO replyUpdateDTO) {
+        log.info(replyUpdateDTO);
+        replyService.updateReply(replyUpdateDTO);
         return Map.of("result", "success");
     }
 

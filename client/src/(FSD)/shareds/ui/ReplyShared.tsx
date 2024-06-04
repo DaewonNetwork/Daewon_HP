@@ -3,20 +3,33 @@ import { ReplyType } from "../types/Reply.type";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 import TextLargeShared from "./TextLargeShared";
 import TextMediumShared from "./TextMediumShared";
-import ReplyDeleteBtn from "@/(FSD)/features/reply/ui/ReplyDeleteBtn";
+import MenuBarShared from "./MenuBarShared";
+import { useDeleteReply } from "@/(FSD)/features/reply/api/useDeleteReply";
+import TextBoxShared from "./TextBoxShared";
 
 const ReplyShared = ({ reply, parentRefetch }: { reply: ReplyType; parentRefetch?: any }) => {
+
+    const onSuccess = (data: any) => {
+        if (parentRefetch) {
+            parentRefetch();
+        }
+    }
+
+    const { mutate } = useDeleteReply({ onSuccess });
+
     return (
         <div className={styles.reply_item}>
-            <div className={styles.left_box}>
-                <TextLargeShared>{reply.userName}님</TextLargeShared>
+            <div className={styles.item_inner}>
+                <div className={styles.top_item}>
+                    <TextLargeShared>{reply.userName}님</TextLargeShared>
+                    <TextMediumShared>{reply.updateAt}</TextMediumShared>
+                </div>
+                <div className={styles.btm_item}>
+                    <TextBoxShared><TextMediumShared>{reply.replyText}</TextMediumShared></TextBoxShared>
+                </div>
             </div>
-            <div className={styles.right_box}>
-                <TextMediumShared>{reply.updateAt}</TextMediumShared>
-                <TextMediumShared>{reply.replyText}</TextMediumShared>
-            </div>
-            <div>
-                <ReplyDeleteBtn parentRefetch={parentRefetch} replyId={reply.replyId} isReply={reply.reply} />
+            <div className={styles.writer_item}>
+                <MenuBarShared path={`/reply/update/${reply.replyId}`} mutate={mutate} id={reply.replyId} />
             </div>
         </div>
     );

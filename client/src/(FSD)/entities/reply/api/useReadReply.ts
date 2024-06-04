@@ -12,7 +12,6 @@ const replyReadFetch = async (reviewId: number, isLoggedIn: boolean) => {
             },
         });
     } else {
-
         response = await fetch(`http://localhost:8090/reply?reviewId=${reviewId}`, {
             method: "GET",
             headers: {

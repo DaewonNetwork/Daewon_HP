@@ -7,20 +7,26 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import { useReadReviews } from "@/(FSD)/entities/review/api/useReadReviews";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
-const ReviewContaner = ({ parentRefetch }: { parentRefetch: any }) => {
+const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
     const { phId } = useParams<{ phId: string }>();
 
-    const { data, isError, isLoading, refetch } = useReadReviews(Number(phId));
+    const { data, refetch } = useReadReviews(Number(phId));
 
     const reviewList: ReviewType[] = data;
+
+    const router = useRouter();
 
     useEffect(() => {
         refetch();
     }, [phId]);
+
+    useEffect(() => {
+        refetch();
+    }, [router])
 
     if (!reviewList) return;
 

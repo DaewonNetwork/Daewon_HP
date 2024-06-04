@@ -1,12 +1,12 @@
+import ReviewUpdateForm from "@/(FSD)/features/review/ui/ReviewUpdateForm";
 import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
-import ReviewUpdateContainer from "@/(FSD)/widgets/review/ui/ReviewUpdateContainer";
 import React from "react";
 
 const Page = () => {
     return (
         <>
             <SectionShared>
-                <ReviewUpdateContainer />
+                <ReviewUpdateForm />
             </SectionShared>
         </>
     )

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReviewUpdateDTO {
-
+    private Long reviewId;
     private String reviewText;
     private int star; // 평점
     private LocalDateTime updateAt;

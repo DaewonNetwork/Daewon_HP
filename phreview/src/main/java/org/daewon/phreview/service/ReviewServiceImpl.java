@@ -125,8 +125,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 @Override
-    public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 리뷰 수정
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+    public void updateReview(ReviewUpdateDTO reviewUpdateDTO, MultipartFile file, String uploadPath) {   // 리뷰 수정
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewUpdateDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
 
         PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
@@ -151,7 +151,7 @@ public class ReviewServiceImpl implements ReviewService {
             // 파일을 지정된 경로에 저장
             try {
                 // 파일을 지정된 경로에 저장
-                ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
+                ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewUpdateDTO.getReviewId()).orElse(null);
                 file.transferTo(savePath.toFile());
                 log.info(reviewImage);
                 // 기존 객체가 있는 경우 수정
@@ -176,7 +176,7 @@ public class ReviewServiceImpl implements ReviewService {
                 throw new RuntimeException("File processing error", e);
             }
         } else{
-            reviewImageRepository.deleteByReviewId(reviewId);
+            reviewImageRepository.deleteByReviewId(reviewUpdateDTO.getReviewId());
         }
     }
 
@@ -204,19 +204,40 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewReadDTO readReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        log.info("이름:"+currentUserName);
+        Users users = userRepository.findByEmail(currentUserName).orElse(null);
 
-        ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
-                .reviewId(review.getReviewId())
-                .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
-                .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
-                .reviewText(review.getReviewText())
-                .reviewTitle(review.getReviewTitle())
-                .star(review.getStar())
-                .replyIndex(review.getReplyIndex())
-                .createAt(review.getCreateAt().format(formatter))
-                .updateAt(review.getUpdateAt().format(formatter))
-                .build();
-        return reviewReadDTO;
+        if(users != null) {
+            ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
+            .reviewId(review.getReviewId())
+            .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
+            .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
+            .reviewText(review.getReviewText())
+            .reviewTitle(review.getReviewTitle())
+            .star(review.getStar())
+            .replyIndex(review.getReplyIndex())
+            .createAt(review.getCreateAt().format(formatter))
+            .updateAt(review.getUpdateAt().format(formatter))
+            .isReview(review.getUsers().getUserId() == users.getUserId())
+            .build();
+    return reviewReadDTO;
+        } else {
+            ReviewReadDTO reviewReadDTO = ReviewReadDTO.builder()
+            .reviewId(review.getReviewId())
+            .phName(review.getPharmacy() != null ? review.getPharmacy().getPhName() : null)
+            .userName(review.getUsers() != null ? review.getUsers().getUserName() : null)
+            .reviewText(review.getReviewText())
+            .reviewTitle(review.getReviewTitle())
+            .star(review.getStar())
+            .replyIndex(review.getReplyIndex())
+            .createAt(review.getCreateAt().format(formatter))
+            .updateAt(review.getUpdateAt().format(formatter))
+            .isReview(false)
+            .build();
+    return reviewReadDTO;
+        }
     }
 
     @Override

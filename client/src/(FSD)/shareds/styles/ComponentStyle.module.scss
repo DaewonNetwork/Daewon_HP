@@ -173,3 +173,13 @@ $form_height: 58px;
 
     }
 }
+
+.text_box { 
+    max-width: 100%;
+    p {
+        max-width: 100%;
+        display: inline-block;
+        text-wrap: balance;
+        word-wrap: break-word;
+    }
+}

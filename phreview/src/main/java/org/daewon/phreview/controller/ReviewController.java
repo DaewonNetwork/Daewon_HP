@@ -106,7 +106,6 @@ public class ReviewController {
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(
-            @RequestParam(name = "reviewId") Long reviewId, // reviewId를 URL 파라미터로 받음
             @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
             @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
 
@@ -123,7 +122,7 @@ public class ReviewController {
         }
 
         // 기존의 updateReview 서비스 호출
-        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
+        reviewService.updateReview(reviewUpdateDTO, files, uploadPath);
         return Map.of("result", "success");
     }
 

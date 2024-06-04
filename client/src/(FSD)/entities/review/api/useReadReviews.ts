@@ -1,4 +1,3 @@
-import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 import { useQuery } from "@tanstack/react-query";
 
 const reviewsReadFetch = async (phId: number, isLoggedIn: boolean) => {
@@ -33,8 +32,6 @@ const reviewsReadFetch = async (phId: number, isLoggedIn: boolean) => {
 };
 
 export const useReadReviews = (phId: number) => {
-    const { isLoggedIn } = useUserStore();
-
     return useQuery({
         queryKey: ["reviews_read"],
         queryFn: _ => reviewsReadFetch(phId, !!localStorage.getItem("access_token"))
