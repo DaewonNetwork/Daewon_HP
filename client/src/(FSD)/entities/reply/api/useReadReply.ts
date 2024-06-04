@@ -30,7 +30,7 @@ const replyReadFetch = async (replyId: number, isLoggedIn: boolean) => {
     return data;
 };
 
-export const useReadReplys = (replyId: number) => {
+export const useReadReply = (replyId: number) => {
     return useQuery({
         queryKey: ["reply_read"],
         queryFn: _ => replyReadFetch(replyId, !!localStorage.getItem("access_token")),

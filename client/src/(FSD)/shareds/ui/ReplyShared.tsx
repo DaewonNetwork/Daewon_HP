@@ -25,7 +25,7 @@ const ReplyShared = ({ reply, parentRefetch }: { reply: ReplyType; parentRefetch
                     <TextMediumShared>{reply.updateAt}</TextMediumShared>
                 </div>
                 <div className={styles.btm_item}>
-                    <TextBoxShared><TextMediumShared>{reply.replyText}</TextMediumShared></TextBoxShared>
+                    <TextBoxShared isBgColor={true}><TextMediumShared>{reply.replyText}</TextMediumShared></TextBoxShared>
                 </div>
             </div>
             <div className={styles.writer_item}>

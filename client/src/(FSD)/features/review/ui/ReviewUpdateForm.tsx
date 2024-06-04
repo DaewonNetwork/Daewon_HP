@@ -23,7 +23,6 @@ const ReviewUpdateForm = () => {
     const { data } = useReadReview(Number(reviewId));
 
     const review: ReviewType = data;
-    
 
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
 

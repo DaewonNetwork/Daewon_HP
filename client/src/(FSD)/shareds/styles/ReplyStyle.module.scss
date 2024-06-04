@@ -19,12 +19,8 @@
             display: block;
             margin-top: 10px;
 
-            p {
-                &:first-child {
-                    margin-bottom: 10px;
-                    overflow: hidden;
-                    text-wrap: pretty;
-                }
+            div[data-slot="text_box"] {
+                padding: 5px;
             }
         }
     }

@@ -54,6 +54,24 @@ $form_height: 58px;
     z-index: 999;
 }
 
+.title_header {
+    height: 60px;
+    position: relative;
+
+    div[data-slot="inner"] {
+        display: flex;
+        align-items: center;
+    }
+
+    h1[data-slot="text_large"] {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
 .footer {
     display: block;
     width: 100%;

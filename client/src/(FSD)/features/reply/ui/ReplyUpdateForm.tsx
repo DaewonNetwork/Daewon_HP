@@ -10,9 +10,15 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import FormTextareaShared from "@/(FSD)/shareds/ui/FormTextareaShared";
 import { Button } from "@nextui-org/button";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
+import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
+import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
 
 const ReplyUpdateForm = () => {
     const { replyId } = useParams<{ replyId: string }>();
+
+    const { data } = useReadReply(Number(replyId));
+
+    const reply: ReplyType = data;
 
     const schema = z.object({
         replyText: z.string().min(10).max(200)
@@ -33,10 +39,12 @@ const ReplyUpdateForm = () => {
         mutate({ replyId: Number(replyId), replyText: data.replyText });
     }
 
+    if(!reply) return <></>;
+
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>
-                <FormTextareaShared isInvalid={!!errors.replyText} size={"lg"} control={control} name="replyText" placeholder="10자 이상 200자 이하" />
+                <FormTextareaShared placeholder={reply.replyText} isInvalid={!!errors.replyText} size={"lg"} control={control} name={"replyText"} />
                 <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>수정하기</Button>
             </InnerShared>
         </form>
