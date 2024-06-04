@@ -133,23 +133,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
 
-//    @Override
-//    public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId) {   // 댓글 수정
-//        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-//        Review review = reviewOptional.orElseThrow();
-//        PharmacyStar pharmacyStar = pharmacyStarRepository.findByPhId(review.getPharmacy().getPhId()).orElse(null);
-//        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()-review.getStar());
-//        review.setReview(reviewUpdateDTO.getReviewText(),reviewUpdateDTO.getStar());
-//        pharmacyStar.setStarTotal(pharmacyStar.getStarTotal()+reviewUpdateDTO.getStar());
-//        double starAvg = Math.round(pharmacyStar.getStarTotal() / reviewRepository.countByPharmacyPhId(review.getPharmacy().getPhId()) * 10.0) / 10.0;
-//        pharmacyStar.setStarAvg(starAvg);
-//        reviewRepository.save(review); // 리뷰 내용 수정
-//        pharmacyStarRepository.save(pharmacyStar); // 별점 수정
-//    }\
-
-
-
-
 @Override
     public void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile file, String uploadPath) {   // 리뷰 수정
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
@@ -222,6 +205,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         reviewRepository.deleteById(reviewId);
+
     }
 
     @Override

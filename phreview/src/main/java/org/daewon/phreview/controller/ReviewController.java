@@ -52,7 +52,7 @@ public class ReviewController {
             @RequestPart("reviewDTO") String reviewDTOStr,
             // 클라이언트로부터 전달된 파일 리스트를 받음.
             // required = false 로 설정하여 파일이 없어도 요청이 처리됨
-            @RequestPart(name = "files", required = false) List<MultipartFile> files) {
+            @RequestPart(name = "files", required = false) MultipartFile files) {
         log.info("Review DTO String: " + reviewDTOStr);
         log.info("Files: " + files);
 
@@ -72,7 +72,7 @@ public class ReviewController {
         Long reviewId;
         try {
             // 리뷰 생성 메서드 호출
-            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files.get(0) : null, uploadPath);
+            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files : null, uploadPath);
 
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
