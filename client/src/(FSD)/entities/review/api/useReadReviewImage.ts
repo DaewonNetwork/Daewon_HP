@@ -4,28 +4,19 @@ const reviewImageReadFetch = async (reviewId: number) => {
     const response = await fetch(`http://localhost:8090/review/read/image?reviewId=${reviewId}`, {
         method: "GET",
         headers: {
-            "Content-Type": "image/jpeg"
+            "Content-Type": "image/jpeg",
         }
     });
 
-    // if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    // }
+    const blob = await response.blob();
 
-    const data = await response;
-
-    const contentType = response.headers.get('content-type');
-        
-    if (contentType && contentType.includes("image")) {
-        const blob = await response.blob();
-
-        console.log(blob);
-        
-
-        return blob;
+    console.log(await response);
+    
+    if (blob) {
+        return URL.createObjectURL(blob);
+    } else {
+        throw new Error("errorMessage");
     }
-
-    return data;
 };
 
 export const useReadReviewImage = (reviewId: number) => {
