@@ -1,9 +1,6 @@
 package org.daewon.phreview.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -18,6 +15,9 @@ import org.hibernate.annotations.OnDeleteAction;
 public class ReviewImage implements Comparable<ReviewImage>{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
     private String uuid;
 
     private String fileName;
