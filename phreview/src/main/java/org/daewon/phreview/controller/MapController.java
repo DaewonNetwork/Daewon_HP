@@ -35,14 +35,14 @@ public class MapController {
     }
 
     @GetMapping("/region/search")
-    public List<PharmacyDTO> searchNameInCity(String city, String keyword) { // 지역 내 병원 이름
+    public List<PharmacyDTO> searchNameInCity(String city, String keyword) { // 지역 내 약국 이름
         List<PharmacyDTO> pharmacyDTO = mapService.NameSearchInCity(keyword,city);
         log.info(pharmacyDTO);
         return pharmacyDTO;
     }
 
     @GetMapping("/search")
-    public List<PharmacyDTO> searchNameOrAdd(String keyword) { // 병원 이름이랑 주소 둘다
+    public List<PharmacyDTO> searchNameOrAdd(String keyword) { // 키워드 약국 검색
         List<PharmacyDTO> pharmacyDTO = mapService.NameOrAddSearch(keyword);
         log.info(pharmacyDTO);
         return pharmacyDTO;
