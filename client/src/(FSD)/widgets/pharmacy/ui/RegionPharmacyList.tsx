@@ -9,9 +9,12 @@ import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 const RegionPharmacyList = () => {
     const { city } = useParams<{ city: string }>();
 
-    const { pharmacyList, fetchNextPage } = useSearchRegion(city);
+    const { pharmacyList, fetchNextPage, refetch } = useSearchRegion(city);
 
     const { ref, inView } = useInView();
+
+    console.log(pharmacyList);
+    
 
 
     useEffect(() => {
@@ -25,7 +28,7 @@ const RegionPharmacyList = () => {
             {
                 pharmacyList.map((pharmacy, index) => (
                     <React.Fragment key={index}>
-                        <PharmacyShared pharmacy={pharmacy} />
+                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))
             }

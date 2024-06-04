@@ -29,6 +29,7 @@ export const useSearchNear = (lat: number, lng: number) => {
         isFetchingNextPage,
         isError,
         isLoading,
+        refetch
     } = useInfiniteQuery({
         queryKey: ["search_near", [lat, lng]],
         queryFn: phSearchNearFetch,
@@ -49,5 +50,5 @@ export const useSearchNear = (lat: number, lng: number) => {
         return pharmacyList;
     }, [data]);
 
-    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage };
+    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage, refetch };
 };

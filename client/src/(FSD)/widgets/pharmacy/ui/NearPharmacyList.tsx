@@ -24,7 +24,7 @@ const NearPharmacyList = () => {
         }
     }, [lat, lng]);
 
-    const { pharmacyList, fetchNextPage } = useSearchNear(lat, lng);
+    const { pharmacyList, fetchNextPage, refetch } = useSearchNear(lat, lng);
 
 
     const { ref, inView } = useInView();
@@ -43,7 +43,7 @@ const NearPharmacyList = () => {
             {
                 pharmacyList.map((pharmacy, index) => (
                     <React.Fragment key={index}>
-                        <PharmacyShared pharmacy={pharmacy} />
+                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))
             }

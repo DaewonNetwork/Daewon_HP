@@ -29,6 +29,7 @@ export const useSearchRegionKeyword = (city: string, keyword: string) => {
         isFetchingNextPage,
         isError,
         isLoading,
+        refetch
     } = useInfiniteQuery({
         queryKey: ["search_region_keyword", [city, keyword]],
         queryFn: phSearchRegionKeywordFetch,
@@ -51,5 +52,5 @@ export const useSearchRegionKeyword = (city: string, keyword: string) => {
         return pharmacyList;
     }, [data]);
 
-    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage };
+    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage, refetch };
 };
