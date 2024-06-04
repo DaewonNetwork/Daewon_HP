@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class ReplyDTO {
 
+    private Long replyId;
     private Long reviewId;
     private String userName;    // 특정한 유저 id를 선언
+
 
     @NotEmpty
     private String replyText;
