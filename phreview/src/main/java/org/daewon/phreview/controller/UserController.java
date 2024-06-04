@@ -66,7 +66,7 @@ public class UserController {
         return ResponseEntity.ok("Logout successful");
     }
 
-    @GetMapping("/reivew")
+    @GetMapping("/review")
     public ResponseEntity<?> getUserReviews(@RequestHeader("Authorization") String token) {
         try {
             // Bearer 토큰에서 "Bearer " 부분 제거
