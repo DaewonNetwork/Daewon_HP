@@ -9,9 +9,9 @@ const AppFooter = () => {
         <div className={styles.footer}>
             <ContainerShared>
                 <InnerShared>
+                    <LinkBtnShared href={"/review"}>리뷰</LinkBtnShared>
                     <LinkBtnShared href={"/"}>홈</LinkBtnShared>
-                    <LinkBtnShared href={"/"}>홈</LinkBtnShared>
-                    <LinkBtnShared href={"/"}>홈</LinkBtnShared>
+                    <LinkBtnShared href={"/profile"}>프로필</LinkBtnShared>
                 </InnerShared>
             </ContainerShared>
         </div>
