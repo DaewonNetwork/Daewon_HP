@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,6 +10,7 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import { useParams } from "next/navigation";
 import { useReplyCreate } from "../api/useReplyCreate";
+import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 
 const ReplyCreateForm = ({ parentRefetch } : { parentRefetch: any }) => {
     const { reviewId } = useParams<{ reviewId: string }>();
@@ -37,7 +38,7 @@ const ReplyCreateForm = ({ parentRefetch } : { parentRefetch: any }) => {
     
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>
                 <TextLargeShared>댓글 작성하기</TextLargeShared>
                 <FormTextareaShared isInvalid={!!errors.replyText} size={"lg"} control={control} name="replyText" placeholder="10자 이상 200자 이하" />

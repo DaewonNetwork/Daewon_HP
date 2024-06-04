@@ -8,8 +8,6 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 const PharmacyRankEnjoyList = () => {
     const { data } = useReadRankEnjoyPharmacys();
     
-    console.log(data);
-    
     return (
         <div>
             <InnerShared>

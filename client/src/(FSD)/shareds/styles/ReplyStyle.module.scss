@@ -17,3 +17,17 @@
         }
     }
 }
+
+.reply_form {
+    display: block;
+    margin-top: 20px;
+
+    h1[data-slot="text_large"] {
+        margin-bottom: 20px;
+    }
+
+    div[data-slot="base"] {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+}

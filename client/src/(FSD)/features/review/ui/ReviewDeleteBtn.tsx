@@ -3,10 +3,11 @@ import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
 import React from "react";
 
-const ReviewDeleteBtn = ({ isWriter, reviewId, parentRefetch }: { isWriter: boolean; reviewId: number; parentRefetch: any; }) => {
+const ReviewDeleteBtn = ({ isWriter, reviewId, parentRefetch, grandParentFetch }: { isWriter: boolean; reviewId: number; parentRefetch: any; grandParentFetch?: any }) => {
     const onSuccess = (data: any) => {
         if(parentRefetch) {
-            parentRefetch()
+            parentRefetch();
+            grandParentFetch();
         }
     };
     const { mutate } = useDeleteReview({ onSuccess });

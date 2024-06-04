@@ -12,7 +12,7 @@ import { ReplyType } from "../types/Reply.type";
 import ReviewDeleteBtn from "@/(FSD)/features/review/ui/ReviewDeleteBtn";
 
 
-const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; isWriter?: boolean }) => {
+const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
     const router = useRouter();
 
     if (!review) return <></>;
@@ -29,11 +29,15 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
     return (
         <div onClick={_ => router.push(`/reply/create/${review.reviewId}`)} className={styles.review_item}>
             <ItemShared>
-                <div className="">
+                <div className={styles.review_inner}>
                     <div className={styles.review_header}>
                         <div className={styles.top_item}>
                             <TextLargeShared>{review.userName}님</TextLargeShared>
-                            {isWriter && <ReviewDeleteBtn parentRefetch={parentRefetch} reviewId={review.reviewId} isWriter={review.review} />}
+                            {isWriter &&
+                                <div className={styles.writer_item}>
+                                    <ReviewDeleteBtn parentRefetch={parentRefetch} grandParentFetch={grandParentFetch} reviewId={review.reviewId} isWriter={review.review} />
+                                </div>
+                            }
                         </div>
                         <div className={styles.btm_item}>
                             <StarListShared star={review.star} />
