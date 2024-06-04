@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReplyReadDTO {
 
-
+    private Long replyId;
     private String userName;
 
     @NotEmpty

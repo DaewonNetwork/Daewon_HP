@@ -6,12 +6,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Review;
+import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
+import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
-import org.daewon.phreview.security.exception.ReviewNotFoundException;
-import org.daewon.phreview.service.LikeService;
+
 import org.daewon.phreview.service.ReviewService;
 import org.daewon.phreview.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -35,12 +39,13 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final LikeService likeService;
+
     private final JWTUtil jwtUtil;
     private final ReviewRepository reviewRepository;
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
+    private ReviewImageRepository reviewImageRepository;
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
@@ -124,14 +129,6 @@ public class ReviewController {
         return Map.of("result", "success");
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/like")
-    public int like(@RequestParam Long reviewId){ // 좋아요
-        likeService.likeReview(reviewId);
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
-        return review.getLikeIndex(); // 좋아요 수 반환
-    }
-
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
@@ -147,13 +144,7 @@ public class ReviewController {
         return reviewList;
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "좋아요 순")
-    @GetMapping("/list/like")
-    public List<ReviewReadDTO> readReviewsByLikeIndexDesc(@RequestParam(name = "phId") Long phId){ // 리뷰 좋아요순
-        List<ReviewReadDTO> reviewlist = reviewService.readReviewsByLikeIndexDesc(phId);
-        return reviewlist;
-    }
+
 
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "모든 리뷰")
@@ -163,13 +154,28 @@ public class ReviewController {
         return reviewlist;
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "모든 리뷰 좋아요순")
-    @GetMapping("/AllList/like")
-    public List<ReviewReadDTO> readAllReviewsByLikeIndexDesc(){ // 리뷰 전체
-        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviewsByLikeIndexDesc();
-        return reviewlist;
+    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
+    @Operation(summary = "이미지")
+    @GetMapping("/read/image")
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
+
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
+        if (reviewImage == null) {
+            return null;
+        }
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
+
 
 
 

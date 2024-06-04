@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReplyUpdateDTO {
-
+    private Long replyId;
     @NotEmpty
     private String replyText;
     private LocalDateTime updateAt;

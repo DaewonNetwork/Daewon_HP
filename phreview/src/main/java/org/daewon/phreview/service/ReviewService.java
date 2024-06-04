@@ -18,11 +18,9 @@ public interface ReviewService {
     ReviewReadDTO readReview(Long reviewId);
 
     List<ReviewReadDTO> readReviews(Long phId);
-    List<ReviewReadDTO> readReviewsByLikeIndexDesc(Long phId);
     List<ReviewReadDTO> readAllReviews();
-    List<ReviewReadDTO> readAllReviewsByLikeIndexDesc();
     List<ReviewReadDTO> readReviewsByUser(Long userId);
-    List<ReviewReadDTO> readLikedReviewsListByUser();
+
 
 
 
