@@ -111,16 +111,19 @@ public class ReviewController {
             @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
 
         // reviewUpdateDTOString을 올바르게 디코딩
+        ObjectMapper objectMapper = new ObjectMapper();
+        
         String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
         // decodedReviewDTO를 ReviewUpdateDTO 객체로 변환
-        ObjectMapper objectMapper = new ObjectMapper();
         ReviewUpdateDTO reviewUpdateDTO;
         try {
             reviewUpdateDTO = objectMapper.readValue(decodedReviewDTO, ReviewUpdateDTO.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to parse reviewUpdateDTO", e); // 변환 실패 시 예외 처리
         }
+
+        log.info("files : " + files);
 
         // 기존의 updateReview 서비스 호출
         reviewService.updateReview(reviewUpdateDTO, files, uploadPath);

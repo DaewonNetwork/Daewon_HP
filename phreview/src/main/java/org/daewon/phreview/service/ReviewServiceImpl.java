@@ -126,6 +126,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 @Override
     public void updateReview(ReviewUpdateDTO reviewUpdateDTO, MultipartFile file, String uploadPath) {   // 리뷰 수정
+        log.info("getReviewId : " +reviewUpdateDTO.getReviewId());
         Optional<Review> reviewOptional = reviewRepository.findById(reviewUpdateDTO.getReviewId());
         Review review = reviewOptional.orElseThrow();
 

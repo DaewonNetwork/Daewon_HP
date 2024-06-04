@@ -15,7 +15,7 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, refetch } = useReadReviews(Number(phId));
-
+    
     const reviewList: ReviewType[] = data;
 
     const router = useRouter();

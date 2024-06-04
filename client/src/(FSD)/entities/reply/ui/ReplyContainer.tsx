@@ -28,10 +28,10 @@ const ReplyContainer = () => {
     if(!review) return <></>;
     
     return (
-        <div>
+        <>
             <ReviewShared parentRefetch={refetch} review={review} isWriter={review.review} />
             <ReplyCreateForm parentRefetch={refetch} />
-        </div>
+        </>
     )
 }
 
