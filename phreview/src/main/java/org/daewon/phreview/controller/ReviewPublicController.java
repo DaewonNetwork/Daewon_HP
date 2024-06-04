@@ -67,7 +67,8 @@ public class ReviewPublicController {
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\";
+//    private static final String UPLOAD_FOLDER = "C:\\upload\\";
+    private static final String UPLOAD_FOLDER = "/Users/jungtae/upload/";
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {

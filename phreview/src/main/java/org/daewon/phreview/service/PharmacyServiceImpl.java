@@ -36,18 +36,27 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final PharmacyStarRepository pharmacyStarRepository;
     private final ReviewRepository reviewRepository;
 
+    // 지역별 검색 카테고리 메서드
     public PageResponseDTO<PharmacyDTO> regionCategorySearch(String city, PageRequestDTO pageRequestDTO) {
+        // 페이지 요청 객체 생성
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("phId").ascending()); // pageable 객체 생성
+        // 도시명을 기준으로 약국을 검색
         Page<Pharmacy> result = pharmacyRepository.findByCity(city, pageable); // city 스트링을 phAdd에 대입하여 검색
         log.info(result);
+
+        // 현재 인증된 사용자의 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         log.info("이름:"+currentUserName);
+
+        // 사용자 정보 가져오기
         Users users = userRepository.findByEmail(currentUserName)
                 .orElse(null); // 유저 객체 생성
+
+        // 검색 결과를 DTO로 변환
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
             if(users != null) { // 유저가 있을경우
@@ -60,6 +69,8 @@ public class PharmacyServiceImpl implements PharmacyService {
             return pharmacyDTO;
         }).collect(Collectors.toList());
         log.info(phList);
+
+        // 페이지 응답 객체 생성 및 반환
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .phList(phList)
@@ -67,33 +78,48 @@ public class PharmacyServiceImpl implements PharmacyService {
                 .build();
     }
 
+    // 위도와 경도를 기준으로 근처 약국을 검색하는 메서드
     @Override
     public PageResponseDTO<PharmacyDTO> nearSearch(double lat, double lng, PageRequestDTO pageRequestDTO) {
+        // PageRequestDTO를 사용하여 페이지 요청 정보를 기반으로 Pageable 객체를 생성
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPageIndex() <= 0 ? 0 : pageRequestDTO.getPageIndex() - 1,
                 pageRequestDTO.getSize(),
-                Sort.by("phId").ascending());
+                Sort.by("phId").ascending());   // phID를 기준으로 오름차순 정렬합니다.
+
+        // 주어진 위도와 경도를 기준으로 근처 약국을 검색하여 결과를 page<pharmacy>로 반환
         Page<Pharmacy> result = pharmacyRepository.findByLoc(lat, lng, pageable); // 좌표 가지고 근처 약국 검색
         log.info(result);
+
+        // 현재 인증된 사용자의 정보를 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         log.info("이름:"+currentUserName);
+
+        // 사용자 이메일을 통해 사용자 정보를 찾음, 없을 경우 null 반환
         Users users = userRepository.findByEmail(currentUserName)
                 .orElse(null);
 
-
+        // 검색 결과를 PharmacyDTO 리스트로 변환
         List<PharmacyDTO> phList = result.getContent().stream().map(pharmacy -> {
             PharmacyDTO pharmacyDTO = modelMapper.map(pharmacy, PharmacyDTO.class);
-            if(users != null) {
-                Long userId = users.getUserId();
+
+            if(users != null) { // 사용자가 존재하는 경우
+                Long userId = users.getUserId();  // 사용자의 ID 가져옴
+                // 현재 사용자가 즐겨찾기한 약국인지 확인
                 EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(),userId);
+                // 즐겨찾기 여부 설정
                 pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false);
             } else{
+                // 사용자가 존재하지 않는 경우 즐겨찾기 여부를 false로 설정
                 pharmacyDTO.setEnjoy(false);
             }
             return pharmacyDTO;
         }).collect(Collectors.toList());
+
         log.info(phList);
+
+        // PageResponseDTO를 생성하여 반환
         return PageResponseDTO.<PharmacyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .phList(phList)
