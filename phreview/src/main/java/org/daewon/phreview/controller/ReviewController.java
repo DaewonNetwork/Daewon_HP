@@ -160,7 +160,9 @@ public class ReviewController {
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
         ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
-
+        if (reviewImage == null) {
+            return ResponseEntity.notFound().build();
+        }
         String uuid = reviewImage.getUuid();
         String fileName = reviewImage.getFileName();
 
