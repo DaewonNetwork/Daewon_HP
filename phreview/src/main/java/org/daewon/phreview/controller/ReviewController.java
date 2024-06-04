@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.daewon.phreview.domain.Review;
+import org.daewon.phreview.domain.ReviewImage;
 import org.daewon.phreview.dto.review.ReviewDTO;
 import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.dto.review.ReviewUpdateDTO;
+import org.daewon.phreview.repository.ReviewImageRepository;
 import org.daewon.phreview.repository.ReviewRepository;
 
 import org.daewon.phreview.service.ReviewService;
@@ -24,6 +26,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +45,7 @@ public class ReviewController {
 
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
+    private ReviewImageRepository reviewImageRepository;
 
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
@@ -148,6 +154,25 @@ public class ReviewController {
         return reviewlist;
     }
 
+    private static final String UPLOAD_FOLDER = "C:\\upload\\";
+    @Operation(summary = "이미지")
+    @GetMapping("/read/image")
+    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
+
+        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
+
+        String uuid = reviewImage.getUuid();
+        String fileName = reviewImage.getFileName();
+
+        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+
+        // 응답에 이미지와 Content-Type 설정 후 반환
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+    }
 
 
 
