@@ -32,7 +32,7 @@ public class ReviewReadDTO {
 
     private int star;
 
-    private int likeIndex;
+
     private int replyIndex;
 
     private String createAt;

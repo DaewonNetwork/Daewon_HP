@@ -212,7 +212,6 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewText(review.getReviewText())
                 .reviewTitle(review.getReviewTitle())
                 .star(review.getStar())
-                .likeIndex(review.getLikeIndex())
                 .replyIndex(review.getReplyIndex())
                 .createAt(review.getCreateAt().format(formatter))
                 .updateAt(review.getUpdateAt().format(formatter))
@@ -269,7 +268,7 @@ public class ReviewServiceImpl implements ReviewService {
                         .reviewText(review.getReviewText())
                         .reviewTitle(review.getReviewTitle())
                         .star(review.getStar())
-                        .likeIndex(review.getLikeIndex())
+
                         .replyIndex(review.getReplyIndex())
                         .createAt(review.getCreateAt().format(formatter))
                         .updateAt(review.getUpdateAt().format(formatter))
@@ -285,7 +284,7 @@ public class ReviewServiceImpl implements ReviewService {
                             .reviewText(review.getReviewText())
                             .reviewTitle(review.getReviewTitle())
                             .star(review.getStar())
-                            .likeIndex(review.getLikeIndex())
+
                             .replyIndex(review.getReplyIndex())
                             .createAt(review.getCreateAt().format(formatter))
                             .updateAt(review.getUpdateAt().format(formatter))
