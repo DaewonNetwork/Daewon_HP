@@ -5,6 +5,7 @@ const reviewImageReadFetch = async (reviewId: number) => {
         method: "GET",
         headers: {
             "Content-Type": "image/jpeg",
+            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
         }
     });
 
@@ -15,21 +16,17 @@ const reviewImageReadFetch = async (reviewId: number) => {
 
     const blob = await response.blob();
 
-    console.log(blob);
-    
-    
     if (blob.size) {
-        console.log("aswdwddqwaqdwa");
-        
-        return blob;
+        return URL.createObjectURL(blob);
     } else {
-        throw new Error("errorMessage");
+        return null;
     }
 };
 
 export const useReadReviewImage = (reviewId: number) => {
     return useQuery({
         queryKey: ["review_image_read"],
-        queryFn: _ => reviewImageReadFetch(reviewId)
+        queryFn: _ => reviewImageReadFetch(reviewId),
+        refetchOnMount: true
     });
 };

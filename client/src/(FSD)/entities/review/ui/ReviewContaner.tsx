@@ -10,13 +10,12 @@ import { useReadReviews } from "@/(FSD)/entities/review/api/useReadReviews";
 import { useParams } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
+import ReviewImage from "@/(FSD)/widgets/review/ui/ReviewImage";
 
 const ReviewContaner = () => {
     const { phId } = useParams<{ phId: string }>();
 
-    const { data, isError, isLoading, refetch } = useReadReviews(Number(phId));
-    
-    console.log(data);
+    const { data, refetch } = useReadReviews(Number(phId));
     
     const reviewList: ReviewType[] = data;
 
@@ -38,7 +37,8 @@ const ReviewContaner = () => {
                 {
                     reviewList.map((review, index) => (
                         <React.Fragment key={index}>
-                            <ReviewShared isWriter={true} parentRefetch={refetch} review={review} />
+                            <ReviewShared review={review} parentRefetch={refetch} isWriter={review.review} />
+                            <ReviewImage review={review} />
                         </React.Fragment>
                     ))
                 }

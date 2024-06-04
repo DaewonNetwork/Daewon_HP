@@ -12,7 +12,6 @@ import org.daewon.phreview.dto.review.ReviewUpdateDTO;
 
 import org.daewon.phreview.repository.ReviewImageRepository;
 
-
 import org.daewon.phreview.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +44,6 @@ public class ReviewController {
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
 
-
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
     // Content-Type : multipart/form-data, Accept : application/json 형태 이어야함
@@ -65,7 +63,8 @@ public class ReviewController {
             // JSON 문자열을 ReviewDTO 객체로 변환
             ObjectMapper objectMapper = new ObjectMapper();
             // @RequestPart 부분에서 한글 처리하는데 문제가 생겨서 강제로 UTF-8로 변환해 줌
-            String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String decodedReviewDTO = new String(reviewDTOStr.getBytes(StandardCharsets.ISO_8859_1),
+                    StandardCharsets.UTF_8);
             reviewDTO = objectMapper.readValue(decodedReviewDTO, ReviewDTO.class);
         } catch (IOException e) {
             // JSON 변환 중 오류가 발생하면 로그를 남기고 예외 발생
@@ -76,7 +75,8 @@ public class ReviewController {
         Long reviewId;
         try {
             // 리뷰 생성 메서드 호출
-            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files : null, uploadPath);
+            reviewId = reviewService.createReview(reviewDTO, files != null && !files.isEmpty() ? files : null,
+                    uploadPath);
 
             return ResponseEntity.ok(reviewId);
         } catch (RuntimeException e) {
@@ -84,7 +84,6 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request", e);
         }
     }
-
 
     // 리뷰 작성한 유저만 삭제 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
@@ -95,13 +94,14 @@ public class ReviewController {
     }
 
     // 리뷰 작성한 유저만 수정 가능
-//    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long reviewId,
-//            @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
-//        reviewService.updateReview(reviewUpdateDTO,reviewId);
-//        return Map.of("result", "success");
-//    }
+    // @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
+    // @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    // public Map<String, String> updateReview(@RequestParam(name = "reviewId") Long
+    // reviewId,
+    // @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+    // reviewService.updateReview(reviewUpdateDTO,reviewId);
+    // return Map.of("result", "success");
+    // }
 
     // 리뷰 작성한 유저만 수정 가능
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
@@ -112,7 +112,8 @@ public class ReviewController {
             @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
 
         // reviewUpdateDTOString을 올바르게 디코딩
-        String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1),
+                StandardCharsets.UTF_8);
 
         // decodedReviewDTO를 ReviewUpdateDTO 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
@@ -128,7 +129,6 @@ public class ReviewController {
         return Map.of("result", "success");
     }
 
-
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
     public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
@@ -143,44 +143,40 @@ public class ReviewController {
         return reviewList;
     }
 
-
-
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "모든 리뷰")
     @GetMapping("/AllList")
-    public List<ReviewReadDTO> readAllReviews(){ // 리뷰 전체
-        List<ReviewReadDTO> reviewlist =  reviewService.readAllReviews();
+    public List<ReviewReadDTO> readAllReviews() { // 리뷰 전체
+        List<ReviewReadDTO> reviewlist = reviewService.readAllReviews();
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "/Users/cyjoon/upload"; // 업로드듼 폴더(createReview시 파일 경로)
+    private static final String UPLOAD_FOLDER = "/Users/cyjoon/upload/"; // 업로드듼 폴더(createReview시 파일 경로)
+
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) {
         try {
             ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
-            if (reviewImage == null) {
-                log.info("Review Image Not Found");
+            if (reviewImage != null) {
+                String uuid = reviewImage.getUuid();
+                String fileName = reviewImage.getFileName();
+
+                String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
+
+                // 파일을 바이트 배열로 읽기
+                Path path = Paths.get(filePath);
+                byte[] image = Files.readAllBytes(path);
+
+                // 응답에 이미지와 Content-Type 설정 후 반환
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+            } else {
+                return ResponseEntity.ok(null);
             }
-            String uuid = reviewImage.getUuid();
-            String fileName = reviewImage.getFileName();
-
-            String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
-
-            // 파일을 바이트 배열로 읽기
-            Path path = Paths.get(filePath);
-            byte[] image = Files.readAllBytes(path);
-
-            // 응답에 이미지와 Content-Type 설정 후 반환
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
         } catch (IOException e) {
             log.error("Error reading review image: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
-
-
 
 }
