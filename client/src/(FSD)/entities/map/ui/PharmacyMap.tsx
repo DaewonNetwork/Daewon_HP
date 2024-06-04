@@ -30,7 +30,9 @@ const PharmacyMap = ({ pharmacyList }: { pharmacyList: PharmacyType[] }) => {
                 pharmacyList.map((pharmacy, index) => {
                     return (
                         <React.Fragment key={index}>
-                            <MapMarker title={pharmacy.phName} position={{ lat: pharmacy.phY, lng: pharmacy.phX }} />
+                            <MapMarker title={pharmacy.phName} position={{ lat: pharmacy.phY, lng: pharmacy.phX }}>
+
+                            </MapMarker>
                         </React.Fragment>
                     )
                 })
