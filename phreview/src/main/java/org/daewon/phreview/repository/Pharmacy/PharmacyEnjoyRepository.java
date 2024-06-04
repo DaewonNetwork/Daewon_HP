@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
+// 즐겨찾기
 public interface PharmacyEnjoyRepository extends JpaRepository<PharmacyEnjoy, Long> {
     List<PharmacyEnjoy> findAllByOrderByEnjoyIndexDesc();
 

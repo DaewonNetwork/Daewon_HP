@@ -53,6 +53,7 @@ public class EnjoyServiceImpl implements EnjoyService {
                     return pharmacyEnjoyRepository.save(newPharmacyEnjoy);
                 });
 
+        // 사용자가 즐겨찾기를 누르지 않았을떄
         if (enjoyRepository.findByPharmacyAndUsers(phId, userId) == null) {
             pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() + 1);
             pharmacyEnjoyRepository.save(pharmacyEnjoy);
@@ -61,14 +62,14 @@ public class EnjoyServiceImpl implements EnjoyService {
             log.info(pharmacy);
             log.info(enjoyPh);
             log.info("즐겨찾기");
-        } else {
+        } else {    // 즐겨찾기가 눌러져 있을때
             EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId);
             enjoyPh.unEnjoyPh(pharmacyEnjoy);
             enjoyRepository.delete(enjoyPh);
             pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1);
-            if(pharmacyEnjoy.getEnjoyIndex() == 0){
+            if(pharmacyEnjoy.getEnjoyIndex() == 0){     // 약국의 즐겨찾기수가 0이면 레코드가 삭제된다
                 pharmacyEnjoyRepository.delete(pharmacyEnjoy);
-            } else {
+            } else {    // 약국의 즐겨찾기수가 1이상이면 save
                 pharmacyEnjoyRepository.save(pharmacyEnjoy);
             }
             log.info(pharmacy);

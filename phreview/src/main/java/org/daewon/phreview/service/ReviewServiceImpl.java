@@ -329,7 +329,7 @@ public class ReviewServiceImpl implements ReviewService {
                         .isReview(review.getUsers().getUserId() == users.getUserId())
                         .build())
                 .collect(Collectors.toList());
-        }else{
+        } else{
             reviewDTOList = reviews.stream()
                     .map(review -> ReviewReadDTO.builder()
                             .reviewId(review.getReviewId())
