@@ -13,17 +13,20 @@ import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
 import ReviewDeleteBtn from "@/(FSD)/features/review/ui/ReviewDeleteBtn";
 import { useReadReviewImage } from "@/(FSD)/entities/review/api/useReadReviewImage";
-import Image from "next/image";
 
 const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; isWriter?: boolean }) => {
     const router = useRouter();
 
     if (!review) return <></>;
     
-    const { data, refetch } = useReadReply(review.reviewId);
+    const { data, refetch } = useReadReply(review.reviewId);    
 
+    const img = useReadReviewImage(review.reviewId);
+    const imgUrl = img.data;
+    const imgError = img.error;
+
+    console.log(imgError);
     
-    const imgUrl = useReadReviewImage(review.reviewId).data;
     
 
     const replyList: ReplyType[] = data;
@@ -50,7 +53,7 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
                     <div className={styles.review_content}>
                         <TextLargeShared>{review.reviewTitle}</TextLargeShared>
                         <TextMediumShared>{review.reviewText}</TextMediumShared>
-                        {imgUrl && <img style={{ width: 100, height: 100 }} src={imgUrl} alt="" />}
+                        {(!imgError && imgUrl) && <img style={{ width: 100, height: 100 }} src={URL.createObjectURL(imgUrl)} alt="" />}
                     </div>
                 </div>
                 {

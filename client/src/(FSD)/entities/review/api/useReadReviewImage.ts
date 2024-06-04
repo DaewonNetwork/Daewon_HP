@@ -9,11 +9,11 @@ const reviewImageReadFetch = async (reviewId: number) => {
     });
 
     const blob = await response.blob();
-
-    console.log(await response);
     
-    if (blob) {
-        return URL.createObjectURL(blob);
+    if (blob.size) {
+        console.log("aswdwddqwaqdwa");
+        
+        return blob;
     } else {
         throw new Error("errorMessage");
     }
