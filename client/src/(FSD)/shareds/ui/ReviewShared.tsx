@@ -25,7 +25,7 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
     const imgUrl = img.data;
     const imgError = img.error;
 
-    console.log(imgError);
+    console.log(imgUrl);
     
     
 
@@ -53,7 +53,7 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
                     <div className={styles.review_content}>
                         <TextLargeShared>{review.reviewTitle}</TextLargeShared>
                         <TextMediumShared>{review.reviewText}</TextMediumShared>
-                        {(!imgError && imgUrl) && <img style={{ width: 100, height: 100 }} src={URL.createObjectURL(imgUrl)} alt="" />}
+                        {(imgUrl) && <img style={{ width: 100, height: 100 }} src={URL.createObjectURL(imgUrl)} alt="" />}
                     </div>
                 </div>
                 {
