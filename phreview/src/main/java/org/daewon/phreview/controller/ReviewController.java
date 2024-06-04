@@ -136,13 +136,39 @@ public class ReviewController {
         return review;
     }
 
+//    @PreAuthorize("hasRole('USER')")
+//    @GetMapping("/list")
+//    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
+//        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
+//        return reviewList;
+//    }
+
+
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/list")
-    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
-        return reviewList;
+    public ResponseEntity<?> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
+        List<ReviewReadDTO> reviews = reviewService.readReviews(phId);
+
+        for(ReviewReadDTO review : reviews) {
+            ReviewImage reviewImage = reviewImageRepository.findByReviewId(review.getReviewId()).orElse(null);
+            if(reviewImage != null) {
+                review.setReviewImage(getImage(reviewImage.getUuid(),reviewImage.getFileName()));
+            } else{
+                review.setReviewImage(null);
+            }
+
+        }
+        return ResponseEntity.ok(reviews);
     }
 
+    public byte[] getImage(String uuid, String fileName) throws IOException {
+        String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+        return image;
+    }
 
 
     @PreAuthorize("hasRole('USER')")
@@ -153,8 +179,7 @@ public class ReviewController {
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드된 폴더(createReview 시 파일 경로)
-
+    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
     @Operation(summary = "이미지")
     @GetMapping("/read/image")
     public ResponseEntity<byte[]> readReviewImage(Long reviewId) {

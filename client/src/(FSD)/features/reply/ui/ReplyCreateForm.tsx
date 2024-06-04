@@ -11,7 +11,7 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import { useParams } from "next/navigation";
 import { useReplyCreate } from "../api/useReplyCreate";
 
-const ReplyCreateForm = () => {
+const ReplyCreateForm = ({ parentRefetch } : { parentRefetch: any }) => {
     const { reviewId } = useParams<{ reviewId: string }>();
 
     const schema = z.object({
@@ -24,13 +24,15 @@ const ReplyCreateForm = () => {
     });
 
     const onSuccess = (data: any) => {
-        console.log(data);
+        if(parentRefetch) {
+            parentRefetch();
+        }
     }
 
     const { mutate } = useReplyCreate({ onSuccess });
 
     const onSubmit = (data: any) => {
-        mutate({ reviewId, replyText: data.replyText });
+        mutate({ reviewId: Number(reviewId), replyText: data.replyText });
     }
     
 

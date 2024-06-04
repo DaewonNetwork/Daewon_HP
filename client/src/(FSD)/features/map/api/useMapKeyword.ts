@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const phMapKeywordFetch = async (keyword: string) => {
     const response = await fetch(`http://localhost:8090/map/search?keyword=${keyword}`, {
@@ -22,5 +22,7 @@ export const useMapKeyword = (keyword: string) => {
     return useQuery({
         queryKey: ["map_keyword"],
         queryFn: () => phMapKeywordFetch(keyword),
+        placeholderData: keepPreviousData,
+        
     });
 };

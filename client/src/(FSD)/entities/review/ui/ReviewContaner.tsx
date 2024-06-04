@@ -8,17 +8,16 @@ import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import { useReadReviews } from "@/(FSD)/entities/review/api/useReadReviews";
 import { useParams } from "next/navigation";
-import { ReviewType } from "@/(FSD)/shareds/types/reviews/Review.type";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
+import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
 const ReviewContaner = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadReviews(Number(phId));
-
+    
     console.log(data);
     
-
     const reviewList: ReviewType[] = data;
 
     useEffect(() => {
@@ -39,7 +38,7 @@ const ReviewContaner = () => {
                 {
                     reviewList.map((review, index) => (
                         <React.Fragment key={index}>
-                            <ReviewShared review={review} />
+                            <ReviewShared isWriter={true} parentRefetch={refetch} review={review} />
                         </React.Fragment>
                     ))
                 }

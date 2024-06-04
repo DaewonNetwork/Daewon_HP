@@ -15,35 +15,6 @@
 
     .review_list {
         display: block;
-
-        .review_item {
-            display: block;
-
-            .review_header {
-                .top_item {
-                    display: block;
-                }
-
-                .btm_item {
-                    display: flex;
-                    align-items: center;
-                    margin-top: 5px;
-
-                    p[data-slot="text_medium"] {
-                        margin-left: 20px;
-                    }
-                }
-
-                margin-bottom: 10px;
-            }
-
-            .review_content {
-                display: inline-block;
-                max-width: 70%;
-                overflow: hidden;
-                word-wrap: break-word;
-            }
-        }
     }
 }
 
@@ -66,15 +37,52 @@
 }
 
 .form {
-    margin-top: 20px;
+    .star_list {
+        margin-top: 20px;
+        margin-bottom: 30px;
 
-    &>div[data-slot="inner"] {
-        h1[data-slot="text_large"] {
+        .star_list_inner {
+            margin: 0 auto;
+            width: 130px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    .review_input_box {
+        display: block;
+        margin-bottom: 20px;
+
+        h1 {
             margin-bottom: 10px;
         }
+    }
+}
 
-        & > div {
-            margin-bottom: 20px;
+.review_item {
+    display: block;
+
+    .review_header {
+        .top_item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .btm_item {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+
+            p[data-slot="text_medium"] {
+                margin-left: 20px;
+            }
+        }
+
+        margin-bottom: 10px;
+    }
+
+    .review_content {
+        display: block;
     }
 }

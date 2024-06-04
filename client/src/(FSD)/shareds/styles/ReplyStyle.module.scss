@@ -1,0 +1,19 @@
+.reply_item {
+    margin-top: 20px;
+    display: flex;
+
+    .left_box {
+        display: block;
+    }
+
+    .right_box {
+        margin-left: 20px;
+        display: block;
+
+        & > p {
+            &:first-child {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

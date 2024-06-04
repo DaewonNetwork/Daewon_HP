@@ -16,14 +16,12 @@ const PharmacyInfo = () => {
     const { phId } = useParams<{ phId: string }>();
 
     const { data, isError, isLoading, refetch } = useReadPharmacy(Number(phId));
-    
-    const [isEnjoi, setIsEnjoy] = useState<boolean>(false);
 
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();
-    }, [phId, isEnjoi]);
+    }, [phId]);
 
     if (isError) return <></>;
     if (isLoading) return <></>;
@@ -34,7 +32,7 @@ const PharmacyInfo = () => {
                 <div className={styles.pharmacy_header}>
                     <div className={styles.top_item}>
                         <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
-                        <PharmacyEnjoyBtn defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} set={setIsEnjoy} />
+                        <PharmacyEnjoyBtn parentRefetch={refetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />
                     </div>
                     <div className={styles.btm_item}>
                         <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>

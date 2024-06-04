@@ -29,6 +29,7 @@ public class ReviewReadDTO {
 
     private boolean isReview;
 
+    private byte[] reviewImage;
 
     private int star;
 
