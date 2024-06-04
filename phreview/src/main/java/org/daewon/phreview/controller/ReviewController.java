@@ -103,9 +103,10 @@ public class ReviewController {
 //    }
 
     // 리뷰 작성한 유저만 수정 가능
-    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewUpdateDTO.reviewId)")
+    @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(
+            @RequestParam(name = "reviewId") Long reviewId,
             @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
             @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
 

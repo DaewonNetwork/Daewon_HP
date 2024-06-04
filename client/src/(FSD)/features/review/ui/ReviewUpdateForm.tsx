@@ -54,11 +54,11 @@ const ReviewUpdateForm = () => {
     const onSubmit = (data: any) => {
         const formData = new FormData();
 
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewId: Number(reviewId), star: stars.filter(star => star).length }));
+        formData.append("reviewUpdateDTO", JSON.stringify({ reviewText: data.reviewText, reviewId: Number(reviewId), star: stars.filter(star => star).length }));
 
         formData.append("files", file);
 
-        mutate(formData);
+        mutate({ data: formData, reviewId: Number(reviewId) });
     }
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const ReviewUpdateForm = () => {
                     <FormTextareaShared placeholder={review.reviewText} isInvalid={!!errors.reviewText} size={"lg"} control={control} name={"reviewText"} />
                 </div>
                 <FileInputShared id={"review_img"} variant={"bordered"} setFile={setFile} fullWidth>이미지 업로드</FileInputShared>
-                <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>등록하기</Button>
+                <Button isDisabled={!isValid} type={"submit"} color={"primary"} fullWidth size={"lg"}>수정하기</Button>
             </InnerShared>
         </form>
     )
