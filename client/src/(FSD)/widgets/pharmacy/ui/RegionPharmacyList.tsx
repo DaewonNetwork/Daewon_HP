@@ -13,10 +13,6 @@ const RegionPharmacyList = () => {
 
     const { ref, inView } = useInView();
 
-    console.log(pharmacyList);
-    
-
-
     useEffect(() => {
         if (inView) {
             fetchNextPage();
