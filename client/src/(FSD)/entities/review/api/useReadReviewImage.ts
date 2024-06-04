@@ -3,12 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 const reviewImageReadFetch = async (reviewId: number) => {
     const response = await fetch(`http://localhost:8090/review/read/image?reviewId=${reviewId}`, {
         method: "GET",
-
+        headers: {
+            "Content-Type": "image/jpeg"
+        }
     });
 
-    if (!response.ok) {
-        throw new Error("Network response was not ok");
-    }
+    // if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    // }
 
     const data = await response;
 

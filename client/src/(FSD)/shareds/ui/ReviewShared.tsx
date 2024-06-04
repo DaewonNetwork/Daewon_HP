@@ -23,8 +23,8 @@ const ReviewShared = ({ review, parentRefetch, isWriter = false }: { review: Rev
 
     
     const aa = useReadReviewImage(review.reviewId);
-    
     console.log(aa.data);
+    console.log(aa.error);
 
     
 
