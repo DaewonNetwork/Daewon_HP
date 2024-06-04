@@ -11,14 +11,13 @@ const PharmacyEnjoyBtn = ({ phId, children, defaultLikeActive = false, parentRef
     useEffect(() => {}, [defaultLikeActive]);
 
     const onSuccess = (data: any) => {
-        
-
         if(parentRefetch) {
             parentRefetch();
         }
     };
 
     const { mutate } = usePharmacyEnjoyToggle({ onSuccess });
+
     return (
         <Button onClick={_ => mutate(Number(phId))} isIconOnly size={"sm"} variant={"light"} className={defaultLikeActive ? styles.active_like : ""} endContent={<TextXlargeShared><IconShared iconType={"like"} />{children}</TextXlargeShared>} />
     )

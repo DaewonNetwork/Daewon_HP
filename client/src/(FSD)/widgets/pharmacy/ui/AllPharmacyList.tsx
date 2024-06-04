@@ -6,7 +6,6 @@ import { useSearchAll } from "@/(FSD)/features/pharmacy/api/useSearchAll";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const AllPharmacyList = () => {
-    const [enjoy, setEnjoy] = useState();
     const { pharmacyList, fetchNextPage, refetch } = useSearchAll();
 
     const { ref, inView } = useInView();
