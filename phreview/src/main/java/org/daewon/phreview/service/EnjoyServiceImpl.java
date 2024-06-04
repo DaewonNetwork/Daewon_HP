@@ -62,7 +62,6 @@ public class EnjoyServiceImpl implements EnjoyService {
             log.info("즐겨찾기");
         } else { // 즐겨찾기를 이미 했을 때 즐겨찾기 취소
             EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(phId, userId); // EnjoyPh 객체 생성
-            enjoyPh.unEnjoyPh(pharmacyEnjoy); // EnjoyPh의 pharmacyEnjoy 객체에 해당하는 phId isEnjoy를 false로
             enjoyRepository.delete(enjoyPh); // 레코드 삭제
             pharmacyEnjoy.setEnjoyIndex(pharmacyEnjoy.getEnjoyIndex() - 1); // 즐겨찾기 수 -1
             if(pharmacyEnjoy.getEnjoyIndex() == 0){ // 즐겨찾기 수가 0일경우 삭제
