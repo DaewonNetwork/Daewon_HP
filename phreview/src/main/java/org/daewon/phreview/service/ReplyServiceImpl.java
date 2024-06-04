@@ -70,6 +70,7 @@ public class ReplyServiceImpl implements ReplyService {
         if(users != null){
             replyDTOList = replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
+                            .replyId(reply.getReplyId())
                             .userName(reply.getUsers().getUserName())
                             .replyText(reply.getReplyText())
                             .createAt(reply.getCreateAt().format(formatter))
@@ -80,6 +81,7 @@ public class ReplyServiceImpl implements ReplyService {
         }else{
             replyDTOList = replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
+                            .replyId(reply.getReplyId())
                             .userName(reply.getUsers().getUserName())
                             .replyText(reply.getReplyText())
                             .createAt(reply.getCreateAt().format(formatter))
@@ -124,6 +126,7 @@ public class ReplyServiceImpl implements ReplyService {
         if(users != null){
             replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
+                            .replyId(reply.getReplyId())
                             .userName(reply.getUsers().getUserName())
                             .replyText(reply.getReplyText())
                             .createAt(reply.getCreateAt().format(formatter))
@@ -134,6 +137,7 @@ public class ReplyServiceImpl implements ReplyService {
         }else{
             replies.stream()
                     .map(reply -> ReplyReadDTO.builder()
+                            .replyId(reply.getReplyId())
                             .userName(reply.getUsers().getUserName())
                             .replyText(reply.getReplyText())
                             .createAt(reply.getCreateAt().format(formatter))
