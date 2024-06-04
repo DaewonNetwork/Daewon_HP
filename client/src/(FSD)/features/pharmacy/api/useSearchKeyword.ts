@@ -1,5 +1,5 @@
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 const phSearchKeywordFetch = async ({ pageParam = 1, queryKey }: { pageParam?: number, queryKey: string[] }) => {
@@ -42,6 +42,8 @@ export const useSearchKeyword = (keyword: string) => {
         refetchOnMount: false,
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
+        placeholderData: keepPreviousData,
+        
     });
 
     const pharmacyList: PharmacyType[] = useMemo(() => {

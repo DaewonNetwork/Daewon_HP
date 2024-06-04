@@ -7,7 +7,7 @@ import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const AllPharmacyList = () => {
     const [enjoy, setEnjoy] = useState();
-    const { pharmacyList, fetchNextPage } = useSearchAll();
+    const { pharmacyList, fetchNextPage, refetch } = useSearchAll();
 
     const { ref, inView } = useInView();
 
@@ -22,7 +22,7 @@ const AllPharmacyList = () => {
             {
                 pharmacyList.map((pharmacy, index) => (
                     <React.Fragment key={index}>
-                        <PharmacyShared set={setEnjoy} pharmacy={pharmacy} />
+                        <PharmacyShared parentRefetch={refetch} pharmacy={pharmacy} />
                     </React.Fragment>
                 ))
             }

@@ -27,9 +27,7 @@ export const useAuthSignin = ({ onSuccess, onError }: MutationType) => {
         mutationFn: (userData: UserType) => {
             return authSigninFetch(userData);
         },
-        onSuccess: (data: UserType) => {
-            console.log(data);
-
+        onSuccess: (data: any) => {
             onSuccess(data);
         },
         onError: _ => {

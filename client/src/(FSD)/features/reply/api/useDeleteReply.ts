@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import { MutationType } from "../../types/mutation.type";
+import { MutationType } from "@/(FSD)/features/types/mutation.type";
+import { useMutation } from "@tanstack/react-query"
 
-const pharmacyEnjoyToggleFetch = async (phId: number) => {
-    const response = await fetch(`http://localhost:8090/api/enjoy?phId=${phId}`, {
-        method: "GET",
+const ReplyDeleteFetch = async (replyId: number) => {
+    const response = await fetch(`http://localhost:8090/api/reply?replyId=${replyId}`, {
+        method: "delete",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
@@ -16,13 +16,15 @@ const pharmacyEnjoyToggleFetch = async (phId: number) => {
     };
 
     const data = await response.json();
-
+    
     return data;
 };
 
-export const usePharmacyEnjoyToggle = ({ onSuccess, onError }: MutationType) => {
+export const useDeleteReply = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (phId: number) => pharmacyEnjoyToggleFetch(phId),
+        mutationFn: (replyId: number) => {
+            return ReplyDeleteFetch(replyId);
+        },
         onSuccess: (data: any) => {
             onSuccess(data);
         },

@@ -22,8 +22,8 @@ const reviewCreateFetch = async (data: FormData) => {
 
 export const useReviewCreate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: (userData: FormData) => {
-            return reviewCreateFetch(userData);
+        mutationFn: (data: FormData) => {
+            return reviewCreateFetch(data);
         },
         onSuccess: (data: any) => {
             onSuccess(data);
