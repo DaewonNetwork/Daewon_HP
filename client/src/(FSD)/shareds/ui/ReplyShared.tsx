@@ -7,8 +7,10 @@ import MenuBarShared from "./MenuBarShared";
 import { useDeleteReply } from "@/(FSD)/features/reply/api/useDeleteReply";
 import TextBoxShared from "./TextBoxShared";
 
-const ReplyShared = ({ reply, parentRefetch }: { reply: ReplyType; parentRefetch?: any }) => {
+const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyType; parentRefetch?: any; isWriter?: boolean }) => {
 
+    console.log(reply);
+    
     const onSuccess = (data: any) => {
         if (parentRefetch) {
             parentRefetch();

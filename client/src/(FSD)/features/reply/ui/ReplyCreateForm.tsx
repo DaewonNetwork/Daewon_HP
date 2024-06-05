@@ -35,7 +35,9 @@ const ReplyCreateForm = ({ parentRefetch } : { parentRefetch?: any }) => {
     const onSubmit = (data: any) => {
         mutate({ reviewId: Number(reviewId), replyText: data.replyText });
     }
-
+    
+    if(!localStorage.getItem("access_token")) return <></>;
+    
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>
             <InnerShared>

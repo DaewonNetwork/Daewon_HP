@@ -40,6 +40,8 @@ const ReplyUpdateForm = () => {
     }
 
     if(!reply) return <></>;
+    
+    if(!localStorage.getItem("access_token")) return <></>;
 
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>

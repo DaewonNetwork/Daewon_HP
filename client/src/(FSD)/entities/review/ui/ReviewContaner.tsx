@@ -35,7 +35,7 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
             <div className={styles.review_box}>
                 <InnerShared>
                     <TextLargeShared>리뷰</TextLargeShared>
-                    <LinkBtnShared href={`/review/create/${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>
+                    {!!localStorage.getItem("access_token") && <LinkBtnShared href={`/review/create/${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>}
                 </InnerShared>
             </div>
             <div className={styles.review_list}>

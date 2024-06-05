@@ -1,12 +1,15 @@
 "use client";
 
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MapMarker, Map } from "react-kakao-maps-sdk";
 
 const PharmacyMap = ({ pharmacyList }: { pharmacyList: PharmacyType[] }) => {
     const { kakao } = window;
     const [map, setMap] = useState<any>();
+
+    const router = useRouter();
 
     useEffect(() => {
         if(!kakao?.maps) return;
@@ -30,7 +33,9 @@ const PharmacyMap = ({ pharmacyList }: { pharmacyList: PharmacyType[] }) => {
                 pharmacyList.map((pharmacy, index) => {
                     return (
                         <React.Fragment key={index}>
-                            <MapMarker title={pharmacy.phName} position={{ lat: pharmacy.phY, lng: pharmacy.phX }} />
+                            <MapMarker onClick={(e) => {
+                                router.push(`/pharmacy/${e.getTitle()}`);
+                            }} title={`${pharmacy.phId}`} position={{ lat: pharmacy.phY, lng: pharmacy.phX }} />
                         </React.Fragment>
                     )
                 })
