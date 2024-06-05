@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useAuthSignin } from "../api/useAuthSIgnin";
 import { UserType } from "@/(FSD)/shareds/types/User.type";
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
+import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 
 const AuthSigninForm = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -63,7 +64,7 @@ const AuthSigninForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <label className={"text-medium font-semibold"} htmlFor={"email"}>이메일</label>
             <FormInputShared isClearable autoFocus={true} size={"lg"} variant={"underlined"} isInvalid={!!errors.email} radius={"none"} errorMessage={errors.email && <>{errors.email.message}</>} name={"email"} control={control} placeholder={"이메일을 입력해주세요."} />
             <label className={"text-medium font-semibold"} htmlFor={"password"}>비밀번호</label>

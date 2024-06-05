@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { UserType } from "@/(FSD)/shareds/types/User.type";
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
+import styles from "@/(FSD)/shareds/styles/AuthStyle.module.scss";
 
 const AuthSignupForm = () => {
     const userNameRegex = /^[가-힣a-zA-Z\s]{1,20}$/;
@@ -68,7 +69,7 @@ const AuthSignupForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <label className={"text-medium font-semibold"} htmlFor={"userName"}>이름</label>
             <FormInputShared isClearable size={"lg"} variant={"underlined"} isInvalid={!!errors.userName} errorMessage={errors.userName && <>{errors.userName.message}</>} name={"userName"} type={"text"} autoFocus={true} isRequired control={control} placeholder={"홍길동"} />
             <label className={"text-medium font-semibold"} htmlFor={"email"}>이메일</label>

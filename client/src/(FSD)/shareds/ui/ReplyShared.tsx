@@ -8,9 +8,6 @@ import { useDeleteReply } from "@/(FSD)/features/reply/api/useDeleteReply";
 import TextBoxShared from "./TextBoxShared";
 
 const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyType; parentRefetch?: any; isWriter?: boolean }) => {
-
-    console.log(reply);
-    
     const onSuccess = (data: any) => {
         if (parentRefetch) {
             parentRefetch();
@@ -31,7 +28,7 @@ const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyT
                 </div>
             </div>
             <div className={styles.writer_item}>
-                <MenuBarShared path={`/reply/update/${reply.replyId}`} mutate={mutate} id={reply.replyId} />
+                {isWriter && <MenuBarShared path={`/reply/update/${reply.replyId}`} mutate={mutate} id={reply.replyId} />}
             </div>
         </div>
     );
