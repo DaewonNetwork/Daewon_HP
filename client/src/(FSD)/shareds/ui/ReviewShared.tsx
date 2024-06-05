@@ -72,7 +72,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
                 {
                     (isViewReply && replyList) && replyList.map((reply, index) => (
                         <React.Fragment key={index}>
-                            <ReplyShared parentRefetch={parentRefetch} reply={reply} />
+                            <ReplyShared parentRefetch={parentRefetch} reply={reply} isWriter={reply.reply} />
                         </React.Fragment>
                     ))
                 }
