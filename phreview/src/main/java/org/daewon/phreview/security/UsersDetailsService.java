@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// Spring Security에서 사용자 인증을 처리하기 위해 UserDetailsService 인터페이스를 구현한 서비스 클래스
 @Service
 @Log4j2
 @RequiredArgsConstructor
@@ -23,11 +24,13 @@ public class UsersDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    // 이메일을 기반으로 사용자 정보를 로드하는 메서드
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info("loadUserByEmail : " + email);
 
+        // 이메일을 사용하여 사용자 조회
         Optional<Users> result = userRepository.findByEmail(email);
         log.info("result : " + result);
 
@@ -35,7 +38,7 @@ public class UsersDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Cannot find user with Email : " + email);
         }
 
-        Users users = result.get();
+        Users users = result.get(); // Optional에서 사용자 객체를 추출
 
         log.info("User found: " + users);
 
@@ -48,6 +51,7 @@ public class UsersDetailsService implements UserDetailsService {
         }
 
         // 권한을 SimpleGrantedAuthority로 변환
+        // 사용자의 역할을 SimpleGrantedAuthority로 변환하여 Spring Security의 권한 시스템과 통합
         List<SimpleGrantedAuthority> authorities;
         try {
             authorities = users.getRoleSet().stream()
@@ -59,6 +63,7 @@ public class UsersDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Cannot convert roles to authorities", e);
         }
 
+        // AuthSigninDTO 객체 생성 및 반환
         return new AuthSigninDTO(
                         users.getUserName(),
                         users.getPassword(),

@@ -40,7 +40,6 @@ public class TokenCheckFilter extends OncePerRequestFilter {    // OncePerReques
             return;
         }
 
-
         log.info("Token Check Filter......");
         log.info("JWTUtil : " + jwtUtil);
 
