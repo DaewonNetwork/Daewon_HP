@@ -45,7 +45,6 @@ public class ReviewController {
     @Value("${org.daewon.upload.path}")
     private String uploadPath;
 
-
     // ROLE_USER 권한을 가지고 있는 유저만 접근 가능
     @PreAuthorize("hasRole('USER')")
     // Content-Type : multipart/form-data, Accept : application/json 형태 이어야함
@@ -107,15 +106,16 @@ public class ReviewController {
     @PreAuthorize("@reviewAndReplySecurity.isReviewOwner(#reviewId)")
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> updateReview(
-            @RequestParam(name = "reviewId") Long reviewId, // reviewId를 URL 파라미터로 받음
+            @RequestParam(name = "reviewId") Long reviewId,
             @RequestPart("reviewUpdateDTO") String reviewUpdateDTOString, // reviewUpdateDTO를 문자열로 받음
             @RequestPart(name = "files", required = false) MultipartFile files) { // 파일을 받음
 
         // reviewUpdateDTOString을 올바르게 디코딩
+        ObjectMapper objectMapper = new ObjectMapper();
+        
         String decodedReviewDTO = new String(reviewUpdateDTOString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
         // decodedReviewDTO를 ReviewUpdateDTO 객체로 변환
-        ObjectMapper objectMapper = new ObjectMapper();
         ReviewUpdateDTO reviewUpdateDTO;
         try {
             reviewUpdateDTO = objectMapper.readValue(decodedReviewDTO, ReviewUpdateDTO.class);
@@ -123,26 +123,47 @@ public class ReviewController {
             throw new RuntimeException("Failed to parse reviewUpdateDTO", e); // 변환 실패 시 예외 처리
         }
 
+        log.info("files : " + files);
+
         // 기존의 updateReview 서비스 호출
-        reviewService.updateReview(reviewUpdateDTO, reviewId, files, uploadPath);
+        reviewService.updateReview(reviewUpdateDTO, files, uploadPath);
         return Map.of("result", "success");
     }
 
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/read")
-    public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
+    public ResponseEntity<ReviewReadDTO> readReview(@RequestParam(name = "reviewId") Long reviewId) {
         ReviewReadDTO review = reviewService.readReview(reviewId); // 리뷰 최신순
-        return review;
+        
+        return ResponseEntity.ok(review);
     }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/list")
-    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
-        return reviewList;
+    public ResponseEntity<List<ReviewReadDTO>> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
+        List<ReviewReadDTO> reviews = reviewService.readReviews(phId);
+
+        for(ReviewReadDTO review : reviews) {
+            ReviewImage reviewImage = reviewImageRepository.findByReviewId(review.getReviewId()).orElse(null);
+            if(reviewImage != null) {
+                review.setReviewImage(getImage(reviewImage.getUuid(),reviewImage.getFileName()));
+            } else{
+                review.setReviewImage(null);
+            }
+
+        }
+        return ResponseEntity.ok(reviews);
     }
 
+    public byte[] getImage(String uuid, String fileName) throws IOException {
+        String filePath = uploadPath + uuid + "_" + fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+        return image;
+    }
 
 
     @PreAuthorize("hasRole('USER')")
@@ -153,32 +174,7 @@ public class ReviewController {
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드된 폴더(createReview 시 파일 경로)
 
-    @Operation(summary = "이미지")
-    @GetMapping("/read/image")
-    public ResponseEntity<byte[]> readReviewImage(Long reviewId) {
-        try {
-            ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
-            if (reviewImage == null) {
-                log.info("Review Image Not Found");
-            }
-            String uuid = reviewImage.getUuid();
-            String fileName = reviewImage.getFileName();
-
-            String filePath = UPLOAD_FOLDER + uuid + "_" + fileName;
-
-            // 파일을 바이트 배열로 읽기
-            Path path = Paths.get(filePath);
-            byte[] image = Files.readAllBytes(path);
-
-            // 응답에 이미지와 Content-Type 설정 후 반환
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
-        } catch (IOException e) {
-            log.error("Error reading review image: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
 
 

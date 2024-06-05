@@ -7,24 +7,26 @@ import TextMediumShared from "./TextMediumShared";
 import ItemShared from "./ItemShared";
 import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 
-const PharmacyShared = ({ pharmacy, set }: { pharmacy: PharmacyType; set?: any }) => {
+const PharmacyShared = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyType; parentRefetch?: any; rank?: string }) => {
     if (!pharmacy) return;
     const router = useRouter();
 
     return (
         <div
             onClick={_ => {
-                router.push(`/pharmacy/${pharmacy.phId}`);
+            router.push(`/pharmacy/${pharmacy.phId}`);
             }}
             className={styles.pharmacy_item}
         >
             <ItemShared>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                    <TextLargeShared>{pharmacy.phName}</TextLargeShared>
-                    <PharmacyEnjoyBtn set={set} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
+                <div className={styles.top_item}>
+                    <TextLargeShared>{rank} {pharmacy.phName}</TextLargeShared>
+                    {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />}
                 </div>
-                <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
-                <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+                <div className={styles.btm_item}>
+                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                    <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+                </div>
             </ItemShared>
         </div>
     )

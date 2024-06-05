@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const phMapRegionFetch = async (city: string) => {
@@ -23,5 +23,7 @@ export const useMapRegion = (city: string) => {
     return useQuery({
         queryKey: ["map_region"],
         queryFn: () => phMapRegionFetch(city),
+        placeholderData: keepPreviousData,
+        
     });
 };

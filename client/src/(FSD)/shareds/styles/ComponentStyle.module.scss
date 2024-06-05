@@ -54,6 +54,24 @@ $form_height: 58px;
     z-index: 999;
 }
 
+.title_header {
+    height: 60px;
+    position: relative;
+
+    div[data-slot="inner"] {
+        display: flex;
+        align-items: center;
+    }
+
+    h1[data-slot="text_large"] {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
 .footer {
     display: block;
     width: 100%;
@@ -149,6 +167,7 @@ $form_height: 58px;
 
     .preview_img_box {
         display: block;
+        margin-bottom: 30px;
 
         .preview_img_item {
             width: 100%;
@@ -170,5 +189,15 @@ $form_height: 58px;
             }
         }
 
+    }
+}
+
+.text_box { 
+    max-width: 100%;
+    p {
+        max-width: 100%;
+        display: inline-block;
+        text-wrap: balance;
+        word-wrap: break-word;
     }
 }

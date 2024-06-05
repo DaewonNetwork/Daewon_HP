@@ -1,0 +1,45 @@
+.reply_item {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .item_inner {
+        max-width: 70%;
+        .top_item {
+            width: 100%;
+            display: flex;
+
+            h1 {
+                margin-right: 10px;
+            }
+        }
+    
+        .btm_item {
+            display: block;
+            margin-top: 10px;
+
+            div[data-slot="text_box"] {
+                padding: 5px;
+            }
+        }
+    }
+
+    .writer_item {
+        display: block;
+    }
+}
+
+.reply_form {
+    display: block;
+    margin-top: 20px;
+
+    h1[data-slot="text_large"] {
+        margin-bottom: 20px;
+    }
+
+    div[data-slot="base"] {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+}

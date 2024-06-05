@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { MutationType } from "../../types/mutation.type";
 
 const pharmacyEnjoyToggleFetch = async (phId: number) => {

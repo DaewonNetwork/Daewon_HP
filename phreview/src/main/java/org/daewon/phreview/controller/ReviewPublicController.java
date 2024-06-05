@@ -10,6 +10,8 @@ import org.daewon.phreview.dto.review.ReviewReadDTO;
 import org.daewon.phreview.repository.ReviewImageRepository;
 
 import org.daewon.phreview.service.ReviewService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +35,8 @@ public class ReviewPublicController {
     private final ReviewService reviewService;
     private final ReviewImageRepository reviewImageRepository;
 
+    @Value("${org.daewon.upload.path}")
+    private String uploadPath;
 
     @GetMapping("/read")
     public ReviewReadDTO readReview(@RequestParam(name = "reviewId") Long reviewId) {
@@ -40,12 +44,36 @@ public class ReviewPublicController {
         return review;
     }
 
+//    @GetMapping("/list")
+//    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
+//        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
+//        return reviewList;
+//    }
+
     @GetMapping("/list")
-    public List<ReviewReadDTO> readReviews(@RequestParam(name = "phId") Long phId) {
-        List<ReviewReadDTO> reviewList = reviewService.readReviews(phId); // 리뷰 최신순
-        return reviewList;
+    public ResponseEntity<?> readReviews(@RequestParam(name="phId")Long phId) throws IOException {
+        List<ReviewReadDTO> reviews = reviewService.readReviews(phId);
+
+        for(ReviewReadDTO review : reviews) {
+            ReviewImage reviewImage = reviewImageRepository.findByReviewId(review.getReviewId()).orElse(null);
+            if(reviewImage != null) {
+                review.setReviewImage(getImage(reviewImage.getUuid(),reviewImage.getFileName()));
+            } else{
+                review.setReviewImage(null);
+            }
+
+        }
+        return ResponseEntity.ok(reviews);
     }
 
+    public byte[] getImage(String uuid, String fileName) throws IOException {
+        String filePath = uploadPath + uuid + "_" + fileName;
+
+        // 파일을 바이트 배열로 읽기
+        Path path = Paths.get(filePath);
+        byte[] image = Files.readAllBytes(path);
+        return image;
+    }
 
 
     @Operation(summary = "모든 리뷰")
@@ -55,28 +83,9 @@ public class ReviewPublicController {
         return reviewlist;
     }
 
-    private static final String UPLOAD_FOLDER = "C:\\upload\\"; // 업로드듼 폴더(createReview시 파일 경로)
-    @Operation(summary = "이미지")
-    @GetMapping("/read/image")
-    public ResponseEntity<byte[]> readReviewImage(Long reviewId) throws IOException {
 
-        ReviewImage reviewImage = reviewImageRepository.findByReviewId(reviewId).orElse(null);
-        if (reviewImage == null) {
-            return ResponseEntity.notFound().build();
-        }
-        String uuid = reviewImage.getUuid();
-        String fileName = reviewImage.getFileName();
 
-        String filePath = UPLOAD_FOLDER + uuid+"_"+fileName;
 
-        // 파일을 바이트 배열로 읽기
-        Path path = Paths.get(filePath);
-        byte[] image = Files.readAllBytes(path);
-
-        log.info(image);
-        // 응답에 이미지와 Content-Type 설정 후 반환
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
-    }
 
 
 }

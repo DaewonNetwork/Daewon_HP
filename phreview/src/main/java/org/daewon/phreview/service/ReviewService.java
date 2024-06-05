@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReviewService {
     Long createReview(ReviewDTO reviewDTO, MultipartFile file, String uploadPath);
 
-    void updateReview(ReviewUpdateDTO reviewUpdateDTO,Long reviewId, MultipartFile files, String uploadPath);
+    void updateReview(ReviewUpdateDTO reviewUpdateDTO, MultipartFile files, String uploadPath);
 
     void deleteReview(Long reviewId);
 

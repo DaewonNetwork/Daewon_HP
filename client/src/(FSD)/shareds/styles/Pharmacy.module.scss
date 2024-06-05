@@ -1,21 +1,27 @@
 .pharmacy_item {
     display: block;
 
-    h1[data-slot="text_large"] {
-        padding-bottom: 8px;
+    .top_item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
     }
 
-    p[data-slot="text_medium"] {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .btm_item {
+        display: block;
+        p[data-slot="text_medium"] {
 
-        padding-bottom: 5px;
-
-        &:last-child {
-            padding-bottom: 0;
+            &:first-child{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+        
+                padding-bottom: 5px;
+            }
         }
     }
+
 }
 
 .active_like {
@@ -65,6 +71,24 @@
                     margin-left: 5px;
                 }
             }   
+        }
+    }
+
+    .pharmacy_date {
+        display: block;
+        margin-top: 20px;
+    }
+}
+
+.pharmacy_rank_container {
+    display: block;
+    margin-top: 20px;
+
+    .pharmacy_rank_List {
+        display: block;
+
+        &:first-child {
+            margin-bottom: 30px;
         }
     }
 }

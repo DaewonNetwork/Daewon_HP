@@ -27,8 +27,6 @@ export const useAuthSignup = ({ onSuccess, onError }: MutationType) => {
             return authSignupFetch(userData);
         },
         onSuccess: (data: UserType) => {
-            console.log(data);
-
             onSuccess(data);
         },
         onError: _ => {

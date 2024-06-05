@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { Input } from "@nextui-org/input";
 import IconShared from "./IconShared";

@@ -52,11 +52,7 @@ const AuthSignupForm = () => {
         router.push("/");
     }
 
-    const onError = () => {
-        console.log("error")
-    }
-
-    const { mutate } = useAuthSignup({ onSuccess, onError });
+    const { mutate } = useAuthSignup({ onSuccess });
 
     const onSubmit = (data: any) => {
         if ((!data.userName) || (!data.email) || (!data.password)) return;

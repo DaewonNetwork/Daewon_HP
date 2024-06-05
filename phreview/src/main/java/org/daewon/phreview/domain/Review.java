@@ -39,7 +39,7 @@ public class Review extends BaseEntity{
 
     private int star; // 평점
 
-    private int likeIndex; // 좋아요 인덱스
+
     private int replyIndex; // 좋아요 인덱스
 
     // 리뷰작성 내용 수정

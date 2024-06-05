@@ -16,4 +16,5 @@ public class PharmacyEnjoyRankListDTO {
     private String phAdd; // 병원 주소
     private double starAvg;
     private int enjoyIndex;
+    private boolean isEnjoy;
 }

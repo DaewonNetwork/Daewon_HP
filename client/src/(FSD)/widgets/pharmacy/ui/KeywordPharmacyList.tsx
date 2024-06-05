@@ -9,7 +9,7 @@ import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 const KeywordPharmacyList = () => {
     const { keyword } = useParams<{ keyword: string }>();
 
-    const { pharmacyList, fetchNextPage } = useSearchKeyword(keyword);
+    const { pharmacyList, fetchNextPage, refetch } = useSearchKeyword(keyword);
 
     const { ref, inView } = useInView();
 
@@ -24,7 +24,7 @@ const KeywordPharmacyList = () => {
             {
                 pharmacyList.map((pharmacy, index) => (
                     <React.Fragment key={index}>
-                        <PharmacyShared pharmacy={pharmacy} />
+                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))
             }

@@ -40,9 +40,10 @@ export const useSearchAll = () => {
         isFetchingNextPage,
         isError,
         isLoading,
+        refetch
     } = useInfiniteQuery({
         queryKey: ["search_all"],
-        queryFn: _ => phSearchAllFetch({ isLoggedIn: !!localStorage.getItem("access_token") }),
+        queryFn: ({ pageParam }) => phSearchAllFetch({ pageParam: pageParam,isLoggedIn: !!localStorage.getItem("access_token") }),
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;
@@ -60,5 +61,5 @@ export const useSearchAll = () => {
         return pharmacyList;
     }, [data]);
 
-    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage };
+    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage, refetch };
 };
