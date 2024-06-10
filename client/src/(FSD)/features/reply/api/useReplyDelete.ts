@@ -1,7 +1,7 @@
 import { MutationType } from "@/(FSD)/features/types/mutation.type";
 import { useMutation } from "@tanstack/react-query"
 
-const ReplyDeleteFetch = async (replyId: number) => {
+const replyDeleteFetch = async (replyId: number) => {
     const response = await fetch(`http://localhost:8090/api/reply?replyId=${replyId}`, {
         method: "delete",
         headers: {
@@ -20,10 +20,10 @@ const ReplyDeleteFetch = async (replyId: number) => {
     return data;
 };
 
-export const useDeleteReply = ({ onSuccess, onError }: MutationType) => {
+export const useReplyDelete = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
         mutationFn: (replyId: number) => {
-            return ReplyDeleteFetch(replyId);
+            return replyDeleteFetch(replyId);
         },
         onSuccess: (data: any) => {
             onSuccess(data);

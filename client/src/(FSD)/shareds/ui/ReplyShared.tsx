@@ -4,7 +4,7 @@ import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 import TextLargeShared from "./TextLargeShared";
 import TextMediumShared from "./TextMediumShared";
 import MenuBarShared from "./MenuBarShared";
-import { useDeleteReply } from "@/(FSD)/features/reply/api/useDeleteReply";
+import { useReplyDelete } from "@/(FSD)/features/reply/api/useReplyDelete";
 import TextBoxShared from "./TextBoxShared";
 
 const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyType; parentRefetch?: any; isWriter?: boolean }) => {
@@ -14,7 +14,7 @@ const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyT
         }
     }
 
-    const { mutate } = useDeleteReply({ onSuccess });
+    const { mutate } = useReplyDelete({ onSuccess });
 
     return (
         <div className={styles.reply_item}>
