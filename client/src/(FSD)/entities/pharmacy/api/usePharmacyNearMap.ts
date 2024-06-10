@@ -18,7 +18,7 @@ const phMapNearFetch = async (lat: number, lng: number) => {
     return data;
 };
 
-export const useMapNear = (lat: number, lng: number) => {
+export const usePharmacyNearMap = (lat: number, lng: number) => {
     return useQuery({
         queryKey: ["map_near"],
         queryFn: () => phMapNearFetch(lat, lng),

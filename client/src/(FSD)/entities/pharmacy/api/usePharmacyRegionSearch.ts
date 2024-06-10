@@ -34,7 +34,7 @@ const phSearchRegionFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { pa
     return data;
 };
 
-export const useSearchRegion = (city: string) => {
+export const usePharmacyRegionSearch = (city: string) => {
     const {
         data,
         fetchNextPage,

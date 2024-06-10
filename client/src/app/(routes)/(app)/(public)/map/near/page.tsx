@@ -5,7 +5,7 @@ import NearMap from "@/(FSD)/widgets/map/ui/NearMap";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
-import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
+import PharmacyRegionBar from "@/(FSD)/features/map/ui/PharmacyPharmacyRegionBar";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 
@@ -18,7 +18,7 @@ const Page = () => {
         <>
             <HeaderShared>
                 <AppHeader>
-                    <MapSearchRegion />
+                    <PharmacyRegionBar />
                 </AppHeader>
             </HeaderShared>
             <NearMap />

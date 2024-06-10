@@ -3,13 +3,13 @@
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useSearchKeyword } from "@/(FSD)/features/pharmacy/api/useSearchKeyword";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import { usePharmacyKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyKeywordSearch";
 
 const KeywordPharmacyList = () => {
     const { keyword } = useParams<{ keyword: string }>();
 
-    const { pharmacyList, fetchNextPage, refetch } = useSearchKeyword(keyword);
+    const { pharmacyList, fetchNextPage, refetch } = usePharmacyKeywordSearch(keyword);
 
     const { ref, inView } = useInView();
 

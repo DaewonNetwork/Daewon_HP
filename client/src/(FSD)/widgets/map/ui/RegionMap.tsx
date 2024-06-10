@@ -3,14 +3,14 @@
 import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { useParams } from "next/navigation";
-import { useMapRegion } from "@/(FSD)/features/map/api/useMapRegion";
+import { usePharmacyRegionMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionMap";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 
 const RegionMap = () => {
     const { city } = useParams<{ city: string }>();
 
-    const { data, isError, isLoading, refetch } = useMapRegion(city);
+    const { data, isError, isLoading, refetch } = usePharmacyRegionMap(city);
 
     const pharmacyList: PharmacyType[] = data;
     

@@ -2,13 +2,13 @@ import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-const phSearchRegionKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { pageParam?: number, queryKey: any[], isLoggedIn: boolean }) => {
-    const [, [city, keyword]] = queryKey;
+const phSearchKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { pageParam?: number, queryKey: any[], isLoggedIn: boolean }) => {
+    const [, keyword] = queryKey;
 
     let response;
 
     if(isLoggedIn) {
-        response = await fetch(`http://localhost:8090/api/pharmacy/region/search?city=${city}&keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
+        response = await fetch(`http://localhost:8090/api/pharmacy/search?keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const phSearchRegionKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn 
             },
         });
     } else {
-        response = await fetch(`http://localhost:8090/pharmacy/region/search?city=${city}&keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
+        response = await fetch(`http://localhost:8090/pharmacy/search?keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const phSearchRegionKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn 
     return data;
 };
 
-export const useSearchRegionKeyword = (city: string, keyword: string) => {
+export const usePharmacyKeywordSearch = (keyword: string) => {
     const {
         data,
         fetchNextPage,
@@ -44,8 +44,8 @@ export const useSearchRegionKeyword = (city: string, keyword: string) => {
         isLoading,
         refetch
     } = useInfiniteQuery({
-        queryKey: ["search_region_keyword", [city, keyword]],
-        queryFn: ({ pageParam, queryKey }) => phSearchRegionKeywordFetch({ pageParam, queryKey, isLoggedIn: !!localStorage.getItem("access_token") }),
+        queryKey: ["search_keyword", keyword],
+        queryFn: ({ pageParam, queryKey }) => phSearchKeywordFetch({ pageParam: pageParam, queryKey: queryKey, isLoggedIn: !!localStorage.getItem("access_token") }),
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;

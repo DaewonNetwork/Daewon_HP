@@ -3,13 +3,13 @@
 import React, { useEffect } from "react";
 import ReplyCreateForm from "@/(FSD)/features/reply/ui/ReplyCreateForm";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
-import { useReadReview } from "../../review/api/useReadReview";
+import { useReviewRead } from "../../review/api/useReviewRead";
 import { useParams, useRouter } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 
 const ReplyContainer = () => {
     const { reviewId } = useParams<{ reviewId: string }>();
-    const { data, refetch, isError } = useReadReview(Number(reviewId));
+    const { data, refetch, isError } = useReviewRead(Number(reviewId));
 
     const review: ReviewType = data;
 

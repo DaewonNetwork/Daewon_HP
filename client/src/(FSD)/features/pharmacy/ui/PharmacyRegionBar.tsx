@@ -7,8 +7,7 @@ import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import ContainerShared from "@/(FSD)/shareds/ui/ContainerShared";
 
-const MapSearchRegion = () => {
-
+const PharmacyRegionBar = () => {
     return (
         <nav className={styles.nav} data-slot={"nav"}>
             <ContainerShared>
@@ -26,4 +25,4 @@ const MapSearchRegion = () => {
     )
 }
 
-export default MapSearchRegion;
+export default PharmacyRegionBar;

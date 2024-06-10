@@ -2,14 +2,14 @@
 
 import React from "react";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
-import { useReadRankStarPharmacys } from "../api/useReadRankStarPharmacys";
+import { usePharmacyRankStarListRead } from "../api/usePharmacyRankStarListRead";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
 import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
 
 const PharmacyRankStarList = () => {
-    const { data, refetch } = useReadRankStarPharmacys();
+    const { data, refetch } = usePharmacyRankStarListRead();
 
     const pharmacyList: PharmacyType[] = data;
     

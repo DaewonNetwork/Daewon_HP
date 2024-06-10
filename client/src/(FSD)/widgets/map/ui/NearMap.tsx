@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { useMapNear } from "@/(FSD)/features/map/api/useMapNear";
+import { usePharmacyNearMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearMap";
 
 const NearMap = () => {
     const [lat, setLat] = useState<number>(0);
@@ -12,7 +12,7 @@ const NearMap = () => {
 
     const [isGeoError, setIsGeoError] = useState<boolean>(false);
 
-    const { data, isError, isLoading, refetch } = useMapNear(lat, lng);
+    const { data, isError, isLoading, refetch } = usePharmacyNearMap(lat, lng);
 
     useEffect(() => {
         if ("geolocation" in navigator) {

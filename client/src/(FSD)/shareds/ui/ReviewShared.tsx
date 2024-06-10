@@ -9,10 +9,10 @@ import TextMediumShared from "./TextMediumShared";
 import ReplyShared from "./ReplyShared";
 import { ReplyType } from "../types/Reply.type";
 import MenuBarShared from "./MenuBarShared";
-import { useDeleteReview } from "@/(FSD)/features/review/api/useDeleteReview";
+import { useReviewDelete } from "@/(FSD)/features/review/api/useReviewDelete";
 import TextBoxShared from "./TextBoxShared";
 import { DropdownItem } from "@nextui-org/dropdown";
-import { useReadReplys } from "@/(FSD)/entities/reply/api/useReadReplys";
+import { useReplysRead } from "@/(FSD)/entities/reply/api/useReplysRead";
 
 const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
     const [isViewReply, setIsViewReply] = useState(true);
@@ -20,7 +20,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
 
     if (!review) return <></>;
 
-    const { data, refetch } = useReadReplys(review.reviewId);
+    const { data, refetch } = useReplysRead(review.reviewId);
 
     const replyList: ReplyType[] = data;
 
@@ -37,7 +37,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
             grandParentFetch();
         }
     };
-    const { mutate } = useDeleteReview({ onSuccess });
+    const { mutate } = useReviewDelete({ onSuccess });
 
     return (
         <div onClick={_ => router.push(`/reply/create/${review.reviewId}`)} className={styles.review_item}>

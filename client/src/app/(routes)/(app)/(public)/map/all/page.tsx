@@ -1,9 +1,9 @@
 import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
-import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
+import PharmacyKeywordForm from "@/(FSD)/features/map/ui/PharmacyPharmacyKeywordForm";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
-import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
+import PharmacyRegionBar from "@/(FSD)/features/map/ui/PharmacyPharmacyRegionBar";
 import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
@@ -17,8 +17,8 @@ const Page = () => {
         <>
             <HeaderShared>
                 <AppHeader>
-                    <MapSearchForm />
-                    <MapSearchRegion />
+                    <PharmacyKeywordForm />
+                    <PharmacyRegionBar />
                 </AppHeader>
             </HeaderShared>
             <SectionShared>

@@ -5,12 +5,12 @@ import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { useParams } from "next/navigation";
 import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { useMapRegionKeyword } from "@/(FSD)/features/map/api/useMapRegionKeyword";
+import { usePharmacyRegionKeywordMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyMapRegionKeyword";
 
 const RegionKeywordMap = () => {
     const { city, keyword } = useParams<{ city: string, keyword: string }>();
 
-    const { data, isError, isLoading, refetch } = useMapRegionKeyword(city, keyword);
+    const { data, isError, isLoading, refetch } = usePharmacyRegionKeywordMap(city, keyword);
 
     const pharmacyList: PharmacyType[] = data;
 

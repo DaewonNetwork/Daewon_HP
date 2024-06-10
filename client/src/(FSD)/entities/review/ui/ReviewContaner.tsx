@@ -6,7 +6,7 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
-import { useReadReviews } from "@/(FSD)/entities/review/api/useReadReviews";
+import { useReviewsRead } from "@/(FSD)/entities/review/api/useReviewsRead";
 import { useParams, useRouter } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
@@ -14,7 +14,7 @@ import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
     const { phId } = useParams<{ phId: string }>();
 
-    const { data, refetch } = useReadReviews(Number(phId));
+    const { data, refetch } = useReviewsRead(Number(phId));
     
     const reviewList: ReviewType[] = data;
 

@@ -10,7 +10,7 @@ import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 
-const MapSearchForm = () => {
+const PharmacyKeywordForm = () => {
     const schema = z.object({
         keyword: z.string().min(1).max(20)
     });
@@ -35,4 +35,4 @@ const MapSearchForm = () => {
     )
 }
 
-export default MapSearchForm;
+export default PharmacyKeywordForm;

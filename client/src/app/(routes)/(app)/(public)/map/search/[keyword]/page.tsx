@@ -3,10 +3,10 @@ import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
 import KeywordMap from "@/(FSD)/widgets/map/ui/KeywordMap";
 import { Metadata } from "next";
-import MapSearchForm from "@/(FSD)/features/pharmacy/ui/MapSearchForm";
+import PharmacyKeywordForm from "@/(FSD)/features/map/ui/PharmacyPharmacyKeywordForm";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import MapSearchRegion from "@/(FSD)/features/pharmacy/ui/MapSearchRegion";
+import PharmacyRegionBar from "@/(FSD)/features/map/ui/PharmacyPharmacyRegionBar";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 
@@ -19,8 +19,8 @@ const Page = () => {
         <>
             <HeaderShared>
                 <AppHeader>
-                    <MapSearchRegion />
-                    <MapSearchForm />
+                    <PharmacyRegionBar />
+                    <PharmacyKeywordForm />
                 </AppHeader>
             </HeaderShared>
             <KeywordMap />

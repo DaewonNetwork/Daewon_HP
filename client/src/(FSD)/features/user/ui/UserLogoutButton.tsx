@@ -10,16 +10,13 @@ const UserLogoutButton = () => {
     const { setUser } = useUserStore();
     const router = useRouter();
 
-
     const onSuccess = () => {
-        // router.push("/");
         setUser(null);
 
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
 
-
-        // router.push("/");
+        router.push("/");
     }
     
     const { mutate } = useUserLogout({ onSuccess });

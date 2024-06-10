@@ -3,13 +3,13 @@
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useSearchRegionKeyword } from "@/(FSD)/features/pharmacy/api/useSearchRegionKeyword";
+import { usePharmacyRegionKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionKeywordSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const RegionKeywordPharmacyList = () => {
     const { city, keyword } = useParams<{ city: string, keyword: string }>();
 
-    const { pharmacyList, fetchNextPage, refetch } = useSearchRegionKeyword(city, keyword);
+    const { pharmacyList, fetchNextPage, refetch } = usePharmacyRegionKeywordSearch(city, keyword);
 
     const { ref, inView } = useInView();
 

@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useSearchAll } from "@/(FSD)/features/pharmacy/api/useSearchAll";
+import { usePharmacyAllSearch } from "@/(FSD)/features/pharmacy/api/usePharmacyAllSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const AllPharmacyList = () => {
-    const { pharmacyList, fetchNextPage, refetch } = useSearchAll();
+    const { pharmacyList, fetchNextPage, refetch } = usePharmacyAllSearch();
 
     const { ref, inView } = useInView();
 

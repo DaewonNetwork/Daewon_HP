@@ -14,13 +14,13 @@ import { useParams, useRouter } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import { useReviewUpdate } from "../api/useReviewUpdate";
-import { useReadReview } from "@/(FSD)/entities/review/api/useReadReview";
+import { useReviewRead } from "@/(FSD)/entities/review/api/useReviewRead";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
 const ReviewUpdateForm = () => {
     const { reviewId } = useParams<{ reviewId: string }>();
 
-    const { data } = useReadReview(Number(reviewId));
+    const { data } = useReviewRead(Number(reviewId));
 
     const review: ReviewType = data;
 

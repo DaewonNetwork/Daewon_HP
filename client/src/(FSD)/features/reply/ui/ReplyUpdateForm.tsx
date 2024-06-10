@@ -10,13 +10,13 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import FormTextareaShared from "@/(FSD)/shareds/ui/FormTextareaShared";
 import { Button } from "@nextui-org/button";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
-import { useReadReply } from "@/(FSD)/entities/reply/api/useReadReply";
+import { useReplyRead } from "@/(FSD)/entities/reply/api/useReplyRead";
 import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
 
 const ReplyUpdateForm = () => {
     const { replyId } = useParams<{ replyId: string }>();
 
-    const { data } = useReadReply(Number(replyId));
+    const { data } = useReplyRead(Number(replyId));
 
     const reply: ReplyType = data;
 

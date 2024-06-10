@@ -10,7 +10,7 @@ import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
 import { useParams, useRouter } from "next/navigation";
 
-const MapSearchRegionKeywordForm = () => {
+const PharmacyRegionKeywordForm = () => {
     const router = useRouter();
     const { city } = useParams<{ city: string }>();
 
@@ -36,4 +36,4 @@ const MapSearchRegionKeywordForm = () => {
     )
 }
 
-export default MapSearchRegionKeywordForm;
+export default PharmacyRegionKeywordForm;

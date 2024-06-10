@@ -18,7 +18,7 @@ const phMapKeywordFetch = async (keyword: string) => {
     return data;
 };
 
-export const useMapKeyword = (keyword: string) => {
+export const usePharmacyKeywordMap = (keyword: string) => {
     return useQuery({
         queryKey: ["map_keyword"],
         queryFn: () => phMapKeywordFetch(keyword),

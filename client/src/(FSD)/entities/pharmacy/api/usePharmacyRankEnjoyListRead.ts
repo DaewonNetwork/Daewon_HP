@@ -1,19 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 
-const reviewsReadFetch = async (phId: number, isLoggedIn: boolean) => {
+const readRankEnjoyPharmacysFetch = async (isLoggedIn: boolean) => {
     let response;
 
     if(isLoggedIn) {
-        response = await fetch(`http://localhost:8090/api/review/list?phId=${phId}`, {
+        response = await fetch("http://localhost:8090/api/pharmacy/rank/enjoy", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
-
             },
         });
     } else {
-        response = await fetch(`http://localhost:8090/review/list?phId=${phId}`, {
+        response = await fetch("http://localhost:8090/pharmacy/rank/enjoy", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -31,9 +30,9 @@ const reviewsReadFetch = async (phId: number, isLoggedIn: boolean) => {
     return data;
 };
 
-export const useReadReviews = (phId: number) => {
+export const usePharmacyRankEnjoyListRead = () => {
     return useQuery({
-        queryKey: ["reviews_read"],
-        queryFn: _ => reviewsReadFetch(phId, !!localStorage.getItem("access_token"))
+        queryKey: ["read_rank_enjoy_pharmacys"],
+        queryFn: _ => readRankEnjoyPharmacysFetch(!!localStorage.getItem("access_token")),
     });
 };

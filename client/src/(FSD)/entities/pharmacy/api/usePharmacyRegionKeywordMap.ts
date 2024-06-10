@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-const phMapRegionFetch = async (city: string) => {
-    const response = await fetch(`http://localhost:8090/map/region?city=${city}`, {
+const phMapRegionKeywordFetch = async (city: string, keyword: string) => {
+    const response = await fetch(`http://localhost:8090/map/region/search?city=${city}&keyword=${keyword}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -12,16 +12,16 @@ const phMapRegionFetch = async (city: string) => {
         const errorMessage = await response.text();
         throw new Error(errorMessage);
     };
-    
+
     const data = await response.json();
     
     return data;
 };
 
-export const useMapRegion = (city: string) => {
+export const usePharmacyRegionKeywordMap = (city: string, keyword: string) => {
     return useQuery({
-        queryKey: ["map_region"],
-        queryFn: () => phMapRegionFetch(city),
+        queryKey: ["map_region_keyword"],
+        queryFn: () => phMapRegionKeywordFetch(city, keyword),
         placeholderData: keepPreviousData,
         
     });

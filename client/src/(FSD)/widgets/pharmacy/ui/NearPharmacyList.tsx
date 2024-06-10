@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useSearchNear } from "@/(FSD)/features/pharmacy/api/useSearchNear";
+import { usePharmacyNearSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
 const NearPharmacyList = () => {
@@ -24,7 +24,7 @@ const NearPharmacyList = () => {
         }
     }, [lat, lng]);
 
-    const { pharmacyList, fetchNextPage, refetch } = useSearchNear(lat, lng);
+    const { pharmacyList, fetchNextPage, refetch } = usePharmacyNearSearch(lat, lng);
 
 
     const { ref, inView } = useInView();

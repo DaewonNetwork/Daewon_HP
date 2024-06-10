@@ -19,7 +19,7 @@ const myReviewsReadFetch = async () => {
     return data;
 };
 
-export const useReadMyReviews = () => {
+export const useUserReviewsRead = () => {
     return useQuery({
         queryKey: ["my_reviews_read"],
         queryFn: _ => myReviewsReadFetch(),

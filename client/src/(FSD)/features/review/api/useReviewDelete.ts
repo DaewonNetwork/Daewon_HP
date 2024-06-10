@@ -20,7 +20,7 @@ const reviewDeleteFetch = async (reviewId: number) => {
     return data;
 };
 
-export const useDeleteReview = ({ onSuccess, onError }: MutationType) => {
+export const useReviewDelete = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
         mutationFn: (reviewId: number) => {
             return reviewDeleteFetch(reviewId);

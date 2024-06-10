@@ -33,7 +33,7 @@ const phSearchNearFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { page
     return data;
 };
 
-export const useSearchNear = (lat: number, lng: number) => {
+export const usePharmacyNearSearch = (lat: number, lng: number) => {
     const {
         data,
         fetchNextPage,

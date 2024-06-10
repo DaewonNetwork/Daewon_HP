@@ -19,7 +19,7 @@ const myReplyReadFetch = async () => {
     return data;
 };
 
-export const useReadMyReply = () => {
+export const useUserReplysRead = () => {
     return useQuery({
         queryKey: ["my_reply_read"],
         queryFn: _ => myReplyReadFetch(),

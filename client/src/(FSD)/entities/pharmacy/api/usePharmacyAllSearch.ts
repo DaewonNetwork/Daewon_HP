@@ -1,14 +1,12 @@
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-const phSearchKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { pageParam?: number, queryKey: any[], isLoggedIn: boolean }) => {
-    const [, keyword] = queryKey;
-
+const phSearchAllFetch = async ({ pageParam = 1, isLoggedIn }: { pageParam?: number, isLoggedIn: boolean }) => {
     let response;
 
     if(isLoggedIn) {
-        response = await fetch(`http://localhost:8090/api/pharmacy/search?keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
+        response = await fetch(`http://localhost:8090/api/pharmacy/all?pageIndex=${pageParam}&size=10`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -16,7 +14,7 @@ const phSearchKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { p
             },
         });
     } else {
-        response = await fetch(`http://localhost:8090/pharmacy/search?keyword=${keyword}&pageIndex=${pageParam}&size=10`, {
+        response = await fetch(`http://localhost:8090/pharmacy/all?pageIndex=${pageParam}&size=10`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +32,7 @@ const phSearchKeywordFetch = async ({ pageParam = 1, queryKey, isLoggedIn }: { p
     return data;
 };
 
-export const useSearchKeyword = (keyword: string) => {
+export const usePharmacyAllSearch = () => {
     const {
         data,
         fetchNextPage,
@@ -44,8 +42,8 @@ export const useSearchKeyword = (keyword: string) => {
         isLoading,
         refetch
     } = useInfiniteQuery({
-        queryKey: ["search_keyword", keyword],
-        queryFn: ({ pageParam, queryKey }) => phSearchKeywordFetch({ pageParam: pageParam, queryKey: queryKey, isLoggedIn: !!localStorage.getItem("access_token") }),
+        queryKey: ["search_all"],
+        queryFn: ({ pageParam }) => phSearchAllFetch({ pageParam: pageParam,isLoggedIn: !!localStorage.getItem("access_token") }),
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;
@@ -56,8 +54,6 @@ export const useSearchKeyword = (keyword: string) => {
         refetchOnMount: false,
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
-        placeholderData: keepPreviousData,
-        
     });
 
     const pharmacyList: PharmacyType[] = useMemo(() => {
