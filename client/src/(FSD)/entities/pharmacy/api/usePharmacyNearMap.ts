@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 const phMapNearFetch = async (lat: number, lng: number) => {
-    const response = await fetch(`http://localhost:8090/map/near?lat=${lat}&lng=${lng}`, {
+    const response = await fetch(`http://localhost:8090/pharmacy/near?lat=${lat}&lng=${lng}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

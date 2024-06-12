@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const phMapKeywordFetch = async (keyword: string) => {
-    const response = await fetch(`http://localhost:8090/map/search?keyword=${keyword}`, {
+    const response = await fetch(`http://localhost:8090/pharmacy/search?keyword=${keyword}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

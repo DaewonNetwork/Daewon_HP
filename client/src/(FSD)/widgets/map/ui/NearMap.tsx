@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
-import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
+import PharmacyMap from "@/(FSD)/entities/pharmacy/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { usePharmacyNearMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearMap";
 

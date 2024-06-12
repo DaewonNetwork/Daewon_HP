@@ -25,7 +25,7 @@ const PharmacyRegionKeywordForm = () => {
 
     const onSubmit = (data: any) => {
         if(data.keyword) {
-            router.push(`/map/region/search/${city}/${data.keyword}`); 
+            router.push(`/pharmacy/region/search/${city}/${data.keyword}`); 
         }
     }
 

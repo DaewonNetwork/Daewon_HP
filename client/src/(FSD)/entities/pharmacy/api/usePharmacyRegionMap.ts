@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const phMapRegionFetch = async (city: string) => {
-    const response = await fetch(`http://localhost:8090/map/region?city=${city}`, {
+    const response = await fetch(`http://localhost:8090/pharmacy/region?city=${city}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { useParams } from "next/navigation";
 import { usePharmacyRegionMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionMap";
-import PharmacyMap from "@/(FSD)/entities/map/ui/PharmacyMap";
+import PharmacyMap from "@/(FSD)/entities/pharmacy/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 
 const RegionMap = () => {

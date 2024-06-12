@@ -1,9 +1,9 @@
 import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
-import PharmacyKeywordForm from "@/(FSD)/features/map/ui/PharmacyPharmacyKeywordForm";
+import PharmacyKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyKeywordForm";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
-import PharmacyRegionBar from "@/(FSD)/features/map/ui/PharmacyPharmacyRegionBar";
+import PharmacyRegionBar from "@/(FSD)/features/pharmacy/ui/PharmacyRegionBar";
 import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
