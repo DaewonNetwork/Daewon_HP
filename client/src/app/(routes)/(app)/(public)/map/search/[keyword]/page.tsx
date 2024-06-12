@@ -9,6 +9,7 @@ import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import PharmacyRegionBar from "@/(FSD)/features/pharmacy/ui/PharmacyRegionBar";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
+import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 
 export const metadata: Metadata = {
     title: "HP - 키워드 검색",
@@ -23,7 +24,9 @@ const Page = () => {
                     <PharmacyKeywordForm />
                 </AppHeader>
             </HeaderShared>
-            <PharmacyKeywordMap />
+            <SectionShared>
+                <PharmacyKeywordMap />
+            </SectionShared>
             <FooterShared>
                 <ModalShared>
                     <PharmacyKeywordList />
