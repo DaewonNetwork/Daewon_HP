@@ -1,8 +1,8 @@
-import PharmacyRegionKeywordList from "@/(FSD)/widgets/pharmacy/ui/PharmacyRegionKeywordList";
+import PharmacyRegionKeywordList from "@/(FSD)/entities/pharmacy/ui/PharmacyRegionKeywordList";
 import React from "react";
 import PharmacyRegionKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyRegionKeywordForm";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import PharmacyRegionKeywordMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyRegionKeywordMap";
+import PharmacyRegionKeywordMap from "@/(FSD)/entities/pharmacy/ui/PharmacyRegionKeywordMap";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";

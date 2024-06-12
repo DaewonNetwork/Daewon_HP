@@ -1,4 +1,4 @@
-import PharmacyAllList from "@/(FSD)/widgets/pharmacy/ui/PharmacyAllList";
+import PharmacyAllList from "@/(FSD)/entities/pharmacy/ui/PharmacyAllList";
 import PharmacyKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyKeywordForm";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";

@@ -1,7 +1,7 @@
-import PharmacyKeywordList from "@/(FSD)/widgets/pharmacy/ui/PharmacyKeywordList";
+import PharmacyKeywordList from "@/(FSD)/entities/pharmacy/ui/PharmacyKeywordList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import PharmacyKeywordMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyKeywordMap";
+import PharmacyKeywordMap from "@/(FSD)/entities/pharmacy/ui/PharmacyKeywordMap";
 import { Metadata } from "next";
 import PharmacyKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyKeywordForm";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";

@@ -1,7 +1,7 @@
-import PharmacyNearList from "@/(FSD)/widgets/pharmacy/ui/PharmacyNearList";
+import PharmacyNearList from "@/(FSD)/entities/pharmacy/ui/PharmacyNearList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import PharmacyNearMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyNearMap";
+import PharmacyNearMap from "@/(FSD)/entities/pharmacy/ui/PharmacyNearMap";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
