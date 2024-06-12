@@ -5,11 +5,12 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import { usePharmacyKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyKeywordSearch";
+import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyKeywordList = () => {
     const { keyword } = useParams<{ keyword: string }>();
 
-    const { pharmacyList, fetchNextPage, refetch } = usePharmacyKeywordSearch(keyword);
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyKeywordSearch(keyword);
 
     const { ref, inView } = useInView();
 
@@ -28,7 +29,18 @@ const PharmacyKeywordList = () => {
                     </React.Fragment>
                 ))
             }
-            <div ref={ref} />
+            {
+                isFetchingNextPage ? <>
+                    <PharmacySkeletonShared />
+                    {
+                        Array.from({ length: 9 }).map((_, index) => (
+                            <React.Fragment key={index}>
+                                <PharmacySkeletonShared />
+                            </React.Fragment>
+                        ))
+                    }
+                </> : <div ref={ref} />
+            }
         </>
     );
 };

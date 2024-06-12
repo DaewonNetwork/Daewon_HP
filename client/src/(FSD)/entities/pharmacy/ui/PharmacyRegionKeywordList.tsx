@@ -5,11 +5,12 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyRegionKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionKeywordSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyRegionKeywordList = () => {
     const { city, keyword } = useParams<{ city: string, keyword: string }>();
 
-    const { pharmacyList, fetchNextPage, refetch } = usePharmacyRegionKeywordSearch(city, keyword);
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyRegionKeywordSearch(city, keyword);
 
     const { ref, inView } = useInView();
 
@@ -28,7 +29,18 @@ const PharmacyRegionKeywordList = () => {
                     </React.Fragment>
                 ))
             }
-            <div ref={ref} />
+            {
+                isFetchingNextPage ? <>
+                    <PharmacySkeletonShared />
+                    {
+                        Array.from({ length: 9 }).map((_, index) => (
+                            <React.Fragment key={index}>
+                                <PharmacySkeletonShared />
+                            </React.Fragment>
+                        ))
+                    }
+                </> : <div ref={ref} />
+            }
         </>
     );
 };

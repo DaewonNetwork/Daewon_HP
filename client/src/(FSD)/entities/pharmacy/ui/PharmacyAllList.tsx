@@ -26,16 +26,18 @@ const PharmacyAllList = () => {
                     </React.Fragment>
                 ))
             }
-            {isFetchingNextPage ? <>
-                <PharmacySkeletonShared />
-                {
-                    Array.from({ length: 9 }).map((_, index) => (
-                        <React.Fragment key={index}>
-                            <PharmacySkeletonShared />
-                        </React.Fragment>
-                    ))
-                }
-            </> : <div ref={ref} />}
+            {
+                isFetchingNextPage ? <>
+                    <PharmacySkeletonShared />
+                    {
+                        Array.from({ length: 9 }).map((_, index) => (
+                            <React.Fragment key={index}>
+                                <PharmacySkeletonShared />
+                            </React.Fragment>
+                        ))
+                    }
+                </> : <div ref={ref} />
+            }
         </>
     );
 };

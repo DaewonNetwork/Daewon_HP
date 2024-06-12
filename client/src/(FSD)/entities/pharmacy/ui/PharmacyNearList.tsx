@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyNearSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyNearList = () => {
     const [lat, setLat] = useState<number>(0);
@@ -24,7 +25,7 @@ const PharmacyNearList = () => {
         }
     }, [lat, lng]);
 
-    const { pharmacyList, fetchNextPage, refetch } = usePharmacyNearSearch(lat, lng);
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyNearSearch(lat, lng);
 
 
     const { ref, inView } = useInView();
@@ -47,7 +48,18 @@ const PharmacyNearList = () => {
                     </React.Fragment>
                 ))
             }
-            <div ref={ref} />
+            {
+                isFetchingNextPage ? <>
+                    <PharmacySkeletonShared />
+                    {
+                        Array.from({ length: 9 }).map((_, index) => (
+                            <React.Fragment key={index}>
+                                <PharmacySkeletonShared />
+                            </React.Fragment>
+                        ))
+                    }
+                </> : <div ref={ref} />
+            }
         </>
     );
 };
