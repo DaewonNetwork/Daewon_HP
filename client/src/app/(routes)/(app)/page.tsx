@@ -20,10 +20,8 @@ const Page = () => {
                 </AppHeader>
             </HeaderShared>
             <SectionShared>
-                <div className={styles.pharmacy_rank_container}>
-                    <PharmacyRankEnjoyList />
-                    <PharmacyRankStarList />
-                </div>
+                <PharmacyRankEnjoyList />
+                <PharmacyRankStarList />
             </SectionShared>
             <FooterShared>
                 <AppFooter />
