@@ -4,4 +4,5 @@ export interface FetchType {
     contentType?: string;
     isAuthRequired?: boolean;
     isNotAuthRequired?: boolean;
+    body?: any;
 }

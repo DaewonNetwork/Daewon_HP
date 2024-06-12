@@ -1,7 +1,7 @@
 import { FetchType } from "../types/FetchData.type";
 
 
-export const fetchData = async ({ path, method = "GET", contentType = "application/json", isAuthRequired = false, isNotAuthRequired = false }: FetchType) => {
+export const fetchData = async ({ path, method = "GET", contentType = "application/json", isAuthRequired = false, isNotAuthRequired = false, body }: FetchType) => {
     let response = null;
 
     const isLoggedIn: boolean = !!localStorage.getItem("access_token");
@@ -11,8 +11,9 @@ export const fetchData = async ({ path, method = "GET", contentType = "applicati
             method: method,
             headers: {
                 "Content-Type": contentType,
-                "Authorization": `Bearer ${localStorage.getItem("access_token")}`
-            }
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: body
         });
     } else {
         response = await fetch(`http://localhost:8090${path}`, {

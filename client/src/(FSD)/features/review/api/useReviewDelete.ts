@@ -1,29 +1,11 @@
 import { MutationType } from "@/(FSD)/features/types/mutation.type";
+import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 import { useMutation } from "@tanstack/react-query"
-
-const reviewDeleteFetch = async (reviewId: number) => {
-    const response = await fetch(`http://localhost:8090/api/review?reviewId=${reviewId}`, {
-        method: "delete",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
-        },
-    });
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    };
-
-    const data = await response.json();
-    
-    return data;
-};
 
 export const useReviewDelete = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
         mutationFn: (reviewId: number) => {
-            return reviewDeleteFetch(reviewId);
+            return fetchData({ path: `/review?reviewId=${reviewId}`, method: "DELETE", isAuthRequired: true });
         },
         onSuccess: (data: any) => {
             onSuccess(data);
