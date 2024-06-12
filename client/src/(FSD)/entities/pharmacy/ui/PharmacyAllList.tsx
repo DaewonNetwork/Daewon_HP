@@ -4,9 +4,10 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyAllSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyAllSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyAllList = () => {
-    const { pharmacyList, fetchNextPage, refetch } = usePharmacyAllSearch();
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyAllSearch();
 
     const { ref, inView } = useInView();
 
@@ -25,7 +26,16 @@ const PharmacyAllList = () => {
                     </React.Fragment>
                 ))
             }
-            <div ref={ref} />
+            {isFetchingNextPage ? <>
+                <PharmacySkeletonShared />
+                {
+                    Array.from({ length: 9 }).map((_, index) => (
+                        <React.Fragment key={index}>
+                            <PharmacySkeletonShared />
+                        </React.Fragment>
+                    ))
+                }
+            </> : <div ref={ref} />}
         </>
     );
 };
