@@ -10,7 +10,7 @@ export const usePharmacyKeywordSearch = (keyword: string) => {
         hasNextPage,
         isFetchingNextPage,
         isError,
-        isLoading,
+        isPending,
         refetch
     } = useInfiniteQuery({
         queryKey: ["search_keyword", keyword],
@@ -34,5 +34,5 @@ export const usePharmacyKeywordSearch = (keyword: string) => {
         return pharmacyList;
     }, [data]);
 
-    return { pharmacyList, isLoading, isError, fetchNextPage, isFetchingNextPage, hasNextPage, refetch };
+    return { pharmacyList, isPending, isError, fetchNextPage, isFetchingNextPage, hasNextPage, refetch };
 };

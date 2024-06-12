@@ -12,7 +12,7 @@ const PharmacyNearMap = () => {
 
     const [isGeoError, setIsGeoError] = useState<boolean>(false);
 
-    const { data, isError, isLoading, refetch } = usePharmacyNearMap(lat, lng);
+    const { data, isError, isPending, refetch } = usePharmacyNearMap(lat, lng);
 
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -34,7 +34,7 @@ const PharmacyNearMap = () => {
     
     if(isGeoError) return <></>;
     if(isError) return <></>;
-    if(isLoading) return <></>;
+    if(isPending) return <></>;
     if((!pharmacyList) || (!pharmacyList[0])) return <></>;
 
 

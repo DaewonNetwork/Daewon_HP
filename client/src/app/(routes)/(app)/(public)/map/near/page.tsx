@@ -22,9 +22,7 @@ const Page = () => {
                     <PharmacyRegionBar />
                 </AppHeader>
             </HeaderShared>
-            <SectionShared>
-                <PharmacyNearMap />
-            </SectionShared>
+            <PharmacyNearMap />
             <FooterShared>
                 <ModalShared>
                     <PharmacyNearList />

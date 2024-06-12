@@ -10,7 +10,7 @@ import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 const PharmacyRegionMap = () => {
     const { city } = useParams<{ city: string }>();
 
-    const { data, isError, isLoading, refetch } = usePharmacyRegionMap(city);
+    const { data, isError, isPending, refetch } = usePharmacyRegionMap(city);
 
     const pharmacyList: PharmacyType[] = data;
     
@@ -20,7 +20,7 @@ const PharmacyRegionMap = () => {
     }, [data, city]);
     
     if(isError) return <></>;
-    if(isLoading) return <></>;
+    if(isPending) return <></>;
 
     return (
         <div className={styles.map}>

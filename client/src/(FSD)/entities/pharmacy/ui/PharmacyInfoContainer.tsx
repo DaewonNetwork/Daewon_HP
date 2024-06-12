@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 
 const PharmacyInfoContainer = () => {
     const { phId } = useParams<{ phId: string }>();
-    const { data, isError, isLoading, refetch } = usePharmacyRead(Number(phId));
+    const { data, isError, isPending, refetch } = usePharmacyRead(Number(phId));
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const PharmacyInfoContainer = () => {
 
     if (isError) return <></>;
 
-    if (isLoading) return <></>;
+    if (isPending) return <></>;
 
     return (
         <>

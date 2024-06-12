@@ -10,7 +10,7 @@ import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 const PharmacyKeywordMap = () => {
     const { keyword } = useParams<{ keyword: string }>();
 
-    const { data, isError, isLoading, refetch } = usePharmacyKeywordMap(keyword);
+    const { data, isError, isPending, refetch } = usePharmacyKeywordMap(keyword);
 
     const pharmacyList: PharmacyType[] = data;
     
@@ -20,7 +20,7 @@ const PharmacyKeywordMap = () => {
     }, [data, keyword]);
 
     if(isError) return <></>;
-    if(isLoading) return <></>;
+    if(isPending) return <></>;
 
     return (
         <div className={styles.map}>

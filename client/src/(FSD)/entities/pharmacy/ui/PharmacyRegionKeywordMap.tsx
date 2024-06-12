@@ -10,7 +10,7 @@ import { usePharmacyRegionKeywordMap } from "@/(FSD)/entities/pharmacy/api/usePh
 const PharmacyRegionKeywordMap = () => {
     const { city, keyword } = useParams<{ city: string, keyword: string }>();
 
-    const { data, isError, isLoading, refetch } = usePharmacyRegionKeywordMap(city, keyword);
+    const { data, isError, isPending, refetch } = usePharmacyRegionKeywordMap(city, keyword);
 
     const pharmacyList: PharmacyType[] = data;
 
@@ -19,7 +19,7 @@ const PharmacyRegionKeywordMap = () => {
     }, [city, keyword]);
 
     if(isError) return <></>;
-    if(isLoading) return <></>; 
+    if(isPending) return <></>; 
 
     return (
         <div className={styles.map}>

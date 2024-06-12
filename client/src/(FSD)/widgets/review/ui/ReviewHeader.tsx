@@ -11,7 +11,7 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 
 const ReviewHeader = () => {
     const { phId } = useParams<{ phId: string }>();
-    const { data, isError, isLoading, refetch } = usePharmacyRead(Number(phId));
+    const { data, isError, isPending, refetch } = usePharmacyRead(Number(phId));
 
     const pharmacyInfo: PharmacyInfoType = data;
 
@@ -20,7 +20,7 @@ const ReviewHeader = () => {
     }, [phId]);
 
     if (isError) return <></>;
-    if (isLoading) return <></>;
+    if (isPending) return <></>;
 
     return (
         <div className={styles.title_header}>
