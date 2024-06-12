@@ -1,8 +1,8 @@
-import PharmacyRegionKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyPharmacyRegionKeywordForm";
-import RegionPharmacyList from "@/(FSD)/widgets/pharmacy/ui/RegionPharmacyList";
+import PharmacyRegionKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyRegionKeywordForm";
+import PharmacyRegionList from "@/(FSD)/widgets/pharmacy/ui/PharmacyRegionList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import RegionMap from "@/(FSD)/widgets/pharmacy/ui/RegionMap";
+import PharmacyRegionMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyRegionMap";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
@@ -23,10 +23,10 @@ const Page = () => {
                     <PharmacyRegionKeywordForm />
                 </AppHeader>
             </HeaderShared>
-            <RegionMap />
+            <PharmacyRegionMap />
             <FooterShared>
                 <ModalShared>
-                    <RegionPharmacyList />
+                    <PharmacyRegionList />
                 </ModalShared>
                 <AppFooter />
             </FooterShared>

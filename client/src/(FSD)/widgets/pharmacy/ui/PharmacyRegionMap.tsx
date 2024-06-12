@@ -3,23 +3,24 @@
 import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { useParams } from "next/navigation";
+import { usePharmacyRegionMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionMap";
 import PharmacyMap from "@/(FSD)/entities/pharmacy/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { usePharmacyRegionKeywordMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyMapRegionKeyword";
 
-const RegionKeywordMap = () => {
-    const { city, keyword } = useParams<{ city: string, keyword: string }>();
+const PharmacyRegionMap = () => {
+    const { city } = useParams<{ city: string }>();
 
-    const { data, isError, isLoading, refetch } = usePharmacyRegionKeywordMap(city, keyword);
+    const { data, isError, isLoading, refetch } = usePharmacyRegionMap(city);
 
     const pharmacyList: PharmacyType[] = data;
+    
 
     useEffect(() => {
         refetch();
-    }, [city, keyword]);
-
+    }, [data, city]);
+    
     if(isError) return <></>;
-    if(isLoading) return <></>; 
+    if(isLoading) return <></>;
 
     return (
         <div className={styles.map}>
@@ -28,4 +29,4 @@ const RegionKeywordMap = () => {
     );
 };
 
-export default RegionKeywordMap;
+export default PharmacyRegionMap;

@@ -1,4 +1,4 @@
-import AllPharmacyList from "@/(FSD)/widgets/pharmacy/ui/AllPharmacyList";
+import PharmacyAllList from "@/(FSD)/widgets/pharmacy/ui/PharmacyAllList";
 import PharmacyKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyKeywordForm";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
@@ -22,7 +22,7 @@ const Page = () => {
                 </AppHeader>
             </HeaderShared>
             <SectionShared>
-                <AllPharmacyList />
+                <PharmacyAllList />
             </SectionShared>
             <FooterShared>
                 <AppFooter />

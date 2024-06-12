@@ -6,7 +6,7 @@ import PharmacyMap from "@/(FSD)/entities/pharmacy/ui/PharmacyMap";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { usePharmacyNearMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearMap";
 
-const NearMap = () => {
+const PharmacyNearMap = () => {
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
 
@@ -45,4 +45,4 @@ const NearMap = () => {
     );
 };
 
-export default NearMap;
+export default PharmacyNearMap;

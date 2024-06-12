@@ -1,15 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { usePharmacyRegionKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionKeywordSearch";
+import { usePharmacyAllSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyAllSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
-const RegionKeywordPharmacyList = () => {
-    const { city, keyword } = useParams<{ city: string, keyword: string }>();
-
-    const { pharmacyList, fetchNextPage, refetch } = usePharmacyRegionKeywordSearch(city, keyword);
+const PharmacyAllList = () => {
+    const { pharmacyList, fetchNextPage, refetch } = usePharmacyAllSearch();
 
     const { ref, inView } = useInView();
 
@@ -24,7 +21,7 @@ const RegionKeywordPharmacyList = () => {
             {
                 pharmacyList.map((pharmacy, index) => (
                     <React.Fragment key={index}>
-                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
+                        <PharmacyShared parentRefetch={refetch} pharmacy={pharmacy} />
                     </React.Fragment>
                 ))
             }
@@ -33,4 +30,4 @@ const RegionKeywordPharmacyList = () => {
     );
 };
 
-export default RegionKeywordPharmacyList;
+export default PharmacyAllList;

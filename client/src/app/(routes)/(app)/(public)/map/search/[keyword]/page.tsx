@@ -1,7 +1,7 @@
-import KeywordPharmacyList from "@/(FSD)/widgets/pharmacy/ui/KeywordPharmacyList";
+import PharmacyKeywordList from "@/(FSD)/widgets/pharmacy/ui/PharmacyKeywordList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import KeywordMap from "@/(FSD)/widgets/pharmacy/ui/KeywordMap";
+import PharmacyKeywordMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyKeywordMap";
 import { Metadata } from "next";
 import PharmacyKeywordForm from "@/(FSD)/features/pharmacy/ui/PharmacyKeywordForm";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
@@ -23,10 +23,10 @@ const Page = () => {
                     <PharmacyKeywordForm />
                 </AppHeader>
             </HeaderShared>
-            <KeywordMap />
+            <PharmacyKeywordMap />
             <FooterShared>
                 <ModalShared>
-                    <KeywordPharmacyList />
+                    <PharmacyKeywordList />
                 </ModalShared>
                 <AppFooter />
             </FooterShared>

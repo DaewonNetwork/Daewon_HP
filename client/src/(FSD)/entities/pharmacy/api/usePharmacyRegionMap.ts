@@ -1,28 +1,10 @@
+import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-
-const phMapRegionFetch = async (city: string) => {
-    const response = await fetch(`http://localhost:8090/pharmacy/region?city=${city}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    };
-    
-    const data = await response.json();
-    
-    return data;
-};
 
 export const usePharmacyRegionMap = (city: string) => {
     return useQuery({
         queryKey: ["map_region"],
-        queryFn: () => phMapRegionFetch(city),
+        queryFn: () => fetchData({ path: `/map/region?city=${city}`, isNotAuthRequired: true }),
         placeholderData: keepPreviousData,
-        
     });
 };

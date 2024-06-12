@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { usePharmacyNearSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 
-const NearPharmacyList = () => {
+const PharmacyNearList = () => {
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
 
@@ -52,4 +52,4 @@ const NearPharmacyList = () => {
     );
 };
 
-export default NearPharmacyList;
+export default PharmacyNearList;

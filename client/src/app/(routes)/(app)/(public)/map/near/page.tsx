@@ -1,7 +1,7 @@
-import NearPharmacyList from "@/(FSD)/widgets/pharmacy/ui/NearPharmacyList";
+import PharmacyNearList from "@/(FSD)/widgets/pharmacy/ui/PharmacyNearList";
 import React from "react";
 import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
-import NearMap from "@/(FSD)/widgets/pharmacy/ui/NearMap";
+import PharmacyNearMap from "@/(FSD)/widgets/pharmacy/ui/PharmacyNearMap";
 import { Metadata } from "next";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
@@ -21,10 +21,10 @@ const Page = () => {
                     <PharmacyRegionBar />
                 </AppHeader>
             </HeaderShared>
-            <NearMap />
+            <PharmacyNearMap />
             <FooterShared>
                 <ModalShared>
-                    <NearPharmacyList />
+                    <PharmacyNearList />
                 </ModalShared>
                 <AppFooter />
             </FooterShared>
