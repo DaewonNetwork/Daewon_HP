@@ -14,9 +14,13 @@ export const usePharmacyNearSearch = (lat: number, lng: number) => {
         refetch
     } = useInfiniteQuery({
         queryKey: ["search_near", [lat, lng]],
-        queryFn: ({ pageParam }) => fetchData({ path: `/pharmacy/near?lat=${lat}&lng=${lng}&pageIndex=${pageParam}&size=10` }),
+        queryFn: ({ pageParam }) => {
+            return fetchData({ path: `/pharmacy/near?lat=${lat}&lng=${lng}&pageIndex=${pageParam}&size=10` });
+        },
         getNextPageParam: (lastPage) => {
             if (lastPage.next) {
+                console.log(lastPage);
+                
                 return lastPage.pageIndex + 1;
             }
             return undefined;

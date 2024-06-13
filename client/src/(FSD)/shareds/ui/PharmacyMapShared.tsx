@@ -14,28 +14,30 @@ const PharmacyMapShared = ({ pharmacyList, isPending }: PharmacyMapType) => {
     const router = useRouter();
 
     useEffect(() => {
-        if(!kakao?.maps) return;
-        if(!kakao?.maps.LatLngBounds) return;
-        if(isPending) return;
+        if (!kakao?.maps) return;
+        if (!kakao?.maps.LatLngBounds) return;
+        if (isPending) return;
 
         const bounds = new kakao.maps.LatLngBounds();
 
         pharmacyList.forEach((pharmacy) => {
             bounds.extend(new kakao.maps.LatLng(pharmacy.phY, pharmacy.phX));
         });
-        
-        if(!map) return;
+
+        if (!map) return;
         map.setBounds(bounds);
         map.setLevel(5);
     }, [map, isPending, pharmacyList]);
 
-    if(!kakao?.maps) return <></>;
-
-    if(isPending) return <Loading />;
+    if(!kakao?.maps) return;
+    if ((isPending) || (!pharmacyList)) return <Loading />;
+    if (pharmacyList.length === 0) return <Loading />;
+    
 
     return (
-        <MapShared onCreate={setMap} isPending={isPending}>
-            {!isPending && pharmacyList.map((pharmacy, index) => {
+        <MapShared onCreate={setMap}>
+            {
+                pharmacyList.map((pharmacy, index) => {
                     return (
                         <React.Fragment key={index}>
                             <MapMarker onClick={(e) => {
