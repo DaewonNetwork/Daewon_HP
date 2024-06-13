@@ -22,21 +22,19 @@ public class PageResponseDTO<E> {
 
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> phList, int totalIndex) {
-        if(totalIndex <= 0) {
+        if (totalIndex <= 0) {
             return;
         }
         this.pageIndex = pageRequestDTO.getPageIndex();
         this.size = pageRequestDTO.getSize();
         this.totalIndex = totalIndex;
-        this.totalPageIndex = (int)(Math.ceil((double)totalIndex / size)); // 전체 페이지 수 계산
+        this.totalPageIndex = (int) (Math.ceil((double) totalIndex / size)); // 전체 페이지 수 계산
 
         this.phList = phList;
 
-        this.viewEnd = Math.min((int)(Math.ceil((double)(pageIndex + 1) / 10.0)) * 10, totalPageIndex); // 화면에 표시할 페이지번호 갯수...
-        this.viewStart = this.viewEnd - 9; // 화면에서 시작번호
+        this.viewEnd = Math.min((int) (Math.ceil((double) (pageIndex + 1) / 10.0)) * 10, totalPageIndex); // 화면에 표시할 페이지번호 갯수...
+        this.viewStart = Math.max(this.viewEnd - 9, 1); // 화면에서 시작번호 (1 이상으로 보장)
         this.prev = this.viewStart > 1;
         this.next = totalPageIndex > this.viewEnd;
     }
 }
-
-

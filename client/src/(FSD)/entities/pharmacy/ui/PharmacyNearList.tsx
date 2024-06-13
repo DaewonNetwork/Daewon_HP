@@ -11,16 +11,15 @@ const PharmacyNearList = ({ lat, lng, isGeoPending } : { lat: number, lng: numbe
 
     const { ref, inView } = useInView();
 
-    useEffect(() => {
-        refetch();
-    }, [lat, lng, pharmacyList]);
+    // useEffect(() => {
+    //     refetch();
+    // }, [lat, lng, pharmacyList]);
 
     useEffect(() => {
         if (inView) {
             fetchNextPage();
         }
     }, [inView]);
-
 
     return (
         <>
@@ -32,7 +31,7 @@ const PharmacyNearList = ({ lat, lng, isGeoPending } : { lat: number, lng: numbe
                 ))
             }
             {
-                (isFetchingNextPage || isPending || isGeoPending) ? <>
+                isFetchingNextPage ? <>
                     <PharmacySkeletonShared />
                     {
                         Array.from({ length: 9 }).map((_, index) => (

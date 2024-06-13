@@ -16,6 +16,7 @@ export const usePharmacyRegionSearch = (city: string) => {
         queryKey: ["search_region", city],
         queryFn: ({ pageParam }) => fetchData({ path: `/pharmacy/region?city=${city}&pageIndex=${pageParam}&size=10` }),
         getNextPageParam: (lastPage) => {
+            console.log(lastPage);
             if (lastPage.next) {
                 return lastPage.pageIndex + 1;
             }

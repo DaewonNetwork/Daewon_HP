@@ -1,6 +1,6 @@
 import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 export const usePharmacyNearSearch = (lat: number, lng: number) => {
@@ -14,12 +14,12 @@ export const usePharmacyNearSearch = (lat: number, lng: number) => {
         refetch
     } = useInfiniteQuery({
         queryKey: ["search_near", [lat, lng]],
-        queryFn: ({ pageParam }) => {
-            return fetchData({ path: `/pharmacy/near?lat=${lat}&lng=${lng}&pageIndex=${pageParam}&size=10` });
-        },
+        queryFn: ({ pageParam }) => fetchData({ path: `/pharmacy/near?lat=${lat}&lng=${lng}&pageIndex=${pageParam}&size=10` }),
         getNextPageParam: (lastPage) => {
+            console.log(lastPage);
+            
             if (lastPage.next) {
-                console.log(lastPage);
+                console.log(lastPage.pageIndex + 1);
                 
                 return lastPage.pageIndex + 1;
             }

@@ -51,4 +51,4 @@ const PharmacyMapShared = ({ pharmacyList, isPending }: PharmacyMapType) => {
     )
 }
 
-export default React.memo(PharmacyMapShared);
+export default PharmacyMapShared;

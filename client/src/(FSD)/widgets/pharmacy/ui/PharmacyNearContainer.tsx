@@ -7,7 +7,7 @@ import ModalShared from "@/(FSD)/shareds/ui/ModalShared";
 import React, { useEffect, useState } from "react";
 import AppFooter from "../../app/ui/AppFooter";
 
-const PharmacyNear = () => {
+const PharmacyNearContainer = () => {
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
     const [isGeoError, setIsGeoError] = useState<boolean>(false);
@@ -47,4 +47,4 @@ const PharmacyNear = () => {
     );
 };
 
-export default PharmacyNear;
+export default PharmacyNearContainer;

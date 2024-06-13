@@ -15,9 +15,6 @@ const PharmacyNearMap = ({ lat, lng, isGeoPending }: { lat: number, lng: number,
         refetch();
     }, [lat, lng, pharmacyList]);
 
-    console.log(pharmacyList);
-    
-
     return (
         <div className={styles.map}>
             <PharmacyMapShared pharmacyList={pharmacyList} isPending={isPending || isGeoPending} />
