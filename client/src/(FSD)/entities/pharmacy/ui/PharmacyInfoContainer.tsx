@@ -6,18 +6,19 @@ import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.t
 import PharmacyInfo from "@/(FSD)/widgets/pharmacy/ui/PharmacyInfo";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
-import {CircularProgress} from "@nextui-org/progress";
+import Loading from "@/(FSD)/widgets/app/ui/Loading";
 
 const PharmacyInfoContainer = () => {
     const { phId } = useParams<{ phId: string }>();
     const { data, isError, error, isPending, refetch } = usePharmacyRead(Number(phId));
+    
     const pharmacy: PharmacyInfoType = data;
 
     useEffect(() => {
         refetch();
     }, [phId]);
 
-    if (isPending) return <CircularProgress />;
+    if(isPending) return <Loading />;
 
     return (
         <>

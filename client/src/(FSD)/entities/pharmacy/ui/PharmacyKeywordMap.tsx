@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { useParams } from "next/navigation";
 import { usePharmacyKeywordMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyKeywordMap";
-import PharmacyMap from "@/(FSD)/entities/pharmacy/ui/PharmacyMap";
+import PharmacyMapShared from "@/(FSD)/shareds/ui/PharmacyMapShared";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 
 const PharmacyKeywordMap = () => {
@@ -20,11 +20,10 @@ const PharmacyKeywordMap = () => {
     }, [data, keyword]);
 
     if(isError) return <></>;
-    if(isPending) return <></>;
 
     return (
         <div className={styles.map}>
-            <PharmacyMap pharmacyList={pharmacyList} />
+            <PharmacyMapShared pharmacyList={pharmacyList} isPending={isPending} />
         </div>
     );
 };
