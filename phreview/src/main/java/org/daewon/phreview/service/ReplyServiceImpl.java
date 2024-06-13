@@ -51,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService {
 
         Long replyId = replyRepository.save(reply).getReplyId();
         Long reviewId = replyDTO.getReviewId();
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException());
         review.setReplyIndex(review.getReplyIndex() + 1);
 
         return replyId;
@@ -142,7 +142,7 @@ public class ReplyServiceImpl implements ReplyService {
     public void deleteReply(Long replyId) {
         Reply reply = replyRepository.findById(replyId).orElseThrow();
         Long reviewId = reply.getReview().getReviewId();
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException());
         review.setReplyIndex(review.getReplyIndex() - 1);
         replyRepository.deleteById(replyId);
     }

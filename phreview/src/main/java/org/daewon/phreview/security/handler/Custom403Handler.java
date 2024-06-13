@@ -16,15 +16,15 @@ public class Custom403Handler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        log.info("--------------------- ACCESS DENIED -----------------------------");
+        log.info("--------------------- 접근 거부 -----------------------------");
 
         response.setStatus(HttpStatus.FORBIDDEN.value());
 
         String contentType = request.getHeader("Content-Type");
-        boolean jsonRequest = contentType.startsWith("application/json");
-        log.info("isJSON: " + jsonRequest);
+        boolean jsonRequest = contentType != null && contentType.startsWith("application/json");
+        log.info("JSON 요청인가? " + jsonRequest);
 
-        if(!jsonRequest) {
+        if (!jsonRequest) {
             response.sendRedirect("/user/login?error=ACCESS_DENIED");
         }
     }

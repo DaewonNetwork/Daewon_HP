@@ -42,7 +42,7 @@ public class EnjoyServiceImpl implements EnjoyService {
         Long userId = users.getUserId();
 
         Pharmacy pharmacy = pharmacyRepository.findById(phId)
-                .orElseThrow(() -> new PharmacyNotFoundException(phId)); // phId를 통해 약국 찾기
+                .orElseThrow(() -> new PharmacyNotFoundException()); // phId를 통해 약국 찾기
 
         PharmacyEnjoy pharmacyEnjoy = pharmacyEnjoyRepository.findByPhId(phId)
                 .orElseGet(() -> { // phId를 가지고 즐겨찾기된 약국 찾기, 해당하는 phId가 없을경우 새로 생성

@@ -28,48 +28,44 @@ public class UsersDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        log.info("loadUserByEmail : " + email);
+        log.info("loadUserByUsername : " + email);
 
         // 이메일을 사용하여 사용자 조회
         Optional<Users> result = userRepository.findByEmail(email);
         log.info("result : " + result);
 
         if (!result.isPresent()) {
-            throw new UsernameNotFoundException("Cannot find user with Email : " + email);
+            throw new UsernameNotFoundException("이메일로 사용자를 찾을 수 없습니다 : " + email);
         }
 
-        Users users = result.get(); // Optional에서 사용자 객체를 추출
+        Users user = result.get(); // Optional에서 사용자 객체를 추출
 
-        log.info("User found: " + users);
+        log.info("사용자를 찾았습니다: " + user);
 
-        log.info("UsersDetailsService----------------------------------------------");
-
-        // ROLE 역할이 비어있는지 확인
-        if (users.getRoleSet().isEmpty()) {
-            log.error("User has no roles assigned");
-            throw new UsernameNotFoundException("User has no roles assigned");
+        // 사용자에게 할당된 역할이 비어 있는지 확인
+        if (user.getRoleSet().isEmpty()) {
+            log.error("사용자에게 할당된 역할이 없습니다");
+            throw new UsernameNotFoundException("사용자에게 할당된 역할이 없습니다");
         }
 
         // 권한을 SimpleGrantedAuthority로 변환
-        // 사용자의 역할을 SimpleGrantedAuthority로 변환하여 Spring Security의 권한 시스템과 통합
         List<SimpleGrantedAuthority> authorities;
         try {
-            authorities = users.getRoleSet().stream()
-                    .peek(role -> log.info("유저한테 할당된 권한: ROLE_" +role))
+            authorities = user.getRoleSet().stream()
+                    .peek(role -> log.info("사용자의 권한: ROLE_" + role))
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("Error converting roles to authorities", e);
-            throw new UsernameNotFoundException("Cannot convert roles to authorities", e);
+            log.error("역할을 권한으로 변환하는 중 오류가 발생했습니다", e);
+            throw new UsernameNotFoundException("역할을 권한으로 변환할 수 없습니다", e);
         }
 
         // AuthSigninDTO 객체 생성 및 반환
         return new AuthSigninDTO(
-                        users.getUserName(),
-                        users.getPassword(),
-                        users.getEmail(),
-                        authorities,
-                        users.getUserId()
-                );
+                user.getUserName(),
+                user.getPassword(),
+                user.getEmail(),
+                authorities,
+                user.getUserId());
     }
 }

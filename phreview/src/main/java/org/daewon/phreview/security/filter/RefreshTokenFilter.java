@@ -35,14 +35,13 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
         log.info("path: " + path);
 
         // url주소에 /refreshToken이 없으면 refresh Token filter를 skip
-          if(!path.contains("refreshToken")) {
-//        if(!path.equals(refreshToken)) {
-            log.info("skip refresh token filter..........");
+        if(!path.contains("refreshToken")) {
+            log.info("리프레시 토큰 필터를 스킵합니다..........");
             filterChain.doFilter(request, response);
             return;
         }
 
-        log.info("Refresh token filter..........run......");
+        log.info("리프레시 토큰 필터..........실행......");
 
         // 전송된 JSON에서 accessToken과 refreshToken을 얻어온다
         Map<String, String> tokens = parseRequstJSON(request);
@@ -93,11 +92,11 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
 
             // RefreshToken이 3일도 안 남았다면
             if(gapTime < (1000 * 60 * 60 * 24 * 3)) {
-                log.info("new Refresh Token required......");
+                log.info("새로운 Refresh Token이 필요합니다......");
                 refreshTokenValue = jwtUtil.generateToken(Map.of("email", email), 30);
             }
 
-            log.info("Refresh Token result.......................");
+            log.info("Refresh Token 결과.......................");
             log.info("accessToken: " + accessTokenValue);
             log.info("refreshToken: " + refreshTokenValue);
 
@@ -127,8 +126,8 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
     private void checkAccessToken(String accessToken) throws RefreshTokenException {
         try {
             jwtUtil.validateToken(accessToken);
-        } catch (ExpiredJwtException expiredJwtException) { // 만료 기간이 지났을 떄
-            log.info("Access Token has expired");
+        } catch (ExpiredJwtException expiredJwtException) { // 만료 기간이 지났을 때
+            log.info("Access Token이 만료되었습니다");
         } catch (Exception exception) {     // 나머지 상황
             throw new RefreshTokenException(RefreshTokenException.ErrorCase.NO_ACCESS);
         }
@@ -143,7 +142,7 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException expiredJwtException) {
             throw new RefreshTokenException(RefreshTokenException.ErrorCase.OLD_REFRESH);
         } catch (MalformedJwtException malformedJwtException) {
-            log.error("MalformedJwtException-----------------------");
+            log.error("잘못된 형식의 Refresh Token입니다-----------------------");
             throw new RefreshTokenException(RefreshTokenException.ErrorCase.NO_REFRESH);
         } catch (Exception exception) {
             new RefreshTokenException(RefreshTokenException.ErrorCase.NO_REFRESH);

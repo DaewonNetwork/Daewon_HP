@@ -231,7 +231,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     public PharmacyInfoDTO getPharmacyInfo(Long phId) {
 
         Optional<Pharmacy> result = pharmacyRepository.findById(phId);
-        Pharmacy pharmacy = result.orElseThrow(() -> new PharmacyNotFoundException(phId)); // pharmacy 객체 생성
+        Pharmacy pharmacy = result.orElseThrow(() -> new PharmacyNotFoundException()); // pharmacy 객체 생성
 
         PharmacyInfoDTO pharmacyInfoDTO = modelMapper.map(pharmacy, PharmacyInfoDTO.class); // dto 매핑
 
