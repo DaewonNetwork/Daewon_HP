@@ -131,7 +131,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void updateReply(ReplyUpdateDTO replyUpdateDTO) { // 댓글 수정
         Optional<Reply> replyOptional = replyRepository.findById(replyUpdateDTO.getReplyId());
-        Reply reply = replyOptional.orElseThrow();
+        Reply reply = replyOptional.orElseThrow();  
 
         reply.setReplyText(replyUpdateDTO.getReplyText()); // 리뷰 내용 수정
 

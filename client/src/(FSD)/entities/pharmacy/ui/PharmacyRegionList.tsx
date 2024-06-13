@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyRegionSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionSearch";
@@ -10,7 +10,7 @@ import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 const PharmacyRegionList = () => {
     const { city } = useParams<{ city: string }>();
 
-    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyRegionSearch(city);
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isError } = usePharmacyRegionSearch(city);
 
     const { ref, inView } = useInView();
 

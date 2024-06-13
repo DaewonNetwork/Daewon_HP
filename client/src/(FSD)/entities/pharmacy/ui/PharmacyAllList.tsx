@@ -5,9 +5,10 @@ import { useInView } from "react-intersection-observer";
 import { usePharmacyAllSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyAllSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
+import { notFound } from "next/navigation";
 
 const PharmacyAllList = () => {
-    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyAllSearch();
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isError } = usePharmacyAllSearch();
 
     const { ref, inView } = useInView();
 
@@ -16,6 +17,8 @@ const PharmacyAllList = () => {
             fetchNextPage();
         }
     }, [inView]);
+    
+    if(isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
 
     return (
         <>

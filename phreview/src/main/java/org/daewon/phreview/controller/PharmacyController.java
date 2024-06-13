@@ -33,7 +33,7 @@ public class PharmacyController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/near") // 근처 검색
-    public PageResponseDTO<PharmacyDTO> searchNear(@RequestParam double lat, @RequestParam double lng, PageRequestDTO pageRequestDTO){ // 내 위치 반경 500m 가까운 약국 검색
+    public PageResponseDTO<PharmacyDTO> searchNear(@RequestParam double lat, @RequestParam double lng, PageRequestDTO pageRequestDTO){ // 내 위치 반경 1.0km 가까운 약국 검색
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.nearSearch(lat,lng,pageRequestDTO);
         return responseDTO;
     }

@@ -5,28 +5,37 @@ import { useInView } from "react-intersection-observer";
 import { usePharmacyNearSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearSearch";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
+import { notFound } from "next/navigation";
+import Loading from "@/(FSD)/widgets/app/ui/Loading";
 
 const PharmacyNearList = () => {
     const [lat, setLat] = useState<number>(0);
     const [lng, setLng] = useState<number>(0);
 
-    const [isError, setIsError] = useState<boolean>(false);
+    const [isGeoError, setIsGeoError] = useState<boolean>(false);
+    const [isGeoPending, setIsGeoPending] = useState<boolean>(true);
 
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isPending, isError } = usePharmacyNearSearch(lat, lng);
+    
     useEffect(() => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     setLat(position.coords.latitude);
                     setLng(position.coords.longitude);
+                    setIsGeoPending(false);
+                }, (error) => {
+                    setIsGeoError(true);
+                    setIsGeoPending(false);
                 }
             )
         } else {
-            setIsError(true);
+            setIsGeoError(true);
+            setIsGeoPending(false);
         }
-    }, [lat, lng]);
 
-    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyNearSearch(lat, lng);
-
+        refetch();
+    }, [pharmacyList, lat, lng]);
 
     const { ref, inView } = useInView();
 
@@ -34,10 +43,10 @@ const PharmacyNearList = () => {
         if (inView) {
             fetchNextPage();
         }
-    }, [inView]);
+    }, [inView]);    
 
-
-    if (isError || (!pharmacyList) || (!pharmacyList[0])) return <></>;
+    if(isPending || isGeoPending) return <Loading />;
+    if(isGeoError || isError) return notFound();
 
     return (
         <>

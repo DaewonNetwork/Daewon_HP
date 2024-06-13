@@ -16,7 +16,7 @@ public interface MapRepository extends JpaRepository<Pharmacy, Long> {
     @Query("select p from Pharmacy p where p.phAdd like concat('%',:city,'%')")
     List<Pharmacy> findByCity(String city);
 
-    @Query("select p from Pharmacy p where (6371 * acos(cos(radians(:lat)) * cos(radians(p.phY)) * cos(radians(p.phX) - radians(:lng)) + sin(radians(:lat)) * sin(radians(p.phY)))) <= 0.5")
+    @Query("select p from Pharmacy p where (6371 * acos(cos(radians(:lat)) * cos(radians(p.phY)) * cos(radians(p.phX) - radians(:lng)) + sin(radians(:lat)) * sin(radians(p.phY)))) <= 1.0")
     List<Pharmacy> findByLoc(double lat, double lng);
 
     @Query("select p from Pharmacy p where p.phAdd like concat('%',:keyword,'%') or p.phName like concat('%',:keyword,'%')")

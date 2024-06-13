@@ -17,7 +17,7 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
     Page<Pharmacy> findByCity(String city, Pageable pageable);
 
     // 위도(lat), 경도(lng), 페이징 정보를 매개변수로 받아, 해당 조건에 맞는 약국 목록을 페이지 단위로 반환하는 메서드
-    @Query("select p from Pharmacy p where (6371 * acos(cos(radians(:lat)) * cos(radians(p.phY)) * cos(radians(p.phX) - radians(:lng)) + sin(radians(:lat)) * sin(radians(p.phY)))) <= 0.5")
+    @Query("select p from Pharmacy p where (6371 * acos(cos(radians(:lat)) * cos(radians(p.phY)) * cos(radians(p.phX) - radians(:lng)) + sin(radians(:lat)) * sin(radians(p.phY)))) <= 1.0")
     Page<Pharmacy> findByLoc(double lat, double lng, Pageable pageable);
 
     // 약국명 또는 주소로 검색

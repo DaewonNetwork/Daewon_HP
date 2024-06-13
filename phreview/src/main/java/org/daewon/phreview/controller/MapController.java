@@ -27,7 +27,7 @@ public class MapController {
     }
 
     @GetMapping("/near")
-    public List<PharmacyDTO> searchNear(double lat, double lng){ // 내 위치 반경 500m 가까운 약국 검색
+    public List<PharmacyDTO> searchNear(double lat, double lng){ // 내 위치 반경 1.0km 가까운 약국 검색
         log.info("좌표값 :"+lat+","+lng);
         List<PharmacyDTO> pharmacyDTO = mapService.nearSearch(lat,lng);
         log.info(pharmacyDTO);

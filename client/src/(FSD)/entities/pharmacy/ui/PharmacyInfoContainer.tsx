@@ -17,11 +17,9 @@ const PharmacyInfoContainer = () => {
     useEffect(() => {
         refetch();
     }, [phId]);
-
-    if(isPending) return <Loading />;
-    console.log(JSON.parse(error?.message || ""));
     
-    if(isError) return;
+    if(isError) notFound();
+    if(isPending) return <Loading />;
 
     return (
         <>

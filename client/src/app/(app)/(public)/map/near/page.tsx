@@ -8,7 +8,6 @@ import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import PharmacyRegionBar from "@/(FSD)/features/pharmacy/ui/PharmacyRegionBar";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 
 export const metadata: Metadata = {
     title: "HP - 근처 지역 검색",

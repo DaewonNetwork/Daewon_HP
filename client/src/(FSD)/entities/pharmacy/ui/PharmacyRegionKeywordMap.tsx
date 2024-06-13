@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import PharmacyMapShared from "@/(FSD)/shareds/ui/PharmacyMapShared";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import { usePharmacyRegionKeywordMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionKeywordMap";
@@ -17,6 +17,8 @@ const PharmacyRegionKeywordMap = () => {
     useEffect(() => {
         refetch();
     }, [city, keyword]);
+
+    if(isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
 
     return (
         <div className={styles.map}>
