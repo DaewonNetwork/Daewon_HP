@@ -17,7 +17,10 @@ const PharmacyInfo = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyInfoType;
             <InnerShared>
                 <div className={styles.pharmacy_header}>
                     <div className={styles.top_item}>
-                        <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
+                        <div className={styles.top_text_box}>
+                            <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
+                            <TextMediumShared>{pharmacy.phTel || "02-0000-0000"}</TextMediumShared>
+                        </div>
                         {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={parentRefetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />}
                     </div>
                     <div className={styles.btm_item}>
@@ -32,25 +35,25 @@ const PharmacyInfo = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyInfoType;
                 <div className={styles.pharmacy_date}>
                     <Table aria-label="Example static collection table">
                         <TableHeader>
-                            <TableColumn>구분</TableColumn>
-                            <TableColumn>시작 시간</TableColumn>
-                            <TableColumn>종료 시간</TableColumn>
+                            <TableColumn><TextMediumShared>구분</TextMediumShared></TableColumn>
+                            <TableColumn><TextMediumShared>시작 시간</TextMediumShared></TableColumn>
+                            <TableColumn><TextMediumShared>종료 시간</TextMediumShared></TableColumn>
                         </TableHeader>
                         <TableBody>
                             <TableRow key="1">
-                                <TableCell>평일</TableCell>
-                                <TableCell>{pharmacy.timeWeekStartDate}</TableCell>
-                                <TableCell>{pharmacy.timeWeekEndDate}</TableCell>
+                                <TableCell><TextMediumShared>평일</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeWeekStartDate || "없음"}</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeWeekEndDate || "없음"}</TextMediumShared></TableCell>
                             </TableRow>
                             <TableRow key="2">
-                                <TableCell>토요일</TableCell>
-                                <TableCell>{pharmacy.timeSatStartDate}</TableCell>
-                                <TableCell>{pharmacy.timeSatEndDate}</TableCell>
+                                <TableCell><TextMediumShared>토요일</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeSatStartDate || "없음"}</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeSatEndDate || "없음"}</TextMediumShared></TableCell>
                             </TableRow>
                             <TableRow key="3">
-                                <TableCell>공휴일</TableCell>
-                                <TableCell>{pharmacy.timeHoliStartDate || "없음"}</TableCell>
-                                <TableCell>{pharmacy.timeHoliEndDate || "없음"}</TableCell>
+                                <TableCell><TextMediumShared>공휴일</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeHoliStartDate || "없음"}</TextMediumShared></TableCell>
+                                <TableCell><TextMediumShared>{pharmacy.timeHoliEndDate || "없음"}</TextMediumShared></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

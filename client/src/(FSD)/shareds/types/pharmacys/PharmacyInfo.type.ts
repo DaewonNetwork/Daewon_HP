@@ -1,5 +1,3 @@
-import { PharmacyEnjoyType } from "./PharmacyEnjoy.type";
-
 export interface PharmacyInfoType {
     phId: number;
     phName: string;

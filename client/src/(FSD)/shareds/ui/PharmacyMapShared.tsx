@@ -1,17 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
-import { MapMarker, Map, useMap } from "react-kakao-maps-sdk";
+import React, { useEffect, useState } from "react";
+import { MapMarker } from "react-kakao-maps-sdk";
 import type { PharmacyMapType } from "../types/PharmacyMap.type";
 import MapShared from "./MapShared";
 import Loading from "@/(FSD)/widgets/app/ui/Loading";
+import PharmacyInfoModal from "@/(FSD)/widgets/pharmacy/ui/PharmacyInfoModal";
 
 const PharmacyMapShared = ({ pharmacyList, isPending }: PharmacyMapType) => {
     const { kakao } = window;
     const [map, setMap] = useState<kakao.maps.Map>();
-
-    const router = useRouter();
+    const [phId, setPhId] = useState<number>(0);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
 
     useEffect(() => {
         if (!kakao?.maps) return;
@@ -29,25 +29,31 @@ const PharmacyMapShared = ({ pharmacyList, isPending }: PharmacyMapType) => {
         map.setLevel(5);
     }, [map, isPending, pharmacyList]);
 
-    if(!kakao?.maps) return;
-    if ((isPending) || (!pharmacyList)) return <Loading />;
-    if (pharmacyList.length === 0) return <Loading />;
-    
+    if (!kakao?.maps) return;
+    if (isPending) return <Loading />;
 
     return (
-        <MapShared onCreate={setMap}>
-            {
-                pharmacyList.map((pharmacy, index) => {
-                    return (
-                        <React.Fragment key={index}>
-                            <MapMarker onClick={(e) => {
-                                router.push(`/pharmacy/${e.getTitle()}`);
-                            }} title={`${pharmacy.phId}`} position={{ lat: pharmacy.phY, lng: pharmacy.phX }} />
-                        </React.Fragment>
-                    )
-                })
-            }
-        </MapShared>
+        <>
+            <MapShared onCreate={setMap} onClick={() => setIsOpen(false)}>
+                {
+                    pharmacyList.map((pharmacy, index) => {
+                        return (
+                            <React.Fragment key={index}>
+                                <MapMarker
+                                    onClick={_ => {
+                                        setIsOpen(true);
+                                        setPhId(pharmacy.phId);
+                                        map?.panTo(new kakao.maps.LatLng(pharmacy.phY, pharmacy.phX));
+                                    }}
+                                    title={`${pharmacy.phName}`}
+                                    position={{ lat: pharmacy.phY, lng: pharmacy.phX }} />
+                            </React.Fragment>
+                        )
+                    })
+                }
+            </MapShared>
+            {phId && <PharmacyInfoModal phId={phId} isOpen={isOpen} setIsOpen={setIsOpen} />}
+        </>
     )
 }
 

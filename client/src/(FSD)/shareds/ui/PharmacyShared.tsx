@@ -14,7 +14,7 @@ const PharmacyShared = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyT
     return (
         <div
             onClick={_ => {
-            router.push(`/pharmacy/${pharmacy.phId}`);
+                router.push(`/pharmacy/${pharmacy.phId}`);
             }}
             className={styles.pharmacy_item}
         >

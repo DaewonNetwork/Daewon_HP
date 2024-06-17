@@ -6,22 +6,19 @@ import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
-import { useUserReviewsRead } from "@/(FSD)/entities/review/api/useReadMyReview";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
-import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import TitleHeader from "@/(FSD)/widgets/app/ui/TitleHeader";
 import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
-import { useUserReplysRead } from "@/(FSD)/entities/reply/api/useUserReplysRead";
 import ReplyShared from "@/(FSD)/shareds/ui/ReplyShared";
+import { useUserReviewsRead } from "@/(FSD)/entities/user/api/useUserReviewsRead";
+import { useUserReplysRead } from "@/(FSD)/entities/user/api/useUserReplysRead";
 
 const Page = () => {
     const reviewList: ReviewType[] = useUserReviewsRead().data;
     const replyList: ReplyType[] = useUserReplysRead().data;
-
-    console.log(replyList);
     
 
     return (

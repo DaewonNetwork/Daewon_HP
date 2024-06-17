@@ -44,6 +44,14 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
+
+            .top_text_box {
+                display: block;
+    
+                p {
+                    margin-top: 5px;
+                }
+            }
         }
     
         .btm_item {
@@ -90,5 +98,28 @@
         &:first-child {
             margin-bottom: 30px;
         }
+    }
+}
+
+.pharmacy_info_modal {
+    display: block;
+    position: absolute;
+    bottom: 300px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    width: 70%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    div[data-slot="container"] {
+        padding: 10px;
+        padding-bottom: 20px;
+    }
+
+    p[data-slot="text_medium"] {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }
