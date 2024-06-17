@@ -13,13 +13,15 @@ export const fetchData = async ({ path, method = "GET", contentType = "applicati
                 "Content-Type": contentType,
                 "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
             },
-            body: body
+            body: JSON.stringify(body)
         });
     } else {
         response = await fetch(`http://localhost:8090${path}`, {
+            method: method,
             headers: {
                 "Content-Type": contentType,
-            }
+            },
+            body: JSON.stringify(body)
         });
     };
 

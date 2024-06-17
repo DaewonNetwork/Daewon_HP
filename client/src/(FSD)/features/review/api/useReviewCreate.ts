@@ -5,7 +5,7 @@ import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 export const useReviewCreate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
         mutationFn: (data: FormData) => {
-            return fetchData({ path: "/review", method: "POST", body: data, isAuthRequired: true });
+            return fetchData({ path: "/review", method: "POST", body: data, isAuthRequired: true, contentType: "multipart/form-data" });
         },
         onSuccess: (data: any) => {
             onSuccess(data);
