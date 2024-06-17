@@ -4,8 +4,8 @@ import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 
 export const useReplyUpdate = ({ onSuccess, onError }: MutationType) => {
     return useMutation({
-        mutationFn: ({ replyId, data } : { replyId: number; data: any; }) => {
-            return fetchData({ path: `/reply?replyId=${replyId}`, method: "PUT", body: data, isAuthRequired: true });
+        mutationFn: ({ replyId, replyText } : { replyId: number; replyText: string; }) => {
+            return fetchData({ path: `/reply?replyId=${replyId}`, method: "PUT", body: replyText, isAuthRequired: true });
         },
         onSuccess: (data: any) => {
             onSuccess(data);

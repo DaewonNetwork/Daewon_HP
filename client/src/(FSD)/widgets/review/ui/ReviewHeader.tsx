@@ -1,7 +1,7 @@
 "use client";
 
 import { usePharmacyRead } from "@/(FSD)/entities/pharmacy/api/usePharmacyRead";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
@@ -10,8 +10,9 @@ import BackBtnShared from "@/(FSD)/shareds/ui/BackBtnShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 
 const ReviewHeader = () => {
-    const { phId } = useParams<{ phId: string }>();
-    const { data, isError, isPending, refetch } = usePharmacyRead(Number(phId));
+    const searchParams = useSearchParams();
+    const phId = +searchParams.get("phId")!;
+    const { data, isError, isPending, refetch } = usePharmacyRead(phId);
 
     const pharmacyInfo: PharmacyInfoType = data;
 

@@ -4,7 +4,7 @@ import IconShared from "./IconShared";
 
 const StarShared = ({ isActive = true }: { isActive?: boolean }) => {
     return (
-        <div className={`${styles.star} ${isActive ? styles.active_star : ""}`}>
+        <div data-slot={"star"} className={`${styles.star} ${isActive ? styles.active_star : ""}`}>
             <IconShared iconType={"star"} />
         </div>
     );

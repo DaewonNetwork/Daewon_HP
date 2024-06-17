@@ -8,11 +8,12 @@ import { z } from "zod";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import IconShared from "@/(FSD)/shareds/ui/IconShared";
 import { Button } from "@nextui-org/button";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PharmacyRegionKeywordForm = () => {
     const router = useRouter();
-    const { city } = useParams<{ city: string }>();
+    const searchParams = useSearchParams();
+    const city = searchParams.get("city")!;
 
     const schema = z.object({
         keyword: z.string().min(1).max(20)
@@ -25,7 +26,7 @@ const PharmacyRegionKeywordForm = () => {
 
     const onSubmit = (data: any) => {
         if(data.keyword) {
-            router.push(`/map/region/search/${city}/${data.keyword}`); 
+            router.push(`/map/region/search?city=${city}&keyword=${data.keyword}`); 
         }
     }
 

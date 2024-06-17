@@ -10,13 +10,14 @@
 
     .btm_item {
         display: block;
+
         p[data-slot="text_medium"] {
 
-            &:first-child{
+            &:first-child {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-        
+
                 padding-bottom: 5px;
             }
         }
@@ -25,7 +26,9 @@
 }
 
 .active_like {
-    p, svg {
+
+    p,
+    svg {
         color: red !important;
     }
 }
@@ -38,7 +41,7 @@
         p[data-slot="text_medium"] {
             text-wrap: pretty;
         }
-        
+
         .top_item {
             display: flex;
             align-items: center;
@@ -47,38 +50,38 @@
 
             .top_text_box {
                 display: block;
-    
+
                 p {
                     margin-top: 5px;
                 }
             }
         }
-    
+
         .btm_item {
             display: block;
         }
     }
-    
+
 
     .pharmacy_content {
         display: flex;
         align-items: center;
         margin-top: 20px;
 
-        & > div {
+        &>div {
             margin-right: 10px;
 
             &:last-child {
                 margin-right: 0px;
             }
 
-            & > span {
+            &>span {
                 display: flex;
-    
+
                 & p[data-slot="text_medium"] {
                     margin-left: 5px;
                 }
-            }   
+            }
         }
     }
 
@@ -104,22 +107,49 @@
 .pharmacy_info_modal {
     display: block;
     position: absolute;
-    bottom: 300px;
+    bottom: 200px;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99;
     width: 70%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+
     div[data-slot="container"] {
         padding: 10px;
         padding-bottom: 20px;
+
     }
 
-    p[data-slot="text_medium"] {
+    .modal_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .modal_body {
         display: block;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
+
+        .star_item {
+            display: flex;
+
+            div[data-slot="star"] {
+                margin-right: 5px;
+            }
+        }
+
+        p[data-slot="text_medium"] {
+            display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        & > * {
+            margin-bottom: 5px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }

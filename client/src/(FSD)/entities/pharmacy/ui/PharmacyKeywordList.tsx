@@ -1,6 +1,6 @@
 "use client";
 
-import { notFound, useParams } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
@@ -8,7 +8,8 @@ import { usePharmacyKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharm
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyKeywordList = () => {
-    const { keyword } = useParams<{ keyword: string }>();
+    const searchParams = useSearchParams();
+    const keyword = searchParams.get("keyword")!;
 
     const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isError } = usePharmacyKeywordSearch(keyword);
 
@@ -20,7 +21,7 @@ const PharmacyKeywordList = () => {
         }
     }, [inView]);
 
-    if(isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
+    if (isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
 
     return (
         <>

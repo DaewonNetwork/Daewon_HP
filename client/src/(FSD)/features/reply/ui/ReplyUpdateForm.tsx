@@ -3,7 +3,7 @@
 import React from "react";
 import { useReplyUpdate } from "../api/useReplyUpdate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
@@ -14,9 +14,10 @@ import { useReplyRead } from "@/(FSD)/entities/reply/api/useReplyRead";
 import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
 
 const ReplyUpdateForm = () => {
-    const { replyId } = useParams<{ replyId: string }>();
+    const searchParams = useSearchParams();
+    const replyId = +searchParams.get("replyId")!;
 
-    const { data } = useReplyRead(Number(replyId));
+    const { data } = useReplyRead(replyId);
 
     const reply: ReplyType = data;
 
@@ -36,7 +37,7 @@ const ReplyUpdateForm = () => {
     const { mutate } = useReplyUpdate({ onSuccess });
     
     const onSubmit = (data: any) => {
-        mutate({ replyId: Number(replyId), replyText: data.replyText });
+        mutate({ replyId: replyId, replyText: data.replyText });
     }
 
     if(!reply) return <></>;

@@ -7,9 +7,13 @@ import ContainerShared from "@/(FSD)/shareds/ui/ContainerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import { PharmacyInfoType } from "@/(FSD)/shareds/types/pharmacys/PharmacyInfo.type";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
+import { useRouter } from "next/navigation";
+import StarShared from "@/(FSD)/shareds/ui/StarShared";
+import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 
 const PharmacyInfoModal = ({ phId, isOpen, setIsOpen }: { phId: number; isOpen: boolean; setIsOpen: React.Dispatch<React.SetStateAction<boolean>>; }) => {
     const { data, isError, refetch } = usePharmacyRead(phId);
+    const router = useRouter();
 
     useEffect(() => {
         refetch();
@@ -17,15 +21,27 @@ const PharmacyInfoModal = ({ phId, isOpen, setIsOpen }: { phId: number; isOpen: 
     }, [phId]);
 
     const pharmacy: PharmacyInfoType = data;
-    console.log(pharmacy);
     if (isError || !pharmacy || !isOpen) return <></>;
 
     return (
         <>
-            <div className={styles.pharmacy_info_modal}>
+            <div
+                onClick={_ => router.push(`/pharmacy?phId=${phId}`)}
+                className={styles.pharmacy_info_modal}
+            >
                 <ContainerShared>
-                    <TextLargeShared>{pharmacy.phName}</TextLargeShared>
-                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                    <div className={styles.modal_header}>
+                        <TextLargeShared>{pharmacy.phName}</TextLargeShared>
+                        {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={refetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />}
+                    </div>
+                    <div className={styles.modal_body}>
+                        <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                        <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
+                        <div className={styles.star_item}>
+                            <StarShared isActive={true} />
+                            <TextMediumShared>{pharmacy.starAvg}</TextMediumShared>
+                        </div>
+                    </div>
                 </ContainerShared>
             </div>
         </>

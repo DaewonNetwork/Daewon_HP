@@ -7,14 +7,15 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import { useReviewsRead } from "@/(FSD)/entities/review/api/useReviewsRead";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
 const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
-    const { phId } = useParams<{ phId: string }>();
+    const searchParams = useSearchParams();
+    const phId = +searchParams.get("phId")!;
 
-    const { data, refetch } = useReviewsRead(Number(phId));
+    const { data, refetch } = useReviewsRead(phId);
     
     const reviewList: ReviewType[] = data;
 
@@ -35,7 +36,7 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
             <div className={styles.review_box}>
                 <InnerShared>
                     <TextLargeShared>리뷰</TextLargeShared>
-                    {!!localStorage.getItem("access_token") && <LinkBtnShared href={`/review/create/${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>}
+                    {!!localStorage.getItem("access_token") && <LinkBtnShared href={`/review/create?phId=${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>}
                 </InnerShared>
             </div>
             <div className={styles.review_list}>

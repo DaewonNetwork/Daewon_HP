@@ -11,21 +11,23 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
 import { useReviewCreate } from "../api/useReviewCreate";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 
 const ReviewCreateForm = () => {
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
-
+    
     const router = useRouter();
+    
+    const searchParams = useSearchParams();
+    const phId = +searchParams.get("phId")!;
 
     const handleStarClick = (index: number) => {
         const newStars: Array<boolean> = stars.map((_, i) => i <= index);
         setStars(newStars);
     };
 
-    const { phId } = useParams<{ phId: string }>();
 
     const schema = z.object({
         reviewText: z.string().min(10).max(200),
@@ -38,7 +40,7 @@ const ReviewCreateForm = () => {
     });
 
     const onSuccess = (data: any) => {
-        router.push(`/pharmacy/${phId}`);
+        router.push(`/pharmacy?phId=${phId}`);
     }
 
     const [file, setFile] = useState<any>();
@@ -49,7 +51,7 @@ const ReviewCreateForm = () => {
     const onSubmit = (data: any) => {
         const formData = new FormData();
 
-        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewTitle: data.reviewTitle, phId: Number(phId), star: stars.filter(star => star).length }));
+        formData.append("reviewDTO", JSON.stringify({ reviewText: data.reviewText, reviewTitle: data.reviewTitle, phId: phId, star: stars.filter(star => star).length }));
 
         formData.append("files", file);
 

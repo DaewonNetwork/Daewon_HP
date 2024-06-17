@@ -10,7 +10,7 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import FileInputShared from "@/(FSD)/shareds/ui/FileInputShared";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import { useReviewUpdate } from "../api/useReviewUpdate";
@@ -18,7 +18,8 @@ import { useReviewRead } from "@/(FSD)/entities/review/api/useReviewRead";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 
 const ReviewUpdateForm = () => {
-    const { reviewId } = useParams<{ reviewId: string }>();
+    const searchParams = useSearchParams();
+    const reviewId = +searchParams.get("reviewId")!;
 
     const { data } = useReviewRead(Number(reviewId));
 

@@ -8,12 +8,13 @@ import FormTextareaShared from "@/(FSD)/shareds/ui/FormTextareaShared";
 import { Button } from "@nextui-org/button";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useReplyCreate } from "../api/useReplyCreate";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 
 const ReplyCreateForm = ({ parentRefetch } : { parentRefetch?: any }) => {
-    const { reviewId } = useParams<{ reviewId: string }>();
+    const searchParams = useSearchParams();
+    const reviewId = +searchParams.get("reviewId")!;
     
     const schema = z.object({
         replyText: z.string().min(10).max(200)
@@ -33,7 +34,7 @@ const ReplyCreateForm = ({ parentRefetch } : { parentRefetch?: any }) => {
     const { mutate } = useReplyCreate({ onSuccess });
     
     const onSubmit = (data: any) => {
-        mutate({ reviewId: Number(reviewId), replyText: data.replyText });
+        mutate({ reviewId: reviewId, replyText: data.replyText });
     }
     
     if(!localStorage.getItem("access_token")) return <></>;

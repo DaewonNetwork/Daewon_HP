@@ -19,7 +19,7 @@ const PharmacyEnjoyBtn = ({ phId, children, defaultLikeActive = false, parentRef
     const { mutate } = usePharmacyEnjoyToggle({ onSuccess });
 
     return (
-        <Button onClick={_ => mutate(Number(phId))} isIconOnly size={"sm"} variant={"light"} className={defaultLikeActive ? styles.active_like : ""} endContent={<TextXlargeShared><IconShared iconType={"like"} />{children}</TextXlargeShared>} />
+        <Button onClick={_ => mutate(phId)} isIconOnly size={"sm"} variant={"light"} className={defaultLikeActive ? styles.active_like : ""} endContent={<TextXlargeShared><IconShared iconType={"like"} />{children}</TextXlargeShared>} />
     )
 }
 

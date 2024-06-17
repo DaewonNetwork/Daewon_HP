@@ -28,7 +28,7 @@ const ReplyShared = ({ reply, parentRefetch, isWriter = false }: { reply: ReplyT
                 </div>
             </div>
             <div className={styles.writer_item}>
-                {isWriter && <MenuBarShared path={`/reply/update/${reply.replyId}`} mutate={mutate} id={reply.replyId} />}
+                {isWriter && <MenuBarShared path={`/reply/update?replyId=${reply.replyId}`} mutate={mutate} id={reply.replyId} />}
             </div>
         </div>
     );
