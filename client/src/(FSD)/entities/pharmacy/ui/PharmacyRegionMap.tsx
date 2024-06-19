@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { usePharmacyRegionMap } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionMap";
 import PharmacyMapShared from "@/(FSD)/shareds/ui/PharmacyMapShared";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const PharmacyRegionMap = () => {
     const searchParams = useSearchParams();
@@ -14,10 +15,11 @@ const PharmacyRegionMap = () => {
     const { data, isError, isPending, refetch } = usePharmacyRegionMap(city);
 
     const pharmacyList: PharmacyType[] = data;
-
     useEffect(() => {
         refetch();
     }, [data, city]);
+
+    if (!pharmacyList) return <></>;
 
     return (
         <div className={styles.map}>

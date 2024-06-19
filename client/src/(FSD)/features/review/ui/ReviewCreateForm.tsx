@@ -14,6 +14,7 @@ import { useReviewCreate } from "../api/useReviewCreate";
 import { useRouter, useSearchParams } from "next/navigation";
 import FormInputShared from "@/(FSD)/shareds/ui/FormInputShared";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const ReviewCreateForm = () => {
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
@@ -58,7 +59,9 @@ const ReviewCreateForm = () => {
         mutate(formData);
     }
 
-    if(!localStorage.getItem("access_token")) return <></>;
+    const { isLoggedIn } = useUserStore();
+
+    if(!isLoggedIn) return <></>;
 
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

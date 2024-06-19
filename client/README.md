@@ -4,6 +4,7 @@
 
 ## 📦 폴더 구조
 
+
 ```
 client
 ├─ src
@@ -44,21 +45,21 @@ client
 │  │  │  │     └─ PharmacyRegionMap.tsx
 │  │  │  ├─ reply
 │  │  │  │  ├─ api
-│  │  │  │  │  ├─ useReplyRead.ts
-│  │  │  │  │  └─ useReplysRead.ts
+│  │  │  │  │  ├─ useReplyListRead.ts
+│  │  │  │  │  └─ useReplyRead.ts
 │  │  │  │  └─ ui
 │  │  │  │     └─ ReplyContainer.tsx
 │  │  │  ├─ review
 │  │  │  │  ├─ api
-│  │  │  │  │  ├─ useReviewRead.ts
-│  │  │  │  │  └─ useReviewsRead.ts
+│  │  │  │  │  ├─ useReviewListRead.ts
+│  │  │  │  │  └─ useReviewRead.ts
 │  │  │  │  └─ ui
 │  │  │  │     └─ ReviewContaner.tsx
 │  │  │  └─ user
 │  │  │     └─ api
-│  │  │        ├─ useReadUser.ts
-│  │  │        ├─ useUserReplysRead.ts
-│  │  │        └─ useUserReviewsRead.ts
+│  │  │        ├─ useUserRead.ts
+│  │  │        ├─ useUserReplyListRead.ts
+│  │  │        └─ useUserReviewListRead.ts
 │  │  ├─ features
 │  │  │  ├─ auth
 │  │  │  │  ├─ api
@@ -134,10 +135,7 @@ client
 │  │  │  │  ├─ User.type.ts
 │  │  │  │  └─ pharmacys
 │  │  │  │     ├─ Pharmacy.type.ts
-│  │  │  │     ├─ PharmacyEnjoy.type.ts
-│  │  │  │     ├─ PharmacyInfo.type.ts
-│  │  │  │     ├─ PharmacyRank.type.ts
-│  │  │  │     └─ PharmacyStar.type.ts
+│  │  │  │     └─ PharmacyInfo.type.ts
 │  │  │  └─ ui
 │  │  │     ├─ BackBtnShared.tsx
 │  │  │     ├─ ContainerShared.tsx
@@ -195,29 +193,23 @@ client
 │     │  │  └─ profile
 │     │  │     └─ page.tsx
 │     │  ├─ (public)
-│     │  │  ├─ ()
+│     │  │  ├─ (common)
 │     │  │  │  ├─ layout.tsx
 │     │  │  │  ├─ pharmacy
-│     │  │  │  │  └─ [phId]
-│     │  │  │  │     ├─ not-found.tsx
-│     │  │  │  │     └─ page.tsx
+│     │  │  │  │  ├─ not-found.tsx
+│     │  │  │  │  └─ page.tsx
 │     │  │  │  ├─ reply
 │     │  │  │  │  ├─ create
 │     │  │  │  │  │  └─ [reviewId]
 │     │  │  │  │  │     └─ page.tsx
 │     │  │  │  │  └─ update
-│     │  │  │  │     ├─ [replyId]
-│     │  │  │  │     │  └─ page.tsx
-│     │  │  │  │     └─ [reviewId]
-│     │  │  │  │        └─ [replyId]
+│     │  │  │  │     └─ page.tsx
 │     │  │  │  └─ review
 │     │  │  │     ├─ create
-│     │  │  │     │  └─ [phId]
-│     │  │  │     │     └─ page.tsx
+│     │  │  │     │  └─ page.tsx
 │     │  │  │     ├─ page.tsx
 │     │  │  │     └─ update
-│     │  │  │        └─ [reviewId]
-│     │  │  │           └─ page.tsx
+│     │  │  │        └─ page.tsx
 │     │  │  └─ map
 │     │  │     ├─ all
 │     │  │     │  └─ page.tsx
@@ -225,19 +217,13 @@ client
 │     │  │     │  └─ page.tsx
 │     │  │     ├─ not-found.tsx
 │     │  │     ├─ region
-│     │  │     │  ├─ [city]
-│     │  │     │  │  └─ page.tsx
+│     │  │     │  ├─ page.tsx
 │     │  │     │  └─ search
-│     │  │     │     └─ [city]
-│     │  │     │        └─ [keyword]
-│     │  │     │           └─ page.tsx
+│     │  │     │     └─ page.tsx
 │     │  │     └─ search
-│     │  │        └─ [keyword]
-│     │  │           └─ page.tsx
+│     │  │        └─ page.tsx
+│     │  ├─ layout.tsx
 │     │  └─ page.tsx
-│     ├─ (test)
-│     │  └─ logout
-│     │     └─ page.tsx
 │     ├─ auth
 │     │  ├─ signin
 │     │  │  └─ page.tsx
@@ -245,4 +231,6 @@ client
 │     │     └─ page.tsx
 │     ├─ layout.tsx
 │     └─ not-found.tsx
+├─ tailwind.config.js
+└─ tsconfig.json
 ```

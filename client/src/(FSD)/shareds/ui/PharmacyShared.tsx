@@ -21,7 +21,7 @@ const PharmacyShared = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyT
             <ItemShared>
                 <div className={styles.top_item}>
                     <TextLargeShared>{rank} {pharmacy.phName}</TextLargeShared>
-                    {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />}
+                    <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
                 </div>
                 <div className={styles.btm_item}>
                     <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>

@@ -19,13 +19,13 @@ import { useUserReplyListRead } from "@/(FSD)/entities/user/api/useUserReplyList
 const Page = () => {
     const reviewList: ReviewType[] = useUserReviewListRead().data;
     const replyList: ReplyType[] = useUserReplyListRead().data;
-    
+
 
     return (
         <>
-        <HeaderShared>
-            <TitleHeader title={"프로필"} />
-        </HeaderShared>
+            <HeaderShared>
+                <TitleHeader title={"프로필"} />
+            </HeaderShared>
             <SectionShared>
                 <InnerShared>
                     <TextLargeShared>작성한 리뷰</TextLargeShared>

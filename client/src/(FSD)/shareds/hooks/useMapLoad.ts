@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export const useMapLoad = (render?: any) => {
+export const useMapLoad = () => {
     const router = useRouter();
 
     useEffect(() => {

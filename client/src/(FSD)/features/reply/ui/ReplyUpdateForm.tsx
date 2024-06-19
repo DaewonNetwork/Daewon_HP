@@ -12,10 +12,12 @@ import { Button } from "@nextui-org/button";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
 import { useReplyRead } from "@/(FSD)/entities/reply/api/useReplyRead";
 import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const ReplyUpdateForm = () => {
     const searchParams = useSearchParams();
     const replyId = +searchParams.get("replyId")!;
+    const { isLoggedIn } = useUserStore();
 
     const { data } = useReplyRead(replyId);
 
@@ -42,7 +44,7 @@ const ReplyUpdateForm = () => {
 
     if(!reply) return <></>;
     
-    if(!localStorage.getItem("access_token")) return <></>;
+    if(!isLoggedIn) return <></>;
 
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>

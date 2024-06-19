@@ -16,6 +16,7 @@ import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import { useReviewUpdate } from "../api/useReviewUpdate";
 import { useReviewRead } from "@/(FSD)/entities/review/api/useReviewRead";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const ReviewUpdateForm = () => {
     const searchParams = useSearchParams();
@@ -69,7 +70,11 @@ const ReviewUpdateForm = () => {
     }, [review]);
 
     if(!review) return <></>;
-    if(!localStorage.getItem("access_token")) return <></>;
+
+    const { isLoggedIn } = useUserStore();
+    
+    if(!isLoggedIn) return <></>;
+
     
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

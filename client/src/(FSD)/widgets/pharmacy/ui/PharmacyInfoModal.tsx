@@ -10,9 +10,12 @@ import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import { useRouter } from "next/navigation";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const PharmacyInfoModal = ({ phId, isOpen, setIsOpen }: { phId: number; isOpen: boolean; setIsOpen: React.Dispatch<React.SetStateAction<boolean>>; }) => {
     const { data, isError, refetch } = usePharmacyRead(phId);
+    const { isLoggedIn } = useUserStore();
+
     const router = useRouter();
 
     useEffect(() => {
@@ -32,7 +35,7 @@ const PharmacyInfoModal = ({ phId, isOpen, setIsOpen }: { phId: number; isOpen: 
                 <ContainerShared>
                     <div className={styles.modal_header}>
                         <TextLargeShared>{pharmacy.phName}</TextLargeShared>
-                        {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={refetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />}
+                        {isLoggedIn && <PharmacyEnjoyBtn parentRefetch={refetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />}
                     </div>
                     <div className={styles.modal_body}>
                         <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>

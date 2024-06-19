@@ -10,8 +10,11 @@ import { Chip } from "@nextui-org/chip";
 import StarShared from "@/(FSD)/shareds/ui/StarShared";
 import PharmacyEnjoyBtn from "@/(FSD)/features/pharmacy/ui/PharmacyEnjoyBtn";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/table";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const PharmacyInfo = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyInfoType; parentRefetch?: any }) => {
+    const { isLoggedIn } = useUserStore();
+
     return (
         <div className={styles.pharmacy_info}>
             <InnerShared>
@@ -21,7 +24,7 @@ const PharmacyInfo = ({ pharmacy, parentRefetch }: { pharmacy: PharmacyInfoType;
                             <TextXlargeShared>{pharmacy.phName}</TextXlargeShared>
                             <TextMediumShared>{pharmacy.phTel || "02-0000-0000"}</TextMediumShared>
                         </div>
-                        {!!localStorage.getItem("access_token") && <PharmacyEnjoyBtn parentRefetch={parentRefetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />}
+                        {isLoggedIn && <PharmacyEnjoyBtn parentRefetch={parentRefetch} defaultLikeActive={pharmacy.enjoy} phId={pharmacy.phId} />}
                     </div>
                     <div className={styles.btm_item}>
                         <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
