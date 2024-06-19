@@ -1,9 +1,9 @@
-import { UserType } from '@/(FSD)/shareds/types/User.type';
-import { useUserStore } from '@/(FSD)/shareds/stores/useUserStore';
-import { useUserRead } from '@/(FSD)/entities/user/api/useUserRead';
 "use client";
 
+import { UserType } from "@/(FSD)/shareds/types/User.type";
+import { useUserRead } from "@/(FSD)/entities/user/api/useUserRead";
 import { useEffect } from "react";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const useAuthStatus = () => {
     const { data, isError, isPending, refetch } = useUserRead();

@@ -6,13 +6,12 @@ import { usePharmacyRegionSearch } from "@/(FSD)/entities/pharmacy/api/usePharma
 import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 import { useSearchParams } from "next/navigation";
-import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const PharmacyRegionList = () => {
     const searchParams = useSearchParams();
     const city = searchParams.get("city")!;
 
-    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isError } = usePharmacyRegionSearch(city);
+    const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyRegionSearch(city);
     const { ref, inView } = useInView();
     
     useEffect(() => {}, [city]);
