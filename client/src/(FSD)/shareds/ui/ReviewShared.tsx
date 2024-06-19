@@ -12,7 +12,7 @@ import MenuBarShared from "./MenuBarShared";
 import { useReviewDelete } from "@/(FSD)/features/review/api/useReviewDelete";
 import TextBoxShared from "./TextBoxShared";
 import { DropdownItem } from "@nextui-org/dropdown";
-import { useReplysRead } from "@/(FSD)/entities/reply/api/useReplysRead";
+import { useReplyListRead } from "@/(FSD)/entities/reply/api/useReplyListRead";
 
 const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
     const [isViewReply, setIsViewReply] = useState(true);
@@ -20,7 +20,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
 
     if (!review) return <></>;
 
-    const { data, refetch } = useReplysRead(review.reviewId);
+    const { data, refetch } = useReplyListRead(review.reviewId);
 
     const replyList: ReplyType[] = data;
 
@@ -70,8 +70,8 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
                     </div>
                 </div>
                 {
-                    (isViewReply && replyList) && replyList.map((reply, index) => (
-                        <React.Fragment key={index}>
+                    (isViewReply && replyList) && replyList.map(reply => (
+                        <React.Fragment key={reply.replyId}>
                             <ReplyShared parentRefetch={parentRefetch} reply={reply} isWriter={reply.reply} />
                         </React.Fragment>
                     ))

@@ -14,9 +14,9 @@ const PharmacyRegionBar = () => {
                 <LinkBtnShared size={"sm"} href={"/map/all"}><TextMediumShared>전체</TextMediumShared></LinkBtnShared>
                 <LinkBtnShared size={"sm"} href={"/map/near"}><TextMediumShared>근처</TextMediumShared></LinkBtnShared>
                 {
-                    cityList.map((city, index) => (
-                        <React.Fragment key={index}>
-                            <LinkBtnShared size={"sm"} href={`/map/region?city=${city}`}><TextMediumShared>{city}</TextMediumShared></LinkBtnShared>
+                    cityList.map(city => (
+                        <React.Fragment key={city.cityId}>
+                            <LinkBtnShared size={"sm"} href={`/map/region?city=${city.cityName}`}><TextMediumShared>{city.cityName}</TextMediumShared></LinkBtnShared>
                         </React.Fragment>
                     ))
                 }

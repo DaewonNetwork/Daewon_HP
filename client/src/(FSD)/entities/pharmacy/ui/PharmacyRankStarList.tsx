@@ -24,7 +24,7 @@ const PharmacyRankStarList = () => {
                 pharmacyList.map((pharmacy, index) => {
                     if(index >= 10) return;
                     return (
-                        <React.Fragment key={index}>
+                        <React.Fragment key={pharmacy.phId}>
                             <PharmacyShared rank={`${index + 1}위`} parentRefetch={refetch} pharmacy={pharmacy} />
                         </React.Fragment>
                     )

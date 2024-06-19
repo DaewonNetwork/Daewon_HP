@@ -13,12 +13,12 @@ import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import TitleHeader from "@/(FSD)/widgets/app/ui/TitleHeader";
 import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
 import ReplyShared from "@/(FSD)/shareds/ui/ReplyShared";
-import { useUserReviewsRead } from "@/(FSD)/entities/user/api/useUserReviewsRead";
-import { useUserReplysRead } from "@/(FSD)/entities/user/api/useUserReplysRead";
+import { useUserReviewListRead } from "@/(FSD)/entities/user/api/useUserReviewListRead";
+import { useUserReplyListRead } from "@/(FSD)/entities/user/api/useUserReplyListRead";
 
 const Page = () => {
-    const reviewList: ReviewType[] = useUserReviewsRead().data;
-    const replyList: ReplyType[] = useUserReplysRead().data;
+    const reviewList: ReviewType[] = useUserReviewListRead().data;
+    const replyList: ReplyType[] = useUserReplyListRead().data;
     
 
     return (
@@ -30,16 +30,16 @@ const Page = () => {
                 <InnerShared>
                     <TextLargeShared>작성한 리뷰</TextLargeShared>
                     {
-                        reviewList && reviewList.map((review, index) => (
-                            <React.Fragment key={index}>
+                        reviewList && reviewList.map(review => (
+                            <React.Fragment key={review.reviewId}>
                                 <ReviewShared review={review} isWriter={review.review} />
                             </React.Fragment>
                         ))
                     }
                     <TextLargeShared>작성한 댓글</TextLargeShared>
                     {
-                        replyList && replyList.map((reply, index) => (
-                            <React.Fragment key={index}>
+                        replyList && replyList.map(reply => (
+                            <React.Fragment key={reply.replyId}>
                                 <ReplyShared reply={reply} isWriter={reply.reply} />
                             </React.Fragment>
                         ))

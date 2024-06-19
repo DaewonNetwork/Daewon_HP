@@ -1,25 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { MutationNullType, MutationType } from "../../types/mutation.type";
-
-const userLogoutFetch = async () => {
-    const response = await fetch("http://localhost:8090/api/user/logout", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`
-        },
-    });
-
-    return response;
-}
+import { MutationNullType } from "../../types/mutation.type";
+import { fetchData } from "@/(FSD)/shareds/fetch/fetchData";
 
 export const useUserLogout = ({ onSuccess, onError }: MutationNullType) => {
     return useMutation({
         mutationFn: () => {
-            return userLogoutFetch();
+            return fetchData({ path: "/user/logout", method: "POST", isAuthRequired: true })
         },
         onSuccess: () => {
-            if(onSuccess) {
+            if (onSuccess) {
                 onSuccess();
             }
         },

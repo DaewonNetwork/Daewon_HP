@@ -18,13 +18,13 @@ const PharmacyAllList = () => {
         }
     }, [inView]);
     
-    if(isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
+    // if(isError && (pharmacyList && (!pharmacyList[0]))) return notFound();
 
     return (
         <>
             {
-                pharmacyList.map((pharmacy, index) => (
-                    <React.Fragment key={index}>
+                pharmacyList.map(pharmacy => (
+                    <React.Fragment key={pharmacy.phId}>
                         <PharmacyShared parentRefetch={refetch} pharmacy={pharmacy} />
                     </React.Fragment>
                 ))

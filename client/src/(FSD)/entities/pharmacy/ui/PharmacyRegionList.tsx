@@ -25,8 +25,8 @@ const PharmacyRegionList = () => {
     return (
         <>
             {
-                pharmacyList.map((pharmacy, index) => (
-                    <React.Fragment key={index}>
+                pharmacyList.map(pharmacy => (
+                    <React.Fragment key={pharmacy.phId}>
                         <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))

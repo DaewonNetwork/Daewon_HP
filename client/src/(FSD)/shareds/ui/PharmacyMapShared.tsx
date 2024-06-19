@@ -36,9 +36,9 @@ const PharmacyMapShared = ({ pharmacyList, isPending }: PharmacyMapType) => {
         <>
             <MapShared onCreate={setMap} onClick={() => setIsOpen(false)}>
                 {
-                    pharmacyList.map((pharmacy, index) => {
+                    pharmacyList.map(pharmacy => {
                         return (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={pharmacy.phId}>
                                 <MapMarker
                                     onClick={_ => {
                                         setIsOpen(true);

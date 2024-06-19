@@ -1,9 +1,7 @@
 import { FetchType } from "../types/FetchData.type";
 
-
 export const fetchData = async ({ path, method = "GET", contentType = "application/json", isAuthRequired = false, isNotAuthRequired = false, body }: FetchType) => {
     let response = null;
-
     const isLoggedIn: boolean = !!localStorage.getItem("access_token");
 
     if ((!isNotAuthRequired && isLoggedIn) || isAuthRequired) {

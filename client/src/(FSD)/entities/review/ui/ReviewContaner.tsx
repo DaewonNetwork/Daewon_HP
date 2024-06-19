@@ -6,7 +6,7 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
-import { useReviewsRead } from "@/(FSD)/entities/review/api/useReviewsRead";
+import { useReviewListRead } from "@/(FSD)/entities/review/api/useReviewListRead";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
@@ -15,7 +15,7 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
     const searchParams = useSearchParams();
     const phId = +searchParams.get("phId")!;
 
-    const { data, refetch } = useReviewsRead(phId);
+    const { data, refetch } = useReviewListRead(phId);
     
     const reviewList: ReviewType[] = data;
 
@@ -41,8 +41,8 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
             </div>
             <div className={styles.review_list}>
                 {
-                    reviewList.map((review, index) => (
-                        <React.Fragment key={index}>
+                    reviewList.map(review => (
+                        <React.Fragment key={review.reviewId}>
                             <ReviewShared isWriter={review.review} grandParentFetch={parentRefetch} parentRefetch={refetch} review={review} />
                         </React.Fragment>
                     ))
