@@ -4,7 +4,7 @@ import { notFound, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyRegionKeywordSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyRegionKeywordSearch";
-import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacyItem from "@/(FSD)/widgets/pharmacy/ui/PharmacyItem";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyRegionKeywordList = () => {
@@ -29,7 +29,7 @@ const PharmacyRegionKeywordList = () => {
             {
                 pharmacyList.map(pharmacy => (
                     <React.Fragment key={pharmacy.phId}>
-                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
+                        <PharmacyItem pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))
             }

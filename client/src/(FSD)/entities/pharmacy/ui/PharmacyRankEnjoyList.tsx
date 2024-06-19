@@ -4,7 +4,7 @@ import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import React from "react";
 import { usePharmacyRankEnjoyListRead } from "../api/usePharmacyRankEnjoyListRead";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
-import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacyItem from "@/(FSD)/widgets/pharmacy/ui/PharmacyItem";
 import styles from "@/(FSD)/shareds/styles/Pharmacy.module.scss";
 import TextXlargeShared from "@/(FSD)/shareds/ui/TextXlargeShared";
 
@@ -24,7 +24,7 @@ const PharmacyRankEnjoyList = () => {
                     if (index >= 10) return;
                     return (
                         <React.Fragment key={pharmacy.phId}>
-                            <PharmacyShared rank={`${index + 1}위`} parentRefetch={refetch} pharmacy={pharmacy} />
+                            <PharmacyItem rank={`${index + 1}위`} parentRefetch={refetch} pharmacy={pharmacy} />
                         </React.Fragment>
                     )
                 })

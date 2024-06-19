@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyNearSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyNearSearch";
-import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacyItem from "@/(FSD)/widgets/pharmacy/ui/PharmacyItem";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyNearList = ({ lat, lng, isGeoPending } : { lat: number, lng: number, isGeoPending: boolean }) => {
@@ -26,7 +26,7 @@ const PharmacyNearList = ({ lat, lng, isGeoPending } : { lat: number, lng: numbe
             {
                 pharmacyList.map(pharmacy => (
                     <React.Fragment key={pharmacy.phId}>
-                        <PharmacyShared pharmacy={pharmacy} parentRefetch={refetch} />
+                        <PharmacyItem pharmacy={pharmacy} parentRefetch={refetch} />
                     </React.Fragment>
                 ))
             }

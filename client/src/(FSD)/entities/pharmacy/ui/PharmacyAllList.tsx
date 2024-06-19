@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePharmacyAllSearch } from "@/(FSD)/entities/pharmacy/api/usePharmacyAllSearch";
-import PharmacyShared from "@/(FSD)/shareds/ui/PharmacyShared";
+import PharmacyItem from "@/(FSD)/widgets/pharmacy/ui/PharmacyItem";
 import PharmacySkeletonShared from "@/(FSD)/shareds/ui/PharmacySkeletonShared";
 
 const PharmacyAllList = () => {
@@ -22,7 +22,7 @@ const PharmacyAllList = () => {
             {
                 pharmacyList.map(pharmacy => (
                     <React.Fragment key={pharmacy.phId}>
-                        <PharmacyShared parentRefetch={refetch} pharmacy={pharmacy} />
+                        <PharmacyItem parentRefetch={refetch} pharmacy={pharmacy} />
                     </React.Fragment>
                 ))
             }
