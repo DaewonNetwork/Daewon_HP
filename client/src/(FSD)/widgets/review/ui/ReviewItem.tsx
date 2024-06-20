@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
-import type { ReviewType } from "../types/Review.type";
+import type { ReviewType } from "../../../shareds/types/Review.type";
 import { useRouter } from "next/navigation";
-import ItemShared from "./ItemShared";
-import TextLargeShared from "./TextLargeShared";
-import StarListShared from "./StarListShared";
-import TextMediumShared from "./TextMediumShared";
-import ReplyShared from "./ReplyShared";
-import { ReplyType } from "../types/Reply.type";
-import MenuBarShared from "./MenuBarShared";
-import { useReviewDelete } from "@/(FSD)/features/review/api/useReviewDelete";
-import TextBoxShared from "./TextBoxShared";
-import { DropdownItem } from "@nextui-org/dropdown";
 import { useReplyListRead } from "@/(FSD)/entities/reply/api/useReplyListRead";
+import { ReplyType } from "@/(FSD)/shareds/types/Reply.type";
+import { useReviewDelete } from "@/(FSD)/features/review/api/useReviewDelete";
+import ItemShared from "@/(FSD)/shareds/ui/ItemShared";
+import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
+import TextBoxShared from "@/(FSD)/shareds/ui/TextBoxShared";
+import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
+import StarListShared from "@/(FSD)/shareds/ui/StarListShared";
+import MenuBarShared from "@/(FSD)/shareds/ui/MenuBarShared";
+import { DropdownItem } from "@nextui-org/dropdown";
+import ReplyShared from "@/(FSD)/shareds/ui/ReplyShared";
 
-const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
+const ReviewItem = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
     const [isViewReply, setIsViewReply] = useState(true);
     const router = useRouter();
 
@@ -40,7 +40,7 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
     const { mutate } = useReviewDelete({ onSuccess });
 
     return (
-        <div onClick={_ => router.push(`/reply/create/${review.reviewId}`)} className={styles.review_item}>
+        <div onClick={_ => router.push(`/reply/create?reviewId=${review.reviewId}`)} className={styles.review_item}>
             <ItemShared>
                 <div className={styles.review_inner}>
                     <div className={styles.review_header}>
@@ -81,4 +81,4 @@ const ReviewShared = ({ review, parentRefetch, grandParentFetch, isWriter = fals
     );
 };
 
-export default ReviewShared;
+export default ReviewItem;

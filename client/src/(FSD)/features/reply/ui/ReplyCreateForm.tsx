@@ -10,13 +10,11 @@ import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import { useSearchParams } from "next/navigation";
 import { useReplyCreate } from "../api/useReplyCreate";
 import styles from "@/(FSD)/shareds/styles/ReplyStyle.module.scss";
-import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const ReplyCreateForm = ({ parentRefetch } : { parentRefetch?: any }) => {
     const searchParams = useSearchParams();
     const reviewId = +searchParams.get("reviewId")!;
-    const { isLoggedIn } = useUserStore();
     
     const schema = z.object({
         replyText: z.string().min(10).max(200)
@@ -38,8 +36,6 @@ const ReplyCreateForm = ({ parentRefetch } : { parentRefetch?: any }) => {
     const onSubmit = (data: any) => {
         mutate({ reviewId: reviewId, replyText: data.replyText });
     }
-    
-    if(!isLoggedIn) return <></>;
     
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>

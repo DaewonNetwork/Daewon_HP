@@ -8,9 +8,9 @@ import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 import { useReviewListRead } from "@/(FSD)/entities/review/api/useReviewListRead";
 import { useParams, useRouter } from "next/navigation";
-import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
+import ReviewItem from "@/(FSD)/widgets/review/ui/ReviewItem";
 
 const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
     const { phId } = useParams<{ phId: string; }>()!;
@@ -39,14 +39,14 @@ const ReviewContaner = ({ parentRefetch }: { parentRefetch?: any }) => {
             <div className={styles.review_box}>
                 <InnerShared>
                     <TextLargeShared>리뷰</TextLargeShared>
-                    {isLoggedIn && <LinkBtnShared href={`/review/create?phId=${phId}`} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>}
+                    <LinkBtnShared href={isLoggedIn ? `/review/create?phId=${phId}` : "/auth/signin"} fullWidth size={"lg"} variant={"solid"} color={"primary"}><TextMediumShared>리뷰 작성하기</TextMediumShared></LinkBtnShared>
                 </InnerShared>
             </div>
             <div className={styles.review_list}>
                 {
                     reviewList.map(review => (
                         <React.Fragment key={review.reviewId}>
-                            <ReviewShared isWriter={review.review} grandParentFetch={parentRefetch} parentRefetch={refetch} review={review} />
+                            <ReviewItem isWriter={review.review} grandParentFetch={parentRefetch} parentRefetch={refetch} review={review} />
                         </React.Fragment>
                     ))
                 }

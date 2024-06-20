@@ -10,7 +10,7 @@ export const fetchData = async ({ path, method = "GET", contentType = "applicati
         response = await fetch(`http://localhost:8090/api${path}`, {
             method: method,
             headers: {
-                // "Content-Type": contentType,
+                "Content-Type": contentType,
                 "Authorization": `Bearer ${accessToken}`,
             },
             body: JSON.stringify(body)

@@ -5,13 +5,16 @@ import ReplyCreateForm from "@/(FSD)/features/reply/ui/ReplyCreateForm";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
 import { useReviewRead } from "../../review/api/useReviewRead";
 import { useRouter, useSearchParams } from "next/navigation";
-import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
+import ReviewItem from "@/(FSD)/widgets/review/ui/ReviewItem";
+import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const ReplyContainer = () => {
     const searchParams = useSearchParams();
     const reviewId = +searchParams.get("reviewId")!;
     
     const { data, refetch, isError } = useReviewRead(reviewId);
+
+    const { isLoggedIn } = useUserStore();
 
     const review: ReviewType = data;
 
@@ -31,8 +34,8 @@ const ReplyContainer = () => {
     
     return (
         <>
-            <ReviewShared parentRefetch={refetch} review={review} isWriter={review.review} />
-            <ReplyCreateForm parentRefetch={refetch} />
+            <ReviewItem parentRefetch={refetch} review={review} isWriter={review.review} />
+            {isLoggedIn && <ReplyCreateForm parentRefetch={refetch} />}
         </>
     )
 }

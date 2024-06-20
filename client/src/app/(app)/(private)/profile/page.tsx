@@ -7,7 +7,7 @@ import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
 import SectionShared from "@/(FSD)/shareds/ui/SectionShared";
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
 import { ReviewType } from "@/(FSD)/shareds/types/Review.type";
-import ReviewShared from "@/(FSD)/shareds/ui/ReviewShared";
+import ReviewItem from "@/(FSD)/widgets/review/ui/ReviewItem";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import HeaderShared from "@/(FSD)/shareds/ui/HeaderShared";
 import TitleHeader from "@/(FSD)/widgets/app/ui/TitleHeader";
@@ -32,7 +32,7 @@ const Page = () => {
                     {
                         reviewList && reviewList.map(review => (
                             <React.Fragment key={review.reviewId}>
-                                <ReviewShared review={review} isWriter={review.review} />
+                                <ReviewItem review={review} isWriter={review.review} />
                             </React.Fragment>
                         ))
                     }
