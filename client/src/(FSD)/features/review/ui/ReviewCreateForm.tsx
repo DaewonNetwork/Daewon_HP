@@ -41,7 +41,7 @@ const ReviewCreateForm = () => {
     });
 
     const onSuccess = (data: any) => {
-        router.push(`/pharmacy?phId=${phId}`);
+        router.push(`/pharmacy/${phId}`);
     }
 
     const [file, setFile] = useState<any>();

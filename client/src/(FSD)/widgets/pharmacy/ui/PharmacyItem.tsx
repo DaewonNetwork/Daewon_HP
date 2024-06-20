@@ -14,7 +14,7 @@ const PharmacyItem = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyTyp
     return (
         <div
             onClick={_ => {
-                router.push(`/pharmacy?phId=${pharmacy.phId}`);
+                router.push(`/pharmacy/${pharmacy.phId}`);
             }}
             className={styles.pharmacy_item}
         >
