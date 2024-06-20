@@ -1,7 +1,7 @@
 "use client";
 
 import InnerShared from "@/(FSD)/shareds/ui/InnerShared";
-import React from "react";
+import React, { useEffect } from "react";
 import { usePharmacyRankEnjoyListRead } from "../api/usePharmacyRankEnjoyListRead";
 import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import PharmacyItem from "@/(FSD)/widgets/pharmacy/ui/PharmacyItem";
@@ -12,6 +12,10 @@ const PharmacyRankEnjoyList = () => {
     const { data, refetch } = usePharmacyRankEnjoyListRead();
 
     const pharmacyList: PharmacyType[] = data;
+    
+    useEffect(() => {
+        refetch();
+    }, [pharmacyList]);
 
     if (!pharmacyList) return <></>;
     return (

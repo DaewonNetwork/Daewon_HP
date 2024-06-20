@@ -10,6 +10,8 @@ import { IoMdListBox } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
 import styles from "@/(FSD)/shareds/styles/ComponentStyle.module.scss";
 import { GoHeartFill } from "react-icons/go";
+import { MdLocalHospital } from "react-icons/md";
+
 
 const IconShared = ({ iconType, ...props }: IconType) => {
     let component = null;
@@ -77,17 +79,17 @@ const IconShared = ({ iconType, ...props }: IconType) => {
             break;
         case "pencil":
             component = <GoPencil />;
-            break; 
+            break;
         case "menu":
             component = <IoEllipsisHorizontal />;
             break;
         case "search":
             component = <IoSearch />;
-            break;    
+            break;
         case "map":
             component = <IoMap />;
             break;
-        case "review": 
+        case "review":
             component = <IoMdListBox />;
             break;
         case "person":
@@ -95,7 +97,10 @@ const IconShared = ({ iconType, ...props }: IconType) => {
             break;
         case "star":
             component = <FaStar />;
-            break;    
+            break;
+        case "hospital":
+            component = <MdLocalHospital />;
+            break;
         default:
             component = null;
             break;

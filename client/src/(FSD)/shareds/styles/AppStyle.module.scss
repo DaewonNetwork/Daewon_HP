@@ -15,34 +15,88 @@
     }
 
     .nav {
-        scrollbar-width: none;
-        margin-bottom: 10px;
-        overflow-x: scroll;
-
-        div[data-slot="container"] {
-            width: max-content;
-            display: flex;
+        position: relative;
+        overflow: hidden;
+        &::-webkit-scrollbar {
+            display: none;
         }
 
+        .slider {
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            cursor: grab;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            scrollbar-width: none;
+
+            scroll-behavior: smooth;
+
+            > a {
+                margin-right: 10px;
+                padding: 0 5px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+            
+            &:active {
+                cursor: grabbing;
+            }
+        }
     }
 }
 
 .footer {
     display: block;
-    height: 80px;
     position: relative;
     z-index: 999;
-
+    box-shadow: 0 8px 12px 6px rgba(0,0,0,.15),0 4px 4px rgba(0,0,0,.3);
+    
     div[data-slot="container"] {
         height: 100%;
-    }
+        padding-top: 10px;
+        padding-bottom: 20px;
 
-    div[data-slot="inner"] {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 10px;
+        div[data-slot="inner"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            a {
+                padding: 8px 16px;
+                height: auto;
+                width: auto;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column-reverse;
+                margin-right: 10px;
+                cursor: pointer;
+    
+                &:last-child {
+                    margin-right: 0;
+                }
+    
+                span {
+                    font-size: 24px;
+                }
+            }
+        }
+
     }
+    
 }
 
 .modal {
