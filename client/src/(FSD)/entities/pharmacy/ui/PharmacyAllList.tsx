@@ -11,8 +11,9 @@ const PharmacyAllList = () => {
 
     const { ref, inView } = useInView();
 
-    console.log(pharmacyList);
-    
+    useEffect(() => {
+        refetch();
+    }, [pharmacyList]);
 
     useEffect(() => {
         if (inView) {

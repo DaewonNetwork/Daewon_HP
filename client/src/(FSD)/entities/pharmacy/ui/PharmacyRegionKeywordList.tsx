@@ -15,7 +15,11 @@ const PharmacyRegionKeywordList = () => {
     const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage, isError } = usePharmacyRegionKeywordSearch(city, keyword);
 
     const { ref, inView } = useInView();
-
+    
+    useEffect(() => {
+        refetch();
+    }, [pharmacyList]);
+    
     useEffect(() => {
         if (inView) {
             fetchNextPage();

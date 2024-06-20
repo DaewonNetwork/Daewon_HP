@@ -29,7 +29,7 @@ const PharmacyInfoModal = ({ phId, isOpen, setIsOpen }: { phId: number; isOpen: 
     return (
         <>
             <div
-                onClick={_ => router.push(`/pharmacy?phId=${phId}`)}
+                onClick={_ => router.push(`/pharmacy/${phId}`)}
                 className={styles.pharmacy_info_modal}
             >
                 <ContainerShared>

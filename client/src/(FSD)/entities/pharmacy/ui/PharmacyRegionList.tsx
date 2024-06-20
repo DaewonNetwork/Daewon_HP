@@ -14,7 +14,9 @@ const PharmacyRegionList = () => {
     const { pharmacyList, fetchNextPage, refetch, isFetchingNextPage } = usePharmacyRegionSearch(city);
     const { ref, inView } = useInView();
     
-    useEffect(() => {}, [city]);
+    useEffect(() => {
+        refetch();
+    }, [pharmacyList]);
 
     useEffect(() => {
         if (inView) {

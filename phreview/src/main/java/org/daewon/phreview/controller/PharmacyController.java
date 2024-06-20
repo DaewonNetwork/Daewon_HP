@@ -56,6 +56,8 @@ public class PharmacyController {
     @GetMapping("/all") // 전체 약국 검색
     public PageResponseDTO<PharmacyDTO> searchAll(PageRequestDTO pageRequestDTO) {
         PageResponseDTO<PharmacyDTO> responseDTO = pharmacyService.allSearch(pageRequestDTO);
+
+        log.info(responseDTO);
         return responseDTO;
     }
 

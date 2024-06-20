@@ -16,6 +16,10 @@ const PharmacyKeywordList = () => {
     const { ref, inView } = useInView();
 
     useEffect(() => {
+        refetch();
+    }, [pharmacyList]);
+    
+    useEffect(() => {
         if (inView) {
             fetchNextPage();
         }

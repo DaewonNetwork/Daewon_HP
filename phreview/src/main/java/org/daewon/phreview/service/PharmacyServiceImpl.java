@@ -62,7 +62,6 @@ public class PharmacyServiceImpl implements PharmacyService {
             if (users != null) { // 유저가 있을경우
                 Long userId = users.getUserId();
                 EnjoyPh enjoyPh = enjoyRepository.findByPharmacyAndUsers(pharmacyDTO.getPhId(), userId); // EnjoyPh 객체
-                                                                                                         // 생성
                 pharmacyDTO.setEnjoy(enjoyPh != null ? enjoyPh.isEnjoy() : false); // 약국 목록 가져올 때 즐겨찾기 여부
             } else {
                 pharmacyDTO.setEnjoy(false); // 로그인 안한경우 무조건 false
