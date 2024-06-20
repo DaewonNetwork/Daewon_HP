@@ -1,44 +1,44 @@
 import { create } from "zustand";
-import { RefetchType } from "../types/Refetch.type";
+import { PharmacyType } from "../types/pharmacys/Pharmacy.type";
 
 interface PharmacyStateType {
-    pharmacyAllSearchRefetch: RefetchType | null;
-    pharmacyKeywordSearchRefetch: RefetchType | null;
-    pharmacyNearSearchRefetch: RefetchType | null;
-    pharmacyRankEnjoyListReadRefetch: RefetchType | null;
-    pharmacyRankStarListRefetch: RefetchType | null;
-    pharmacyRegionKeywordSearchRefetch: RefetchType | null;
-    pharmacyRegionSearchRefetch: RefetchType | null;
-    pharmacyReadRefetch: RefetchType | null;
+    pharmacyAllList: PharmacyType[] | null;
+    pharmacyKeywordList: PharmacyType[] | null;
+    pharmacyNearList: PharmacyType[] | null;
+    pharmacyRankEnjoyListRead: PharmacyType[] | null;
+    pharmacyRankStarList: PharmacyType[] | null;
+    pharmacyRegionKeywordList: PharmacyType[] | null;
+    pharmacyRegionList: PharmacyType[] | null;
+    pharmacyRead: PharmacyType[] | null;
     
-    setPharmacyAllSearchRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyKeywordSearchRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyNearSearchRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyRankEnjoyListReadRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyRankStarListRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyRegionKeywordSearchRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyRegionSearchRefetch: (refetch: RefetchType | null) => void;
-    setPharmacyReadRefetch: (refetch: RefetchType | null) => void;
+    setPharmacyAllList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyKeywordList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyNearList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyRankEnjoyList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyRankStarList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyRegionKeywordList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyRegionList: (pharmacyList: PharmacyType[] | null) => void;
+    setPharmacyRead: (pharmacyList: PharmacyType[] | null) => void;
 }
 
 const usePharmacyStore = create<PharmacyStateType>((set) => ({
-    pharmacyAllSearchRefetch: null,
-    pharmacyKeywordSearchRefetch: null,
-    pharmacyNearSearchRefetch: null,
-    pharmacyRankEnjoyListReadRefetch: null,
-    pharmacyRankStarListRefetch: null,
-    pharmacyRegionKeywordSearchRefetch: null,
-    pharmacyRegionSearchRefetch: null,
-    pharmacyReadRefetch: null,
+    pharmacyAllList: null,
+    pharmacyKeywordList: null,
+    pharmacyNearList: null,
+    pharmacyRankEnjoyListRead: null,
+    pharmacyRankStarList: null,
+    pharmacyRegionKeywordList: null,
+    pharmacyRegionList: null,
+    pharmacyRead: null,
     
-    setPharmacyAllSearchRefetch: (refetch) => set({ pharmacyAllSearchRefetch: refetch }),
-    setPharmacyKeywordSearchRefetch: (refetch) => set({ pharmacyKeywordSearchRefetch: refetch }),
-    setPharmacyNearSearchRefetch: (refetch) => set({ pharmacyNearSearchRefetch: refetch }),
-    setPharmacyRankEnjoyListReadRefetch: (refetch) => set({ pharmacyRankEnjoyListReadRefetch: refetch }),
-    setPharmacyRankStarListRefetch: (refetch) => set({ pharmacyRankStarListRefetch: refetch }),
-    setPharmacyRegionKeywordSearchRefetch: (refetch) => set({ pharmacyRegionKeywordSearchRefetch: refetch }),
-    setPharmacyRegionSearchRefetch: (refetch) => set({ pharmacyRegionSearchRefetch: refetch }),
-    setPharmacyReadRefetch: (refetch) => set({ pharmacyReadRefetch: refetch }),
+    setPharmacyAllList: pharmacyList => set({ pharmacyAllList: pharmacyList }),
+    setPharmacyKeywordList: pharmacyList => set({ pharmacyKeywordList: pharmacyList }),
+    setPharmacyNearList: pharmacyList => set({ pharmacyNearList: pharmacyList }),
+    setPharmacyRankEnjoyList: pharmacyList => set({ pharmacyRankEnjoyListRead: pharmacyList }),
+    setPharmacyRankStarList: pharmacyList => set({ pharmacyRankStarList: pharmacyList }),
+    setPharmacyRegionKeywordList: pharmacyList => set({ pharmacyRegionKeywordList: pharmacyList }),
+    setPharmacyRegionList: pharmacyList => set({ pharmacyRegionList: pharmacyList }),
+    setPharmacyRead: pharmacyList => set({ pharmacyRead: pharmacyList }),
 }));
 
 export default usePharmacyStore;
