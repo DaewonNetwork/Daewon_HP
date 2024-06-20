@@ -21,10 +21,13 @@ import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 const ReviewUpdateForm = () => {
     const searchParams = useSearchParams();
     const reviewId = +searchParams.get("reviewId")!;
-
+    const { isLoggedIn } = useUserStore();
     const { data } = useReviewRead(Number(reviewId));
 
     const review: ReviewType = data;
+
+    console.log(review);
+    
 
     const [stars, setStars] = useState<Array<boolean>>([false, false, false, false, false]);
 
@@ -70,11 +73,8 @@ const ReviewUpdateForm = () => {
     }, [review]);
 
     if(!review) return <></>;
-
-    const { isLoggedIn } = useUserStore();
-    
     if(!isLoggedIn) return <></>;
-
+    if(!review.review) return <></>;
     
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

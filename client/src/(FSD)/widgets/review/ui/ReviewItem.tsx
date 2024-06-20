@@ -48,7 +48,7 @@ const ReviewItem = ({ review, parentRefetch, grandParentFetch, isWriter = false 
                             <TextLargeShared>{review.userName}님</TextLargeShared>
                             {isWriter &&
                                 <div className={styles.writer_item}>
-                                    <MenuBarShared path={`/review/update/${review.reviewId}`} mutate={mutate} id={review.reviewId}>
+                                    <MenuBarShared path={`/review/update?reviewId=${review.reviewId}`} mutate={mutate} id={review.reviewId}>
                                         <DropdownItem onClick={_ => setIsViewReply(!isViewReply)}>{isViewReply ? "답글 숨기기" : "답글 보기"}</DropdownItem>
                                     </MenuBarShared>
                                 </div>

@@ -43,8 +43,8 @@ const ReplyUpdateForm = () => {
     }
 
     if(!reply) return <></>;
-    
     if(!isLoggedIn) return <></>;
+    if(!reply.reply) return <></>;
 
     return (
         <form className={styles.reply_form} onSubmit={handleSubmit(onSubmit)}>
