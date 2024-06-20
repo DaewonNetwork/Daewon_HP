@@ -138,13 +138,6 @@
             }
         }
 
-        p[data-slot="text_medium"] {
-            display: block;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
         & > * {
             margin-bottom: 5px;
             &:last-child {

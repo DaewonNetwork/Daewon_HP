@@ -6,6 +6,7 @@ import { PharmacyType } from "@/(FSD)/shareds/types/pharmacys/Pharmacy.type";
 import ItemShared from "@/(FSD)/shareds/ui/ItemShared";
 import TextLargeShared from "@/(FSD)/shareds/ui/TextLargeShared";
 import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
+import TextBoxShared from "@/(FSD)/shareds/ui/TextBoxShared";
 
 const PharmacyItem = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyType; parentRefetch?: any; rank?: string }) => {
     if (!pharmacy) return;
@@ -24,7 +25,7 @@ const PharmacyItem = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyTyp
                     <PharmacyEnjoyBtn parentRefetch={parentRefetch} phId={pharmacy.phId} defaultLikeActive={pharmacy.enjoy} />
                 </div>
                 <div className={styles.btm_item}>
-                    <TextMediumShared>{pharmacy.phAdd}</TextMediumShared>
+                    <TextBoxShared><TextMediumShared>{pharmacy.phAdd}</TextMediumShared></TextBoxShared>
                     <TextMediumShared>{pharmacy.phTel}</TextMediumShared>
                 </div>
             </ItemShared>
