@@ -10,7 +10,7 @@ import TextMediumShared from "@/(FSD)/shareds/ui/TextMediumShared";
 const PharmacyItem = ({ pharmacy, parentRefetch, rank }: { pharmacy: PharmacyType; parentRefetch?: any; rank?: string }) => {
     if (!pharmacy) return;
     const router = useRouter();
-
+    
     return (
         <div
             onClick={_ => {

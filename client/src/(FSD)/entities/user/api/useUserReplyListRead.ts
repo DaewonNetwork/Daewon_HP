@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useUserReplyListRead = () => {
     return useQuery({
-        queryKey: ["my_reply_read"],
+        queryKey: ["user_reply_list_read"],
         queryFn: _ => fetchData({ path: "/api/user/reply", isAuthRequired: true })
     });
 };
