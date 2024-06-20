@@ -4,13 +4,13 @@ import { FetchType } from "../types/FetchData.type";
 export const fetchData = async ({ path, method = "GET", contentType = "application/json", isAuthRequired = false, isNotAuthRequired = false, body }: FetchType) => {
     let response = null;
 
-    const { isLoggedIn, accessToken } = useUserStore.getState();    
+    const { isLoggedIn, accessToken } = useUserStore.getState();
     
     if ((!isNotAuthRequired && isLoggedIn) || (isAuthRequired && isLoggedIn)) {
         response = await fetch(`http://localhost:8090/api${path}`, {
             method: method,
             headers: {
-                "Content-Type": contentType,
+                // "Content-Type": contentType,
                 "Authorization": `Bearer ${accessToken}`,
             },
             body: JSON.stringify(body)
