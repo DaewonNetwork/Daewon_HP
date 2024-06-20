@@ -8,16 +8,15 @@ import LinkBtnShared from "@/(FSD)/shareds/ui/LinkBtnShared";
 import useUserStore from "@/(FSD)/shareds/stores/useUserStore";
 
 const AppHeader = ({ children }: { children?: React.ReactNode }) => {
-    const { isLoggedIn } = useUserStore();
+    const { user, isLoggedIn } = useUserStore();
 
     return (
         <div className={styles.header}>
             <InnerShared>
                 <div className={styles.top_bar}>
                     <LogoShared />
-                    {!isLoggedIn && <LinkBtnShared href={"/auth/signin"}>
-                        로그인 / 가입하기
-                    </LinkBtnShared>}
+                    {!isLoggedIn && <LinkBtnShared href={"/auth/signin"}>로그인 / 가입하기</LinkBtnShared>}
+                    {(isLoggedIn && user) && <LinkBtnShared href={"/profile"}>{user.userName}님</LinkBtnShared>}
                 </div>
                 {children}
             </InnerShared>

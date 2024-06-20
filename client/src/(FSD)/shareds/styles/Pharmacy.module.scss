@@ -94,12 +94,17 @@
 .pharmacy_rank_container {
     display: block;
     margin-top: 20px;
+    padding-bottom: 30px;
+
+    h1[data-slot="text_xlarge"] {
+        margin-bottom: 10px;
+    }
 
     .pharmacy_rank_List {
         display: block;
 
         &:first-child {
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
     }
 }

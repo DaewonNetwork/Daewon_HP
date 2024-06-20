@@ -6,8 +6,7 @@ import AppHeader from "@/(FSD)/widgets/app/ui/AppHeader";
 import PharmacyRegionBar from "@/(FSD)/features/pharmacy/ui/PharmacyRegionBar";
 import FooterShared from "@/(FSD)/shareds/ui/FooterShared";
 import AppFooter from "@/(FSD)/widgets/app/ui/AppFooter";
-import PharmacyRankEnjoyList from "@/(FSD)/entities/pharmacy/ui/PharmacyRankEnjoyList";
-import PharmacyRankStarList from "@/(FSD)/entities/pharmacy/ui/PharmacyRankStarList";
+import PharmacyRankContainer from "@/(FSD)/widgets/pharmacy/ui/PharmacyRankContainer";
 
 const Page = () => {
     return (
@@ -19,8 +18,7 @@ const Page = () => {
                 </AppHeader>
             </HeaderShared>
             <SectionShared>
-                <PharmacyRankEnjoyList />
-                <PharmacyRankStarList />
+                <PharmacyRankContainer />
             </SectionShared>
             <FooterShared>
                 <AppFooter />
