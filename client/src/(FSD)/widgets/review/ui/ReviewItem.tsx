@@ -19,7 +19,7 @@ const ReviewItem = ({ review, parentRefetch, grandParentFetch, isWriter = false 
     const router = useRouter();
 
     if (!review) return <></>;
-
+    
     const { data, refetch } = useReplyListRead(review.reviewId);
 
     const replyList: ReplyType[] = data;

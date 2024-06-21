@@ -1,0 +1,23 @@
+.user_writer_list {
+    display: block;
+
+    div[data-slot="inner"] {
+        display: block;
+        margin-bottom: 10px;
+
+        h1[data-slot="text_xlarge"] {
+            margin-bottom: 10px;
+        }
+    }
+
+    &:first-child {
+        margin-bottom: 20px;
+    }
+    
+
+    .no_writer_text {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
