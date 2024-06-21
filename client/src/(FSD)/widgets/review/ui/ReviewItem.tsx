@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import styles from "@/(FSD)/shareds/styles/ReviewStyle.module.scss";
 import type { ReviewType } from "../../../shareds/types/Review.type";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ import { DropdownItem } from "@nextui-org/dropdown";
 import ReplyShared from "@/(FSD)/shareds/ui/ReplyShared";
 
 const ReviewItem = ({ review, parentRefetch, grandParentFetch, isWriter = false }: { review: ReviewType; parentRefetch?: any; grandParentFetch?: any; isWriter?: boolean }) => {
-    const [isViewReply, setIsViewReply] = useState(true);
+    const [isViewReply, toggleViewReply] = useReducer((state) => !state, true);
     const router = useRouter();
 
     if (!review) return <></>;
@@ -49,7 +49,7 @@ const ReviewItem = ({ review, parentRefetch, grandParentFetch, isWriter = false 
                             {isWriter &&
                                 <div className={styles.writer_item}>
                                     <MenuBarShared path={`/review/update?reviewId=${review.reviewId}`} mutate={mutate} id={review.reviewId}>
-                                        <DropdownItem onClick={_ => setIsViewReply(!isViewReply)}>{isViewReply ? "답글 숨기기" : "답글 보기"}</DropdownItem>
+                                        <DropdownItem onClick={toggleViewReply}>{isViewReply ? "답글 숨기기" : "답글 보기"}</DropdownItem>
                                     </MenuBarShared>
                                 </div>
                             }
